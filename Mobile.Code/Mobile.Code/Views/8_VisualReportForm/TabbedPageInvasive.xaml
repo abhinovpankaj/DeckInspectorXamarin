@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.Code.Views._8_VisualReportForm.TabbedPageInvasive"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controles="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Mobile.Code.Views"
+    xmlns:tabview="clr-namespace:Xam.Plugin.TabView;assembly=Xam.Plugin.TabView"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Title="Home"
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <controles:Loading
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsBusyProgress}" />
+            <Grid
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+
+                    <RowDefinition Height="*" />
+
+
+                </Grid.RowDefinitions>
+                <Grid
+                    x:Name="gridtoolbar"
+                    Padding="0"
+                    BackgroundColor="White">
+                    <Grid.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,25,0,0" />
+                            <On Platform="Android, WinPhone, Windows" Value="5,20,5,10" />
+                        </OnPlatform>
+                    </Grid.Margin>
+
+                    <Image
+                        Grid.Column="0"
+                        HeightRequest="30"
+                        HorizontalOptions="Start"
+                        Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                           Glyph={x:Static helpers:IconFont.ArrowLeft},
+                                           Color=#2e479b,
+                                           Size=30}"
+                        VerticalOptions="Start"
+                        WidthRequest="30">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label
+                        Margin="0,5,0,0"
+                        FontAttributes="None"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="15"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Visual Deck/Waterproofing"
+                        TextColor="Black"
+                        VerticalOptions="StartAndExpand" />
+
+                    <Image
+                        Margin="0"
+                        HorizontalOptions="End"
+                        Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                           Glyph={x:Static helpers:IconFont.Floppy},
+                                           Color=#2e479b,
+                                           Size=30}"
+                        VerticalOptions="Start">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SaveCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                </Grid>
+                <tabview:TabViewControl
+                    Grid.Row="1"
+                    Margin="5"
+                    BackgroundColor="White"
+                    HeaderBackgroundColor="White"
+                    HeaderSelectionUnderlineColor="#2e479b"
+                    HeaderSelectionUnderlineThickness="2"
+                    HeaderTabTextColor="#2e479b"
+                    HeaderTabTextFontAttributes="Bold"
+                    HorizontalOptions="FillAndExpand"
+                    IsSwipeEnabled="True"
+                    TabHeaderSpacing="100"
+                    VerticalOptions="FillAndExpand">
+                    <tabview:TabViewControl.ItemSource>
+                        <tabview:TabItem HeaderText="Visual">
+                            <Grid>
+                                <pages:InvasiveVisualProjectLocationForm IsVisible="{Binding IsVisualProjectLocatoion}" />
+                                <pages:InvasiveVisualBuildingLocationForm IsVisible="{Binding IsVisualBuilding}" />
+                                <pages:InvasiveVisualApartmentLocationForm IsVisible="{Binding IsVisualApartment}" />
+                            </Grid>
+                        </tabview:TabItem>
+
+                        <tabview:TabItem HeaderText="Invasive">
+
+                            <pages:AdditionalInvasive VerticalOptions="FillAndExpand" />
+
+
+                        </tabview:TabItem>
+                        <tabview:TabItem HeaderText="Conclusive">
+
+                            <pages:ConclusiveInfo VerticalOptions="FillAndExpand" />
+
+                        </tabview:TabItem>
+                    </tabview:TabViewControl.ItemSource>
+                </tabview:TabViewControl>
+            </Grid>
+
+        </AbsoluteLayout>
+
+    </ContentPage.Content>
+</ContentPage>

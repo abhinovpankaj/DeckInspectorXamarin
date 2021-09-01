@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:controles="clr-namespace:Mobile.Code.Controls"
+
+             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             x:Class="Mobile.Code.Views.AddBuildingImage">
+    
+    <ScrollView>
+        <StackLayout Spacing="0">
+            <Frame Margin="8,2,8,0" CornerRadius="12">
+                <Grid Margin="10" Padding="0"
+                                ColumnSpacing="0"
+                                RowSpacing="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalTextAlignment="Start" VerticalOptions="Start"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="20"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="New Building Image"
+                                    TextColor="{DynamicResource Gray-900}" />
+                    <ImageButton x:Name="favouriteButton"           
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                     
+                                                                                       
+                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CheckCircle},Color=#2e479b,Size=28}"                      
+                                  
+                                   
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                    </ImageButton>
+                    <BoxView HeightRequest="1" Grid.Row="1"  Color="Gray" Margin="0,14,0,14" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                             
+                             
+                 Style="{StaticResource BoxViewStyle}"  />
+
+                    <Label  Grid.Row="2" Margin="0,5,0,5"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Name"
+                                    TextColor="{DynamicResource Gray-900}" />
+
+
+                        
+                    
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            
+                        </Grid.ColumnDefinitions>
+                        <controles:BorderlessEntry HeightRequest="40" BackgroundColor="#ececec"></controles:BorderlessEntry>
+                        <ImageButton Grid.Column="1"  Source="microphone.png"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                    Command="{Binding Path=BindingContext.FavouriteCommand, 
+                                    Source={x:Reference favouriteButton}}"                                                     
+                                    CommandParameter="{x:Reference favouriteButton}"                       
+                                   
+                                    CornerRadius="20"
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                        </ImageButton>
+                    </Grid>
+
+                    <Label Margin="0,5,0,3" Grid.Row="4"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Description"
+                                    TextColor="{DynamicResource Gray-900}" />
+                    <Grid Grid.Row="5" Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <controles:XEditor HeightRequest="200" BackgroundColor="#ececec"></controles:XEditor>
+                        <ImageButton Grid.Column="1"  Source="microphone.png"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                    Command="{Binding Path=BindingContext.FavouriteCommand, 
+                                    Source={x:Reference favouriteButton}}"                                                     
+                                    CommandParameter="{x:Reference favouriteButton}"                       
+                                   
+                                    CornerRadius="20"
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                        </ImageButton>
+                    </Grid>
+                    
+                        <ImageButton Grid.Row="6"         Margin="5"
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Camera},Color=#2e479b,Size=28}"
+                                         
+                                    Command="{Binding ChoosePhotoCommand}"
+                                    CornerRadius="20"
+                                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        </ImageButton>
+                    <Grid Grid.Row="7">
+                        <Image Source="{Binding ImgPatah}" Aspect="AspectFill"></Image>
+                    </Grid>
+                    <!--<StackLayout Grid.Row="3">
+                        <Label Margin="0" Grid.Row="4"
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Description"
+                                    TextColor="{DynamicResource Gray-900}" />
+                        <Editor HeightRequest="80"></Editor>
+                    </StackLayout>-->
+                </Grid>
+               
+            </Frame>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:controles="clr-namespace:Mobile.Code.Controls"
+             Shell.NavBarIsVisible="False"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Name="MyPage" 
+             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             x:Class="Mobile.Code.Views.UnitPhtoForm">
+      <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness">
+        <On Platform="iOS" Value="0,45,0,0" />
+    </OnPlatform>
+</ContentPage.Padding>
+    <AbsoluteLayout>
+        <controles:Loading   AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress}"
+        AbsoluteLayout.LayoutFlags="All"></controles:Loading>
+        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress,Converter={StaticResource InverseBoolConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+        <Grid 
+                x:Name="gridtoolbar" HeightRequest="80"
+                Padding="0"
+                
+        BackgroundColor="White">
+
+            <Grid.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="0,25,0,0" />
+                    <On Platform="Android, WinPhone, Windows" Value="5,20,5,0" />
+                </OnPlatform>
+            </Grid.Margin>
+            <Image
+                    Grid.Column="0"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.ArrowLeft},Color=#2e479b,Size=30}"
+                    VerticalOptions="Start"
+                    WidthRequest="30">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Text="Unit Photo(s)"  FontSize="18"
+                   Style="{StaticResource LabelStyle}"
+                   TextColor="Black"
+                   FontAttributes="None"
+                   FontFamily="{StaticResource Montserrat-Regular}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"/>
+            
+            <!--<Image Margin="5"  
+                    
+              
+                    HorizontalOptions="End" 
+                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=#2e479b,Size=30}"
+                    VerticalOptions="Start"
+                 >
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveCommand}" />
+                </Image.GestureRecognizers>
+            </Image>-->
+
+        </Grid>
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
+            <FlexLayout x:Name="FlexTypes" Grid.Row="3"
+        AlignContent="Start"
+        AlignItems="Start"
+        AlignSelf="Start"
+        BindableLayout.ItemsSource="{Binding VisualProjectLocationPhotoItems}"
+        Direction="Row"
+        JustifyContent="Start"
+        Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4" 
+                      HasShadow="True" CornerRadius="5">-->
+
+
+                        <Grid RowSpacing="0" ColumnSpacing="0" Margin="4" FlexLayout.AlignSelf="Start" FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='50%'}">
+
+
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <yummy:PancakeView CornerRadius="5">
+                                <Image
+                                                Aspect="AspectFill" Source="{Binding Path=ImageUrl}"
+                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                HeightRequest="140">
+                                    <!--<Image.Source>
+                                            <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ProjectLocation.LocationImage}" />
+                                        </Image.Source>-->
+                                </Image>
+
+                            </yummy:PancakeView>
+                            <ImageButton  Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+                     
+                            
+
+                            <Grid.GestureRecognizers>
+                                
+                                <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+                        <!--<Frame.GestureRecognizers>
+
+                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+                                            </Frame.GestureRecognizers>-->
+                        <!--</Frame>-->
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsVisualBuilding}">
+            <FlexLayout x:Name="FlexTypes2" Grid.Row="3"
+        AlignContent="Start"
+        AlignItems="Start"
+        AlignSelf="Start"
+        BindableLayout.ItemsSource="{Binding VisualBuildingLocationPhotoItems}"
+        Direction="Row"
+        JustifyContent="Start"
+        Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4" 
+                      HasShadow="True" CornerRadius="5">-->
+
+
+                        <Grid RowSpacing="0" ColumnSpacing="0" Margin="4" FlexLayout.AlignSelf="Start" FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='50%'}">
+
+
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <yummy:PancakeView CornerRadius="5">
+                                <Image
+                                                Aspect="AspectFill" Source="{Binding Path=ImageUrl}"
+                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                HeightRequest="140">
+                                    <!--<Image.Source>
+                                            <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ProjectLocation.LocationImage}" />
+                                        </Image.Source>-->
+                                </Image>
+
+                            </yummy:PancakeView>
+                            <ImageButton  Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference FlexTypes2}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+
+
+
+                            <Grid.GestureRecognizers>
+
+                                <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference FlexTypes2}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+                        <!--<Frame.GestureRecognizers>
+
+                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+                                            </Frame.GestureRecognizers>-->
+                        <!--</Frame>-->
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsVisualApartment}"> 
+            <FlexLayout x:Name="FlexTypes3" Grid.Row="3"
+        AlignContent="Start"
+        AlignItems="Start"
+        AlignSelf="Start"
+        BindableLayout.ItemsSource="{Binding VisualApartmentLocationPhotoItems}"
+        Direction="Row"
+        JustifyContent="Start"
+        Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4" 
+                      HasShadow="True" CornerRadius="5">-->
+
+
+                        <Grid RowSpacing="0" ColumnSpacing="0" Margin="4" FlexLayout.AlignSelf="Start" FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='50%'}">
+
+
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <yummy:PancakeView  CornerRadius="5">
+                                <Image
+                                                Aspect="AspectFill" Source="{Binding Path=ImageUrl}"
+                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                HeightRequest="140">
+                                    <!--<Image.Source>
+                                            <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ProjectLocation.LocationImage}" />
+                                        </Image.Source>-->
+                                </Image>
+
+                            </yummy:PancakeView>
+                            <ImageButton  Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference FlexTypes3}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+
+
+
+                            <Grid.GestureRecognizers>
+
+                                <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference FlexTypes3}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+                        <!--<Frame.GestureRecognizers>
+
+                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+                                            </Frame.GestureRecognizers>-->
+                        <!--</Frame>-->
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
+
+            <Grid Grid.Row="2" Margin="20" IsVisible="false">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Horizontal"  Margin="0,5,0,5" HorizontalOptions="FillAndExpand">
+                    <Label  FontFamily="{StaticResource Montserrat-Regular}"
+                                     HorizontalTextAlignment="Start"
+                                   Text="Description"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="{DynamicResource  mainLabel}" >
+
+                    </Label>
+                    <Label  FontFamily="{StaticResource Montserrat-Regular}" 
+                                     Text=""
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="Red" >
+
+                    </Label>
+                </StackLayout>
+
+                <ImageButton Grid.Column="1" ClassId="recordDes" x:Name="recordDes" Clicked="recordDes_Clicked"  HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=#2e479b,Size=20}"        
+                                    BackgroundColor="White"  
+                                    
+                                                                                       
+                                                          
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                </ImageButton>
+                <controles:XEditor x:Name="txtDes" TextColor="Black"  FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" Text="{Binding VisualForm.AdditionalConsideration}"  Grid.Row="1" HeightRequest="100" VerticalOptions="FillAndExpand" Grid.ColumnSpan="2" BackgroundColor="#ececec"></controles:XEditor>
+            </Grid>
+        </Grid>
+    </AbsoluteLayout>
+  
+</ContentPage>

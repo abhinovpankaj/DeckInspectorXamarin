@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.Code.Views.PopUpCheakListBox"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    BackgroundColor="White"
+    Visual="Material"
+    mc:Ignorable="d">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid
+            x:Name="gridtoolbar"
+            Padding="0"
+            BackgroundColor="White"
+            VerticalOptions="CenterAndExpand">
+
+            <Grid.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS" Value="0,25,0,0" />
+                    <On Platform="Android, WinPhone, Windows" Value="5,20,5,5" />
+                </OnPlatform>
+            </Grid.Margin>
+            <Image
+                Grid.Column="0"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                   Glyph={x:Static helpers:IconFont.ArrowLeft},
+                                   Color=#2e479b,
+                                   Size=30}"
+                VerticalOptions="Start"
+                WidthRequest="30">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                Margin="0,5,0,0"
+                FontAttributes="None"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16"
+                HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Exterior Elements"
+                TextColor="Black"
+                VerticalOptions="StartAndExpand" />
+
+
+
+        </Grid>
+        <Grid
+            x:Name="SelectAllGrid"
+            Grid.Row="1"
+            Margin="10,5,0,5">
+
+
+
+
+
+
+
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Column="1"
+                Margin="10,1,0,0"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="14"
+                HorizontalOptions="StartAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Select All"
+                TextColor="{DynamicResource mainLabel}"
+                VerticalTextAlignment="Start" />
+
+            <CheckBox
+                Grid.Column="0"
+                HorizontalOptions="StartAndExpand"
+                IsChecked="{Binding IsAllSelect}"
+                WidthRequest="30"
+                Color="#2e479b" />
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding AllSelectedCommand}" />
+
+            </Grid.GestureRecognizers>
+
+        </Grid>
+        <ScrollView Grid.Row="2">
+            <StackLayout
+                x:Name="FlexTypes"
+                BindableLayout.ItemsSource="{Binding Items}"
+                Orientation="Vertical">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame Margin="0" HasShadow="False">
+                            <Grid
+                                x:Name="FrameTypes"
+                                Margin="0"
+                                FlexLayout.AlignSelf="Start">
+
+
+
+
+
+
+
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="14"
+                                    HorizontalOptions="StartAndExpand"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding Name}"
+                                    TextColor="{DynamicResource mainLabel}"
+                                    VerticalTextAlignment="Start" />
+
+                                <CheckBox
+                                    Grid.Column="2"
+                                    HorizontalOptions="CenterAndExpand"
+                                    IsChecked="{Binding IsSelected}"
+                                    WidthRequest="30"
+                                    Color="#2e479b" />
+
+
+
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
+
+                            </Frame.GestureRecognizers>
+
+                        </Frame>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+
+        <Button
+            x:Name="btnDone"
+            Grid.Row="3"
+            Margin="5"
+            BackgroundColor="#2e479b"
+            BorderWidth="1"
+            Clicked="btnDone_Clicked"
+            FontSize="Small"
+            HeightRequest="35"
+            HorizontalOptions="Center"
+            Text="Done"
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="100" />
+    </Grid>
+
+
+</ContentPage>

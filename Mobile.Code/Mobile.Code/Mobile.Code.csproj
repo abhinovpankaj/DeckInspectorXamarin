@@ -1,0 +1,277 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <Compile Remove="Styles\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="Styles\**" />
+    <None Remove="NewFolder\**" />
+    <None Remove="Styles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Camera2Forms\CameraPageIOS.xaml.cs" />
+    <Compile Remove="Camera2Forms\CameraPageOLD.xaml.cs" />
+    <Compile Remove="Controls\CarouselIndicatorView.xaml.cs" />
+    <Compile Remove="CustomRenderer\CustomEntry.cs" />
+    <Compile Remove="Data\ProjectDataStore.cs" />
+    <Compile Remove="Models\Tab.cs" />
+    <Compile Remove="Page1.cs" />
+    <Compile Remove="Page1.xaml.cs" />
+    <Compile Remove="ViewModels\7_DetailImages\EditBuildingApartmentImageViewModel.cs" />
+    <Compile Remove="ViewModels\7_DetailImages\EditBuildingLocationImageViewModel.cs" />
+    <Compile Remove="ViewModels\7_DetailImages\EditProjectLocationImageViewModel.cs" />
+    <Compile Remove="ViewModels\8_VisualReportForm\AdditionalInvasiveViewModel.cs" />
+    <Compile Remove="ViewModels\BearsViewModel.cs" />
+    <Compile Remove="ViewModels\BuildingLocationImageViewModel.cs" />
+    <Compile Remove="ViewModels\ItemsViewModel.cs" />
+    <Compile Remove="ViewModels\ProjectPageViewModel.cs" />
+    <Compile Remove="Views\7_DetailImages\EditBuildingApartmentImage.xaml.cs" />
+    <Compile Remove="Views\7_DetailImages\EditBuildingLocationImage.xaml.cs" />
+    <Compile Remove="Views\7_DetailImages\EditProjectLocationImage.xaml.cs" />
+    <Compile Remove="Views\AboutPage.xaml.cs" />
+    <Compile Remove="Views\AddProjectLocationImage.xaml.cs" />
+    <Compile Remove="Views\BearDetailPage.xaml.cs" />
+    <Compile Remove="Views\BearsPage.xaml.cs" />
+    <Compile Remove="Views\BuildingView\BuildingApartment.xaml.cs" />
+    <Compile Remove="Views\BuildingView\BuildingDetail.xaml.cs" />
+    <Compile Remove="Views\BuildingView\BuildingLocation.xaml.cs" />
+    <Compile Remove="Views\BuildingView\BuildingLocationDetail.xaml.cs" />
+    <Compile Remove="Views\CameraPage.xaml.cs" />
+    <Compile Remove="Views\CatDetailPage.xaml.cs" />
+    <Compile Remove="Views\CatsPage.xaml.cs" />
+    <Compile Remove="Views\DogDetailPage.xaml.cs" />
+    <Compile Remove="Views\DogsPage.xaml.cs" />
+    <Compile Remove="Views\ElephantDetailPage.xaml.cs" />
+    <Compile Remove="Views\ElephantsPage.xaml.cs" />
+    <Compile Remove="Views\ImageEditorPage - Copy_main.xaml.cs" />
+    <Compile Remove="Views\ItemDetailPage.xaml.cs" />
+    <Compile Remove="Views\ItemsPage.xaml.cs" />
+    <Compile Remove="Views\MonkeyDetailPage.xaml.cs" />
+    <Compile Remove="Views\MonkeysPage.xaml.cs" />
+    <Compile Remove="Views\NewItemPage.xaml.cs" />
+    <Compile Remove="Views\ProjectPage.xaml.cs" />
+    <Compile Remove="Views\ProjectTabbedPage.xaml.cs" />
+    <Compile Remove="Views\StatrtProjectPage.xaml.cs" />
+    <Compile Remove="Views\WorkAreasPage.xaml.cs" />
+    <Compile Remove="Views\8_VisualReportForm\InvasiveTabbed.cs" />
+    <Compile Remove="Views\8_VisualReportForm\Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Camera2Forms\CameraPageIOS.xaml" />
+    <EmbeddedResource Remove="Camera2Forms\CameraPageOLD.xaml" />
+    <EmbeddedResource Remove="Controls\CarouselIndicatorView.xaml" />
+    <EmbeddedResource Remove="Page1.xaml" />
+    <EmbeddedResource Remove="Views\7_DetailImages\EditBuildingApartmentImage.xaml" />
+    <EmbeddedResource Remove="Views\7_DetailImages\EditBuildingLocationImage.xaml" />
+    <EmbeddedResource Remove="Views\7_DetailImages\EditProjectLocationImage.xaml" />
+    <EmbeddedResource Remove="Views\AboutPage.xaml" />
+    <EmbeddedResource Remove="Views\AddProjectLocationImage.xaml" />
+    <EmbeddedResource Remove="Views\BearDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\BearsPage.xaml" />
+    <EmbeddedResource Remove="Views\BuildingView\BuildingApartment.xaml" />
+    <EmbeddedResource Remove="Views\BuildingView\BuildingDetail.xaml" />
+    <EmbeddedResource Remove="Views\BuildingView\BuildingLocation.xaml" />
+    <EmbeddedResource Remove="Views\BuildingView\BuildingLocationDetail.xaml" />
+    <EmbeddedResource Remove="Views\CameraPage.xaml" />
+    <EmbeddedResource Remove="Views\CatDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\CatsPage.xaml" />
+    <EmbeddedResource Remove="Views\DogDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\DogsPage.xaml" />
+    <EmbeddedResource Remove="Views\ElephantDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\ElephantsPage.xaml" />
+    <EmbeddedResource Remove="Views\ImageEditorPage - Copy_main.xaml" />
+    <EmbeddedResource Remove="Views\ItemDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\ItemsPage.xaml" />
+    <EmbeddedResource Remove="Views\MonkeyDetailPage.xaml" />
+    <EmbeddedResource Remove="Views\MonkeysPage.xaml" />
+    <EmbeddedResource Remove="Views\NewItemPage.xaml" />
+    <EmbeddedResource Remove="Views\ProjectPage.xaml" />
+    <EmbeddedResource Remove="Views\ProjectTabbedPage.xaml" />
+    <EmbeddedResource Remove="Views\StatrtProjectPage.xaml" />
+    <EmbeddedResource Remove="Views\WorkAreasPage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Syncfusion.Xamarin.SfImageEditor" Version="18.4.0.49" />
+    <PackageReference Include="Wibci.Xamarin.Images" Version="2.0.3" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Xam.Plugin.Screenshot" Version="2.0.3" />
+    <PackageReference Include="Xam.Plugin.TabView" Version="1.1.1" />
+    <PackageReference Include="Xam.Plugins.TextToSpeech" Version="4.0.0.7" />
+    <PackageReference Include="Xamarin.Controls.SignaturePad.Forms" Version="3.0.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />  
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />  
+    <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2012" />  
+    <PackageReference Include="Xamarin.Plugin.ImageEdit" Version="1.0.0" />  
+    <PackageReference Include="XamarinForms.CardView.NetStandard" Version="1.1.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Camera2Forms\CameraPageForAndroid.xaml.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="CamraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ColorPicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\FlyoutHeader.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\HomeBackView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Loading.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LoadingIndicatorPage2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Page2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\1_Project\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\2_ProjectDetail\ProjectDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\8_VisualReportForm\AdditionalInvasive.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\8_VisualReportForm\TabbedPageInvasive.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ImageEditorPageWithoutDetailForIos.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ImageEditorPageWithoutDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MultipalImage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PopUpCheakListBox.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProjectNew.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProjectStart.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShowImage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CameraIOS\" />
+    <Folder Include="ViewModels\7_DetailImages\" />
+    <Folder Include="Views\7_DetailImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Camera2Forms\CameraPage.xaml.cs">
+      <DependentUpon>CameraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\1_Project\ProjectAddEdit.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\2_ProjectDetail\ProjectDetail.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\6_BuildingApartment\AddBuildingApartment.xaml.cs">
+      <DependentUpon>AddBuildingApartment.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\ConclusiveInfo.xaml.cs">
+      <DependentUpon>ConclusiveInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\UnitPhtoForm.xaml.cs">
+      <DependentUpon>UnitPhtoForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\InvasiveVisualApartmentLocationForm.xaml.cs">
+      <DependentUpon>InvasiveVisualApartmentLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\VisualApartmentLocationForm.xaml.cs">
+      <DependentUpon>VisualApartmentLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\InvasiveVisualBuildingLocationForm.xaml.cs">
+      <DependentUpon>InvasiveVisualBuildingLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\VisualBuildingLocationForm.xaml.cs">
+      <DependentUpon>VisualBuildingLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\InvasiveVisualProjectLocationForm.xaml.cs">
+      <DependentUpon>InvasiveVisualProjectLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\VisualProjectLocationForm.xaml.cs">
+      <DependentUpon>VisualProjectLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BuildingView\AddBuildingImage.xaml.cs">
+      <DependentUpon>AddBuildingImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\5_BuildingLocation\AddBuildingLocation.xaml.cs">
+      <DependentUpon>AddBuildingLocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\6_BuildingApartment\BuildingApartmentDetail.xaml.cs">
+      <DependentUpon>BuildingApartmentDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\5_BuildingLocation\BuildingLocationDetail.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\4_ProjectBuilding\ProjectBuildingDetail.xaml.cs">
+      <DependentUpon>ProjectBuildingDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\3_ProjectLocation\ProjectLocationDetail.xaml.cs">
+      <DependentUpon>ProjectLocationDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\2_ProjectDetail\AddProjectBuilding.xaml.cs">
+      <DependentUpon>AddProjectBuilding.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\2_ProjectDetail\AddProjectLocation.xaml.cs">
+      <DependentUpon>AddProjectLocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BuildingView\BuildingImage.xaml.cs">
+      <DependentUpon>BuildingImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ImageEditorPageForIOS.xaml.cs">
+      <DependentUpon>ImageEditorPageForIOS.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ImageEditorPageWithoutDetailForIos.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ImageEditorPageWithoutDetail.xaml.cs">
+      <DependentUpon>ImageEditorPageWithoutDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PopUpCheakListBoxWaterProofing.xaml.cs">
+      <DependentUpon>PopUpCheakListBoxWaterProofing.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>MinimumOSVersion</key>
+	<string>9.0</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.wicr.mobile</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>CFBundleName</key>
+	<string>wicr app</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CustomProperty</key>
+	<string>Requires access to the camera</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Montserrat-Bold</string>
+		<string>materialdesignicons-webfont.ttf</string>
+		<string>Montserrat-Regular</string>
+		<string>Montserrat-SemiBold</string>
+		<string>FontAwesome5BrandsRegular.otf</string>
+		<string>FontAwesome5Regular.otf</string>
+		<string>FontAwesome5Solid.otf</string>
+	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Allows you create tasks</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>App Uses Non-Exempt Encryption	</key>
+	<false/>
+	<key>CFBundleDisplayName</key>
+	<string>DECK INSPECTOR</string>
+	<key>CustomProperty1</key>
+	<string></string>
+	<key>CFBundleVersion</key>
+	<string>2.17</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application uses device microphone to record.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>this application uses camera to take pictures </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needs Access to Photos</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+</dict>
+</plist>

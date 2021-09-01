@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="Mobile.Code.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:con="clr-namespace:Mobile.Code.Convertors"
+    xmlns:convertor="clr-namespace:Mobile.Code.Convertors"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    mc:Ignorable="d">
+    <Application.Resources>
+        <!--<ResourceDictionary Source="/Styles/LightTheme.xaml"/>-->
+        <con:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <con:AccessBoolConverter x:Key="AccessBoolConverter" />
+        <con:InvasiveCon x:Key="InvasiveCon" />
+        <con:ImageButtonInvasive x:Key="ImageButtonInvasive" />
+
+        <ResourceDictionary>
+            <OnPlatform x:Key="PlayfairBold" x:TypeArguments="x:String">
+                <On Platform="Android" Value="PlayfairDisplay-Bold.ttf#Playfair Display Bold" />
+                <On Platform="iOS" Value="PlayfairDisplay-Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="PlayfairNormal" x:TypeArguments="x:String">
+                <On Platform="Android" Value="PlayfairDisplay-Regular.ttf#Playfair Display Regular" />
+                <On Platform="iOS" Value="PlayfairDisplay-Regular" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Roboto-Bold.ttf#Roboto Bold" />
+                <On Platform="iOS" Value="Roboto-Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="NormalFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Roboto-Regular.ttf#Roboto" />
+                <On Platform="iOS" Value="Roboto-Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="ThinFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Roboto-Thin.ttf#Roboto Thin" />
+                <On Platform="iOS" Value="Roboto-Thin" />
+            </OnPlatform>
+            <OnPlatform x:Key="LightFont" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Roboto-Light.ttf#Roboto Light" />
+                <On Platform="iOS" Value="Roboto-Light" />
+            </OnPlatform>
+
+            <!--<Style TargetType="Label" >
+                <Setter Property="FontFamily" Value="{StaticResource NormalFont}"/>
+            </Style>-->
+
+            <ControlTemplate x:Key="GeneralTemplate">
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Margin="30,20,30,10"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Start">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            FontFamily="{StaticResource PlayfairBold}"
+                            FontSize="22"
+                            Text="{TemplateBinding Parent.Title}"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <StackLayout
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Orientation="Horizontal"
+                            VerticalOptions="Center">
+                            <ImageButton
+                                Aspect="AspectFit"
+                                HeightRequest="32"
+                                Source="fav.png"
+                                VerticalOptions="Center"
+                                WidthRequest="30" />
+                            <ImageButton
+                                Aspect="AspectFit"
+                                HeightRequest="32"
+                                Source="cartFilled.png"
+                                VerticalOptions="Center"
+                                WidthRequest="30" />
+                        </StackLayout>
+                    </Grid>
+                    <ContentPresenter
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" />
+                </Grid>
+            </ControlTemplate>
+            <DataTemplate x:Key="AnimalTemplate">
+                <!--<Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.RowSpan="2"
+                       Source="{Binding ImageUrl}"
+                       Aspect="AspectFill"
+                       HeightRequest="60"
+                       WidthRequest="60" />
+                    <Label Grid.Column="1"
+                       Text="{Binding Name}"
+                       FontAttributes="Bold" />
+                    <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding Location}"
+                       FontAttributes="Italic"
+                       VerticalOptions="End" />
+                </Grid>-->
+
+                <Grid>
+
+
+
+                    <Image
+                        Aspect="AspectFill"
+                        HorizontalOptions="FillAndExpand"
+                        Source="{Binding ImageUrl}"
+                        VerticalOptions="FillAndExpand" />
+
+                    <Image
+                        Aspect="Fill"
+                        HorizontalOptions="FillAndExpand"
+                        Source="overlayCol.png"
+                        VerticalOptions="FillAndExpand" />
+
+                    <Label
+                        Margin="10,20"
+                        FontFamily="{StaticResource PlayfairBold}"
+                        FontSize="35"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Name}"
+                        TextColor="White"
+                        VerticalOptions="End" />
+                </Grid>
+
+            </DataTemplate>
+
+            <Color x:Key="primaryColor">#3596fc</Color>
+            <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Brands.otf#Regular" />
+                <On Platform="iOS" Value="FontAwesome5Brands-Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Material Design Icons" />
+                <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+
+            </OnPlatform>
+            <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Solid.otf#Regular" />
+                <On Platform="iOS" Value="FontAwesome5Free-Solid" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="FontAwesomeRegular" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Regular.otf#Regular" />
+                <On Platform="iOS" Value="FontAwesome5Free-Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="InterMedium" x:TypeArguments="x:String">
+                <On Platform="Android" Value="InterMedium.ttf#Medium" />
+                <On Platform="iOS" Value="Inter-Medium" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="InterBold" x:TypeArguments="x:String">
+                <On Platform="Android" Value="InterBold.ttf#Bold" />
+                <On Platform="iOS" Value="Inter-Bold" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="InterLight" x:TypeArguments="x:String">
+                <On Platform="Android" Value="InterLight.ttf#Light" />
+                <On Platform="iOS" Value="Inter-Light" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="Montserrat-Bold" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Montserrat-Bold.ttf#Light" />
+                <On Platform="iOS" Value="Montserrat-Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="Montserrat-Medium" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Montserrat-Medium.ttf#Light" />
+                <On Platform="iOS" Value="Montserrat-Medium" />
+            </OnPlatform>
+            <OnPlatform x:Key="Montserrat-Regular" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Montserrat-Regular.ttf#Light" />
+                <On Platform="iOS" Value="Montserrat-Regular" />
+            </OnPlatform>
+            <OnPlatform x:Key="Montserrat-SemiBold" x:TypeArguments="x:String">
+                <On Platform="Android" Value="Montserrat-SemiBold.ttf#Light" />
+                <On Platform="iOS" Value="Montserrat-SemiBold" />
+            </OnPlatform>
+            <!--<Style TargetType="Label">
+                <Setter Property="FontFamily"
+                Value="{StaticResource InterLight}"/>
+            </Style>-->
+            <Style x:Key="BoxViewStyle" TargetType="BoxView">
+                <Setter Property="Color" Value="{DynamicResource Gray-900}" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource InterLight}" />
+            </Style>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+                <Setter Property="FontFamily" Value="Montserrat-Regular" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+            <Style x:Key="buttonContainerStyle" TargetType="yummy:PancakeView">
+
+
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="cardContainerStyle" TargetType="yummy:PancakeView">
+
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Opacity" Value="0" />
+                <Setter Property="TranslationY" Value="100" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource background}" />
+            </Style>
+
+            <Style x:Key="cardTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="{DynamicResource mainLabel}" />
+                <Setter Property="FontFamily" Value="{DynamicResource InterBold}" />
+            </Style>
+
+            <Style x:Key="borderStyle" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{DynamicResource borderColor}" />
+                <Setter Property="HeightRequest" Value="1" />
+            </Style>
+
+            <Style x:Key="listOptionLayoutStyle" TargetType="yummy:PancakeView">
+
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="listOptionLayoutTextStyle" TargetType="Label">
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="TextColor" Value="{StaticResource primaryColor}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

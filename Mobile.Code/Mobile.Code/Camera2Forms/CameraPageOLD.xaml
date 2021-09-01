@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+              xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             xmlns:cameraView="clr-namespace:Mobile.Code.Camera2Forms"
+             x:Class="Mobile.Code.Camera2Forms.CameraPage">
+    <ContentPage.Content>
+        <ScrollView>
+      
+            <AbsoluteLayout>
+
+                <cameraView:CameraPreview   Grid.Row="1" AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    x:Name="CameraPreview"           
+                    BackgroundColor="Black"
+                    HorizontalOptions="FillAndExpand"
+                    Camera="Rear"                                         
+                    Margin="0,0,0,0"
+                    VerticalOptions="FillAndExpand"
+                   ></cameraView:CameraPreview>
+
+
+                <Grid x:Name="detailGrid" ClassId="detailGrid" BackgroundColor="White" Padding="5,1,5,1"  AbsoluteLayout.LayoutBounds="0,1,1,0.2"
+                AbsoluteLayout.LayoutFlags="All" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image x:Name="img1"  WidthRequest="50" HeightRequest="50" Grid.Row="0" HorizontalOptions="CenterAndExpand" ></Image>
+                   
+                    <ImageButton  Grid.Column="1" BackgroundColor="Transparent" Clicked="OnCameraClicked" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=#2e479b,Size=25}"></ImageButton>
+                    <ImageButton BackgroundColor="Transparent" Grid.Column="2" Command="{Binding GoBackCommand}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Close},Color=#2e479b,Size=25}"></ImageButton>
+
+                </Grid>
+
+            </AbsoluteLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+<!--<Label x:Name="countSelect"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="15"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="0 Photo Taken"
+                                    TextColor="White" />-->

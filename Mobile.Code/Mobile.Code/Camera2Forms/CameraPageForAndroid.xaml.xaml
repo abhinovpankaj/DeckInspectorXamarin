@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" BackgroundColor="Black"
+             Shell.NavBarIsVisible="False"
+              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+              xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+               xmlns:controls="clr-namespace:Mobile.Code.Controls"
+             xmlns:cameraView="clr-namespace:Mobile.Code.Camera2Forms"
+             x:Class="Mobile.Code.Camera2Forms.CameraPageForAndroid">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            
+            
+            <controls:Loading   AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress}"
+        AbsoluteLayout.LayoutFlags="All"></controls:Loading>
+
+            <Grid x:Name="outerGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+                <Grid x:Name="innerGrid" Grid.Row="0" Padding="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollView x:Name="sc" Orientation="Both" Grid.Row="0" Grid.Column="0"  Margin="0" BackgroundColor="Black"  >
+
+                        <FlexLayout  x:Name="FlexTypes" 
+        
+        BindableLayout.ItemsSource="{Binding ImageList}"
+       
+        >
+                            <FlexLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="0" />
+                                    <On Platform="Android, WinPhone, Windows" Value="2" />
+                                </OnPlatform>
+                            </FlexLayout.Margin>
+                            <FlexLayout.Padding>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="2" />
+                                    <On Platform="Android, WinPhone, Windows" Value="2" />
+                                </OnPlatform>
+                            </FlexLayout.Padding>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+
+
+                                    <Grid RowSpacing="0"  ColumnSpacing="0" Margin="5,0,5,0" >
+
+
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <yummy:PancakeView CornerRadius="5">
+                                            <ffimageloading:CachedImage
+                                                Aspect="AspectFill" Source="{Binding Image}"
+                                               
+                                                HeightRequest="120" WidthRequest="120">
+
+                                            </ffimageloading:CachedImage>
+                                        </yummy:PancakeView>
+                                        <ImageButton  Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+
+                                        <!--<Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                                </Grid.GestureRecognizers>-->
+
+                                    </Grid>
+
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </ScrollView>
+                   
+                    <!--<Image Source="deer.jpg" Grid.Row="0" Grid.Column="0" HeightRequest="300" WidthRequest="300" />-->
+                    
+                   
+                    <Grid x:Name="controlsGrid" Grid.Row="0" Grid.Column="1" >
+                        <cameraView:CameraPreview  
+                    x:Name="CameraPreview"           
+                    BackgroundColor="Black"
+                   
+                    Camera="Rear"                                         
+                    Margin="0,0,0,0"
+                   
+                   >
+                        </cameraView:CameraPreview>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="buttonsGrid" Grid.Row="1">
+                    <Grid  BackgroundColor="Black" RowSpacing="0" ColumnSpacing="0" Margin="0" VerticalOptions="FillAndExpand" >
+                        <Grid.Padding>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="35,5,35,40" />
+                                <On Platform="Android, WinPhone, Windows" Value="2" />
+                            </OnPlatform>
+                        </Grid.Padding>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label x:Name="countSelect"  Grid.Column="0"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="15"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding CountPhoto}"
+                                    TextColor="White" />
+                        <!--<Image x:Name="img1"  WidthRequest="50" HeightRequest="50" Grid.Row="0" HorizontalOptions="CenterAndExpand" ></Image>-->
+
+
+                        <ImageButton  Grid.Column="1" BackgroundColor="Transparent" Clicked="OnCameraClicked" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=White,Size=25}"></ImageButton>
+                        <ImageButton BackgroundColor="Transparent" Clicked="btnSave_Clicked" x:Name="btnSave" Grid.Column="2"  WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=White,Size=25}"></ImageButton>
+
+
+
+
+                    </Grid>
+                </Grid>
+            </Grid>
+            <!--<Grid BackgroundColor="Black" RowSpacing="0" ColumnSpacing="0" AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress,Converter={StaticResource InverseBoolConverter}}"
+        AbsoluteLayout.LayoutFlags="All">
+            <Grid.RowDefinitions>
+                --><!--<RowDefinition Height="Auto"></RowDefinition>--><!--
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            --><!--<Label x:Name="countSelect"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="15"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="0 Photo Taken"
+                                    TextColor="White" />--><!--
+            <cameraView:CameraPreview   Grid.Row="1"
+                    x:Name="CameraPreview"           
+                    BackgroundColor="Black"
+                    HorizontalOptions="FillAndExpand"
+                    Camera="Rear"                                         
+                    Margin="0,0,0,0"
+                    VerticalOptions="FillAndExpand"
+                   >
+            </cameraView:CameraPreview>
+          
+            <ScrollView Orientation="Both" Grid.Row="0" Margin="0" BackgroundColor="Black"  >
+                
+                <FlexLayout  x:Name="FlexTypes" 
+        
+        BindableLayout.ItemsSource="{Binding ImageList}"
+       
+        >
+                    <FlexLayout.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0" />
+                            <On Platform="Android, WinPhone, Windows" Value="2" />
+                        </OnPlatform>
+                    </FlexLayout.Margin>
+                    <FlexLayout.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="2" />
+                            <On Platform="Android, WinPhone, Windows" Value="2" />
+                        </OnPlatform>
+                    </FlexLayout.Padding>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+
+
+                            <Grid RowSpacing="0"  ColumnSpacing="0" Margin="5,0,5,0" >
+
+
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <yummy:PancakeView CornerRadius="5">
+                                    <ffimageloading:CachedImage
+                                                Aspect="AspectFill" Source="{Binding Image}"
+                                               
+                                                HeightRequest="120" WidthRequest="120">
+                                       
+                                    </ffimageloading:CachedImage>
+                                </yummy:PancakeView>
+                                <ImageButton  Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+
+                                --><!--<Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                                </Grid.GestureRecognizers>--><!--
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </ScrollView>-->
+        <!--</Grid>-->
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ImageEditor.Pages.ImageEditorPageForIOS"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+      xmlns:fontawesome="clr-namespace:FontAwesome"
+    xmlns:Pad="clr-namespace:SignaturePad.Forms;assembly=SignaturePad.Forms"
+    xmlns:controls="clr-namespace:ImageEditor.Controls"
+     xmlns:local="clr-namespace:Mobile.Code.Controls"
+    xmlns:padview="clr-namespace:ImageEditor.Behaviors"
+     xmlns:imageeditor="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
+     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Name="RootItem">
+
+   
+    <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness">
+        <On Platform="iOS" Value="0,45,0,0" />
+        
+    </OnPlatform>
+      
+    </ContentPage.Padding>
+   
+    <ContentPage.Content>
+       
+        <AbsoluteLayout>
+         
+               
+
+             <ScrollView  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+
+
+
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                <Grid 
+                x:Name="gridtoolbar1" Grid.Row="0"
+                
+                
+        BackgroundColor="White">
+                    <Grid.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,0,0,0" />
+                            <On Platform="Android, WinPhone, Windows" Value="0" />
+                        </OnPlatform>
+                    </Grid.Margin>
+                    <Grid.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,0,0,5" />
+                            <On Platform="Android, WinPhone, Windows" Value="0,5,0,5" />
+                        </OnPlatform>
+                    </Grid.Padding>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+
+                    </Grid.ColumnDefinitions>
+                    <!--<Image
+                    Grid.Column="0" Margin="10,2,0,0"
+                    HeightRequest="{x:OnPlatform Android=30, iOS=30, UWP=30}"
+                    HorizontalOptions="Start"
+                    Source="delete.png"
+                    VerticalOptions="Center"
+                    WidthRequest="{x:OnPlatform Android=30, iOS=30, UWP=30}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>-->
+
+                    <Image
+                    Grid.Column="0" Margin="10,5,0,0"
+                     HeightRequest="{x:OnPlatform Android=30, iOS=40, UWP=30}"
+                    HorizontalOptions="Start"
+                     Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Close},Size=50,Color=DarkRed}"
+                    VerticalOptions="Center" 
+                    WidthRequest="{x:OnPlatform Android=30, iOS=40, UWP=30}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                </Grid>
+                <imageeditor:SfImageEditor Grid.Row="1" ImageSaved="imagebackground_ImageSaved" ImageSaving="imagebackground_ImageSaving"
+                x:Name="imagebackground"  ImageLoaded="imagebackground_ImageLoaded" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+               
+              
+                BackgroundColor="Transparent"
+                Source="{Binding SelectedImage}" />
+
+                    <Grid x:Name="detailGrid" Grid.Row="2" Padding="5,1,5,1"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label  FontFamily="{StaticResource Montserrat-Regular}" x:Name="txtImageSize" Margin="5,0,0,0"
+                                     HorizontalTextAlignment="Start" FontSize="12" TextColor="Black" 
+                                    Text="{Binding ImageSize}"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    >
+
+                            </Label>
+                            <!--<ImageButton Grid.Column="1"  HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Cog},Color=DarkRed,Size=20}"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    
+                                                                                       
+                                                          
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                        </ImageButton>-->
+                        </Grid>
+
+
+                        <Grid Grid.Row="1" Padding="5,1,5,1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal"  Margin="0,2,0,2" HorizontalOptions="FillAndExpand">
+                                <Label  FontFamily="{StaticResource Montserrat-Regular}"
+                                     HorizontalTextAlignment="Start"
+                                   Text="Name"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="{DynamicResource Gray-900}" >
+
+                                </Label>
+                                <!--<Label  FontFamily="{StaticResource Montserrat-Regular}" 
+                                     Text="*"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="Red" >
+
+                            </Label>-->
+                            </StackLayout>
+
+                            <ImageButton Grid.Column="1" ClassId="recordName" IsVisible="false" x:Name="recordName" Clicked="recordClick" HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=DarkRed,Size=20}"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    
+                                                                                       
+                                                          
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                            </ImageButton>
+                            <local:BorderlessEntry  TabIndex="0" TextColor="Black" FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" x:Name="txtName" Grid.Row="1" HeightRequest="30" VerticalOptions="FillAndExpand" Grid.ColumnSpan="2" BackgroundColor="#ececec"></local:BorderlessEntry>
+                        </Grid>
+
+
+                        <Grid Grid.Row="2" Margin="0,5,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label   Margin="0,1,0,5"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text=" Description"
+                                    TextColor="{DynamicResource Gray-900}" />
+                            <ImageButton Grid.Column="1" ClassId="recordDes" x:Name="recordDes" Clicked="recordClick" HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=#2e479b,Size=20}"        
+                                    BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                            </ImageButton>
+                            <local:XEditor  TabIndex="1" TextColor="Black" Grid.Row="1" FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" x:Name="txtDes"  HeightRequest="70" BackgroundColor="#ececec" Grid.ColumnSpan="2"></local:XEditor>
+                        </Grid>
+
+                        <Button Grid.Row="3"   Text="Save"  TextColor="White" BackgroundColor="#2e479b"   Margin="1"
+                                    BorderWidth="1"
+                                    HeightRequest="35" WidthRequest="100"
+                                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=White,Size=20}"
+                                         FontFamily="{StaticResource Montserrat-Regular}"
+                                    x:Name="savebutton"
+                                  
+                                     Command="{Binding SaveImageCommand}"
+                                   CommandParameter="{Binding Source={x:Reference RootItem}}"
+                                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        </Button>
+                    </Grid>
+
+                </Grid>
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 </ScrollView>
+
+
+        </AbsoluteLayout>
+     
+    </ContentPage.Content>
+    <!--<ContentPage.Content>
+
+        <ScrollView >
+            <Grid RowSpacing="0" ColumnSpacing="0" BackgroundColor="Transparent" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" ></RowDefinition>
+                    <RowDefinition Height="*" ></RowDefinition>
+                    <RowDefinition Height="Auto" ></RowDefinition>
+
+                </Grid.RowDefinitions>
+                <Grid RowSpacing="0" ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+                    </Grid.ColumnDefinitions>
+                    <Image Margin="2"
+                    Grid.Column="0"
+                   HeightRequest="28"
+                    HorizontalOptions="Start"
+                    Source="cross"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Slider  HorizontalOptions="Start"
+                x:Name="scratchcolorslider" 
+               
+                BackgroundColor="Transparent"
+                IsVisible="False"
+                Maximum="9"
+                MaximumTrackColor="Transparent"
+                Minimum="0"
+                MinimumTrackColor="Transparent"
+                Rotation="-90"
+                ThumbImageSource="thumb"
+                Value="{Binding ScratchSliderValue}" />
+                    <Grid  HorizontalOptions="End" 
+                x:Name="gridtoolbar"
+                Padding="0"
+              
+                BackgroundColor="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                      
+                        <Label
+                    x:Name="resetlabel"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    HorizontalOptions="End"
+                    IsVisible="False"
+                    Text="Reset"
+                    TextColor="Black"
+                    VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ResetAllActions_Tapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                    x:Name="clearlabel"
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    FontSize="Small"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding Source={x:Reference signaturepad}, Path=ClearLabel.IsVisible}"
+                    Text="Clear"
+                    TextColor="#782929"
+                    VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ClearScratch_Tapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Image
+                    Grid.Column="3"
+                   HeightRequest="28"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding Source={x:Reference signaturepad}, Path=ClearLabel.IsVisible}"
+                    Source="undo"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="UndoStroke_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image
+                    x:Name="redoimg"
+                    Grid.Column="4"
+                   HeightRequest="28"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding Source={x:Reference signaturepad}, Path=ClearLabel.IsVisible}"
+                    Source="redo"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RedoStroke_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image
+                    Grid.Column="5"
+                   HeightRequest="28"
+                    HorizontalOptions="End"
+                    Source="rotate"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RotateImage_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image
+                    Grid.Column="6"
+                   HeightRequest="28"
+                    HorizontalOptions="Center"
+                    Source="ticon"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowCommentEditor_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image
+                    Grid.Column="7"
+                   HeightRequest="28"
+                    HorizontalOptions="Start"
+                    Source="pencil"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowScratchView_Tapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Grid>
+
+
+                </Grid>
+                <Image Grid.Row="1" Margin="0,-60,0,0" 
+                x:Name="imagebackground"
+                
+                
+                Aspect="AspectFill"
+               
+                Source="{Binding SelectedImage}" />
+                <Pad:SignaturePadView Grid.Row="1" 
+                x:Name="signaturepad" Margin="0,-60,0,0" 
+             
+                BackgroundColor="Transparent"
+                ClearText=""
+                ClearTextColor="Transparent"
+                IsEnabled="False"
+                IsVisible="False"
+                StrokeColor="{Binding StrokeColor}"
+                StrokeWidth="5">
+                    <Pad:SignaturePadView.Behaviors>
+                        <padview:ScratchView />
+                    </Pad:SignaturePadView.Behaviors>
+                </Pad:SignaturePadView>
+
+                <Image Grid.Row="0"
+                x:Name="imgcolors"
+             
+                BackgroundColor="Transparent"
+                IsVisible="False"
+                Rotation="-90"
+                 />
+
+                <Slider Grid.Row="1" 
+                x:Name="commentcolorslider"
+               
+                BackgroundColor="Transparent"
+                IsVisible="False"
+                Maximum="9"
+                MaximumTrackColor="Transparent"
+                Minimum="0"
+                MinimumTrackColor="Transparent"
+                Rotation="-90"
+                ThumbImageSource="thumb"
+                Value="{Binding ColorSliderValue}" />
+                <controls:EditorControl Grid.Row="1"
+                x:Name="editorcomment"
+               
+                BackgroundColor="Transparent"
+                FontSize="Medium"
+                IsVisible="False"
+                Placeholder="Enter your Comment"
+                PlaceholderColor="{Binding CommentColor}"
+                Text="{Binding CommentText}"
+                TextColor="{Binding CommentColor}"
+                Unfocused="Editorcomment_Unfocused" />
+                <padview:PanContainer Grid.Row="1" x:Name="pancontainer"
+                 
+              
+                IsVisible="False">
+                    <Label
+                    x:Name="labelcomment"
+                    BackgroundColor="Transparent"
+                    FontSize="Medium"
+                    TextColor="{Binding CommentColor}" />
+                    <padview:PanContainer.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PanContainer_Tapped" />
+                    </padview:PanContainer.GestureRecognizers>
+                </padview:PanContainer>
+
+                <Grid x:Name="detailGrid"  Grid.Row="2" Padding="10,2,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+                    <Label  Grid.Row="0" Margin="0,5,0,5"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Name"
+                                    TextColor="{DynamicResource Gray-900}" />
+
+
+
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <local:BorderlessEntry x:Name="txtName" HeightRequest="40" BackgroundColor="#ececec"></local:BorderlessEntry>
+                        <ImageButton Grid.Column="1"  Source="microphone.png"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                        </ImageButton>
+                    </Grid>
+
+                    <Label Margin="0,5,0,3" Grid.Row="2"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Description"
+                                    TextColor="{DynamicResource Gray-900}" />
+                    <Grid Grid.Row="3" Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <local:XEditor x:Name="txtDescription" HeightRequest="100" BackgroundColor="#ececec"></local:XEditor>
+                        <ImageButton Grid.Column="1"  Source="microphone.png"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                   
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                        </ImageButton>
+                    </Grid>
+
+                    <ImageButton Grid.Row="4"         Margin="5"
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CheckboxMarkedCircle},Color=Green,Size=28}"
+                                         
+                                    x:Name="savebutton"
+                                    CornerRadius="20"
+                                     Command="{Binding SaveImageCommand}"
+                                   CommandParameter="{Binding Source={x:Reference RootItem}}"
+                                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    </ImageButton>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+
+
+
+
+
+
+
+        --><!--<Button
+                x:Name="savebutton"
+                Margin="20,10"
+                AbsoluteLayout.LayoutBounds="0,1,1,0.1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="LightGray"
+                BorderRadius="8"
+                Command="{Binding SaveImageCommand}"
+                CommandParameter="{Binding Source={x:Reference RootItem}}"
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="Save Image"
+                TextColor="Gray" />--><!--
+
+
+
+
+
+
+
+    </ContentPage.Content>-->
+</ContentPage>

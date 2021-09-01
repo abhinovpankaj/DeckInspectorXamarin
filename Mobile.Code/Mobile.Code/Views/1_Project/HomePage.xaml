@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.Code.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cardView="clr-namespace:CardViewNetStandard;assembly=CardViewNetStandard"
+    xmlns:controls="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tabview="clr-namespace:Xam.Plugin.TabView;assembly=Xam.Plugin.TabView"
+    xmlns:vm="clr-namespace:Mobile.Code.ViewModels"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Title="Home"
+    mc:Ignorable="d">
+    <!--<Shell.SearchHandler>
+
+        <controls:CustomSearchHandler  ></controls:CustomSearchHandler>
+    </Shell.SearchHandler>-->
+    <Shell.TitleView>
+        <StackLayout Padding="10,2" Orientation="Horizontal">
+            <Label
+                FontAttributes="None"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Title"
+                HorizontalOptions="StartAndExpand"
+                Text="Projects"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand" />
+            <!--<SearchBar Placeholder="Search.." HorizontalOptions="StartAndExpand"></SearchBar>-->
+            <yummy:PancakeView
+                CornerRadius="0"
+                HeightRequest="40"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="120">
+                <Image Aspect="AspectFill" Source="icon.png" />
+            </yummy:PancakeView>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <AbsoluteLayout>
+        <controls:Loading
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsBusyProgress}" />
+        <Grid
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+
+            <Grid
+                AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="#2e479b" />
+            <Frame Grid.Row="1" Margin="10,10,10,0">
+                <Grid BackgroundColor="White" VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="18"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Projects"
+                        TextColor="Black"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="18"
+                        Style="{StaticResource LabelStyle}"
+                        Text="|"
+                        TextColor="{DynamicResource Gray-200}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        Grid.Column="2"
+                        BackgroundColor="White"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="30"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{x:Static helpers:IconFont.PlusCircle}"
+                        TextColor="#2e479b"
+                        VerticalOptions="CenterAndExpand" />
+                    <!--<ImageButton Command="{Binding AddNewCommand}"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2" BackgroundColor="White"
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PlusCircle},Color=#2e479b,Size=38}"></ImageButton>-->
+
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddNewCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <StackLayout
+                Grid.Row="2"
+                Margin="10,10,10,0"
+                Padding="0">
+                <ScrollView>
+                    <FlexLayout
+                        x:Name="FlexTypes"
+                        AlignContent="Start"
+                        AlignItems="Start"
+                        AlignSelf="Start"
+                        BindableLayout.ItemsSource="{Binding AllProjects}"
+                        Direction="Row"
+                        JustifyContent="Start"
+                        Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame
+                                    x:Name="FrameTypes"
+                                    Margin="2"
+                                    FlexLayout.AlignSelf="Start"
+                                    FlexLayout.Basis="{OnIdiom Phone='100%',
+                                                               Tablet='50%'}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100" />
+                                            <!--<RowDefinition Height="*"></RowDefinition>-->
+
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" WidthRequest="100">
+                                            <yummy:PancakeView Grid.Column="0" CornerRadius="5">
+                                                <ffimageloading:CachedImage Aspect="AspectFill" Source="{Binding ImageUrl}" />
+                                            </yummy:PancakeView>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                Grid.Row="0"
+                                                Margin="0,3,0,0"
+                                                FontFamily="{StaticResource Montserrat-Regular}"
+                                                FontSize="14"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Style="{StaticResource LabelStyle}"
+                                                Text="{Binding Name}"
+                                                TextColor="{DynamicResource mainLabel}"
+                                                VerticalOptions="StartAndExpand"
+                                                VerticalTextAlignment="Start" />
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Margin="0,3,0,0"
+                                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                                    FontSize="10"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    LineBreakMode="TailTruncation"
+                                                    MaxLines="2"
+                                                    Style="{StaticResource LabelStyle}"
+                                                    Text="{Binding CreatedOn}"
+                                                    TextColor="{DynamicResource mainLabel}"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    VerticalTextAlignment="Start" />
+                                                <Button
+                                                    Grid.Column="1"
+                                                    Margin="1,5,2,5"
+                                                    BackgroundColor="#2e479b"
+                                                    BorderWidth="1"
+                                                    Command="{Binding BindingContext.InvasiveDetailCommand, Source={x:Reference FlexTypes}}"
+                                                    CommandParameter="{Binding}"
+                                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                                    HeightRequest="35"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                            Glyph={x:Static helpers:IconFont.FormatListBulletedSquare},
+                                                                            Color=White,
+                                                                            Size=20}"
+                                                    IsVisible="{Binding IsInvasive}"
+                                                    Text="Invasive"
+                                                    TextColor="White"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="160" />
+
+                                            </Grid>
+
+                                        </Grid>
+
+                                        <!--<Label  VerticalTextAlignment="Center" Margin="4" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="14"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding ProjectType}"
+                                    TextColor="Black" />-->
+
+
+
+
+
+                                        <Grid.GestureRecognizers>
+
+                                            <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
+
+                                        </Grid.GestureRecognizers>
+
+                                    </Grid>
+                                </Frame>
+
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </ScrollView>
+
+
+            </StackLayout>
+        </Grid>
+        <!--<BoxView Color="Olive"  AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
+        AbsoluteLayout.LayoutFlags="PositionProportional" />-->
+        <!--<BoxView Color="Red" AbsoluteLayout.LayoutBounds="0,.5,25,100"
+        AbsoluteLayout.LayoutFlags="PositionProportional" />
+        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,100,25"
+        AbsoluteLayout.LayoutFlags="PositionProportional" />
+        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,1,25"
+        AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" />-->
+    </AbsoluteLayout>
+
+
+</ContentPage>

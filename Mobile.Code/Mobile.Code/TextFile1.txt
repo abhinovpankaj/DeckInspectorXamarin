@@ -1,0 +1,140 @@
+﻿ //item.UserId = App.LogUser.Id;
+
+            ////using (HttpClient client = new HttpClient())
+            ////{
+            ////    Dictionary<string, string> parameters = new Dictionary<string, string>();
+            ////    parameters.Add("Id", item.Id);
+            ////    parameters.Add("Name", item.Name);
+            ////    parameters.Add("Address", item.Address);
+            ////    parameters.Add("Description", item.Description);
+            ////    parameters.Add("ProjectType", item.ProjectType);
+            ////    parameters.Add("UserID", App.LogUser.Id.ToString());
+            ////    parameters.Add("ImageName", item.ImageName);
+            ////    parameters.Add("ImageDescription", item.ImageDescription);
+            ////    parameters.Add("ImageUrl", item.ImageUrl);
+            ////    MultipartFormDataContent form = new MultipartFormDataContent();
+            ////    HttpContent content = new StringContent("fileToUpload");
+            ////    HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
+
+            ////    form.Add(DictionaryItems, "Model");
+            ////    if (item.ImageUrl == "blank.png")
+            ////    {
+            ////        item.ImageUrl = null;
+            ////    }
+            ////    else
+            ////    {
+            ////        form.Add(content, "fileToUpload");
+            ////        /// System.IO.File.OpenRead(filePath)
+            ////        var stream = System.IO.File.OpenRead(item.ImageUrl);
+            ////        content = new StreamContent(stream);
+            ////        content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+            ////        {
+            ////            Name = "fileToUpload",
+            ////            //  FileName = (item.Name + .Replace(" ","_") + ".png"
+            ////            FileName = item.Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".png"
+            ////        };
+
+            ////        form.Add(content);
+            ////    }
+
+            ////    HttpResponseMessage response = null;
+
+            ////    try
+            ////    {
+            ////        response = await client.PostAsync(App.AzureBackendUrl + "api/Project/AddEdit", form);
+            ////        var responseBody = await response.Content.ReadAsStringAsync();
+            ////        Response result = JsonConvert.DeserializeObject<Response>(responseBody);
+            ////        item.Id = result.ID;
+            ////        //Project obj = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
+            ////        return await Task.FromResult(item);
+
+            ////    }
+            ////    catch (Exception ex)
+            ////    {
+            ////        Console.WriteLine(ex.Message);
+            ////    }
+            ////    if (response.IsSuccessStatusCode == true)
+            ////    {
+
+            ////    }
+            ////}
+
+            ////using (HttpClient client = new HttpClient())
+            ////{
+            ////    //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            ////parameters.Add("Id", item.Id);
+            ////parameters.Add("Name", item.Name);
+            ////parameters.Add("Address", item.Address);
+            ////parameters.Add("Description", item.Description);
+            ////parameters.Add("ProjectType", item.ProjectType);
+            ////parameters.Add("UserID", App.LogUser.Id.ToString());
+            ////parameters.Add("ImageName", item.ImageName);
+            ////parameters.Add("ImageDescription", item.ImageDescription);
+            ////parameters.Add("ImageUrl", item.ImageUrl);
+            ////MultipartFormDataContent form = new MultipartFormDataContent();
+            ////HttpContent content = new StringContent("fileToUpload");
+            // //HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
+            // Regex UrlMatch = new Regex(@"(?i)(http(s)?:\/\/)?(\w{2,25}\.)+\w{3}([a-z0-9\-?=$-_.+!*()]+)(?i)", RegexOptions.Singleline);
+            ////form.Add(DictionaryItems, "Model");
+            //    if (item.ImageUrl == "blank.png" || UrlMatch.IsMatch(item.ImageUrl))
+            //   {
+            //        item.ImageUrl = null;
+            //    }
+            //    else
+            //    {
+            //        //form.Add(content, "fileToUpload");
+            //        /// System.IO.File.OpenRead(filePath)
+            //     //   var stream = System.IO.File.OpenRead(item.ImageUrl);
+
+            //        using (var stream = System.IO.File.OpenRead(item.ImageUrl))
+            //        {
+            //            byte[] filebytearray = new byte[stream.Length];
+            //            stream.Read(filebytearray, 0, (int)stream.Length);
+            //            item.ImageUrl = Convert.ToBase64String(filebytearray);
+            //        }
+            //        //content = new StreamContent(stream);
+            //        //content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+            //        //{
+            //        //    Name = "fileToUpload",
+            //        //    //  FileName = (item.Name + .Replace(" ","_") + ".png"
+            //        //    FileName = item.Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss") + ".png"
+            //        //};
+
+            //        //form.Add(content);
+            //    }
+
+            //// HttpResponseMessage response = null;
+
+            ////try
+            ////{
+            ////    using (HttpClient client = new HttpClient())
+            ////    {
+            ////        client.BaseAddress = new Uri(App.AzureBackendUrl);
+            ////        client.DefaultRequestHeaders.Accept.Clear();
+            ////        client.DefaultRequestHeaders.Accept.Add(
+            ////        new MediaTypeWithQualityHeaderValue("application/json"));
+            ////        // item.ImageName = item.Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss");
+
+            ////        using (HttpResponseMessage response = await client.PostAsJsonAsync($"api/Project/Add", item))
+            ////        {
+            ////            var responseBody = await response.Content.ReadAsStringAsync();
+            ////            Response result = JsonConvert.DeserializeObject<Response>(responseBody);
+
+            ////            response.EnsureSuccessStatusCode();
+            ////            Project obj = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
+            ////            return await Task.FromResult(obj);
+
+
+            ////        }
+
+
+            ////    }
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    Console.WriteLine(ex.Message);
+            ////}
+
+
+
+            //return await Task.FromResult(new Project());

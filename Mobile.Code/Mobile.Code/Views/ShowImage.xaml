@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Mobile.Code.Views.ShowImage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <Image
+                x:Name="imagebackground"
+                
+                
+                Aspect="AspectFill" Source="{Binding ImageUrl}"
+               
+               >
+                        <!--<Image.Source>
+                            <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ImageUrl}" />
+                        </Image.Source>-->
+                    </Image>
+                    <Grid x:Name="detailGrid"  Grid.Row="1" Padding="10,2,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label  Grid.Row="0" Margin="5"
+                                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding Name}"
+                                    TextColor="{DynamicResource Gray-900}" />
+
+
+
+
+                      
+
+                        <Label Margin="5" Grid.Row="1"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding Description}"
+                                    TextColor="{DynamicResource Gray-900}" />
+                        <!--<Label Margin="5" Grid.Row="2"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Created By : John Doe"
+                                    TextColor="{DynamicResource Gray-900}" />-->
+                        <Label Margin="5" Grid.Row="3"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding CreatedOn}"
+                                    TextColor="{DynamicResource Gray-900}" />
+                       
+
+                        
+                    </Grid>
+                    <!--<Button Grid.Row="2"
+                x:Name="savebutton"
+                Margin="20,10"
+                AbsoluteLayout.LayoutBounds="0,1,1,0.1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="LightGray"
+                BorderRadius="8"
+                Command="{Binding SaveImageCommand}"
+                CommandParameter="{Binding Source={x:Reference RootItem}}"
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="Save Image"
+                TextColor="Gray" />-->
+                </Grid>
+            </ScrollView>
+
+            <Grid
+                x:Name="gridtoolbar"
+                Padding="10"
+                AbsoluteLayout.LayoutBounds="0,0,1,.06"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Transparent">
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    
+                </Grid.ColumnDefinitions>-->
+                <Image
+                    Grid.Column="0"
+                    HeightRequest="24"
+                    HorizontalOptions="Start"
+                    Source="cross"
+                    VerticalOptions="Center"
+                    WidthRequest="24">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+               
+            </Grid>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

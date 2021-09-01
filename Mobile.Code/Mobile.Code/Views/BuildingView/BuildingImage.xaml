@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+              xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             BackgroundColor="#2e479b" Title="New Image"
+             x:Class="Mobile.Code.Views.BuildingImage">
+    <ScrollView>
+        <Frame Padding="5" Margin="10,5,10,10">
+            <StackLayout>
+
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!--<StackLayout>
+                        
+                        <Label  VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="12"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="{Binding project.Description}"
+                                    TextColor="{DynamicResource Gray-900}" />
+                    </StackLayout>-->
+                    <Grid>
+                        <Image
+                                                Aspect="AspectFill" Source="overlay.png"
+                                             
+                                                HeightRequest="140">
+                            <!--<Image.Source>
+                        <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding ProjectImage}" />
+                    </Image.Source>-->
+                        </Image>
+                        <Label  VerticalTextAlignment="Center" Margin="0,-20,0,0" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="18"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Building"
+                                    TextColor="White" />
+                    </Grid>
+                    
+                    <!--<StackLayout Grid.Row="1"  Orientation="Horizontal" >
+
+                        <Label Margin="0,0,8,8"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16" 
+                HorizontalOptions="StartAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Common Location"
+                TextColor="Black" />
+
+
+
+
+
+
+                        --><!--  See all review button  --><!--
+                        <ImageButton IsVisible="False" Margin="0,0,8,8" VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"
+                
+                Padding="0"
+                CornerRadius="4"
+                
+                Source="AddNew.png"
+             
+                
+               
+                 />
+
+                    </StackLayout>-->
+                    <Frame Grid.Row="2" Margin="10,10,10,0">
+                        <Grid  BackgroundColor="White" VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="18"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Images"
+                                    TextColor="Black" />
+                            <Label Grid.Column="1" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="18"                           
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="|"
+                                    TextColor="{DynamicResource Gray-200}" />
+                            <ImageButton  Clicked="ImageButton_Clicked"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2" BackgroundColor="White"
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PlusCircle},Color=#2e479b,Size=28}"></ImageButton>
+
+                        </Grid>
+                    </Frame>
+                    <StackLayout Margin="0,10,0,0" Grid.Row="6">
+                        <Frame HasShadow="True" BorderColor="#2e479b">
+                            <StackLayout Orientation="Vertical">
+                             
+                                <ImageButton  Command="{Binding AddNewCommand}" VerticalOptions="CenterAndExpand"  Grid.Column="2" BackgroundColor="White"
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Image},Color=#2e479b,Size=18}"></ImageButton>
+                                <Label Margin="0,0,8,8" VerticalOptions="CenterAndExpand" 
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16" 
+                HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Building Image 1"
+                TextColor="Black" />
+                            </StackLayout>
+                          
+                        </Frame>
+                        <Frame HasShadow="True" BorderColor="#2e479b">
+                            <StackLayout Orientation="Vertical">
+
+                                <ImageButton  Command="{Binding AddNewCommand}" VerticalOptions="CenterAndExpand"  Grid.Column="2" BackgroundColor="White"
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Image},Color=#2e479b,Size=18}"></ImageButton>
+                                <Label Margin="0,0,8,8" VerticalOptions="CenterAndExpand" 
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16" 
+                HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Building Image 2"
+                TextColor="Black" />
+                            </StackLayout>
+
+                        </Frame>
+                        <Frame HasShadow="True" BorderColor="#2e479b">
+                            <StackLayout Orientation="Vertical">
+
+                                <ImageButton  Command="{Binding AddNewCommand}" VerticalOptions="CenterAndExpand"  Grid.Column="2" BackgroundColor="White"
+                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Image},Color=#2e479b,Size=18}"></ImageButton>
+                                <Label Margin="0,0,8,8" VerticalOptions="CenterAndExpand" 
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16" 
+                HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Building Image 3"
+                TextColor="Black" />
+                            </StackLayout>
+
+                        </Frame>
+
+                    </StackLayout>
+
+              
+                </Grid>
+            </StackLayout>
+
+
+
+        </Frame>
+    </ScrollView>
+</ContentPage>

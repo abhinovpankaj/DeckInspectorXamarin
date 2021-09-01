@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Shell.NavBarIsVisible="False"
+             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             x:Class="Mobile.Code.Views.SettingPage">
+     <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness">
+        <On Platform="iOS" Value="0,45,0,0" />
+    </OnPlatform>
+</ContentPage.Padding>
+    <AbsoluteLayout>
+    
+        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+                x:Name="gridtoolbar" 
+                Padding="0"
+                
+        BackgroundColor="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  
+
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Column="0"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.ArrowLeft},Color=#2e479b,Size=30}"
+                    VerticalOptions="Center"
+                    WidthRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                
+                <Label Text="Setting(s)" Grid.Column="1" FontSize="16"
+                   Style="{StaticResource LabelStyle}"
+                   TextColor="Black"
+                   FontAttributes="None"
+                   FontFamily="{StaticResource Montserrat-Regular}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"/>
+              
+
+
+            </Grid>
+            <ScrollView Margin="0,2,0,0" Grid.Row="1" >
+
+                <Frame Margin="5" HasShadow="True"  >
+                    <Grid Margin="5" Padding="0"
+                                ColumnSpacing="0"
+                                RowSpacing="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+
+
+                        </Grid.RowDefinitions>
+                        <StackLayout>
+                            <Label Margin="5"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="16" 
+                HorizontalOptions="CenterAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="Image Quality"
+                TextColor="Black" />
+                          
+                        </StackLayout>
+
+                        <StackLayout BindableLayout.ItemsSource="{Binding CameraSettingItems}" Grid.Row="1" Padding="5" Margin="5" x:Name="FlexTypes"
+             Orientation="Vertical">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Frame HasShadow="True" BorderColor="LightGray" Margin="5">
+                                        <StackLayout HorizontalOptions="FillAndExpand"
+Orientation="Horizontal" Padding="10  ">
+                                            <Label Margin="0,0,8,8"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="14" 
+                HorizontalOptions="StartAndExpand"
+                Style="{StaticResource LabelStyle}"
+                Text="{Binding Name}"
+                TextColor="Black" />
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CheckCircle},Color=Green,Size=20}"  IsVisible="{Binding IsSelected}"
+VerticalOptions="Center"  HeightRequest="30"
+WidthRequest="30"/>
+
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.SelectCameraOption, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+
+
+                                            </StackLayout.GestureRecognizers>
+
+                                        </StackLayout>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        <!--<Label Grid.Row="0" VerticalTextAlignment="Start" VerticalOptions="Start"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="20"                           
+                                    Style="{StaticResource LabelStyle}"
+                                   
+                                    TextColor="{DynamicResource mainLabel}" />
+
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal"  Margin="0,5,0,5" HorizontalOptions="FillAndExpand">
+                                <Label  FontFamily="{StaticResource Montserrat-Regular}"
+                                     HorizontalTextAlignment="Start"
+                                   Text="Project Name"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="{DynamicResource  mainLabel}" >
+
+                                </Label>
+                                <Label  FontFamily="{StaticResource Montserrat-Regular}" 
+                                     Text="*"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="Red" >
+
+                                </Label>
+                            </StackLayout>
+
+                            <ImageButton Grid.Column="1"  HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=#2e479b,Size=20}"        
+                                    BorderWidth="1" BackgroundColor="White"  
+                                    
+                                                                                       
+                                                          
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                            </ImageButton>
+                            <controles:BorderlessEntry FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" Text="{Binding Project.ProjectName}"  Grid.Row="1" HeightRequest="40" VerticalOptions="FillAndExpand" Grid.ColumnSpan="2" BackgroundColor="#ececec"></controles:BorderlessEntry>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal"  Margin="0,5,0,5" HorizontalOptions="FillAndExpand">
+                                <Label  FontFamily="{StaticResource Montserrat-Regular}"
+                                     HorizontalTextAlignment="Start"
+                                   Text="Address"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="{DynamicResource mainLabel}" >
+
+                                </Label>
+                                <Label  FontFamily="{StaticResource Montserrat-Regular}" 
+                                     Text=""
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                    Style="{StaticResource LabelStyle}"
+                                  
+                                    TextColor="Red" >
+
+                                </Label>
+                            </StackLayout>
+
+                            <ImageButton Grid.Column="1"  HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=#2e479b,Size=20}"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    
+                                                                                       
+                                                          
+                                   
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                            </ImageButton>
+                            <controles:BorderlessEntry FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" Text="{Binding Project.Address}" Grid.Row="1" HeightRequest="40" VerticalOptions="FillAndExpand" Grid.ColumnSpan="2" BackgroundColor="#ececec"></controles:BorderlessEntry>
+                        </Grid>
+
+                        <Grid Grid.Row="4" Margin="0,5,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label   Margin="0,5,0,5"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Project Description"
+                                    TextColor="{DynamicResource mainLabel}" />
+                            <ImageButton Grid.Column="1"  HeightRequest="28" Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Microphone},Color=#2e479b,Size=20}"        
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    
+                                    
+                                    HorizontalOptions="End" VerticalOptions="Center">
+                            </ImageButton>
+                            <controles:XEditor Grid.Row="1" FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" Text="{Binding Project.Description}" HeightRequest="180" BackgroundColor="#ececec" Grid.ColumnSpan="2"></controles:XEditor>
+                        </Grid>
+                        <Grid Grid.Row="5" Margin="0,20,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label   Margin="0,5,0,5" Grid.Column="0"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Created by : John Doe"
+                                    TextColor="{DynamicResource mainLabel}" />
+                            <Label Grid.Row="1" Grid.Column="0"  Margin="0,5,0,5"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    Style="{StaticResource LabelStyle}"
+                                    Text="Date : Jun 6,2020"
+                                    TextColor="{DynamicResource mainLabel}" />
+                            <ImageButton Grid.Row="1" Grid.Column="1"   Grid.RowSpan="1"
+                                    BorderWidth="1" BackgroundColor="White"  BorderColor="{DynamicResource Gray-300}"
+                                    HeightRequest="40" WidthRequest="40"
+                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Camera},Color=#2e479b,Size=28}"
+                                         
+                                    Command="{Binding ChoosePhotoCommand}"
+                                    CornerRadius="20"
+                                    HorizontalOptions="End" VerticalOptions="EndAndExpand">
+                            </ImageButton>
+
+                        </Grid>
+                        <Grid Grid.Row="6">
+                            <Image  Aspect="AspectFill" HeightRequest="150" Source="{Binding Project.ProjectImage}">
+                                -->
+                        <!--<Image.Source>
+                                    <UriImageSource
+                                                        CacheValidity="14"
+                                                        CachingEnabled="true"
+                                                        Uri="{Binding project.ProjectImage}" />
+                                </Image.Source>-->
+                        <!--
+
+                            </Image>
+                        </Grid>
+                        <BoxView HeightRequest="1" Grid.Row="1"  Color="#2e479b" Margin="0,14,0,14" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                             
+                             
+                 Style="{StaticResource BoxViewStyle}"  />-->
+
+
+
+
+
+
+
+
+
+
+
+                    </Grid>
+
+                </Frame>
+            </ScrollView>
+        </Grid>
+       
+      
+
+         
+
+       
+    
+        </AbsoluteLayout>
+</ContentPage>

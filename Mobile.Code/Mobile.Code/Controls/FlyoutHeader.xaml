@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" BackgroundColor="#2e479b"
+             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+             x:Class="Mobile.Code.Controls.FlyoutHeader">
+   
+       
+        <Grid VerticalOptions="FillAndExpand" Margin="0,40,0,0" HeightRequest="200" HorizontalOptions="FillAndExpand">
+           
+            
+        <Image Aspect="AspectFit" Grid.Row="0"  HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"
+               Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.AccountCircle },Color=White,Size=54}" 
+               Opacity="0.6" />
+        <Label Text="{Binding LogUserName}" x:Name="txtUserName" Grid.Row="1" HorizontalOptions="CenterAndExpand"
+               TextColor="White" 
+               FontAttributes="Bold" 
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
+        </Grid>
+   
+</ContentView>
