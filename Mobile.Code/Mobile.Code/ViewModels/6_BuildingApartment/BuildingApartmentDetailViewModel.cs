@@ -40,8 +40,7 @@ namespace Mobile.Code.ViewModels
             set { _app = value; OnPropertyChanged("BuildingApartment"); }
         }
         public ICommand ChoosePhotoCommand { get; set; }
-        //public Command ProjectDetailCommand { get; set; }
-        //public Command ProjectEditCommand { get; set; }
+       
         public ObservableCollection<BuildingApartmentImages> _bcimage { get; set; }
 
         public ObservableCollection<BuildingApartmentImages> BuildingApartmentImages
@@ -50,32 +49,7 @@ namespace Mobile.Code.ViewModels
             set { _bcimage = value; OnPropertyChanged("BuildingApartmentImages"); }
         }
         public ObservableCollection<WorkImage> Items { get; set; }
-        //public ObservableCollection<Project> AllProjects { get; set; }
-        //public ObservableCollection<Project> StatrtedProject { get; set; }
-        //async Task ExecuteProjectEditCommand()
-        //{
-        //   // ShellNavigationState state = Shell.Current.CurrentState;
-        //    await Shell.Current.GoToAsync($"newProject?Id={Id}");
-
-        //    //   await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-        //    //   await Shell.Current.GoToAsync("projectdetail");
-        //}
-
-        //private string _id;
-
-        //public string Id
-        //{
-        //    get { return _id; }
-        //    set { _id = value;  OnPropertyChanged("Id"); }
-        //}
-
-        ////string porjectId;
-        //public string Id
-        //{
-        //    set => porjectId = Uri.UnescapeDataString(value);
-        //    get => porjectId;
-
-        //}
+       
         public Command ImageDetailCommand { get; set; }
         private async void GetImageFromEditor(ImageData ImgData)
         {
@@ -91,14 +65,7 @@ namespace Mobile.Code.ViewModels
             ImgData.BuildingApartmentImages = parm;
             ImgData.FormType = "A";
             await CurrentWithoutDetail.EditImage(ImgData, GetImageFromEditor);
-            // await Shell.Current.Navigation.PushAsync(new EditBuildingApartmentImage() { BindingContext = new EditBuildingApartmentImageViewModel() { Title = "Edit Building Apartment Image", BuildingApartmentImages = parm, BuildingApartment = BuildingApartment } });
-
-            // ShellNavigationState state = Shell.Current.CurrentState;
-            //    await App.Current.MainPage.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(parm.Image,parm.Name,parm.Description,parm.CreatedOn) });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
+            
         }
 
         public ICommand DeleteImagCommand => new Command<BuildingApartmentImages>(async (BuildingApartmentImages obj) => await DeleteImagCommandExecute(obj));
@@ -121,11 +88,7 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await LoadData();
                 }
-                
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-                
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+               
             }
         }
         public Command GoBackCommand { get; set; }
@@ -133,18 +96,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             await Shell.Current.Navigation.PopAsync();
-            //await Shell.Current.GoToAsync("BuildingApartmentDetail");
-            //await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-            //var result = await Shell.Current.DisplayAlert(
-            //    "Alert",
-            //    "Are you sure you want to go back?",
-            //    "Yes", "No");
-
-            //if (result)
-            //{
-            //    await Shell.Current.GoToAsync("//main");
-            //    // await Shell.Current.Navigation.Cle ;
-            //}
+            
         }
 
         private async Task Save()
@@ -178,11 +130,7 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
                 }
-               // await BuildingApartmentDataStore.DeleteItemAsync(BuildingApartment);
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-              // await Shell.Current.Navigation.PopAsync();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+               
             }
         }
         public BuildingApartmentDetailViewModel()
@@ -203,19 +151,7 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<BuildingApartmentImages>(async (BuildingApartmentImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-            //MessagingCenter.Subscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList", async (obj, item) =>
-            //{
-            //    var items = item as ObservableCollection<MultiImage>;
-            //    foreach (var photo in items)
-            //    {
-            //        BuildingApartmentImages newObj = new BuildingApartmentImages() { ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), ApartmentID = BuildingApartment.Id, DateCreated = DateTime.Now };
-
-            //        await BuildingApartmentImagesDataStore.AddItemAsync(newObj);
-            //    }
-
-
-
-            //});
+            
 
         }
         public ICommand NewImagCommand => new Command(async () => await NewImage());
@@ -246,16 +182,7 @@ namespace Mobile.Code.ViewModels
                         //  MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS");
                         MessagingCenter.Subscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS", (s, images) =>
                         {
-                            //If we have selected images, put them into the carousel view.
-                            //if (images.Count > 0)
-                            //{
-                            //    foreach (var item in images)
-                            //    {
-                            //        BuildingApartmentImages obj = new BuildingApartmentImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), ApartmentID = BuildingApartment.Id, DateCreated = DateTime.Now };
 
-                            //        _ = AddNewPhoto(obj);
-                            //    }
-                            //}
                             if (images.Count > 0)
                             {
                                 IsBusyProgress = true;
@@ -271,36 +198,23 @@ namespace Mobile.Code.ViewModels
                         MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectedAndroid");
                         MessagingCenter.Subscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectedAndroid", (s, images) =>
                         {
-                           
+
                             if (images.Count > 0)
                             {
                                 IsBusyProgress = true;
-                              
+
                                 Task.Run(() => UploadGallary(images));
-                               
+
                             }
-                            //foreach (var item in images)
-                            //{
-                            //    BuildingApartmentImages obj = new BuildingApartmentImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), ApartmentID = BuildingApartment.Id, DateCreated = DateTime.Now };
+                            
 
-                            //    _ = AddNewPhoto(obj);
-                            //}
-                            //If we have selected images, put them into the carousel view.
-                            //if (images.Count > 0)
-                            //{
-
-                            //    // ImgCarouselView.ItemsSource = images;
-                            //    //InfoText.IsVisible = true; //InfoText is optional
-                            //}
                         });
                     }
-               
+
                     break;
                 default:
                     break;
             }
-            //await Shell.Current.Navigation.PushAsync(new EditBuildingApartmentImage()
-            //{ BindingContext = new EditBuildingApartmentImageViewModel() { Title = "New Apartment Image", BuildingApartmentImages = new BuildingApartmentImages() { Image = "blank.png" }, BuildingApartment = BuildingApartment } });
         }
         public async Task<bool> UploadGallary(List<string> images)
         {
@@ -484,7 +398,12 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsChecked = true;
             vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsChecked = true;
             vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsChecked = true;
-            
+
+            vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
+            vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
+            vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
+            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == parm.IsInvasiveRepairApproved.ToString()).Single().IsChecked = true;
+            vm.RadioList_RepairComplete.Where(c => c.Name == parm.IsInvasiveRepairComplete.ToString()).Single().IsChecked = true;
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
@@ -509,15 +428,17 @@ namespace Mobile.Code.ViewModels
             else
             {
                
-                vm.InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+                var photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                vm.InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualApartmentLocationPhotoItems);
+                
+                vm.ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(Views._8_VisualReportForm.TabbedPageInvasive))
                     await Shell.Current.Navigation.PushAsync(new Views._8_VisualReportForm.TabbedPageInvasive(vm));
                 //await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
             }
-            
-            //await Shell.Current.Navigation.PushAsync(new EditProjectLocationImage()
-            //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
+           
         }
 
         public ICommand DeleteVisualFormCommand => new Command<Apartment_Visual>(async (Apartment_Visual obj) => await DeleteVisualFormCommandExecute(obj));
@@ -540,10 +461,7 @@ namespace Mobile.Code.ViewModels
                     await LoadData();
                 }
                 
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
                
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
             }
         }
         private bool _isEditDeleteAccess;

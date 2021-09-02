@@ -16,7 +16,7 @@ namespace Mobile.Code
     public partial class App : Application
     {
         public static string AzureBackendUrl =
-        DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2/" : "http://localhost:5000";
+        DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
         //DeviceInfo.Platform == DevicePlatform.Android ? "https://api.deckinspectors.com/" : "https://api.deckinspectors.com/";
         public static bool UseMockDataStore = true;
         public static readonly Guid UserID = new Guid("B339656A-C220-4ED5-88CF-A7EC500BD71A");

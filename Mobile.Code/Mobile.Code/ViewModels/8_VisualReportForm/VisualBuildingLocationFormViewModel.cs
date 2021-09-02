@@ -88,21 +88,7 @@ namespace Mobile.Code.ViewModels
                     {
                         checkElements = true;
                     }
-                    //VisualForm.ExteriorElements = string.Join(",", ExteriorElements.ToArray());
-                    //VisualForm.WaterProofingElements = string.Join(",", WaterProofingElements.ToArray());
-
-                    //VisualForm.VisualReview = RadioList_VisualReviewItems.Where(c => c.IsChecked == true).Single().Name;
-                    //VisualForm.AnyVisualSign = RadioList_AnyVisualSignItems.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.FurtherInasive = RadioList_FurtherInasiveItems.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.ConditionAssessment = RadioList_ConditionAssessment.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyEEE = RadioList_LifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyLBC = RadioList_LifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                    
                     if (check == 0 && countImage == 0 && checkElements == false)
                     {
                         await Shell.Current.Navigation.PopAsync();
@@ -410,6 +396,73 @@ namespace Mobile.Code.ViewModels
 
             return await Task.FromResult(response);
         }
+
+        #region conclusive
+
+        public ObservableCollection<CustomRadioItem> RadioList_ConclusiveLifeExpectancyEEE { get; set; }
+        public ObservableCollection<CustomRadioItem> RadioList_ConclusiveLifeExpectancyLBC { get; set; }
+        public ObservableCollection<CustomRadioItem> RadioList_ConclusiveLifeExpectancyAWE { get; set; }
+
+        public ObservableCollection<CustomRadioItem> RadioList_OwnerAgreedToRepair { get; set; }
+        public ObservableCollection<CustomRadioItem> RadioList_RepairComplete { get; set; }
+
+
+        private void PopulateConclusiveRadios()
+        {
+            RadioList_OwnerAgreedToRepair = new ObservableCollection<CustomRadioItem>();
+            RadioList_OwnerAgreedToRepair.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsChecked = false, GroupName = "Repair" });
+            RadioList_OwnerAgreedToRepair.Add(new CustomRadioItem() { ID = 2, Name = "No", IsChecked = false, GroupName = "Repair" });
+
+
+            RadioList_RepairComplete = new ObservableCollection<CustomRadioItem>();
+            RadioList_RepairComplete.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsChecked = false, GroupName = "RepairState" });
+            RadioList_RepairComplete.Add(new CustomRadioItem() { ID = 2, Name = "No", IsChecked = false, GroupName = "RepairState" });
+
+
+            RadioList_ConclusiveLifeExpectancyEEE = new ObservableCollection<CustomRadioItem>();
+            RadioList_ConclusiveLifeExpectancyEEE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "EEEC" });
+            RadioList_ConclusiveLifeExpectancyEEE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "EEEC" });
+            RadioList_ConclusiveLifeExpectancyEEE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "EEEC" });
+            RadioList_ConclusiveLifeExpectancyEEE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "EEEC" });
+
+
+            RadioList_ConclusiveLifeExpectancyLBC = new ObservableCollection<CustomRadioItem>();
+            RadioList_ConclusiveLifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "LBCC" });
+            RadioList_ConclusiveLifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "LBCC" });
+            RadioList_ConclusiveLifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "LBCC" });
+            RadioList_ConclusiveLifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "LBCC" });
+
+
+            RadioList_ConclusiveLifeExpectancyAWE = new ObservableCollection<CustomRadioItem>();
+            RadioList_ConclusiveLifeExpectancyAWE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "AWEC" });
+            RadioList_ConclusiveLifeExpectancyAWE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "AWEC" });
+            RadioList_ConclusiveLifeExpectancyAWE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "AWEC" });
+            RadioList_ConclusiveLifeExpectancyAWE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "AWEC" });
+
+
+        }
+
+        private ObservableCollection<VisualBuildingLocationPhoto> _conclusiveVisualBuildingLocationPhotoItems;
+        public ObservableCollection<VisualBuildingLocationPhoto> ConclusiveVisualBuildingLocationPhotoItems
+        {
+            get
+            {
+                return _conclusiveVisualBuildingLocationPhotoItems;
+            }
+            set
+            {
+                _conclusiveVisualBuildingLocationPhotoItems = value;
+                OnPropertyChanged("ConclusiveVisualBuildingLocationPhotoItems");
+            }
+        }
+        private string _conclusiveUnitPhotoCount;
+        public string ConclusiveUnitPhotoCount
+        {
+            get { return _conclusiveUnitPhotoCount; }
+            set { _conclusiveUnitPhotoCount = value; OnPropertyChanged("ConclusiveUnitPhotoCount"); }
+        }
+        #endregion
+
         private ObservableCollection<VisualBuildingLocationPhoto> _InvvisualProjectLocationPhotoItems;
 
         public ObservableCollection<VisualBuildingLocationPhoto> InvasiveVisualBuildingLocationPhotoItems
@@ -472,12 +525,6 @@ namespace Mobile.Code.ViewModels
 
 
 
-            //RadioList_LifeExpectancyLBC = new ObservableCollection<CustomRadioItem>();
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "LBC" });
-
 
             RadioList_LifeExpectancyLBC = new ObservableCollection<CustomRadioItem>();
             RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "LBC" });
@@ -492,6 +539,7 @@ namespace Mobile.Code.ViewModels
             RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "AWE" });
             RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "AWE" });
 
+            PopulateConclusiveRadios();
 
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
@@ -799,8 +847,12 @@ namespace Mobile.Code.ViewModels
             {
                 // InvasiveVisualProjectLocationPhotoItems.Add(obj);
                 await InvasiveVisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
-                InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                var photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
+
+                ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                ConclusiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
 
             }
             else
@@ -825,9 +877,10 @@ namespace Mobile.Code.ViewModels
 
                 VisualBuildingLocationPhoto obj = parm as VisualBuildingLocationPhoto;
                 await InvasiveVisualBuildingLocationPhotoDataStore.DeleteItemAsync(obj);
-                InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                InvasiveVisualBuildingLocationPhotoItems.Remove(parm);// = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
                 InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
-               
+                ConclusiveVisualBuildingLocationPhotoItems.Remove(parm);
+                ConclusiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
             }
 
 

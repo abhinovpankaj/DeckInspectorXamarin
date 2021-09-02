@@ -653,20 +653,15 @@ namespace Mobile.Code.ViewModels
                     VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false).ConfigureAwait(false));
                     if (App.IsInvasive == true)
                     {
-                        InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false).ConfigureAwait(false));
+                        var photos = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false).ConfigureAwait(false));
+                        
+                        InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                         InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
-                    }
-                    // VisualProjectLocationPhotoItems = VisualProjectLocationPhotoItems.Where(c => c.IsDelete = false).ToList();
-                    //if (App.IsVisualEdidingMode == true)
-                    //{
-                    // VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, true));
-                    //    App.IsVisualEdidingMode = false;
-                    //}
-                    //else
-                    //{
-                    //    VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
 
-                    //}
+                        ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                        ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
+                    }
+                   
 
                 }
                 UnitPhotoCount = VisualProjectLocationPhotoItems.Count.ToString();

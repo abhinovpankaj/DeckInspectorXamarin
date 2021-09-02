@@ -130,19 +130,7 @@ namespace Mobile.Code.ViewModels
             ImgData.ProjectCommonLocationImages = parm;
             ImgData.FormType = "P";
             await CurrentWithoutDetail.EditImage(ImgData, GetImageProjectCommonLocationImages);
-            // await Shell.Current.Navigation.PushAsync(new EditProjectLocationImage() { BindingContext = new EditProjectLocationImageViewModel() { Title = "New Project Common Location", ProjectCommonLocationImages = parm , ProjectLocation = ProjectLocation } });
-            // await Shell.Current.Navigation.PushModalAsync(new EditProjectLocationImage() { BindingContext = new EditProjectLocationImageViewModel() { Title = "New Project Common Location", ProjectCommonLocationImages = parm } });
-            //await Shell.Current.Navigation.PushAsync(new AddProjectLocation()
-            //{
-            //    BindingContext = new ProjectLocationAddEditViewModel()
-            //    { Title = "New Project Common Location", ProjectLocation = new ProjectLocation() { LocationImage = "blank.png" }, Project = Project }
-            //});
-            // ShellNavigationState state = Shell.Current.CurrentState;
-            //     await Shell.Current.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(parm.ImageUrl, parm.Name,parm.Description,parm.CreatedOn) });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
+            
         }
         private async void GetImageProjectCommonLocationImages(ImageData ImgData)
         {
@@ -362,7 +350,8 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
-
+            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == parm.IsInvasiveRepairApproved.ToString()).Single().IsChecked = true;
+            vm.RadioList_RepairComplete.Where(c => c.Name == parm.IsInvasiveRepairComplete.ToString()).Single().IsChecked = true;
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
