@@ -13,6 +13,8 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AdditionalInvasive : ContentView
     {
+
+        public static event EventHandler AllowFurthurInvasive; 
         private ISpeechToText _speechRecongnitionInstance;
         public AdditionalInvasive()
         {
@@ -112,6 +114,10 @@ namespace Mobile.Code.Views
             }
 
         }
-       
+
+        private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            AllowFurthurInvasive?.Invoke(this, null);
+        }
     }
 }

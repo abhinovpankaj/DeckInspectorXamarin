@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xam.Plugin.TabView;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
@@ -17,34 +17,9 @@ namespace Mobile.Code.Views._8_VisualReportForm
         public TabbedPageInvasive(BaseViewModel vm)
         {
             InitializeComponent();
-          //  On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+ 
             this.BindingContext = vm;
-            //if(vm is VisualProjectLocationFormViewModel )
-            //{
-            //    Children.Add(new InvasiveVisualProjectLocationForm() { Title = "Invasive",BindingContext=vm });
-            //    Children.Add(new AdditionalInvasive() { Title = "Detail",BindingContext = vm });
-            //}
-            //if (vm is VisualBuildingLocationFormViewModel)
-            //{
-            //    Children.Add(new InvasiveVisualBuildingLocationForm() { Title = "Invasive", BindingContext = vm });
-            //    Children.Add(new AdditionalInvasive() { Title = "Detail", BindingContext = vm });
-            //}
-            //if (vm is VisualBuildingLocationFormViewModel)
-            //{
-            //    Children.Add(new InvasiveVisualBuildingLocationForm() { Title = "Invasive", BindingContext = vm });
-            //    Children.Add(new AdditionalInvasive() { Title = "Detail", BindingContext = vm });
-            //}
-            // NavigationPage navigationPage = new NavigationPage(new InvasiveVisualProjectLocationForm() { BindingContext = vm });
-            //  navigationPage.IconImageSource = "schedule.png";
-            //   navigationPage.Title = "ProjectLocation";
-            // Children.Add(new InvasiveVisualProjectLocationForm() {  Title = "Invasive" });
-            //InvasiveVisualProjectLocationFormViewModel vmInvasive = new InvasiveVisualProjectLocationFormViewModel();
-            //vmInvasive.VisualProjectLocationPhotoItems =new System.Collections.ObjectModel.ObservableCollection<Models.VisualProjectLocationPhoto>( vm.VisualProjectLocationPhotoItems.Where(c=>c.InvasiveImage==true));
-            ////vm.WaterProofingElements.selectedList = parm.ExteriorElements.Split(',').ToList();
-            //vmInvasive.VisualForm = vm.VisualForm;
-
-            //vmInvasive.ProjectLocation = vm.ProjectLocation;
-            //   Children.Add(new AdditionalInvasive() {Title= "Detail"});
+            AddRemoveConclusiveTab();
 
         }
         protected async override void OnAppearing()
@@ -58,6 +33,63 @@ namespace Mobile.Code.Views._8_VisualReportForm
             if (this.BindingContext is VisualApartmentFormViewModel)
                 await ((VisualApartmentFormViewModel)this.BindingContext).Load();
             //vm.Load();
+            AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+        }
+
+        private void AdditionalInvasive_AllowFurthurInvasive(object sender, EventArgs e)
+        {
+            AddRemoveConclusiveTab();
+        }
+
+        private void AddRemoveConclusiveTab()
+        {
+            var vm = this.BindingContext;
+            var ProjectFormVM = vm as VisualProjectLocationFormViewModel;
+            if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            {
+                var viewModel = vm as VisualProjectLocationFormViewModel;
+                if (viewModel != null)
+                {
+                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                    {
+                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
+                        tabbedControl.AddTab(conclusiveTab, 2, false);
+                    }
+                    else
+                        tabbedControl.RemoveTab(2);
+                }
+            }
+
+            if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            {
+                var viewModel = vm as VisualBuildingLocationFormViewModel;
+                if (viewModel != null)
+                {
+                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                    {
+                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
+                        tabbedControl.AddTab(conclusiveTab, 2, false);
+                    }
+                    else
+                        tabbedControl.RemoveTab(2);
+
+                }
+            }
+            if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+            {
+                var viewModel = vm as VisualApartmentFormViewModel;
+                if (viewModel != null)
+                {
+                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                    {
+                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
+                        tabbedControl.AddTab(conclusiveTab, 2, false);
+                    }
+                    else
+                        tabbedControl.RemoveTab(2);
+
+                }
+            }
         }
     }
 }

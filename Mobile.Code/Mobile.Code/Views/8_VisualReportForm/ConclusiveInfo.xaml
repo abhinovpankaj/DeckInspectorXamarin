@@ -35,7 +35,7 @@
                     <Frame
                         Grid.Row="0"
                         Margin="10,2,10,2"
-                        HeightRequest="70">
+                        HeightRequest="50">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -73,7 +73,6 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                HeightRequest="50"
                                                 IsChecked="{Binding IsChecked}" />
                                         </Grid>
 
@@ -85,7 +84,7 @@
                     <Frame
                         Grid.Row="1"
                         Margin="10,2,10,2"
-                        HeightRequest="70">
+                        HeightRequest="50">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -123,10 +122,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                HeightRequest="50"
                                                 IsChecked="{Binding IsChecked}" />
-
-
 
                                         </Grid>
 
@@ -135,7 +131,10 @@
                             </FlexLayout>
                         </Grid>
                     </Frame>
-                    <Frame Grid.Row="2" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="2"
+                        Margin="10,2,10,2"
+                        HeightRequest="120">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -185,7 +184,10 @@
                         </Grid>
                     </Frame>
 
-                    <Frame Grid.Row="3" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="3"
+                        Margin="10,2,10,2"
+                        HeightRequest="120">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -235,7 +237,10 @@
                         </Grid>
                     </Frame>
 
-                    <Frame Grid.Row="4" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="4"
+                        Margin="10,2,10,2"
+                        HeightRequest="120">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />

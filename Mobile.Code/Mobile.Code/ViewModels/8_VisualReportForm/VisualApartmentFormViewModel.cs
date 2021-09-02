@@ -155,21 +155,7 @@ namespace Mobile.Code.ViewModels
                     {
                         checkElements = true;
                     }
-                    //VisualForm.ExteriorElements = string.Join(",", ExteriorElements.ToArray());
-                    //VisualForm.WaterProofingElements = string.Join(",", WaterProofingElements.ToArray());
-
-                    //VisualForm.VisualReview = RadioList_VisualReviewItems.Where(c => c.IsChecked == true).Single().Name;
-                    //VisualForm.AnyVisualSign = RadioList_AnyVisualSignItems.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.FurtherInasive = RadioList_FurtherInasiveItems.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.ConditionAssessment = RadioList_ConditionAssessment.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyEEE = RadioList_LifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyLBC = RadioList_LifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
-
-                    //VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                   
                     if (check == 0 && countImage == 0 && checkElements == false)
                     {
                         await Shell.Current.Navigation.PopAsync();
@@ -239,14 +225,7 @@ namespace Mobile.Code.ViewModels
                     {
                         checkElements = true;
                     }
-                    //if (App.VisualEditTracking!=null)
-                    //{
-                    //    checkElements = true;
-                    //}
-                    //if (CheckAnyRadioButtonChecked == true)
-                    //{
-                    //    checkElements = true;
-                    //}
+                   
                     if (check == 0 && checkElements == false)
                     {
                         await Shell.Current.Navigation.PopAsync();
@@ -669,7 +648,7 @@ namespace Mobile.Code.ViewModels
                         InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
 
                         ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                        InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
+                        ConclusiveUnitPhotoCount = ConclusiveVisualApartmentLocationPhotoItems.Count.ToString();
                     }
                 }
                 UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
@@ -769,13 +748,7 @@ namespace Mobile.Code.ViewModels
                                 VisualApartmentLocationPhoto obj = new VisualApartmentLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualApartmentId = VisualForm.Id, DateCreated = DateTime.Now };
                                 _ = AddNewPhoto(obj);
                             }
-                        //If we have selected images, put them into the carousel view.
-                        //if (images.Count > 0)
-                        //{
-
-                        //    // ImgCarouselView.ItemsSource = images;
-                        //    //InfoText.IsVisible = true; //InfoText is optional
-                        //}
+                        
                     });
                     }
                     break;

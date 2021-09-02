@@ -823,13 +823,13 @@ namespace Mobile.Code.ViewModels
         private async Task ImageDetailCommandCommandExecute(VisualProjectLocationPhoto parm)
         {
 
-                ImgData.Path = parm.ImageUrl;
-                ImgData.ParentID = parm.VisualLocationId;
-                ImgData.VisualProjectLocationPhoto = parm;
-                ImgData.IsEditVisual = true;
+            ImgData.Path = parm.ImageUrl;
+            ImgData.ParentID = parm.VisualLocationId;
+            ImgData.VisualProjectLocationPhoto = parm;
+            ImgData.IsEditVisual = true;
                
-                ImgData.FormType = "VP";
-                await CurrentWithoutDetail.EditImage(ImgData, GetImage);
+            ImgData.FormType = "VP";
+            await CurrentWithoutDetail.EditImage(ImgData, GetImage);
 
         }
         private bool _isprojectLoc;
@@ -880,8 +880,7 @@ namespace Mobile.Code.ViewModels
                     PhotoSize = PhotoSize.MaxWidthHeight,
                     CompressionQuality = App.CompressionQuality
 
-
-                }); ;
+                }); 
 
             IsBusy = false;
             if (file == null)

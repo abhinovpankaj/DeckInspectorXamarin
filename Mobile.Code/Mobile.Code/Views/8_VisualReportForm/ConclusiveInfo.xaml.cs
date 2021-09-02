@@ -14,10 +14,10 @@ namespace Mobile.Code.Views
     public partial class ConclusiveInfo : ContentView
     {
         private ISpeechToText _speechRecongnitionInstance;
-        public ConclusiveInfo()
+        public ConclusiveInfo(object vm)
         {
             InitializeComponent();
-            
+            this.BindingContext = vm;
             recordDesInv.Clicked += recordDesInv_Clicked;
             if (Device.RuntimePlatform == Device.iOS)
             {

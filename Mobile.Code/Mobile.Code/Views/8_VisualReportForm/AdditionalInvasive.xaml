@@ -273,13 +273,24 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
+                    <StackLayout Margin="10,2,10,2" Orientation="Horizontal">
+                        <CheckBox CheckedChanged="CheckBox_CheckedChanged" IsChecked="{Binding VisualForm.IsPostInvasiveRepairsRequired}" />
+                        <Label
+                            Margin="5,0,0,0"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            HorizontalTextAlignment="Start"
+                            Style="{StaticResource LabelStyle}"
+                            Text="Post Invasive repairs required"
+                            TextColor="{DynamicResource mainLabel}" />
 
+                    </StackLayout>
 
                     <Grid
                         Grid.Row="1"
                         Margin="20"
                         VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -306,7 +317,7 @@
                                 TextColor="Red"
                                 VerticalTextAlignment="Center" />
                         </StackLayout>
-                        <CheckBox IsChecked="{Binding VisualForm.IsPostInvasiveRepairsRequired}" />
+
                         <ImageButton
                             x:Name="recordDesInv"
                             Grid.Column="1"

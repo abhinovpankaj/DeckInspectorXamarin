@@ -402,8 +402,10 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
-            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == parm.IsInvasiveRepairApproved.ToString()).Single().IsChecked = true;
-            vm.RadioList_RepairComplete.Where(c => c.Name == parm.IsInvasiveRepairComplete.ToString()).Single().IsChecked = true;
+            string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsChecked = true;
+            isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+            vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsChecked = true;
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();

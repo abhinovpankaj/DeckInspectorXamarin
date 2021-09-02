@@ -33,13 +33,6 @@ namespace Mobile.Code.ViewModels
         }
 
 
-        //private Project _project;
-
-        //public Project Project
-        //{
-        //    get { return _project; }
-        //    set { _project = value; OnPropertyChanged("Project"); }
-        //}
 
         private Project project;
 
@@ -88,17 +81,7 @@ namespace Mobile.Code.ViewModels
         {
             //await Shell.Current.Navigation.PopAsync();
             await Shell.Current.Navigation.PopAsync();
-            //await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-            //var result = await Shell.Current.DisplayAlert(
-            //    "Alert",
-            //    "Are you sure you want to go back?",
-            //    "Yes", "No");
-
-            //if (result)
-            //{
-            //    await Shell.Current.GoToAsync("//main");
-            //    // await Shell.Current.Navigation.Cle ;
-            //}
+            
         }
         private async Task Save()
         {
@@ -155,9 +138,7 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-           
-            
-           
+       
         }
 
 
@@ -185,8 +166,7 @@ namespace Mobile.Code.ViewModels
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
             VisualProjectLocationPhotoDataStore.Clear();
             InvasiveVisualProjectLocationPhotoDataStore.Clear();
-            //await VisualFormProjectLocationDataStore.AddItemAsync(vloc);
-            //  VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+            
            
             if (App.IsInvasive == false)
             {
@@ -243,11 +223,7 @@ namespace Mobile.Code.ViewModels
                                 IsBusyProgress = true;
                                 // var listOfImages = images as List<string>;
                                 Task.Run(() => UploadGallary(images));
-                                //foreach (var item in images)
-                                //{
-                                //    ProjectCommonLocationImages obj = new ProjectCommonLocationImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), ProjectLocationId = ProjectLocation.Id, DateCreated = DateTime.Now };
-                                //    _ = AddNewPhoto(obj);
-                                //}
+                                
                             }
                         });
                     }
@@ -263,38 +239,9 @@ namespace Mobile.Code.ViewModels
                                 IsBusyProgress = true;
                                 // var listOfImages = images as List<string>;
                                 Task.Run(() => UploadGallary(images));
-                                //foreach (var item in images)
-                                //{
-                                //    ProjectCommonLocationImages obj = new ProjectCommonLocationImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), ProjectLocationId = ProjectLocation.Id, DateCreated = DateTime.Now };
-                                //    _ = AddNewPhoto(obj);
-                                //}
+                                
                             }
-                            //IsBusyProgress = true;
-                            // var listOfImages = images as List<string>;
-                            //Task.Run(() => UploadGallary(images));
-                            //bool complete = await Task.Run(async ()=>UploadGallary(images)).ConfigureAwait(false);
-                            //if (complete == true)
-                            //{
-
-
-
-                            //    IsBusyProgress = false;
-
-
-                            //}
-                            //foreach (var item in images)
-                            //{
-                            //    ProjectCommonLocationImages obj = new ProjectCommonLocationImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), ProjectLocationId = ProjectLocation.Id, DateCreated = DateTime.Now };
-                            //    _ = AddNewPhoto(obj);
-                            //    imageList.Add(new MultiImage() { Image })
-                            //}
-                            //If we have selected images, put them into the carousel view.
-                            //if (images.Count > 0)
-                            //{
-
-                            //    // ImgCarouselView.ItemsSource = images;
-                            //    //InfoText.IsVisible = true; //InfoText is optional
-                            //}
+                           
                         });
 
                         
@@ -350,8 +297,11 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
             vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
-            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == parm.IsInvasiveRepairApproved.ToString()).Single().IsChecked = true;
-            vm.RadioList_RepairComplete.Where(c => c.Name == parm.IsInvasiveRepairComplete.ToString()).Single().IsChecked = true;
+            string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsChecked = true;
+            isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+            vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsChecked = true;
+
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();

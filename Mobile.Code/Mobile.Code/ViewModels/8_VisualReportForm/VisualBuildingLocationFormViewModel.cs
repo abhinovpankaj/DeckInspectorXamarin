@@ -159,14 +159,7 @@ namespace Mobile.Code.ViewModels
                     {
                         checkElements = true;
                     }
-                    //if (App.VisualEditTracking!=null)
-                    //{
-                    //    checkElements = true;
-                    //}
-                    //if (CheckAnyRadioButtonChecked == true)
-                    //{
-                    //    checkElements = true;
-                    //}
+                   
                     if (check == 0 && checkElements == false)
                     {
                         await Shell.Current.Navigation.PopAsync();
@@ -186,40 +179,10 @@ namespace Mobile.Code.ViewModels
             if (result)
             {
                 await Shell.Current.Navigation.PopAsync();
-                //if (!string.IsNullOrEmpty(Project.Id))
-                //{
-                //    await Shell.Current.Navigation.PopAsync();
-                //}
-                //else
-                //{
-                //    await Shell.Current.GoToAsync("//main");
-                //}
-                // await Shell.Current.Navigation.Cle ;
+                
             }
         }
-        //private async Task GoBack()
-        //{
-        //    var result = await Shell.Current.DisplayAlert(
-        //          "Alert",
-        //          "Are you sure you want to go back?",
-        //          "Yes", "No");
-
-
-
-        //    if (result)
-        //    {
-        //        await Shell.Current.Navigation.PopAsync();
-        //        //if (!string.IsNullOrEmpty(Project.Id))
-        //        //{
-        //        //    await Shell.Current.Navigation.PopAsync();
-        //        //}
-        //        //else
-        //        //{
-        //        //    await Shell.Current.GoToAsync("//main");
-        //        //}
-        //        // await Shell.Current.Navigation.Cle ;
-        //    }
-        //}
+        
         private ObservableCollection<string> _exteriorElements;
 
         public ObservableCollection<string> ExteriorElements
@@ -381,8 +344,6 @@ namespace Mobile.Code.ViewModels
 
                         }
 
-                        // return await Task.FromResult(response);
-                        //   await VisualFormBuildingLocationDataStore.UpdateItemAsync(VisualForm);
                     }
                     //  await Shell.Current.Navigation.PopAsync();
 
@@ -545,13 +506,7 @@ namespace Mobile.Code.ViewModels
             SaveCommand = new Command(async () => await Save());
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
+            
             ImgData = new ImageData();
             MessagingCenter.Subscribe<PopUpCheakListBox, ObservableCollection<string>>(this, "SelectedItem",  (obj, item) =>
             {
@@ -567,34 +522,9 @@ namespace Mobile.Code.ViewModels
 
 
             });
-            //MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
-            //ObservableCollection<MultiImage> cameraImages= new  ObservableCollection<MultiImage>();
-            //cameraImages.Clear();
+            
             App.ListCamera2Api = new List<MultiImage>();
-            //MessagingCenter.Subscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList", async (obj, item) =>
-            //{
-            //    var items = item as ObservableCollection<MultiImage>;
-            //    foreach (var photo in items)
-            //    {
-            //        VisualBuildingLocationPhoto newObj = new VisualBuildingLocationPhoto() { ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualBuildingId = VisualForm.Id, DateCreated = DateTime.Now };
-            //        if (App.IsInvasive == true)
-            //        {
-
-            //            _ = AddNewPhoto(newObj).ConfigureAwait(false);
-            //        }
-            //        else
-            //        {
-
-            //            _ = AddNewPhoto(newObj).ConfigureAwait(false);
-            //            //  await VisualProjectLocationPhotoDataStore.AddItemAsync(newObj);
-            //        }
-            //        // await VisualBuildingLocationPhotoDataStore.AddItemAsync(newObj);
-
-            //    }
-            //    items.Clear();
-
-
-            //});
+           
         }
         private string _countExteriorElements;
 
@@ -647,8 +577,6 @@ namespace Mobile.Code.ViewModels
                 {
                     await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true } });
                 }
-
-                    //Later
                    
             }
         }
@@ -825,13 +753,7 @@ namespace Mobile.Code.ViewModels
                                 VisualBuildingLocationPhoto obj = new VisualBuildingLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualBuildingId = VisualForm.Id, DateCreated = DateTime.Now };
                                 _ = AddNewPhoto(obj);
                             }
-                            //If we have selected images, put them into the carousel view.
-                            //if (images.Count > 0)
-                            //{
-
-                            //    // ImgCarouselView.ItemsSource = images;
-                            //    //InfoText.IsVisible = true; //InfoText is optional
-                            //}
+                            
                         });
                     }
                    
@@ -888,11 +810,7 @@ namespace Mobile.Code.ViewModels
 
         public ICommand ImageDetailCommand => new Command<VisualBuildingLocationPhoto>(async (VisualBuildingLocationPhoto parm) => await ImageDetailCommandCommandExecute(parm));
         private async Task ImageDetailCommandCommandExecute(VisualBuildingLocationPhoto parm)
-        {
-
-
-
-          
+        {  
             ImgData.Path = parm.ImageUrl;
             ImgData.ParentID = parm.VisualBuildingId;
             ImgData.VisualBuildingLocationPhoto = parm;
@@ -900,10 +818,6 @@ namespace Mobile.Code.ViewModels
           
             ImgData.FormType = "VB";
             await CurrentWithoutDetail.EditImage(ImgData, GetImage);
-
-
-
-            
 
         }
         private async void GetImage(ImageData ImgData)
