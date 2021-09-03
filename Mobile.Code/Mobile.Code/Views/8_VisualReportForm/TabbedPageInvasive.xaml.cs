@@ -19,7 +19,7 @@ namespace Mobile.Code.Views._8_VisualReportForm
             InitializeComponent();
  
             this.BindingContext = vm;
-            AddRemoveConclusiveTab();
+            //AddRemoveConclusiveTab();
 
         }
         protected async override void OnAppearing()
@@ -56,7 +56,9 @@ namespace Mobile.Code.Views._8_VisualReportForm
                         tabbedControl.AddTab(conclusiveTab, 2, false);
                     }
                     else
-                        tabbedControl.RemoveTab(2);
+                    {                       
+                        tabbedControl.RemoveTab(2);                       
+                    }
                 }
             }
 

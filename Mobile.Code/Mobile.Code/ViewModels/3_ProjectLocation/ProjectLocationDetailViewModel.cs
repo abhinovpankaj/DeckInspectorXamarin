@@ -293,14 +293,22 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsChecked = true;
             vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsChecked = true;
 
-            //For Conclusive 
-            vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
-            vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
-            vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
-            string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
-            vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsChecked = true;
-            isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
-            vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsChecked = true;
+            if (App.IsInvasive)
+            {
+                //For Conclusive 
+                if (parm.IsPostInvasiveRepairsRequired)
+                {
+                    vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
+                    vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
+                    vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
+                    string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+                    vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsChecked = true;
+                    isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+                    vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsChecked = true;
+                }
+                
+
+            }
 
 
             App.VisualEditTracking = new List<MultiImage>();

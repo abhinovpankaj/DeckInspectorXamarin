@@ -770,59 +770,5 @@
             </ScrollView>
         </Grid>
     </AbsoluteLayout>
-    <!--<ContentPage.Content>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <Grid
-                x:Name="gridtoolbar" HeightRequest="40"
-                Padding="0"
-
-        BackgroundColor="White">
-
-
-
-
-                <Image
-                    Grid.Column="0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.ArrowLeft},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                    WidthRequest="30">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label Text=""  FontSize="12"
-                   Style="{StaticResource LabelStyle}"
-                   TextColor="Black"
-                   FontAttributes="None"
-                   FontFamily="{StaticResource Montserrat-Regular}"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"/>
-                <Image Margin="5"
-
-                    HeightRequest="30"
-                    HorizontalOptions="End"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                    WidthRequest="30">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-
-
-            </Grid>
-
-        </Grid>
-
-
-
-    </ContentPage.Content>-->
 </ContentPage>

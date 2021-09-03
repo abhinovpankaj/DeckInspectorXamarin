@@ -369,6 +369,16 @@ namespace Mobile.Code.ViewModels
 
                     VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
 
+                    //Conclusive data
+
+                    if (App.IsInvasive == true)
+                    {
+                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
+                    }
 
                     if (await VisualFormApartmentDataStore.GetItemAsync(VisualForm.Id) == null)
                     {
@@ -408,8 +418,7 @@ namespace Mobile.Code.ViewModels
                             }
 
                         }
-                        //await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm);
-                        // return await Task.FromResult(response);
+                       
                     }
 
 
@@ -427,7 +436,7 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualApartmentLocationPhoto> InvasiveVisualApartmentLocationPhotoItems
         {
-            // get { return _InvvisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            
             get { return _InvvisualInvasiveVisualApartmentLocationPhotoItems; }
             set { _InvvisualInvasiveVisualApartmentLocationPhotoItems = value; OnPropertyChanged("InvasiveVisualApartmentLocationPhotoItems"); }
         }

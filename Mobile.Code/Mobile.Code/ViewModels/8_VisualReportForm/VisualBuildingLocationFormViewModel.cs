@@ -304,6 +304,16 @@ namespace Mobile.Code.ViewModels
 
                     VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
 
+                    //Conclusive data
+
+                    if (App.IsInvasive == true)
+                    {
+                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
+                    }
 
                     if (await VisualFormBuildingLocationDataStore.GetItemAsync(VisualForm.Id) == null)
                     {

@@ -312,20 +312,29 @@ namespace Mobile.Code.ViewModels
 
                     VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
 
+                    //Conclusive data
+
+                    if (App.IsInvasive == true)
+                    {
+                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsChecked == true).Single().Name == "Yes" ? true : false;
+                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
+                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
+                    }
 
                     if (await VisualFormProjectLocationDataStore.GetItemAsync(VisualForm.Id) == null)
                     {
                         List<string> list = VisualProjectLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                         response=  await VisualFormProjectLocationDataStore.AddItemAsync(VisualForm, list);
                        // VisualProjectLocationPhotoItems.Clear();
-                      
-                        
+                                             
                     }
                     else
                     {
                         List<MultiImage> finelList = new List<MultiImage>();
                         if(App.IsInvasive==false)
-                        response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTracking);
+                            response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTracking);
                         else
                         {
                             
