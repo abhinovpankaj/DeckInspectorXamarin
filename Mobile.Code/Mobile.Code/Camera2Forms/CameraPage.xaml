@@ -1,130 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" BackgroundColor="Black"
-             Shell.NavBarIsVisible="False"
-              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-              xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
-              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-               xmlns:controls="clr-namespace:Mobile.Code.Controls"
-             xmlns:cameraView="clr-namespace:Mobile.Code.Camera2Forms"
-             x:Class="Mobile.Code.Camera2Forms.CameraPage">
+<ContentPage
+    x:Class="Mobile.Code.Camera2Forms.CameraPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cameraView="clr-namespace:Mobile.Code.Camera2Forms"
+    xmlns:controls="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    BackgroundColor="Black"
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
     <ContentPage.Content>
         <AbsoluteLayout>
-            <controls:Loading   AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress}"
-        AbsoluteLayout.LayoutFlags="All"></controls:Loading>
-            <Grid BackgroundColor="Black" RowSpacing="0" ColumnSpacing="0" AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress,Converter={StaticResource InverseBoolConverter}}"
-        AbsoluteLayout.LayoutFlags="All">
-            <Grid.RowDefinitions>
-                <!--<RowDefinition Height="Auto"></RowDefinition>-->
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <!--<Label x:Name="countSelect"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+            <controls:Loading
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                IsVisible="{Binding IsBusyProgress}" />
+            <Grid
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black"
+                ColumnSpacing="0"
+                IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
+                RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="Auto"></RowDefinition>-->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!--<Label x:Name="countSelect"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
                                     FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="15"                           
+                                    FontSize="15"
                                     Style="{StaticResource LabelStyle}"
                                     Text="0 Photo Taken"
                                     TextColor="White" />-->
-            <cameraView:CameraPreview   Grid.Row="1" 
-                    x:Name="CameraPreview"           
-                    BackgroundColor="Black"
-                    HorizontalOptions="FillAndExpand"
-                    Camera="Rear"                                         
+                <cameraView:CameraPreview
+                    x:Name="CameraPreview"
+                    Grid.Row="1"
                     Margin="0,0,0,0"
-                    VerticalOptions="FillAndExpand"
-                   >
-            </cameraView:CameraPreview>
-            <Grid Grid.Row="2"  BackgroundColor="Black" RowSpacing="0" ColumnSpacing="0" Margin="0" VerticalOptions="FillAndExpand" >
-                <Grid.Padding>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="35,5,35,40" />
-                        <On Platform="Android, WinPhone, Windows" Value="2" />
-                    </OnPlatform>
-                </Grid.Padding>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="countSelect"  Grid.Column="0"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="15"                           
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="{Binding CountPhoto}"
-                                    TextColor="White" />
-                <!--<Image x:Name="img1"  WidthRequest="50" HeightRequest="50" Grid.Row="0" HorizontalOptions="CenterAndExpand" ></Image>-->
-
-
-                <ImageButton  Grid.Column="1" BackgroundColor="Transparent" Clicked="OnCameraClicked" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=White,Size=25}"></ImageButton>
-                <ImageButton BackgroundColor="Transparent" Clicked="btnSave_Clicked" x:Name="btnSave" Grid.Column="2"  WidthRequest="40" HeightRequest="40" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=White,Size=25}"></ImageButton>
-
-
-
-
-            </Grid>
-            <ScrollView Orientation="Both" Grid.Row="0" Margin="0" BackgroundColor="Black"  >
-                
-                <FlexLayout  x:Name="FlexTypes" 
-        
-        BindableLayout.ItemsSource="{Binding ImageList}"
-       
-        >
-                    <FlexLayout.Margin>
+                    BackgroundColor="Black"
+                    Camera="Rear"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand" />
+                <Grid
+                    Grid.Row="2"
+                    Margin="0"
+                    BackgroundColor="Black"
+                    ColumnSpacing="0"
+                    RowSpacing="0"
+                    VerticalOptions="FillAndExpand">
+                    <Grid.Padding>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0" />
+                            <On Platform="iOS" Value="35,5,35,40" />
                             <On Platform="Android, WinPhone, Windows" Value="2" />
                         </OnPlatform>
-                    </FlexLayout.Margin>
-                    <FlexLayout.Padding>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="2" />
-                            <On Platform="Android, WinPhone, Windows" Value="2" />
-                        </OnPlatform>
-                    </FlexLayout.Padding>
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                    </Grid.Padding>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        x:Name="countSelect"
+                        Grid.Column="0"
+                        Margin="3"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="15"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource LabelStyle}"
+                        Text="{Binding CountPhoto}"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+                    <!--<Image x:Name="img1"  WidthRequest="50" HeightRequest="50" Grid.Row="0" HorizontalOptions="CenterAndExpand" ></Image>-->
 
 
-                            <Grid RowSpacing="0"  ColumnSpacing="0" Margin="5,0,5,0" >
+                    <ImageButton
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Clicked="OnCameraClicked"
+                        HeightRequest="40"
+                        HorizontalOptions="CenterAndExpand"
+                        Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                           Glyph={x:Static helpers:IconFont.CameraPlus},
+                                           Color=White,
+                                           Size=25}"
+                        VerticalOptions="Center"
+                        WidthRequest="40" />
+                    <ImageButton
+                        x:Name="btnSave"
+                        Grid.Column="2"
+                        BackgroundColor="Transparent"
+                        Clicked="btnSave_Clicked"
+                        HeightRequest="40"
+                        HorizontalOptions="CenterAndExpand"
+                        Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                           Glyph={x:Static helpers:IconFont.Floppy},
+                                           Color=White,
+                                           Size=25}"
+                        VerticalOptions="Center"
+                        WidthRequest="40" />
 
 
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <yummy:PancakeView CornerRadius="5">
-                                    <ffimageloading:CachedImage
-                                                Aspect="AspectFill" Source="{Binding Image}"
-                                               
-                                                HeightRequest="120" WidthRequest="120">
-                                       
-                                    </ffimageloading:CachedImage>
-                                </yummy:PancakeView>
-                                <ImageButton  Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" Opacity="0.9"  VerticalOptions="Start" HorizontalOptions="End" 
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CloseCircle},Color=#2e479b,Size=26}"></ImageButton>
+
+                </Grid>
+                <ScrollView
+                    Grid.Row="0"
+                    Margin="0"
+                    BackgroundColor="Black"
+                    Orientation="Both">
+
+                    <FlexLayout x:Name="FlexTypes" BindableLayout.ItemsSource="{Binding ImageList}">
+                        <FlexLayout.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0" />
+                                <On Platform="Android, WinPhone, Windows" Value="2" />
+                            </OnPlatform>
+                        </FlexLayout.Margin>
+                        <FlexLayout.Padding>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="2" />
+                                <On Platform="Android, WinPhone, Windows" Value="2" />
+                            </OnPlatform>
+                        </FlexLayout.Padding>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
 
 
-                                <!--<Grid.GestureRecognizers>
+                                <Grid
+                                    Margin="5,0,5,0"
+                                    ColumnSpacing="0"
+                                    RowSpacing="0">
+
+
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <yummy:PancakeView CornerRadius="5">
+                                        <ffimageloading:CachedImage
+                                            Aspect="AspectFill"
+                                            HeightRequest="120"
+                                            Source="{Binding Image}"
+                                            WidthRequest="120" />
+                                    </yummy:PancakeView>
+                                    <ImageButton
+                                        Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}"
+                                        CommandParameter="{Binding}"
+                                        HorizontalOptions="End"
+                                        Opacity="0.9"
+                                        Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                           Glyph={x:Static helpers:IconFont.CloseCircle},
+                                                           Color=#2e479b,
+                                                           Size=26}"
+                                        VerticalOptions="Start" />
+
+
+                                    <!--<Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
 
 
                                 </Grid.GestureRecognizers>-->
 
-                            </Grid>
+                                </Grid>
 
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </ScrollView>
-        </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </ScrollView>
+            </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

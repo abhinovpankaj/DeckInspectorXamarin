@@ -23,52 +23,17 @@ namespace Mobile.Code.ViewModels
        
         public ObservableCollection<ItemImage> WorkAreaImages { get; set; }
        
-        //async Task ExecuteProjectDetailCommand(Project parm)
-        //{
-         
-        // //   await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-        //    // await Shell.Current.GoToAsync("projectdetail");
-        //}
         public WorkAreasViewModel(WorkArea parm)
         {
             WorkArea = parm;
-            //WorkAreaImages = parm.WorkAreaImages;
-            // AllProjects = new ObservableCollection<Project>();
-            //      StatrtedProject = new ObservableCollection<Project>();
-            //  ProjectDetailCommand = new Command<Project>(async (Project project) => await ExecuteProjectDetailCommand(project));
-
+            
         }
         public void LoadData()
         {
 
-            //foreach (var item in WorkArea.WorkAreaImages)
-            //{
-            //    WorkAreaImages.Add(new ItemImage() { 
-                
-                
-            //    });
-            //}
-                //var popular = new List<Place>();
 
 
-            }
+        }
     }
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+    
 }

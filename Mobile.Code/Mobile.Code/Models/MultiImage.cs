@@ -19,7 +19,7 @@ namespace Mobile.Code.Models
         public string Status{ get; set; }
         public string ParentId { get; set; }
 
-
+        public string ImageType { get; set; }
         public bool IsServerData { get; set; }
         public bool IsDelete { get; set; }
 

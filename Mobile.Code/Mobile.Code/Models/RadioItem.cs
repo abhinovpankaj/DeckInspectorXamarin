@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Mobile.Code.Models
 {
-    public class CustomRadioItem:BindingModel
+    public class CustomRadioItem: BindingModel
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -13,10 +13,14 @@ namespace Mobile.Code.Models
         private bool _isChk;
 
         public string GroupName { get; set; }
-        public bool IsChecked
+        public bool IsSelected
         {
             get { return _isChk; }
-            set { _isChk = value; OnPropertyChanged("IsSelected"); }
+            set 
+            {
+                _isChk = value; 
+                OnPropertyChanged("IsSelected");
+            }
         }
 
     }

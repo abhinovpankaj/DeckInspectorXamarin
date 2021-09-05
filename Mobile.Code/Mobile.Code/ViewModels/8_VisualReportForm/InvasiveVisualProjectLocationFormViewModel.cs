@@ -128,31 +128,31 @@ namespace Mobile.Code.ViewModels
                 {
                     errorMessage += "\nWaterProofing Elements required\n";
                 }
-                if (RadioList_VisualReviewItems.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_VisualReviewItems.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nVisual Review required\n";
                 }
-                if (RadioList_AnyVisualSignItems.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_AnyVisualSignItems.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nAny visual signs of leaksrequired\n";
                 }
-                if (RadioList_FurtherInasiveItems.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_FurtherInasiveItems.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nFurther Invasive Review Required Yes/No required\n";
                 }
-                if (RadioList_ConditionAssessment.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_ConditionAssessment.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nCondition Assessment Required Yes/No required\n";
                 }
-                if (RadioList_LifeExpectancyEEE.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_LifeExpectancyEEE.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nLife Expectancy Exterior Elevated Elements (EEE) required\n";
                 }
-                if (RadioList_LifeExpectancyLBC.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_LifeExpectancyLBC.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nLife Expectancy Load Bearing Componenets (LBC) required\n";
                 }
-                if (RadioList_LifeExpectancyAWE.Where(c => c.IsChecked).Any() == false)
+                if (RadioList_LifeExpectancyAWE.Where(c => c.IsSelected).Any() == false)
                 {
                     errorMessage += "\nLife Expectancy Associated Waterproofing Elements (AWE) required\n";
                 }
@@ -171,18 +171,18 @@ namespace Mobile.Code.ViewModels
                     VisualForm.ExteriorElements = string.Join(",", ExteriorElements.ToArray());
                     VisualForm.WaterProofingElements = string.Join(",", WaterProofingElements.ToArray());
 
-                    VisualForm.VisualReview = RadioList_VisualReviewItems.Where(c => c.IsChecked == true).Single().Name;
-                    VisualForm.AnyVisualSign = RadioList_AnyVisualSignItems.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.VisualReview = RadioList_VisualReviewItems.Where(c => c.IsSelected == true).Single().Name;
+                    VisualForm.AnyVisualSign = RadioList_AnyVisualSignItems.Where(c => c.IsSelected == true).Single().Name;
 
-                    VisualForm.FurtherInasive = RadioList_FurtherInasiveItems.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.FurtherInasive = RadioList_FurtherInasiveItems.Where(c => c.IsSelected == true).Single().Name;
 
-                    VisualForm.ConditionAssessment = RadioList_ConditionAssessment.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.ConditionAssessment = RadioList_ConditionAssessment.Where(c => c.IsSelected == true).Single().Name;
 
-                    VisualForm.LifeExpectancyEEE = RadioList_LifeExpectancyEEE.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.LifeExpectancyEEE = RadioList_LifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
 
-                    VisualForm.LifeExpectancyLBC = RadioList_LifeExpectancyLBC.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.LifeExpectancyLBC = RadioList_LifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
 
-                    VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsChecked == true).Single().Name;
+                    VisualForm.LifeExpectancyAWE = RadioList_LifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
 
 
                     if (await VisualFormProjectLocationDataStore.GetItemAsync(VisualForm.Id) == null)
@@ -239,51 +239,51 @@ namespace Mobile.Code.ViewModels
         {
            
             RadioList_VisualReviewItems = new ObservableCollection<CustomRadioItem>();
-            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 1, Name = "Good", IsChecked = false , GroupName ="VR"});
-            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 2, Name = "Bad", IsChecked = false, GroupName = "VR" });
-            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 3, Name = "Fair", IsChecked = false, GroupName = "VR" });
+            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 1, Name = "Good", IsSelected = false , GroupName ="VR"});
+            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 2, Name = "Bad", IsSelected = false, GroupName = "VR" });
+            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 3, Name = "Fair", IsSelected = false, GroupName = "VR" });
 
             RadioList_AnyVisualSignItems = new ObservableCollection<CustomRadioItem>();
-            RadioList_AnyVisualSignItems.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsChecked = false, GroupName = "AVS" });
-            RadioList_AnyVisualSignItems.Add(new CustomRadioItem() { ID = 2, Name = "No", IsChecked = false, GroupName = "AVS" });
+            RadioList_AnyVisualSignItems.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsSelected = false, GroupName = "AVS" });
+            RadioList_AnyVisualSignItems.Add(new CustomRadioItem() { ID = 2, Name = "No", IsSelected = false, GroupName = "AVS" });
 
 
             RadioList_FurtherInasiveItems = new ObservableCollection<CustomRadioItem>();
-            RadioList_FurtherInasiveItems.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsChecked = false, GroupName = "FIR" });
-            RadioList_FurtherInasiveItems.Add(new CustomRadioItem() { ID = 2, Name = "No", IsChecked = false, GroupName = "FIR" });
+            RadioList_FurtherInasiveItems.Add(new CustomRadioItem() { ID = 1, Name = "Yes", IsSelected = false, GroupName = "FIR" });
+            RadioList_FurtherInasiveItems.Add(new CustomRadioItem() { ID = 2, Name = "No", IsSelected = false, GroupName = "FIR" });
 
             RadioList_ConditionAssessment = new ObservableCollection<CustomRadioItem>();
-            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 1, Name = "Pass", IsChecked = false, GroupName = "CA" });
-            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 2, Name = "Fail", IsChecked = false, GroupName = "CA" });
-            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 3, Name = "Future Inspection", IsChecked = false, GroupName = "CA" });
+            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 1, Name = "Pass", IsSelected = false, GroupName = "CA" });
+            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 2, Name = "Fail", IsSelected = false, GroupName = "CA" });
+            RadioList_ConditionAssessment.Add(new CustomRadioItem() { ID = 3, Name = "Future Inspection", IsSelected = false, GroupName = "CA" });
 
             RadioList_LifeExpectancyEEE = new ObservableCollection<CustomRadioItem>();
-            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "EEE" });
-            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "EEE" });
-            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "EEE" });
-            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "EEE" });
+            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsSelected = false, GroupName = "EEE" });
+            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsSelected = false, GroupName = "EEE" });
+            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsSelected = false, GroupName = "EEE" });
+            RadioList_LifeExpectancyEEE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsSelected = false, GroupName = "EEE" });
 
 
 
             //RadioList_LifeExpectancyLBC = new ObservableCollection<CustomRadioItem>();
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "LBC" });
-            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "LBC" });
+            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsSelected = false, GroupName = "LBC" });
+            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsSelected = false, GroupName = "LBC" });
+            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsSelected = false, GroupName = "LBC" });
+            //RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsSelected = false, GroupName = "LBC" });
 
 
             RadioList_LifeExpectancyLBC = new ObservableCollection<CustomRadioItem>();
-            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "LBC" });
-            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "LBC" });
-            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "LBC" });
-            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "LBC" });
+            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsSelected = false, GroupName = "LBC" });
+            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsSelected = false, GroupName = "LBC" });
+            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsSelected = false, GroupName = "LBC" });
+            RadioList_LifeExpectancyLBC.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsSelected = false, GroupName = "LBC" });
 
 
             RadioList_LifeExpectancyAWE = new ObservableCollection<CustomRadioItem>();
-            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsChecked = false, GroupName = "AWE" });
-            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsChecked = false, GroupName = "AWE" });
-            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsChecked = false, GroupName = "AWE" });
-            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsChecked = false, GroupName = "AWE" });
+            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 1, Name = "0-1 Years", IsSelected = false, GroupName = "AWE" });
+            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 2, Name = "1-4 Years", IsSelected = false, GroupName = "AWE" });
+            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 3, Name = "4-7 Years", IsSelected = false, GroupName = "AWE" });
+            RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsSelected = false, GroupName = "AWE" });
 
 
             GoBackCommand = new Command(async () => await GoBack());
@@ -432,30 +432,7 @@ namespace Mobile.Code.ViewModels
         }
         private async void GetImage(ImageData ImgData)
         {
-            //if (IsVisualProjectLocatoion)
-            //{
-            //   // VisualProjectLocationPhoto obj = parm as VisualProjectLocationPhoto;
-            //    // VisualProjectLocationPhoto = parm;
-            //    VisualProjectLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualProjectLocationPhotoDataStore.UpdateItemAsync(VisualProjectLocationPhoto,IsEdit);
-
-
-
-            //}
-            //if (IsVisualBuilding)
-            //{
-            //    VisualBuildingLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualBuildingLocationPhotoDataStore.UpdateItemAsync(VisualBuildingLocationPhoto);
-
-            //}
-            //if (IsVisualApartment)
-            //{
-            //    VisualApartmentLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualApartmentLocationPhotoDataStore.UpdateItemAsync(VisualApartmentLocationPhoto);
-
-            //}
-
-            //  await Loa();
+            
             await Load();
         }
         private bool _isEdit;

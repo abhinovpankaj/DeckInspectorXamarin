@@ -36,7 +36,7 @@ namespace Mobile.Code.Services
                 item.InvasiveImage = true;
             }
             items.Add(item);
-            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false });
+            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
             return await Task.FromResult(true);
         }
 
@@ -151,7 +151,7 @@ namespace Mobile.Code.Services
 
 
                         items = JsonConvert.DeserializeObject<List<VisualApartmentLocationPhoto>>(result.Data.ToString());
-                        items = items.Where(c => c.ImageDescription == "TRUE").ToList();
+                        items = items.Where(c => c.ImageDescription.Length>0).ToList();
                         foreach (var item in items)
                         {
                             App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });

@@ -14,7 +14,7 @@ namespace Mobile.Code.Services
     public interface IVisualFormProjectLocationDataStore
     {
         Task<Response> AddItemAsync(ProjectLocation_Visual item, IEnumerable<string> ImageList = null);
-        Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList);
+        Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList, string imgType="TRUE");
         Task<Response> DeleteItemAsync(ProjectLocation_Visual item);
         Task<ProjectLocation_Visual> GetItemAsync(string id);
         Task<IEnumerable<ProjectLocation_Visual>> GetItemsAsync(bool forceRefresh = false);
@@ -62,7 +62,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList)
+        public async Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList,string imgType="TRUE")
         {
             Response result = new Response();
 
@@ -85,25 +85,30 @@ namespace Mobile.Code.Services
             parameters.Add("LifeExpectancyAWE", item.LifeExpectancyAWE);
             parameters.Add("ImageDescription", item.ImageDescription);
             parameters.Add("UserID", App.LogUser.Id.ToString());
-          
-            
+
+
+            parameters.Add("ConclusiveComments", item.ConclusiveComments);
+            parameters.Add("ConclusiveLifeExpEEE", item.ConclusiveLifeExpEEE);
+            parameters.Add("ConclusiveLifeExpLBC", item.ConclusiveLifeExpLBC);
+            parameters.Add("ConclusiveLifeExpAWE", item.ConclusiveLifeExpAWE);
+            parameters.Add("ConclusiveAdditionalConcerns", item.ConclusiveAdditionalConcerns);
+            parameters.Add("IsPostInvasiveRepairsRequired", item.IsPostInvasiveRepairsRequired.ToString());
+            parameters.Add("IsInvasiveRepairApproved", item.IsInvasiveRepairApproved.ToString());
+            parameters.Add("IsInvasiveRepairComplete", item.IsInvasiveRepairComplete.ToString());
+
+
             if (App.IsInvasive==true)
             {
                
-                parameters.Add("IsInvaiveImage", "TRUE");
-               // parameters.Add("IsInvasive", "FALSE");
+                parameters.Add("IsInvaiveImage", imgType);
+               
             }
             else
             {
                 parameters.Add("IsInvaiveImage", null);
-              //  parameters.Add("IsInvasive", "FALSE");
-                
+      
             }
-
-
-
-          //  result = await HttpUtil.VisualDataAdd(item.Name, "api/VisualProjectLocation/Add", parameters, ImageList);
-
+            // for invasive Images
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
             using (var client = new HttpClient())
             {
@@ -138,10 +143,7 @@ namespace Mobile.Code.Services
                             var sevenThousandItems = new byte[7000];
                             formData.Add(new ByteArrayContent(sevenThousandItems), Index.ToString(), ServerFileName);
                         }
-                        //if (img.IsServerData == true && img.Status == "Delete")
-                        //{
-                        //    string ServerFileName = "Delete" + img.Id + ".png";
-                        //    formData.Add(new ByteArrayContent(File.ReadAllBytes(img.Image)), Index.ToString(), ServerFileName);
+                       
                     }
                     // var extension = Path.GetExtension(img);
                     formData.Add(DictionaryItems, "Model");

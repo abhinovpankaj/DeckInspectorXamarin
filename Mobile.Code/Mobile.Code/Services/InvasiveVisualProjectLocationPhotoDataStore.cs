@@ -39,7 +39,7 @@ namespace Mobile.Code.Services
                 item.InvasiveImage = true;
             }
             items.Add(item);
-            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id,Image=item.ImageUrl, ParentId = item.VisualLocationId, Status = "New" , IsServerData = false });
+            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id,Image=item.ImageUrl, ParentId = item.VisualLocationId, Status = "New" , IsServerData = false, ImageType=item.ImageDescription});
             return await Task.FromResult(true);
         }
 

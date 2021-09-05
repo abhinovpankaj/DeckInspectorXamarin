@@ -14,84 +14,183 @@ namespace Mobile.Code.Views._8_VisualReportForm
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabbedPageInvasive : ContentPage
     {
-        public TabbedPageInvasive(BaseViewModel vm)
+        public TabbedPageInvasive()
         {
             InitializeComponent();
- 
-            this.BindingContext = vm;
-            //AddRemoveConclusiveTab();
 
+
+            //if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            //{
+            //    var viewModel = vm as VisualProjectLocationFormViewModel;
+            //    this.BindingContext = viewModel;
+            //}
+            //if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            //{
+            //    var viewModel = vm as VisualBuildingLocationFormViewModel;
+            //    this.BindingContext = viewModel;
+            //}
+            //if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+            //{
+            //    var viewModel = vm as VisualApartmentFormViewModel;
+            //    this.BindingContext = viewModel;
+            //}
+
+            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+           // AddRemoveConclusiveTab();
+
+        }
+        VisualApartmentFormViewModel localVM;
+        VisualProjectLocationFormViewModel localLocVM;
+        public TabbedPageInvasive(VisualProjectLocationFormViewModel vm)
+        {
+            vm.IsBusy = true;
+            InitializeComponent();
+
+            localLocVM = vm;
+            this.BindingContext = localLocVM;
+
+            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+            //AddRemoveConclusiveTab();
+            vm.IsBusy = false;
+        }
+        public TabbedPageInvasive(VisualBuildingLocationFormViewModel vm)
+        {
+            vm.IsBusy = true;
+            InitializeComponent();
+
+            //localLocVM = vm;
+            this.BindingContext = vm;
+
+            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+            //AddRemoveConclusiveTab();
+            vm.IsBusy = false;
+        }
+        public TabbedPageInvasive(VisualApartmentFormViewModel vm)
+        {
+            vm.IsBusy = true;
+            InitializeComponent();
+            localVM = vm;
+
+            this.BindingContext = localVM;
+
+            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+            //AddRemoveConclusiveTab();
+            vm.IsBusy = false;
         }
         protected async override void OnAppearing()
         {
-            base.OnAppearing();
-            // var q=this.BindingContext;
+
             if (this.BindingContext is VisualProjectLocationFormViewModel)
                 await ((VisualProjectLocationFormViewModel)this.BindingContext).Load();
             if (this.BindingContext is VisualBuildingLocationFormViewModel)
                 await ((VisualBuildingLocationFormViewModel)this.BindingContext).Load();
             if (this.BindingContext is VisualApartmentFormViewModel)
                 await ((VisualApartmentFormViewModel)this.BindingContext).Load();
-            //vm.Load();
-            AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+            base.OnAppearing();
+
+            //AddRemoveConclusiveTab();
+
         }
 
         private void AdditionalInvasive_AllowFurthurInvasive(object sender, EventArgs e)
         {
-            AddRemoveConclusiveTab();
+            //AddRemoveConclusiveTab();
         }
-
+        private bool added;
         private void AddRemoveConclusiveTab()
         {
-            var vm = this.BindingContext;
-            var ProjectFormVM = vm as VisualProjectLocationFormViewModel;
-            if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            try
             {
-                var viewModel = vm as VisualProjectLocationFormViewModel;
-                if (viewModel != null)
+                var vm = this.BindingContext;
+                
+                if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
                 {
-                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                    var viewModel = vm as VisualProjectLocationFormViewModel;
+                    if (viewModel != null)
                     {
-                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
-                        tabbedControl.AddTab(conclusiveTab, 2, false);
+                        if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            if (!added)
+                            {
+                                TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
+
+                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                added = true;
+                            }
+                            
+                        }
+                        else
+                        {
+                            if (added)
+                            {
+                                tabbedControl.RemoveTab(2);
+                                added = false;
+                            }
+                            
+                        }
                     }
-                    else
-                    {                       
-                        tabbedControl.RemoveTab(2);                       
+                }
+
+                if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+                {
+                    var viewModel = vm as VisualBuildingLocationFormViewModel;
+                    if (viewModel != null)
+                    {
+                        if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            if (!added)
+                            {
+                                TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
+
+                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                added = true;
+                            }
+
+                        }
+                        else
+                        {
+                            if (added)
+                            {
+                                tabbedControl.RemoveTab(2);
+                                added = false;
+                            }
+                        }
+
+                    }
+                }
+                if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+                {
+                    var viewModel = vm as VisualApartmentFormViewModel;
+                    if (viewModel != null)
+                    {
+                        if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            if (!added)
+                            {
+                                TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
+
+                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                added = true;
+                            }
+
+                        }
+                        else
+                        {
+                            if (added)
+                            {
+                                tabbedControl.RemoveTab(2);
+                                added = false;
+                            }
+                        }
+
                     }
                 }
             }
-
-            if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            catch(Exception ex)
             {
-                var viewModel = vm as VisualBuildingLocationFormViewModel;
-                if (viewModel != null)
-                {
-                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
-                    {
-                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
-                        tabbedControl.AddTab(conclusiveTab, 2, false);
-                    }
-                    else
-                        tabbedControl.RemoveTab(2);
 
-                }
             }
-            if (vm.GetType() == typeof(VisualApartmentFormViewModel))
-            {
-                var viewModel = vm as VisualApartmentFormViewModel;
-                if (viewModel != null)
-                {
-                    if (viewModel.VisualForm.IsPostInvasiveRepairsRequired)
-                    {
-                        TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(vm));
-                        tabbedControl.AddTab(conclusiveTab, 2, false);
-                    }
-                    else
-                        tabbedControl.RemoveTab(2);
-
-                }
-            }
+            
         }
     }
 }

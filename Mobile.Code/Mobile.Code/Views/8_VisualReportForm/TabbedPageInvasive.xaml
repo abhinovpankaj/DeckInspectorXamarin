@@ -109,10 +109,7 @@
                         </tabview:TabItem>
 
                         <tabview:TabItem HeaderText="Invasive">
-
                             <pages:AdditionalInvasive VerticalOptions="FillAndExpand" />
-
-
                         </tabview:TabItem>
                         <!--<tabview:TabItem HeaderText="Conclusive">
 

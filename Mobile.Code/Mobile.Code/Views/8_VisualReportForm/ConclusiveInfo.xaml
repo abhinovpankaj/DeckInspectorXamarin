@@ -73,7 +73,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
                                         </Grid>
 
                                     </DataTemplate>
@@ -122,7 +122,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
                                         </Grid>
 
@@ -172,7 +172,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -225,7 +225,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -278,7 +278,7 @@
                                                 CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -364,7 +364,7 @@
                                     TextColor="#2e479b" />
 
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ChoosePhotoFromCameraCommand}" />
+                                    <TapGestureRecognizer Command="{Binding ChooseConclusivePhotoFromCameraCommand}" />
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>
                             <StackLayout
@@ -457,7 +457,7 @@
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BindableLayout.ItemsSource="{Binding ConclusiveVisualProjectLocationPhotoItems}"
+                        BindableLayout.ItemsSource="{Binding ConclusiveVisualBuildingLocationPhotoItems}"
                         Direction="Row"
                         IsVisible="{Binding IsVisualBuilding}"
                         JustifyContent="Start"
@@ -520,7 +520,7 @@
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BindableLayout.ItemsSource="{Binding ConclusiveVisualProjectLocationPhotoItems}"
+                        BindableLayout.ItemsSource="{Binding ConclusiveVisualApartmentLocationPhotoItems}"
                         Direction="Row"
                         IsVisible="{Binding IsVisualApartment}"
                         JustifyContent="Start"

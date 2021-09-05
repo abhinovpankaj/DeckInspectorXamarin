@@ -14,7 +14,7 @@ namespace Mobile.Code.Services
     public interface IVisualFormBuildingLocationDataStore
     {
         Task<Response> AddItemAsync(BuildingLocation_Visual item, IEnumerable<string> ImageList);
-        Task<Response> UpdateItemAsync(BuildingLocation_Visual item,  List<MultiImage> finelList);
+        Task<Response> UpdateItemAsync(BuildingLocation_Visual item,  List<MultiImage> finelList,string imgType="TRUE");
         Task<Response> DeleteItemAsync(BuildingLocation_Visual item);
         Task<BuildingLocation_Visual> GetItemAsync(string id);
         Task<IEnumerable<BuildingLocation_Visual>> GetItemsAsync(bool forceRefresh = false);
@@ -61,7 +61,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<Response> UpdateItemAsync(BuildingLocation_Visual item, List<MultiImage> finelList)
+        public async Task<Response> UpdateItemAsync(BuildingLocation_Visual item, List<MultiImage> finelList, string imgType = "TRUE")
         {
             Response result = new Response();
 
@@ -88,10 +88,20 @@ namespace Mobile.Code.Services
             parameters.Add("UserID", App.LogUser.Id.ToString());
 
 
+            parameters.Add("ConclusiveComments", item.ConclusiveComments);
+            parameters.Add("ConclusiveLifeExpEEE", item.ConclusiveLifeExpEEE);
+            parameters.Add("ConclusiveLifeExpLBC", item.ConclusiveLifeExpLBC);
+            parameters.Add("ConclusiveLifeExpAWE", item.ConclusiveLifeExpAWE);
+            parameters.Add("ConclusiveAdditionalConcerns", item.ConclusiveAdditionalConcerns);
+            parameters.Add("IsPostInvasiveRepairsRequired", item.IsPostInvasiveRepairsRequired.ToString());
+            parameters.Add("IsInvasiveRepairApproved", item.IsInvasiveRepairApproved.ToString());
+            parameters.Add("IsInvasiveRepairComplete", item.IsInvasiveRepairComplete.ToString());
+
+
             if (App.IsInvasive == true)
             {
 
-                parameters.Add("IsInvaiveImage", "TRUE");
+                parameters.Add("IsInvaiveImage", imgType);
                 // parameters.Add("IsInvasive", "FALSE");
             }
             else
@@ -153,13 +163,6 @@ namespace Mobile.Code.Services
                     result = JsonConvert.DeserializeObject<Response>(responseBody);
                     return await Task.FromResult(result);
                 }
-
-
-
-
-
-
-
             }
         }
 

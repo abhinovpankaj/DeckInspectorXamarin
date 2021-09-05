@@ -14,7 +14,7 @@ namespace Mobile.Code.Services
     public interface IVisualFormApartmentDataStore
     {
         Task<Response> AddItemAsync(Apartment_Visual item, IEnumerable<string> ImageList );
-        Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList);
+        Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList,string imgType="TRUE");
         Task<Response> DeleteItemAsync(Apartment_Visual item);
         Task<Apartment_Visual> GetItemAsync(string id);
         Task<IEnumerable<Apartment_Visual>> GetItemsAsync(bool forceRefresh = false);
@@ -61,7 +61,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList)
+        public async Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList, string imgType = "TRUE")
         {
             Response result = new Response();
 
@@ -85,24 +85,29 @@ namespace Mobile.Code.Services
             parameters.Add("UserID", App.LogUser.Id.ToString());
 
             parameters.Add("ImageDescription", item.ImageDescription);
-            // parameters.Add("UserID", App.LogUser.Id.ToString());
+
+            parameters.Add("ConclusiveComments", item.ConclusiveComments);
+            parameters.Add("ConclusiveLifeExpEEE", item.ConclusiveLifeExpEEE);
+            parameters.Add("ConclusiveLifeExpLBC", item.ConclusiveLifeExpLBC);
+            parameters.Add("ConclusiveLifeExpAWE", item.ConclusiveLifeExpAWE);
+            parameters.Add("ConclusiveAdditionalConcerns", item.ConclusiveAdditionalConcerns);
+            parameters.Add("IsPostInvasiveRepairsRequired", item.IsPostInvasiveRepairsRequired.ToString());
+            parameters.Add("IsInvasiveRepairApproved", item.IsInvasiveRepairApproved.ToString());
+            parameters.Add("IsInvasiveRepairComplete", item.IsInvasiveRepairComplete.ToString());
 
 
             if (App.IsInvasive == true)
             {
 
-                parameters.Add("IsInvaiveImage", "TRUE");
-                // parameters.Add("IsInvasive", "FALSE");
+                parameters.Add("IsInvaiveImage", imgType);
+               
             }
             else
             {
                 parameters.Add("IsInvaiveImage", null);
-                //  parameters.Add("IsInvasive", "FALSE");
+                
 
             }
-
-
-            //  result = await HttpUtil.VisualDataAdd(item.Name, "api/VisualProjectLocation/Add", parameters, ImageList);
 
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
             using (var client = new HttpClient())
@@ -154,12 +159,6 @@ namespace Mobile.Code.Services
                     return await Task.FromResult(result);
                 }
 
-
-
-
-
-
-
             }
 
         }
@@ -184,7 +183,7 @@ namespace Mobile.Code.Services
                     return await Task.FromResult(result);
 
 
-                }
+                } 
             }
         }
 

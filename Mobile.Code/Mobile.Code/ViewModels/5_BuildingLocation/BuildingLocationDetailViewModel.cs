@@ -478,26 +478,26 @@ namespace Mobile.Code.ViewModels
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
             vm.CountExteriorElements = vm.ExteriorElements.Count.ToString();
             vm.CountWaterProofingElements = vm.WaterProofingElements.Count.ToString();
-            vm.RadioList_VisualReviewItems.Where(c => c.Name == parm.VisualReview).Single().IsChecked = true;
-            vm.RadioList_AnyVisualSignItems.Where(c => c.Name == parm.AnyVisualSign).Single().IsChecked = true;
-            vm.RadioList_FurtherInasiveItems.Where(c => c.Name == parm.FurtherInasive).Single().IsChecked = true;
-            vm.RadioList_ConditionAssessment.Where(c => c.Name == parm.ConditionAssessment).Single().IsChecked = true;
-            vm.RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsChecked = true;
-            vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsChecked = true;
-            vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsChecked = true;
+            vm.RadioList_VisualReviewItems.Where(c => c.Name == parm.VisualReview).Single().IsSelected = true;
+            vm.RadioList_AnyVisualSignItems.Where(c => c.Name == parm.AnyVisualSign).Single().IsSelected = true;
+            vm.RadioList_FurtherInasiveItems.Where(c => c.Name == parm.FurtherInasive).Single().IsSelected = true;
+            vm.RadioList_ConditionAssessment.Where(c => c.Name == parm.ConditionAssessment).Single().IsSelected = true;
+            vm.RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsSelected = true;
+            vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsSelected = true;
+            vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsSelected = true;
 
             if (App.IsInvasive)
             {
                 if (parm.IsPostInvasiveRepairsRequired)
                 {
-                    vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsChecked = true;
-                    vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsChecked = true;
-                    vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsChecked = true;
+                    vm.RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.Name == parm.ConclusiveLifeExpEEE).Single().IsSelected = true;
+                    vm.RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.Name == parm.ConclusiveLifeExpLBC).Single().IsSelected = true;
+                    vm.RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.Name == parm.ConclusiveLifeExpAWE).Single().IsSelected = true;
 
                     string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
-                    vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsChecked = true;
+                    vm.RadioList_OwnerAgreedToRepair.Where(c => c.Name == isChked).Single().IsSelected = true;
                     isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
-                    vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsChecked = true;
+                    vm.RadioList_RepairComplete.Where(c => c.Name == isChked).Single().IsSelected = true;
                 }
             }
 
@@ -529,7 +529,7 @@ namespace Mobile.Code.ViewModels
                 vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(Views._8_VisualReportForm.TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new Views._8_VisualReportForm.TabbedPageInvasive(vm));
+                    await Shell.Current.Navigation.PushAsync(new Views._8_VisualReportForm.TabbedPageInvasive() { BindingContext = vm });
             }
                 //vm.WaterProofingElements.selectedList = parm.ExteriorElements.Split(',').ToList();
                

@@ -14,7 +14,8 @@ namespace Mobile.Code.Views
     public partial class ConclusiveInfo : ContentView
     {
         private ISpeechToText _speechRecongnitionInstance;
-        public ConclusiveInfo(object vm)
+       
+        public ConclusiveInfo(BaseViewModel vm)
         {
             InitializeComponent();
             this.BindingContext = vm;

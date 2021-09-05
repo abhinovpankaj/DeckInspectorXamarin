@@ -261,9 +261,6 @@
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand" />
 
-
-
-
                         </Grid>
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ChooseWaterproofingCommand}" />
@@ -313,7 +310,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
                                         </Grid>
 
                                     </DataTemplate>
@@ -364,7 +361,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -417,7 +414,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -470,7 +467,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -580,7 +577,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -633,7 +630,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 
@@ -686,7 +683,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsChecked}" />
+                                                IsChecked="{Binding IsSelected}" />
 
 
 

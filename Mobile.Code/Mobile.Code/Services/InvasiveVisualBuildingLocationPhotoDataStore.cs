@@ -40,7 +40,7 @@ namespace Mobile.Code.Services
 
             //return await Task.FromResult(true);
             items.Add(item);
-            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "New", IsServerData = false });
+            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
             return await Task.FromResult(true);
         }
 
