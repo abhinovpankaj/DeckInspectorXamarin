@@ -56,7 +56,14 @@ namespace Mobile.Code.Views
 
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
-       
+
+        public InvasiveVisualProjectLocationForm(VisualProjectLocationFormViewModel viewModel)
+        {
+            InitializeComponent();
+            this.BindingContext = viewModel;
+            
+        }
+
         private void SpeechToTextFinalResultRecieved(string args)
         {
             if (txtName.IsFocused)

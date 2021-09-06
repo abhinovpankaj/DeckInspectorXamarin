@@ -528,8 +528,8 @@ namespace Mobile.Code.ViewModels
                 vm.InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x=>x.ImageDescription=="TRUE"));
                 vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(Views._8_VisualReportForm.TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new Views._8_VisualReportForm.TabbedPageInvasive() { BindingContext = vm });
+                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
+                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = vm });
             }
                 //vm.WaterProofingElements.selectedList = parm.ExteriorElements.Split(',').ToList();
                

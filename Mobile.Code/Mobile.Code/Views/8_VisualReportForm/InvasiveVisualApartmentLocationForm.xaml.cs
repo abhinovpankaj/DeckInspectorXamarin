@@ -19,6 +19,7 @@ namespace Mobile.Code.Views
         public InvasiveVisualApartmentLocationForm()
         {
             InitializeComponent();
+           
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -54,6 +55,13 @@ namespace Mobile.Code.Views
             });
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
+
+        public InvasiveVisualApartmentLocationForm(VisualApartmentFormViewModel viewModel)
+        {
+            InitializeComponent();
+            this.BindingContext = viewModel;
+        }
+
         private void SpeechToTextFinalResultRecieved(string args)
         {
             if (txtName.IsFocused)

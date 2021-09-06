@@ -232,5 +232,7 @@ namespace Mobile.Code.ViewModels
             //Navigation.PopAsync();
 
         }
+
+        public string ImageType { get; set; }
     }
 }

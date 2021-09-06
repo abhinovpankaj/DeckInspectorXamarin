@@ -9,84 +9,61 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
-namespace Mobile.Code.Views._8_VisualReportForm
-{
+namespace Mobile.Code.Views
+{ 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabbedPageInvasive : ContentPage
     {
-        public TabbedPageInvasive()
+        public TabbedPageInvasive(object vm)
         {
             InitializeComponent();
+            //this.BindingContext = vm;
+            
+            if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            {
+                var viewModel = vm as VisualProjectLocationFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualProjectLocationForm(viewModel));
 
+                tabbedControl.AddTab(visualTab);
+            }
+            if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            {
+                var viewModel = vm as VisualBuildingLocationFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualBuildingLocationForm(viewModel));
 
-            //if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
-            //{
-            //    var viewModel = vm as VisualProjectLocationFormViewModel;
-            //    this.BindingContext = viewModel;
-            //}
-            //if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
-            //{
-            //    var viewModel = vm as VisualBuildingLocationFormViewModel;
-            //    this.BindingContext = viewModel;
-            //}
-            //if (vm.GetType() == typeof(VisualApartmentFormViewModel))
-            //{
-            //    var viewModel = vm as VisualApartmentFormViewModel;
-            //    this.BindingContext = viewModel;
-            //}
+                tabbedControl.AddTab(visualTab);
+            }
+            if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+            {
+                var viewModel = vm as VisualApartmentFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualApartmentLocationForm(viewModel));
 
-            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
-           // AddRemoveConclusiveTab();
+                tabbedControl.AddTab(visualTab);
+            }
+
+            AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
+            AddRemoveConclusiveTab();
 
         }
-        VisualApartmentFormViewModel localVM;
-        VisualProjectLocationFormViewModel localLocVM;
-        public TabbedPageInvasive(VisualProjectLocationFormViewModel vm)
+
+        public TabbedPageInvasive( )
         {
-            vm.IsBusy = true;
             InitializeComponent();
-
-            localLocVM = vm;
-            this.BindingContext = localLocVM;
-
-            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
-            //AddRemoveConclusiveTab();
-            vm.IsBusy = false;
         }
-        public TabbedPageInvasive(VisualBuildingLocationFormViewModel vm)
-        {
-            vm.IsBusy = true;
-            InitializeComponent();
-
-            //localLocVM = vm;
-            this.BindingContext = vm;
-
-            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
-            //AddRemoveConclusiveTab();
-            vm.IsBusy = false;
-        }
-        public TabbedPageInvasive(VisualApartmentFormViewModel vm)
-        {
-            vm.IsBusy = true;
-            InitializeComponent();
-            localVM = vm;
-
-            this.BindingContext = localVM;
-
-            //AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
-            //AddRemoveConclusiveTab();
-            vm.IsBusy = false;
-        }
+        
         protected async override void OnAppearing()
         {
-
+            base.OnAppearing();
             if (this.BindingContext is VisualProjectLocationFormViewModel)
                 await ((VisualProjectLocationFormViewModel)this.BindingContext).Load();
             if (this.BindingContext is VisualBuildingLocationFormViewModel)
                 await ((VisualBuildingLocationFormViewModel)this.BindingContext).Load();
             if (this.BindingContext is VisualApartmentFormViewModel)
                 await ((VisualApartmentFormViewModel)this.BindingContext).Load();
-            base.OnAppearing();
+            
 
             //AddRemoveConclusiveTab();
 
@@ -94,7 +71,7 @@ namespace Mobile.Code.Views._8_VisualReportForm
 
         private void AdditionalInvasive_AllowFurthurInvasive(object sender, EventArgs e)
         {
-            //AddRemoveConclusiveTab();
+            AddRemoveConclusiveTab();
         }
         private bool added;
         private void AddRemoveConclusiveTab()
@@ -114,7 +91,7 @@ namespace Mobile.Code.Views._8_VisualReportForm
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                tabbedControl.AddTab(conclusiveTab);
                                 added = true;
                             }
                             
@@ -142,7 +119,7 @@ namespace Mobile.Code.Views._8_VisualReportForm
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                tabbedControl.AddTab(conclusiveTab);
                                 added = true;
                             }
 
@@ -169,7 +146,7 @@ namespace Mobile.Code.Views._8_VisualReportForm
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab, 2, false);
+                                tabbedControl.AddTab(conclusiveTab);
                                 added = true;
                             }
 

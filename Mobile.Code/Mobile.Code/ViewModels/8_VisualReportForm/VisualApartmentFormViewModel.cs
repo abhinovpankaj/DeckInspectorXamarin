@@ -443,8 +443,8 @@ namespace Mobile.Code.ViewModels
             set { _InvvisualInvasiveVisualApartmentLocationPhotoItems = value; OnPropertyChanged("InvasiveVisualApartmentLocationPhotoItems"); }
         }
 
-        public List<CustomRadioItem> _radioList_VisualReviewItems;
-        public List<CustomRadioItem> RadioList_VisualReviewItems 
+        public ObservableCollection<CustomRadioItem> _radioList_VisualReviewItems;
+        public ObservableCollection<CustomRadioItem> RadioList_VisualReviewItems 
         {
             get { return _radioList_VisualReviewItems; }
             set 
@@ -498,7 +498,7 @@ namespace Mobile.Code.ViewModels
             IsVisualApartment = true;
             IsVisualProjectLocatoion = false;
             IsVisualBuilding = false;
-            RadioList_VisualReviewItems = new List<CustomRadioItem>();
+            RadioList_VisualReviewItems = new ObservableCollection<CustomRadioItem>();
             RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 1, Name = "Good", IsSelected = false , GroupName ="VR"});
             RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 2, Name = "Bad", IsSelected = false, GroupName = "VR" });
             RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 3, Name = "Fair", IsSelected = false, GroupName = "VR" });
@@ -557,8 +557,6 @@ namespace Mobile.Code.ViewModels
             {
                 WaterProofingElements = item as ObservableCollection<string>;
                 CountWaterProofingElements = WaterProofingElements.Count.ToString();
-
-
             });
             
             App.ListCamera2Api = new List<MultiImage>();
@@ -637,18 +635,10 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var photo in App.ListCamera2Api)
                 {
-                    VisualApartmentLocationPhoto newObj = new VisualApartmentLocationPhoto() { ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualApartmentId = VisualForm.Id, DateCreated = DateTime.Now };
-                    if (App.IsInvasive == true)
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                    }
-                    else
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                        //  await VisualProjectLocationPhotoDataStore.AddItemAsync(newObj);
-                    }
+                    VisualApartmentLocationPhoto newObj = new VisualApartmentLocationPhoto() { ImageDescription=photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualApartmentId = VisualForm.Id, DateCreated = DateTime.Now };
+                    newObj.ImageDescription = photo.ImageType;
+                    _ = AddNewPhoto(newObj).ConfigureAwait(false);
+                   
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -684,8 +674,6 @@ namespace Mobile.Code.ViewModels
             {
 
                 IsBusyProgress = false;
-
-
             }
             return await Task.FromResult(true);
 
@@ -723,12 +711,12 @@ namespace Mobile.Code.ViewModels
 
                     if (Device.RuntimePlatform == Device.Android)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true, ImageType=imgType } });
                         //await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPageForAndroid() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
                     }
                     if (Device.RuntimePlatform == Device.iOS)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true, ImageType = imgType } });
                         // await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
                     }
                    

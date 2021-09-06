@@ -18,8 +18,12 @@ namespace Mobile.Code.Models
             get { return _isChk; }
             set 
             {
-                _isChk = value; 
-                OnPropertyChanged("IsSelected");
+                if (_isChk != value)
+                {
+                    _isChk = value;
+                    OnPropertyChanged("IsSelected");
+                }
+                
             }
         }
 

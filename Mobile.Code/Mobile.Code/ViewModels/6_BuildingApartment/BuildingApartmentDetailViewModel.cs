@@ -386,15 +386,15 @@ namespace Mobile.Code.ViewModels
         private VisualApartmentFormViewModel _apartmentViewModel;
         
 
-        public VisualApartmentFormViewModel ApartmentViewModel
+        public VisualApartmentFormViewModel vm
         {
             get { return _apartmentViewModel; }
-            set { _apartmentViewModel = value; OnPropertyChanged("ApartmentViewModel"); }
+            set { _apartmentViewModel = value; OnPropertyChanged("vm"); }
         }
         private async Task GoToVisualForm(Apartment_Visual parm)
         {
             App.IsNewForm = false;
-            VisualApartmentFormViewModel vm = new VisualApartmentFormViewModel();
+             vm = new VisualApartmentFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
             vm.CountExteriorElements = vm.ExteriorElements.Count.ToString();
@@ -434,7 +434,7 @@ namespace Mobile.Code.ViewModels
             vm.BuildingApartment = BuildingApartment;
             vm.VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
-            ApartmentViewModel = vm;
+           
 
             App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
             if (App.IsInvasive == false)
@@ -454,8 +454,8 @@ namespace Mobile.Code.ViewModels
                 
                 vm.ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(Views._8_VisualReportForm.TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new Views._8_VisualReportForm.TabbedPageInvasive() { BindingContext = ApartmentViewModel });
+                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
+                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm) );
                 
             }
            

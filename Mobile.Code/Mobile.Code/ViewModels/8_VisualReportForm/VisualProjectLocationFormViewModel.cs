@@ -536,6 +536,8 @@ namespace Mobile.Code.ViewModels
             
 
         }
+
+        
         private string _countExteriorElements;
 
         public string CountExteriorElements

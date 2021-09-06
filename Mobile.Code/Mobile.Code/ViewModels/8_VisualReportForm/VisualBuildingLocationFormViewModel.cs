@@ -538,6 +538,11 @@ namespace Mobile.Code.ViewModels
             App.ListCamera2Api = new List<MultiImage>();
            
         }
+
+        public VisualBuildingLocationFormViewModel(VisualBuildingLocationFormViewModel viewModel)
+        {
+        }
+
         private string _countExteriorElements;
 
         public string CountExteriorElements

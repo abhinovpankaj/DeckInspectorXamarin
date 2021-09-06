@@ -56,6 +56,13 @@ namespace Mobile.Code.Views
 
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
+
+        public InvasiveVisualBuildingLocationForm(VisualBuildingLocationFormViewModel viewModel)
+        {
+            InitializeComponent();
+            this.BindingContext = viewModel;
+        }
+
         //protected async override void OnAppearing()
         //{
         //    base.OnAppearing();

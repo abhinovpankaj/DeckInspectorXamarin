@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Mobile.Code.Views._8_VisualReportForm.TabbedPageInvasive"
+    x:Class="Mobile.Code.Views.TabbedPageInvasive"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controles="clr-namespace:Mobile.Code.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:fontawesome="clr-namespace:FontAwesome"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:Mobile.Code.Views"
@@ -100,13 +101,14 @@
                     TabHeaderSpacing="100"
                     VerticalOptions="FillAndExpand">
                     <tabview:TabViewControl.ItemSource>
-                        <tabview:TabItem HeaderText="Visual">
+                        <!--<tabview:TabItem HeaderText="Visual">
                             <Grid>
                                 <pages:InvasiveVisualProjectLocationForm IsVisible="{Binding IsVisualProjectLocatoion}" />
                                 <pages:InvasiveVisualBuildingLocationForm IsVisible="{Binding IsVisualBuilding}" />
-                                <pages:InvasiveVisualApartmentLocationForm IsVisible="{Binding IsVisualApartment}" />
+                                <pages:InvasiveVisualApartmentLocationForm  IsVisible="{Binding IsVisualApartment}" />
+                                
                             </Grid>
-                        </tabview:TabItem>
+                        </tabview:TabItem>-->
 
                         <tabview:TabItem HeaderText="Invasive">
                             <pages:AdditionalInvasive VerticalOptions="FillAndExpand" />

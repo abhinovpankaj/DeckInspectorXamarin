@@ -310,7 +310,7 @@
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="50"
-                                                IsChecked="{Binding IsSelected}" />
+                                                IsChecked="{Binding IsSelected, Mode=OneWay}" />
                                         </Grid>
 
                                     </DataTemplate>
