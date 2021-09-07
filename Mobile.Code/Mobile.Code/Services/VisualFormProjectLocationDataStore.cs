@@ -117,8 +117,7 @@ namespace Mobile.Code.Services
 
                 using (var formData = new MultipartFormDataContent())
                 {
-                    //https://www.dotnetperls.com/split
-
+                    
                     int Index = 1000;
                     foreach (MultiImage img in finelList)
                     {
