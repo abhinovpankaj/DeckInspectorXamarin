@@ -423,7 +423,7 @@ namespace Mobile.Code.ViewModels
                                 var invasiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "TRUE").ToList();
                                 response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, invasiveImages);
                                 var conclusiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "CONCLUSIVE").ToList();
-                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm,conclusiveImages, "CONCLUSIVE");
+                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, conclusiveImages, "CONCLUSIVE");
                             }
 
                         }

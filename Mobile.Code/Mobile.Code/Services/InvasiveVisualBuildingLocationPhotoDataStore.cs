@@ -60,7 +60,7 @@ namespace Mobile.Code.Services
                 items.Add(item);
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "Update", IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "Update", IsServerData = true });
 
             }
             else

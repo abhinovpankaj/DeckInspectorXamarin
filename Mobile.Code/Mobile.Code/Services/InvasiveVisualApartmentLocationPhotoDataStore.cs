@@ -36,7 +36,7 @@ namespace Mobile.Code.Services
                 item.InvasiveImage = true;
             }
             items.Add(item);
-            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
+            App.VisualEditTrackingForInvasive.Add(new MultiImage() {  Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
             return await Task.FromResult(true);
         }
 
@@ -56,7 +56,7 @@ namespace Mobile.Code.Services
                 items.Add(item);
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Update", IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Update", IsServerData = true });
 
             }
             else
@@ -140,7 +140,7 @@ namespace Mobile.Code.Services
                         items = items.Where(c => c.ImageDescription == "TRUE" || c.ImageDescription == "CONCLUSIVE").ToList();
                         foreach (var item in items)
                         {
-                            App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType=item.ImageDescription, Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                            App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
                         }
                         response.EnsureSuccessStatusCode();
 
