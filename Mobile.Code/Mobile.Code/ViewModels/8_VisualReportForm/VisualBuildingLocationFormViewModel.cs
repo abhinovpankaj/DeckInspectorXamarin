@@ -829,7 +829,7 @@ namespace Mobile.Code.ViewModels
                 InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
 
                 ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                ConclusiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
+                ConclusiveUnitPhotoCount = ConclusiveVisualBuildingLocationPhotoItems.Count.ToString();
             }
 
 

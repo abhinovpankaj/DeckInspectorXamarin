@@ -140,23 +140,19 @@ namespace Mobile.Code.Services
                         Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                         
-                            items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
-                            items = items.Where(c => c.ImageDescription == "TRUE"||c.ImageDescription=="CONCLUSIVE").ToList(); // changed for conclusiveimages
-                            foreach (var item in items)
-                            {
-                                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                            }
+                        items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
+                        items = items.Where(c => c.ImageDescription == "TRUE" || c.ImageDescription == "CONCLUSIVE").ToList(); // changed for conclusiveimages
+                        foreach (var item in items)
+                        {
+                            App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                        }
                         
                         response.EnsureSuccessStatusCode();
 
                         return await Task.FromResult(items);
-
-
                     }
                 }
             }
-
-
         }
 
         public void Clear()
