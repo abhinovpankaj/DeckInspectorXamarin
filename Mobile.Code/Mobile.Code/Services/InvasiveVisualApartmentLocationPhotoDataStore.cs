@@ -42,11 +42,7 @@ namespace Mobile.Code.Services
 
         public async Task<bool> UpdateItemAsync(VisualApartmentLocationPhoto item)
         {
-            //var oldItem = items.Where((VisualApartmentLocationPhoto arg) => arg.Id == item.Id).FirstOrDefault();
-            //items.Remove(oldItem);
-            //items.Add(item);
-
-            //return await Task.FromResult(true);
+           
             if (App.IsInvasive == true)
             {
                 item.InvasiveImage = true;
@@ -77,15 +73,7 @@ namespace Mobile.Code.Services
                 }
             }
             
-            //else
-            //{
-
-            //    App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false });
-            //}
-
-
-
-
+   
             return await Task.FromResult(true);
         }
 
@@ -104,9 +92,7 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true });
-
-
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() {ImageType=item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true });
 
             }
             var oldDelete = App.VisualEditTrackingForInvasive.Where(c => c.Id == item.Id && c.IsServerData == false && c.Status == "New").SingleOrDefault();
@@ -151,10 +137,10 @@ namespace Mobile.Code.Services
 
 
                         items = JsonConvert.DeserializeObject<List<VisualApartmentLocationPhoto>>(result.Data.ToString());
-                        items = items.Where(c => c.ImageDescription.Length>0).ToList();
+                        items = items.Where(c => c.ImageDescription == "TRUE" || c.ImageDescription == "CONCLUSIVE").ToList();
                         foreach (var item in items)
                         {
-                            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                            App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType=item.ImageDescription, Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
                         }
                         response.EnsureSuccessStatusCode();
 

@@ -27,101 +27,8 @@ namespace Mobile.Code.Services
 
         public BuildingApartmentImagesDataStore()
         {
-            //items = new List<Item>()
-            //{
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
-            //};
+            
             items = new List<BuildingApartmentImages>();
-            //{
-            //    new BuildingApartmentImages
-            //    {
-            //        Id = "1",
-            //        ApartmentID="1",
-            //        Name  = "Apartment Image 1 ",
-            //        Description="This is sample project description.",
-            //        Image="https://thumbs.dreamstime.com/z/construction-site-construction-workers-area-people-working-construction-group-people-professional-construction-118630790.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-            //        CreatedOn=" May 3 ,2020",
-                  
-
-            //    },
-            //    new BuildingApartmentImages
-            //    {
-            //        Id = "2",
-            //        ApartmentID="1",
-            //        Name  = "Apartment Image 2 ",
-            //        Description="This is sample project description.",
-            //        Image="https://m.economictimes.com/thumb/msid-69127844,width-1200,height-900,resizemode-4,imgsize-347903/construction-site-generators-types-features-of-generators-used-at-construction-sites.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-            //    },
-            //    new BuildingApartmentImages
-            //    {
-            //        Id = "3",
-            //        ApartmentID="1",
-            //        Name  = "Apartment Image 3 ",
-            //        Description="This is sample project description.",
-            //        Image="https://images.globest.com/contrib/content/uploads/sites/304/2020/04/Construction-resized.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new BuildingApartmentImages
-            //    {
-            //        Id = "4",
-            //        ApartmentID="2",
-            //        Name  = "Apartment Image 4 ",
-            //        Description="This is sample project description.",
-            //        Image="https://media.istockphoto.com/photos/professional-engineer-worker-at-the-house-building-construction-site-picture-id905891244",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new BuildingApartmentImages
-            //    {
-            //        Id = "5",
-            //        ApartmentID="2",
-            //        Name  = "Apartment Image 5 ",
-            //        Description="This is sample project description.",
-            //        Image="https://media.istockphoto.com/photos/professional-engineer-worker-at-the-house-building-construction-site-picture-id905891244",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //     new BuildingApartmentImages
-            //    {
-            //        Id = "6",
-            //        ApartmentID="2",
-            //        Name  = "Apartment Image 6 ",
-            //        Description="This is sample project description.",
-            //        Image="https://www.ukconstructionmedia.co.uk/wp-content/uploads/Screen-Shot-2016-04-21-at-11.55.06.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-
-            //};
 
         }
         public async Task<bool> AddItemAsync(BuildingApartmentImages item)
@@ -133,9 +40,7 @@ namespace Mobile.Code.Services
 
         public async Task<bool> UpdateItemAsync(BuildingApartmentImages item)
         {
-            //var oldItem = items.Where((BuildingApartmentImages arg) => arg.Id == item.Id).FirstOrDefault();
-            //items.Remove(oldItem);
-            //items.Add(item);
+            
             Regex UrlMatch = new Regex(@"(?i)(http(s)?:\/\/)?(\w{2,25}\.)+\w{3}([a-z0-9\-?=$-_.+!*()]+)(?i)", RegexOptions.Singleline);
             if (item.ImageUrl == "blank.png" || UrlMatch.IsMatch(item.ImageUrl))
             {
@@ -163,14 +68,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                    //if (response.IsSuccessStatusCode == false)
-                    //{
-                    //    throw new ApiException
-                    //    {
-                    //        StatusCode = (int)response.StatusCode,
-                    //        Content = result.Message
-                    //    };
-                    //}
+                   
                     return await Task.FromResult(result);
 
 

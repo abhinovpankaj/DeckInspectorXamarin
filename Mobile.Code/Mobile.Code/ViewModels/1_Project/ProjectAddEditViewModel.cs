@@ -141,13 +141,7 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
 
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
+          
             ImgData = new ImageData();
            IsBusyProgress = false;
         }
@@ -166,12 +160,7 @@ namespace Mobile.Code.ViewModels
                 {
                     Heading = "Project Name";
                 }
-                //Items.Clear();
-                //var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
+                
             }
             catch (Exception ex)
             {
@@ -215,9 +204,7 @@ namespace Mobile.Code.ViewModels
             }
             if (!string.IsNullOrEmpty(SelectedImage))
             {
-                //var fileLength = new FileInfo(SelectedImage).Length;
-                //string size = GetFileSize(fileLength);
-                //ImgData.Size = size;
+                
                 ImgData.Name = Project.ImageName;
                 ImgData.Description = Project.ImageDescription;
                 ImgData.Path = SelectedImage;
@@ -256,15 +243,7 @@ namespace Mobile.Code.ViewModels
         }
         public static string GetFileSize(long length)
         {
-            //string[] sizes = { "B", "KB", "MB", "GB" };
-            //int order = 0;
-            //while (fileLength >= 1024 && order + 1 < sizes.Length)
-            //{
-            //    order++;
-            //    fileLength = fileLength / 1024;
-            //}
-            //string result = String.Format("{0:0.##} {1}", fileLength, sizes[order]);
-            //return result;
+            
             long B = 0, KB = 1024, MB = KB * 1024, GB = MB * 1024, TB = GB * 1024;
             double size = length;
             string suffix = nameof(B);
@@ -330,16 +309,7 @@ namespace Mobile.Code.ViewModels
                string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
                 //  ImgData.mediaFile = arr;
                 return filepath;
-             //   byte[] arr = null;
-             //  using (MemoryStream ms = new MemoryStream())
-             // {
-             //     file.GetStream().CopyTo(ms);
-             //     file.Dispose();
-             //     arr = ms.ToArray();
-             //  }
-             // string filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), arr);
-             //ImgData.mediaFile = file;
-             // return filepath;
+             
             }
             else {
 
@@ -362,13 +332,7 @@ namespace Mobile.Code.ViewModels
         {
             Project.ImageName = ImgData.Name;
             Project.ImageDescription = ImgData.Description;
-            //using (var fs = new FileStream(ImgData.Path, FileMode.Open, FileAccess.Read))
-            //{
-            //    var imageData = new byte[fs.Length];
-            //    fs.Read(imageData, 0, (int)fs.Length);
-            //    var base64String = Convert.ToBase64String(imageData);
-            //    project.ProjectImage = base64String;
-            //}
+            
             
             Project.ImageUrl = ImgData.Path;
 
@@ -376,22 +340,5 @@ namespace Mobile.Code.ViewModels
         }
 
     }
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+   
 }

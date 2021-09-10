@@ -143,7 +143,7 @@ namespace Mobile.Code.Services
 
                         
                             items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
-                            items = items.Where(c => c.ImageDescription != "TRUE").ToList();
+                            items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription!="CONCLUSIVE").ToList();
                         foreach (var item in items)
                             {
                                 App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });

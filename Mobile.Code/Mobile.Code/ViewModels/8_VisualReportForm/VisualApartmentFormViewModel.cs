@@ -374,11 +374,15 @@ namespace Mobile.Code.ViewModels
 
                     if (App.IsInvasive == true)
                     {
-                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        if (VisualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        }
+                        
                     }
 
                     if (await VisualFormApartmentDataStore.GetItemAsync(VisualForm.Id) == null)
@@ -416,9 +420,10 @@ namespace Mobile.Code.ViewModels
                             {
 
                                 //response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive);
-                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "TRUE").ToList());
-
-                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "CONCLUSIVE").ToList(), "CONCLUSIVE");
+                                var invasiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "TRUE").ToList();
+                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, invasiveImages);
+                                var conclusiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "CONCLUSIVE").ToList();
+                                response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm,conclusiveImages, "CONCLUSIVE");
                             }
 
                         }
@@ -780,7 +785,7 @@ namespace Mobile.Code.ViewModels
                 InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
 
-                ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIBE"));
+                ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = ConclusiveVisualApartmentLocationPhotoItems.Count.ToString();
 
                 return;
@@ -803,11 +808,13 @@ namespace Mobile.Code.ViewModels
             {
                 //if (parm.GetType() == typeof(VisualProjectLocationPhoto))
                 //{
-                VisualApartmentLocationPhoto obj = parm as VisualApartmentLocationPhoto;
-                await InvasiveVisualApartmentLocationPhotoDataStore.DeleteItemAsync(obj);
-                InvasiveVisualApartmentLocationPhotoItems.Remove(obj);
+               
+                await InvasiveVisualApartmentLocationPhotoDataStore.DeleteItemAsync(parm);
+                var photos = new ObservableCollection<VisualApartmentLocationPhoto>((await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
+                InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
-                ConclusiveVisualApartmentLocationPhotoItems.Remove(obj);
+
+                ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = ConclusiveVisualApartmentLocationPhotoItems.Count.ToString();
                 // await Load();
             }

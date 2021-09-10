@@ -291,17 +291,7 @@ namespace Mobile.Code.Services
             {
                  Query = string.Format("api/Project/GetProjectForMobile?UserID={0}&CreatedOn={1}&isActive={2}&searchText={3}&ProjectType={4}", App.LogUser.Id.ToString(), null, false, string.Empty, string.Empty);
             }
-         
-         
-            //if(!string.IsNullOrEmpty(CreatedOn))
-            //{
-            //    Query += "?" + CreatedOn;
-            //}
-            //if (!string.IsNullOrEmpty(search))
-            //{
-            //    Query += "?" + search;
-            //}
-
+            
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(App.AzureBackendUrl);

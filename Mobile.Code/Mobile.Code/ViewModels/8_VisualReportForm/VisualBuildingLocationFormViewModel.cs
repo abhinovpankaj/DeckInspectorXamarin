@@ -308,11 +308,15 @@ namespace Mobile.Code.ViewModels
 
                     if (App.IsInvasive == true)
                     {
-                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        if (VisualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        }
+                       
                     }
 
                     if (await VisualFormBuildingLocationDataStore.GetItemAsync(VisualForm.Id) == null)
@@ -617,18 +621,10 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var photo in App.ListCamera2Api)
                 {
-                    VisualBuildingLocationPhoto newObj = new VisualBuildingLocationPhoto() { ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualBuildingId = VisualForm.Id, DateCreated = DateTime.Now };
-                    if (App.IsInvasive == true)
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                    }
-                    else
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                        //  await VisualProjectLocationPhotoDataStore.AddItemAsync(newObj);
-                    }
+                    VisualBuildingLocationPhoto newObj = new VisualBuildingLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualBuildingId = VisualForm.Id, DateCreated = DateTime.Now };                  
+                    newObj.ImageDescription = photo.ImageType;                 
+                _ = AddNewPhoto(newObj).ConfigureAwait(false);
+                  
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -645,8 +641,14 @@ namespace Mobile.Code.ViewModels
                    
                     if (App.IsInvasive == true)
                     {
-                        InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>((await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
+                        var photos = new ObservableCollection<VisualBuildingLocationPhoto>((await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
                         InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
+                        
+                        InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
+                        InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
+
+                        ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                        ConclusiveUnitPhotoCount = ConclusiveVisualBuildingLocationPhotoItems.Count.ToString();
                     }
               
                 }
@@ -727,12 +729,12 @@ namespace Mobile.Code.ViewModels
                 case "Take New Photo":
                     if (Device.RuntimePlatform == Device.Android)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true, ImageType = imgType } });
                         //await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPageForAndroid() { BindingContext = new CameraViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true } });
                     }
                     if (Device.RuntimePlatform == Device.iOS)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true, ImageType = imgType } });
                     }
                    
                     break;
@@ -821,9 +823,12 @@ namespace Mobile.Code.ViewModels
 
                 VisualBuildingLocationPhoto obj = parm as VisualBuildingLocationPhoto;
                 await InvasiveVisualBuildingLocationPhotoDataStore.DeleteItemAsync(obj);
-                InvasiveVisualBuildingLocationPhotoItems.Remove(parm);// = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                var photos= new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+
+                InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
-                ConclusiveVisualBuildingLocationPhotoItems.Remove(parm);
+
+                ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
             }
 

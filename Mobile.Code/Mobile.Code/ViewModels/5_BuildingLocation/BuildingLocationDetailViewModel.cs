@@ -529,13 +529,9 @@ namespace Mobile.Code.ViewModels
                 vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = vm });
+                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm));
             }
-                //vm.WaterProofingElements.selectedList = parm.ExteriorElements.Split(',').ToList();
-               
-          
-            //await Shell.Current.Navigation.PushAsync(new EditProjectLocationImage()
-            //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
+             
         }
 
         public ICommand DeleteVisualFormCommand => new Command<BuildingLocation_Visual>(async (BuildingLocation_Visual obj) => await DeleteVisualFormCommandExecute(obj));

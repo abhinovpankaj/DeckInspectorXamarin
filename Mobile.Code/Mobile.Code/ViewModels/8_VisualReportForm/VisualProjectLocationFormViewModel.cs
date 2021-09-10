@@ -316,11 +316,15 @@ namespace Mobile.Code.ViewModels
 
                     if (App.IsInvasive == true)
                     {
-                        VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                        VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
-                        VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        if (visualForm.IsPostInvasiveRepairsRequired)
+                        {
+                            VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                            VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                        }
+                        
                     }
 
                     if (await VisualFormProjectLocationDataStore.GetItemAsync(VisualForm.Id) == null)
@@ -629,18 +633,10 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var photo in App.ListCamera2Api)
                 {
-                    VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id};
-                    if (App.IsInvasive == true)
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                    }
-                    else
-                    {
-
-                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                        //  await VisualProjectLocationPhotoDataStore.AddItemAsync(newObj);
-                    }
+                    VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id};
+                    newObj.ImageDescription = photo.ImageType;
+                    _ = AddNewPhoto(newObj).ConfigureAwait(false);
+    
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -727,12 +723,12 @@ namespace Mobile.Code.ViewModels
 
                     if (Device.RuntimePlatform == Device.Android)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, ImageType = imgType } });
                         // await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPageForAndroid() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true } });
                     }
                     if (Device.RuntimePlatform == Device.iOS)
                     {
-                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true } });
+                        await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, ImageType = imgType } });
                     }
                     
                     
@@ -822,10 +818,19 @@ namespace Mobile.Code.ViewModels
                 VisualProjectLocationPhoto obj = parm as VisualProjectLocationPhoto;
                 await InvasiveVisualProjectLocationPhotoDataStore.DeleteItemAsync(obj, true);
                 //UPDATED FOR CONCLUSIVE 
-                InvasiveVisualProjectLocationPhotoItems.Remove(parm); // = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+
+                var photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
-                ConclusiveVisualProjectLocationPhotoItems.Remove(parm);
+
+                ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
+               
+                //InvasiveVisualProjectLocationPhotoItems.Remove(obj); // = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+
+                //ConclusiveVisualProjectLocationPhotoItems.Remove(obj);
+                //InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
+                //ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
             }
 
 

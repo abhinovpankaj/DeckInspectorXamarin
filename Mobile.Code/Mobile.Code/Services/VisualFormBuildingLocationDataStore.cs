@@ -102,12 +102,12 @@ namespace Mobile.Code.Services
             {
 
                 parameters.Add("IsInvaiveImage", imgType);
-                // parameters.Add("IsInvasive", "FALSE");
+
             }
             else
             {
                 parameters.Add("IsInvaiveImage", null);
-                //  parameters.Add("IsInvasive", "FALSE");
+
 
             }
 

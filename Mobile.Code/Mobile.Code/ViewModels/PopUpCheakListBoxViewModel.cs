@@ -126,17 +126,6 @@ namespace Mobile.Code.ViewModels
                 Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Integrations", IsSelected = false });
                 Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Door Threshold", IsSelected = false });
                 Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Stucco Interface", IsSelected = false });
-            //}
-            //else if (type == CheakBoxElementsType.WaterProofing)
-            //{
-            //    Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Flashings", IsSelected = false });
-            //    Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Waterproofing", IsSelected = false });
-            //    Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Coatings", IsSelected = false });
-            //    Items.Add(new CheckBoxItem() { Id = Guid.NewGuid(), Name = "Sealants", IsSelected = false });
-            //}
-
-
-
 
         }
     }

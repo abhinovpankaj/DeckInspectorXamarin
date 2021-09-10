@@ -68,32 +68,7 @@ namespace Mobile.Code.ViewModels
             set { projectBuilding = value; OnPropertyChanged("ProjectBuilding"); }
         }
 
-        //private async Task Save()
-        //{
-        //    if (string.IsNullOrEmpty(BuildingApartment.Name))
-        //    {
-        //        await Shell.Current.DisplayAlert("Alert", "Building Apartment Name is required", "OK");
-        //        return;
-        //    }
-        //    if (string.IsNullOrEmpty(BuildingApartment.Id))
-        //    {
-        //        BuildingApartment.Id = Guid.NewGuid().ToString();
-        //        BuildingApartment.BuildingId = ProjectBuilding.Id;
-        //        //Project.
-        //        //   Project.ProjectImage = ImgPata;
-        //        BuildingApartment.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-        //        await BuildingApartmentDataStore.AddItemAsync(BuildingApartment);
-        //        //await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-        //        //  await Shell.Current.GoToAsync($"projectDetail/?Id={Project.Id}");
-        //        await Shell.Current.Navigation.PopAsync();
-        //        await Shell.Current.Navigation.PushAsync(new BuildingApartmentDetail() { BindingContext = new BuildingApartmentDetailViewModel() { BuildingApartment = BuildingApartment } });
-        //    }
-        //    else
-        //    {
-        //        await Shell.Current.Navigation.PopAsync();
-        //        await BuildingApartmentDataStore.UpdateItemAsync(BuildingApartment);
-        //    }
-        //}
+       
         private async Task Save()
         {
             if (string.IsNullOrEmpty(BuildingApartment.Name))

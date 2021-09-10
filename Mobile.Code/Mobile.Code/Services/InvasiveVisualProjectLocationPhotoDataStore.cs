@@ -57,7 +57,7 @@ namespace Mobile.Code.Services
                 items.Add(item);
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
                 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Update" , IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Update" , IsServerData = true });
               
             }
 
@@ -144,7 +144,7 @@ namespace Mobile.Code.Services
                             items = items.Where(c => c.ImageDescription == "TRUE"||c.ImageDescription=="CONCLUSIVE").ToList(); // changed for conclusiveimages
                             foreach (var item in items)
                             {
-                                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
                             }
                         
                         response.EnsureSuccessStatusCode();

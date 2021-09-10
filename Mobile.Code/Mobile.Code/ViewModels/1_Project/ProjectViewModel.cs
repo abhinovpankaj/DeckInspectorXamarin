@@ -39,20 +39,16 @@ namespace Mobile.Code.ViewModels
         {
             App.IsInvasive = false;
             string action = project.ProjectType;
-            //  string action = await Shell.Current.DisplayActionSheet("Select Report Type", "Cancel", null, "Visual Report", "Invasive Report", "Finel Report");
-            //  ShellNavigationState state = Shell.Current.CurrentState;
-            //  await Shell.Current.GoToAsync($"projectDetail/?Id={project.Id}");
+           
             if (action == "Visual Report")
             {
                 App.ReportType = ReportType.Visual;
-                //ProjectType = action;
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+                
             }
             else if (action == "Invasive Report")
             {
                 App.ReportType = ReportType.Invasive;
-                //  ProjectType = action;
-                //  await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+              
             }
             else if (action == "Final Report")
             {
@@ -62,44 +58,18 @@ namespace Mobile.Code.ViewModels
             }
 
             await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
+           
         }
 
         async Task ExecuteInvasiveDetailCommand(Project project)
         {
             App.IsInvasive = true;
             string action = project.ProjectType;
-            //  string action = await Shell.Current.DisplayActionSheet("Select Report Type", "Cancel", null, "Visual Report", "Invasive Report", "Finel Report");
-            //  ShellNavigationState state = Shell.Current.CurrentState;
-            //  await Shell.Current.GoToAsync($"projectDetail/?Id={project.Id}");
-            //if (action == "Visual Report")
-            //{
-            //    App.ReportType = ReportType.Visual;
-            //    //ProjectType = action;
-            //    // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //}
-            //else if (action == "Invasive Report")
-            //{
-            //    App.ReportType = ReportType.Invasive;
-            //    //  ProjectType = action;
-            //    //  await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //}
-            //else if (action == "Final Report")
-            //{
-            //    App.ReportType = ReportType.Final;
-            //    //   ProjectType = action;
-
-            //}
+           
             App.IsInvasive = true;
             project.Id = project.InvasiveProjectID;
             await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
+           
         }
         private bool _Isbusyprog;
 
@@ -123,46 +93,13 @@ namespace Mobile.Code.ViewModels
         async Task ExecuteAddNewCommand()
         {
             string ProjectType = string.Empty;
-            //string action = await Shell.Current.DisplayActionSheet("Select Report Type", "Cancel", null, "Visual Report", "Invasive Report", "Final Report");
-            ////  ShellNavigationState state = Shell.Current.CurrentState;
-            ////  await Shell.Current.GoToAsync($"projectDetail/?Id={project.Id}");
-            //if (action == "Visual Report")
-            //{
-            //    App.ReportType = ReportType.Visual;
-            //    ProjectType = action;
-            //    // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //}
-            //else if (action == "Invasive Report")
-            //{
-            //    App.ReportType = ReportType.Invasive;
-            //    ProjectType = action;
-            //    //  await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-            //}
-            //else if (action == "Final Report")
-            //{
-            //    App.ReportType = ReportType.Final;
-            //    ProjectType = action;
-
-            //}
-            //if (!string.IsNullOrEmpty(ProjectType))
+            
             App.IsInvasive = false;
 
             ProjectType = "Visual Report";
             await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType } });
 
 
-            //string action = await Application.Current.MainPage.DisplayActionSheet("Choose ProjectType", "Cancel", "MultiLevel Project", "SingleLevel Project");
-            //if (action == "Common Location")
-            //{
-            //    //ShellNavigationState state = Shell.Current.CurrentState;
-            //    //await Shell.Current.GoToAsync($"{state.Location}/newProject?action={animalName}");
-            //}
-            //if (action == "Building")
-            //{
-            //    //await Shell.Current.GoToAsync("projectdetail");
-            //}
-            //await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
         }
         private async Task<bool> Running()
         {
@@ -179,29 +116,6 @@ namespace Mobile.Code.ViewModels
             if (complete == true)
             {
 
-                //foreach (var item in Projects)
-                //{
-                //    AllProjects.Add(new Project
-                //    {
-
-                //        Attendent = item.Attendent,
-                //        CreatedOn = item.CreatedOn,
-                //        Description = item.Description,
-                //        EmployeeName = item.EmployeeName,
-                //        IdAnimation = $"All{Guid.NewGuid()}",
-                //        IsStarred = item.IsStarred,
-                //        Id = item.Id,
-                //        ProjectType = item.ProjectType,
-                //        ImageUrl = item.ImageUrl,
-                //        Name = item.Name,
-                //        Location = item.Location,
-
-                //        // WorkAreas = item.WorkAreas
-
-                //    }); ; ;
-                    
-                    //DependencyService.Get<ILodingPageService>().HideLoadingPage();
-              //  }
 
 
                 IsBusyProgress = false;
@@ -235,22 +149,5 @@ namespace Mobile.Code.ViewModels
         }
     }
     
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+   
 }

@@ -75,8 +75,9 @@
                     </Grid.ColumnDefinitions>
                     <Label
                         Grid.Column="0"
+                        Padding="0"
                         FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="18"
+                        FontSize="25"
                         Style="{StaticResource LabelStyle}"
                         Text="Projects"
                         TextColor="Black"
@@ -85,7 +86,7 @@
                     <Label
                         Grid.Column="1"
                         FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="18"
+                        FontSize="25"
                         Style="{StaticResource LabelStyle}"
                         Text="|"
                         TextColor="{DynamicResource Gray-200}"
@@ -95,7 +96,7 @@
                         Grid.Column="2"
                         BackgroundColor="White"
                         FontFamily="{StaticResource MaterialFontFamily}"
-                        FontSize="30"
+                        FontSize="40"
                         HorizontalOptions="CenterAndExpand"
                         Text="{x:Static helpers:IconFont.PlusCircle}"
                         TextColor="#2e479b"

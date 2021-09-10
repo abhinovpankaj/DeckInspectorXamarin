@@ -117,28 +117,16 @@ namespace Mobile.Code.ViewModels
                         }
                         else
                         {
-                            
-                            //errorMessage = "you are not authorized to access this application";
-                           // await Shell.Current.DisplayAlert("Message", errorMessage, "OK");
-                            
+                           
                             result.Message = "you are not authorized to access this application";
                             result.Status = ApiResult.Fail; ;
                         }
                     }
                     else
                     {
-                        //errorMessage = "Invalid username and password";
-                        //await Shell.Current.DisplayAlert("Message", errorMessage, "OK");
-                        //return;
                         result.Message = "you are not authorized to access this application";
                         result.Status = ApiResult.Fail; ;
                     }
-
-
-
-
-
-
 
                 }
             }
@@ -146,8 +134,7 @@ namespace Mobile.Code.ViewModels
             {
                 result.Message = ex.Message;
                 result.Status = ApiResult.Fail; ;
-                // await Shell.Current.DisplayAlert("Validation Error", ex.Message, "OK");
-                // Possible that device doesn't support secure storage on device.
+              
             }
             return await Task.FromResult(result);
         }
@@ -177,12 +164,7 @@ namespace Mobile.Code.ViewModels
                     SecureStorage.Remove("Username");
                     SecureStorage.Remove("Password");
                 }
-                //if (Savecredentials == true)
-                //{
-                //    await SecureStorage.SetAsync("Username", Username);
-                //    await SecureStorage.SetAsync("Password", Password);
-
-                //}
+             
 
             }
             catch (Exception )

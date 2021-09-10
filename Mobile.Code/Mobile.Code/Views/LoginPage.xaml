@@ -1,235 +1,156 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"   
-               xmlns:controls="clr-namespace:Mobile.Code.Controls"
-               xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             xmlns:controles="clr-namespace:Mobile.Code.Controls"
-             Shell.NavBarIsVisible="False" Visual="Material"
-             x:Class="Mobile.Code.Views.LoginPage">
-    <!--<AbsoluteLayout>
-        
-        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            
-                <ScrollView.VerticalOptions>
-                    <OnIdiom
-                    x:TypeArguments="LayoutOptions"
-                    Default="CenterAndExpand"
-                    Phone="FillAndExpand" />
-                </ScrollView.VerticalOptions>
-            <StackLayout>
-                <yummy:PancakeView CornerRadius="5" Margin="0,20,0,0"
-                               HasShadow="True"
-                               HeightRequest="80"
-                               WidthRequest="100"
-                               VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
-                               Elevation="1">
-                    <Image Source="icon.png"
-                                            Aspect="AspectFill"/>
-                </yummy:PancakeView>
-                <Frame BackgroundColor="White" HasShadow="True"
-                Margin="20,50"
-              
-                VerticalOptions="FillAndExpand"
-                WidthRequest="{OnPlatform Default='-1',
-                                          UWP='350'}">
+<ContentPage
+    x:Class="Mobile.Code.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controles="clr-namespace:Mobile.Code.Controls"
+    xmlns:controls="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Shell.NavBarIsVisible="False"
+    Visual="Material"
+    mc:Ignorable="d">
 
-
-
-                    <Grid Margin="10" Padding="0"
-                                ColumnSpacing="0"
-                                RowSpacing="0">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" VerticalTextAlignment="Start" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="20"                           
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Login"
-                                    TextColor="{DynamicResource Gray-900}" />
-
-                        <BoxView HeightRequest="1" Grid.Row="1"  Color="Gray" Margin="0,14,0,14" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                             
-                             
-                 Style="{StaticResource BoxViewStyle}"  />
-
-                        <Label  Grid.Row="2" Margin="0,5,0,5"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Username"
-                                    TextColor="Black" />
-
-
-
-
-                        <Grid Grid.Row="3">
-
-                            <controles:BorderlessEntry HeightRequest="40" Text="{Binding Username}" TextColor="Black" FontFamily="{StaticResource Montserrat-Regular}" BackgroundColor="#ececec"></controles:BorderlessEntry>
-
-                        </Grid>
-
-                        <Label Margin="0,5,0,3" Grid.Row="4"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Password"
-                                    TextColor="Black" />
-                        <Grid Grid.Row="5" Margin="0,10,0,0">
-
-                            <controles:BorderlessEntry IsPassword="True" Text="{Binding Password}" TextColor="Black" FontFamily="{StaticResource Montserrat-Regular}" HeightRequest="40" BackgroundColor="#ececec"></controles:BorderlessEntry>
-
-                        </Grid>
-                        <Grid Grid.Row="6" x:Name="GridRemember">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <CheckBox IsChecked="{Binding Savecredentials}"></CheckBox>
-                            <Label Margin="0,5,0,3" Grid.Column="1" FontSize="12"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Save login credentials"
-                                    TextColor="Black" />
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SavecredentialCommand,Source={x:Reference GridRemember}}" ></TapGestureRecognizer>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-
-                        <Button
-                        Grid.Row="7"
-                        Margin="0,16"
-                        Command="{Binding LoginCommand}"
-                        BackgroundColor="#2e479b"
-                    TextColor="White"
-                        Text="LOG IN" />
-                       
-                    </Grid>
-
-                </Frame>
-            </StackLayout>
-        </ScrollView>
-
-        
-
-    </AbsoluteLayout>-->
     <AbsoluteLayout>
-        <controls:Loading   AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsBusyProgress}"
-        AbsoluteLayout.LayoutFlags="All"></controls:Loading>
-        <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" IsVisible="{Binding IsBusyProgress,Converter={StaticResource InverseBoolConverter}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-    <yummy:PancakeView CornerRadius="5" Margin="0,0,0,0" Grid.Row="0"
-                               
-                              
-                               VerticalOptions="CenterAndExpand"
-                                   HorizontalOptions="CenterAndExpand"
-                               >
-        <Image Source="icon.png"
-                                            Aspect="AspectFill"/>
-    </yummy:PancakeView>
-        <Frame BackgroundColor="White" HasShadow="True" Grid.Row="1" Margin="10,10"
-               HorizontalOptions="FillAndExpand"
-              
-                VerticalOptions="CenterAndExpand">
-
-
-
-
-            <Grid Padding="0" VerticalOptions="CenterAndExpand"  HorizontalOptions="FillAndExpand"
-                                ColumnSpacing="0"
-                                RowSpacing="0">
-
+        <controls:Loading
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsBusyProgress}" />
+        <Grid
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
+            VerticalOptions="CenterAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" VerticalTextAlignment="Start" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="20"                           
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Login"
-                                    TextColor="{DynamicResource Gray-900}" />
+            <yummy:PancakeView
+                Grid.Row="0"
+                Margin="0,-80,0,0"
+                CornerRadius="5"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <Image Aspect="AspectFill" Source="icon.png" />
+            </yummy:PancakeView>
+            <Frame
+                Grid.Row="1"
+                Margin="10,10"
+                BackgroundColor="White"
+                HasShadow="True"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <Grid
+                    Padding="0"
+                    ColumnSpacing="0"
+                    HorizontalOptions="FillAndExpand"
+                    RowSpacing="0"
+                    VerticalOptions="CenterAndExpand">
 
-            <BoxView HeightRequest="1" Grid.Row="1"  Color="Gray" Margin="0,14,0,14" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                             
-                             
-                 Style="{StaticResource BoxViewStyle}"  />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
 
-            <Label  Grid.Row="2" Margin="0,5,0,5"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Username"
-                                    TextColor="Black" />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="20"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Login"
+                        TextColor="{DynamicResource Gray-900}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Start" />
+
+                    <BoxView
+                        Grid.Row="1"
+                        Margin="0,1,0,14"
+                        HeightRequest="1"
+                        HorizontalOptions="FillAndExpand"
+                        Style="{StaticResource BoxViewStyle}"
+                        VerticalOptions="FillAndExpand"
+                        Color="Gray" />
+
+                    <Label
+                        Grid.Row="2"
+                        Margin="0,5,0,5"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Username"
+                        TextColor="Black" />
 
 
 
 
-            <Grid Grid.Row="3">
+                    <Grid Grid.Row="3">
 
-                <controles:BorderlessEntry HeightRequest="40" Text="{Binding Username}" TextColor="Black" FontFamily="{StaticResource Montserrat-Regular}" BackgroundColor="#ececec"></controles:BorderlessEntry>
+                        <controles:BorderlessEntry
+                            BackgroundColor="#ececec"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            HeightRequest="40"
+                            Text="{Binding Username}"
+                            TextColor="Black" />
 
-            </Grid>
+                    </Grid>
 
-            <Label Margin="0,5,0,3" Grid.Row="4"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Password"
-                                    TextColor="Black" />
-            <Grid Grid.Row="5" Margin="0,10,0,0">
+                    <Label
+                        Grid.Row="4"
+                        Margin="0,5,0,3"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Password"
+                        TextColor="Black" />
+                    <Grid Grid.Row="5" Margin="0,10,0,0">
 
-                <controles:BorderlessEntry IsPassword="True" Text="{Binding Password}" TextColor="Black" FontFamily="{StaticResource Montserrat-Regular}" HeightRequest="40" BackgroundColor="#ececec"></controles:BorderlessEntry>
+                        <controles:BorderlessEntry
+                            BackgroundColor="#ececec"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            HeightRequest="40"
+                            IsPassword="True"
+                            Text="{Binding Password}"
+                            TextColor="Black" />
 
-            </Grid>
-            <Grid Grid.Row="6" x:Name="GridRemember">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Grid x:Name="GridRemember" Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <CheckBox IsChecked="{Binding Savecredentials}" Color="#2e479b"></CheckBox>
-                <Label Margin="0,5,0,3" Grid.Column="1" FontSize="12"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Save login credentials"
-                                    TextColor="Black" />
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SavecredentialCommand,Source={x:Reference GridRemember}}" ></TapGestureRecognizer>
-                </Grid.GestureRecognizers>
-            </Grid>
+                        <CheckBox IsChecked="{Binding Savecredentials}" Color="#2e479b" />
+                        <Label
+                            Grid.Column="1"
+                            Margin="0,5,0,3"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="12"
+                            Style="{StaticResource LabelStyle}"
+                            Text="Save login credentials"
+                            TextColor="Black" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SavecredentialCommand, Source={x:Reference GridRemember}}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
 
-            <Button
+                    <Button
                         Grid.Row="7"
                         Margin="0,16"
-                        Command="{Binding LoginCommand}"
                         BackgroundColor="#2e479b"
-                    TextColor="White"
-                        Text="LOG IN" />
+                        Command="{Binding LoginCommand}"
+                        Text="LOG IN"
+                        TextColor="White" />
 
+                </Grid>
+
+            </Frame>
         </Grid>
-
-    </Frame>
-    </Grid>
     </AbsoluteLayout>
 </ContentPage>
