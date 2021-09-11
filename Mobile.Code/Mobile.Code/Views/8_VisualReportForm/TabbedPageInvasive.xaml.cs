@@ -22,40 +22,43 @@ namespace Mobile.Code.Views
             loadingcontrol.IsVisible = false;
         }
 
-        private void  LoadAllTabs(object vm)
+        private void LoadAllTabs(object vm)
         {
             
-                if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
-                {
-                    var viewModel = vm as VisualProjectLocationFormViewModel;
-                    this.BindingContext = viewModel;
-                    TabItem visualTab = new TabItem("Visual", new InvasiveVisualProjectLocationForm(viewModel));
+            if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            {
+                var viewModel = vm as VisualProjectLocationFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualProjectLocationForm(viewModel));
 
-                    tabbedControl.AddTab(visualTab);
-                }
-                if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
-                {
-                    var viewModel = vm as VisualBuildingLocationFormViewModel;
-                    this.BindingContext = viewModel;
-                    TabItem visualTab = new TabItem("Visual", new InvasiveVisualBuildingLocationForm(viewModel));
+                tabbedControl.AddTab(visualTab);
+                tabbedControl.SelectFirst();
+            }
+            if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            {
+                var viewModel = vm as VisualBuildingLocationFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualBuildingLocationForm(viewModel));
 
-                    tabbedControl.AddTab(visualTab);
-                }
-                if (vm.GetType() == typeof(VisualApartmentFormViewModel))
-                {
-                    var viewModel = vm as VisualApartmentFormViewModel;
-                    this.BindingContext = viewModel;
-                    TabItem visualTab = new TabItem("Visual", new InvasiveVisualApartmentLocationForm(viewModel));
+                tabbedControl.AddTab(visualTab) ;
+                tabbedControl.SelectFirst();
+            }
+            if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+            {
+                var viewModel = vm as VisualApartmentFormViewModel;
+                this.BindingContext = viewModel;
+                TabItem visualTab = new TabItem("Visual", new InvasiveVisualApartmentLocationForm(viewModel));
 
-                    tabbedControl.AddTab(visualTab);
-                }
+                tabbedControl.AddTab(visualTab);
+                tabbedControl.SelectFirst();
+            }
 
-                AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
-                AddRemoveConclusiveTab();
-           
+            
+            AddRemoveConclusiveTab();
 
+            AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
         }
-        public TabbedPageInvasive( )
+        public TabbedPageInvasive()
         {
             InitializeComponent();
         }
@@ -71,17 +74,18 @@ namespace Mobile.Code.Views
                 await ((VisualApartmentFormViewModel)this.BindingContext).Load();
             
 
-            //AddRemoveConclusiveTab();
-
         }
 
         private void AdditionalInvasive_AllowFurthurInvasive(object sender, EventArgs e)
         {
+
             AddRemoveConclusiveTab();
         }
         private bool added;
+        
         private void AddRemoveConclusiveTab()
         {
+            
             try
             {
                 var vm = this.BindingContext;
@@ -97,7 +101,7 @@ namespace Mobile.Code.Views
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab);
+                                tabbedControl.AddTab(conclusiveTab,2);
                                 added = true;
                             }
                             
@@ -107,7 +111,7 @@ namespace Mobile.Code.Views
                             if (added)
                             {
                                 tabbedControl.RemoveTab(2);
-                                added = false;
+                                added = false;                               
                             }
                             
                         }
@@ -123,10 +127,12 @@ namespace Mobile.Code.Views
                         {
                             if (!added)
                             {
+                               
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
-
-                                tabbedControl.AddTab(conclusiveTab);
+                               
+                                tabbedControl.AddTab(conclusiveTab,2);
                                 added = true;
+                               
                             }
 
                         }
@@ -136,6 +142,7 @@ namespace Mobile.Code.Views
                             {
                                 tabbedControl.RemoveTab(2);
                                 added = false;
+                                
                             }
                         }
 
@@ -152,7 +159,7 @@ namespace Mobile.Code.Views
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab);
+                                tabbedControl.AddTab(conclusiveTab,2);
                                 added = true;
                             }
 
@@ -168,6 +175,8 @@ namespace Mobile.Code.Views
 
                     }
                 }
+                
+                tabbedControl.SelectFirst();
             }
             catch(Exception ex)
             {

@@ -90,7 +90,7 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
                
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Delete", IsDelete = true, IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() {ImageType=item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Delete", IsDelete = true, IsServerData = true });
                
                
                 
@@ -129,7 +129,7 @@ namespace Mobile.Code.Services
             {
                 using (HttpClient client = new HttpClient())
                 {
-                   
+                    client.Timeout = TimeSpan.FromSeconds(60);
                     client.BaseAddress = new Uri(App.AzureBackendUrl);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(

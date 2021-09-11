@@ -68,6 +68,7 @@ namespace Mobile.Code.Services
             item.IsDelete = true;
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -108,6 +109,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

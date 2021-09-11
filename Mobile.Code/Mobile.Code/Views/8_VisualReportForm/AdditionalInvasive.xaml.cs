@@ -117,7 +117,9 @@ namespace Mobile.Code.Views
 
         private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            AllowFurthurInvasive?.Invoke(this, null);
+            Device.BeginInvokeOnMainThread(
+            () => { AllowFurthurInvasive?.Invoke(this, null); });
+            
         }
     }
 }

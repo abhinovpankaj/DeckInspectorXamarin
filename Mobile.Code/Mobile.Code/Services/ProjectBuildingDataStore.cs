@@ -27,108 +27,9 @@ namespace Mobile.Code.Services
 
         public ProjectBuildingDataStore()
         {
-            //items = new List<Item>()
-            //{
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
-            //};
+           
             items = new List<ProjectBuilding>();
-            //{
-            //    new ProjectBuilding
-            //    {
-            //        Id = "1",
-            //        ProjectId="1",
-            //        BuildingName  = "Project Building 1 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://upload.wikimedia.org/wikipedia/commons/e/ec/The_crane_and_the_Main_Street_midrise_on_the_Infinity_(300_Spear_Street)_construction_site,_SF.JPG",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new ProjectBuilding
-            //    {
-            //         Id = "2",
-            //        ProjectId="1",
-            //        BuildingName  = "Project Building 2 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://images.globest.com/contrib/content/uploads/sites/304/2020/04/Construction-resized.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new ProjectBuilding
-            //    {
-            //        Id = "3",
-            //        ProjectId="1",
-            //        BuildingName  = "Project Building 3 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://m.economictimes.com/thumb/msid-69127844,width-1200,height-900,resizemode-4,imgsize-347903/construction-site-generators-types-features-of-generators-used-at-construction-sites.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-
-            //    },
-            //    new ProjectBuilding
-            //    {
-            //        Id = "4",
-            //        ProjectId="2",
-            //        BuildingName  = "Project Building 4 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://images.globest.com/contrib/content/uploads/sites/304/2020/04/Construction-resized.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-
-            //    },
-            //    new ProjectBuilding
-            //    {
-            //     Id = "5",
-            //        ProjectId="2",
-            //        BuildingName  = "Project Building 5 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://www.ukconstructionmedia.co.uk/wp-content/uploads/Screen-Shot-2016-04-21-at-11.55.06.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-
-            //    },
-            //     new ProjectBuilding
-            //    {
-            //         Id = "6",
-            //        ProjectId="2",
-            //        BuildingName  = "Project Building 6 ",
-            //        Description="This is sample project description.",
-            //        BuildingImage="https://upload.wikimedia.org/wikipedia/commons/e/ec/The_crane_and_the_Main_Street_midrise_on_the_Infinity_(300_Spear_Street)_construction_site,_SF.JPG",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-
-            //    },
-
-            //};
-
+            
 
         }
         public async Task<bool> UpdateItemAsync(ProjectBuilding item)
@@ -146,6 +47,7 @@ namespace Mobile.Code.Services
             item.UserId = App.LogUser.Id.ToString();
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -208,6 +110,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -241,6 +144,7 @@ namespace Mobile.Code.Services
             items = new List<ProjectBuilding>();
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

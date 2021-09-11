@@ -84,6 +84,7 @@ namespace Mobile.Code.Services
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -105,6 +106,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -136,6 +138,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

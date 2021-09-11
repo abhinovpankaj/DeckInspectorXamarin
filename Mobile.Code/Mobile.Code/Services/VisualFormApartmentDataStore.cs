@@ -112,7 +112,7 @@ namespace Mobile.Code.Services
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
             using (var client = new HttpClient())
             {
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
 
                 using (var formData = new MultipartFormDataContent())
@@ -169,6 +169,7 @@ namespace Mobile.Code.Services
             item.UserId = App.LogUser.Id.ToString();
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -203,6 +204,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

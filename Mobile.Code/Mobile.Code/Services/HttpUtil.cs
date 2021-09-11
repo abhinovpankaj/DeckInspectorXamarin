@@ -19,7 +19,7 @@ namespace Mobile.Code.Services
             using (var client = new HttpClient()) {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
                     int Index = 1000;
@@ -56,7 +56,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
                     int Index = 1000;
@@ -95,7 +95,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
                     //int Index = 1000;
@@ -144,7 +144,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
                     //int Index = 1000;
@@ -183,7 +183,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-
+                client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
                     //int Index = 1000;

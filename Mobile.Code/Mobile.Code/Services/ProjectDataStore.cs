@@ -31,47 +31,9 @@ namespace Mobile.Code.Services
 
         public ProjectDataStore()
         {
-            //items = new List<Item>()
-            //{
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
-            //};
+           
             items = new List<Project>();
-            //{
-            //    new Project
-            //    {
-            //        Id = "1",
-            //        ProjectName  = "Sample Project 1 ",
-            //        Description="This is sample project description.",
-            //        ProjectImage="https://media.istockphoto.com/photos/professional-engineer-worker-at-the-house-building-construction-site-picture-id905891244",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-            //        IsStarred=true,
-            //        CreatedOn=" May 3 ,2020",
-            //        ProjectType="Visual Report",
-            //        IdAnimation = $"All{Guid.NewGuid()}",
-
-            //    },
-            //    new Project
-            //    {
-            //        //Id = Guid.NewGuid().ToString(),
-            //        Id="2",
-            //        ProjectName  = "Sample Project 2",
-            //        Description="This is sample project description. a little big description for test",
-            //        ProjectImage="https://www.ukconstructionmedia.co.uk/wp-content/uploads/Screen-Shot-2016-04-21-at-11.55.06.jpg",
-            //        Attendent="Attendent Pankaj",
-            //        EmployeeName="Point5Nyble",
-            //        CreatedOn=" April 3 ,2019",
-            //        ProjectType="Invasive Report",
-            //        IdAnimation = $"All{Guid.NewGuid()}",
-
-            //    }
-
-            //};
+           
 
         }
         public async Task<Response> AddItemAsync(Project item)
@@ -96,11 +58,6 @@ namespace Mobile.Code.Services
             //string ImageUrl = HttpUtil.GetImageUrl(item.ImageUrl).Result;
 
             result = await HttpUtil.UploadSingleImage(item.Name, item.ImageUrl, "api/Project/AddEdit", parameters);
-
-
-           
-
-
             return await Task.FromResult(result);
             
         }
@@ -114,6 +71,7 @@ namespace Mobile.Code.Services
             Response result = new Response();
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 Dictionary<string, string> parameters = new Dictionary<string, string>();
                 parameters.Add("Id", item.Id);
                 parameters.Add("Name", item.Name);
@@ -186,6 +144,7 @@ namespace Mobile.Code.Services
             item.IsDelete = true;
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -196,14 +155,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                    //if (response.IsSuccessStatusCode == false)
-                    //{
-                    //    throw new ApiException
-                    //    {
-                    //        StatusCode = (int)response.StatusCode,
-                    //        Content = result.Message
-                    //    };
-                    //}
+                   
                     return await Task.FromResult(result);
 
 
@@ -216,6 +168,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -238,27 +191,13 @@ namespace Mobile.Code.Services
         public async Task<Project> GetItemAsync(string id)
         {
 
-           // string Query = string.Empty;
-            //if (App.LogUser.RoleName == "Admin")
-            //{
-            //    Query = string.Format("api/Project/GetProjectList?CreatedOn={0}&isActive={1}&searchText={2}&ProjectType={3}", null, false, string.Empty, string.Empty);
-            //}
-            //else
-            //{
-            //    Query = string.Format("api/Project/GetProjectForMobile?UserID={0}&CreatedOn={1}&isActive={2}&searchText={3}&ProjectType={4}", App.LogUser.Id.ToString(), null, false, string.Empty, string.Empty);
-            //}
+           
             string Query = string.Format("api/Project/GetProjectByIDMobile?Id={0}&UserId={1}", id,App.LogUser.Id.ToString());
-            //if(!string.IsNullOrEmpty(CreatedOn))
-            //{
-            //    Query += "?" + CreatedOn;
-            //}
-            //if (!string.IsNullOrEmpty(search))
-            //{
-            //    Query += "?" + search;
-            //}
+           
 
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -294,6 +233,7 @@ namespace Mobile.Code.Services
             
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

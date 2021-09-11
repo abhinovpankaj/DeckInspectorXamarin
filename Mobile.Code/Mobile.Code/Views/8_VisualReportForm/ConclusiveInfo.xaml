@@ -70,7 +70,6 @@
                                             RowSpacing="0">
 
                                             <RadioButton
-                                                CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 IsChecked="{Binding IsSelected}" />
@@ -119,7 +118,6 @@
                                             RowSpacing="0">
 
                                             <RadioButton
-                                                CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 IsChecked="{Binding IsSelected}" />
@@ -169,7 +167,6 @@
                                             RowSpacing="0">
 
                                             <RadioButton
-                                                CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 IsChecked="{Binding IsSelected}" />
@@ -222,7 +219,6 @@
                                             RowSpacing="0">
 
                                             <RadioButton
-                                                CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 IsChecked="{Binding IsSelected}" />
@@ -275,13 +271,9 @@
                                             RowSpacing="0">
 
                                             <RadioButton
-                                                CheckedChanged="RadioButton_CheckedChanged"
                                                 Content="{Binding Name}"
                                                 GroupName="{Binding GroupName}"
                                                 IsChecked="{Binding IsSelected}" />
-
-
-
                                         </Grid>
 
                                     </DataTemplate>
@@ -542,8 +534,9 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <yummy:PancakeView CornerRadius="5">
+                                    <yummy:PancakeView BackgroundColor="LightBlue" CornerRadius="5">
                                         <Image
+                                            Margin="1"
                                             Aspect="AspectFill"
                                             BackgroundColor="{DynamicResource Gray-200}"
                                             HeightRequest="140"

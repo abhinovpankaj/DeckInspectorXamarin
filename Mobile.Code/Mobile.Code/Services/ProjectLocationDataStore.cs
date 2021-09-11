@@ -40,92 +40,7 @@ namespace Mobile.Code.Services
             //    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
             //};
             items = new List<ProjectLocation>();
-            //{
-            //    new ProjectLocation
-            //    {
-            //        Id = "1",
-            //        ProjectId="1",
-            //        LocationName  = "Project Location 1 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://thumbs.dreamstime.com/z/construction-site-construction-workers-area-people-working-construction-group-people-professional-construction-118630790.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-            //        CreatedOn=" May 3 ,2020",
-                  
-
-            //    },
-            //    new ProjectLocation
-            //    {
-            //        Id = "2",
-            //        ProjectId="1",
-            //        LocationName  = "Project Location 2 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://m.economictimes.com/thumb/msid-69127844,width-1200,height-900,resizemode-4,imgsize-347903/construction-site-generators-types-features-of-generators-used-at-construction-sites.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-            //    },
-            //    new ProjectLocation
-            //    {
-            //        Id = "3",
-            //        ProjectId="1",
-            //        LocationName  = "Project Location 3 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://images.globest.com/contrib/content/uploads/sites/304/2020/04/Construction-resized.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new ProjectLocation
-            //    {
-            //        Id = "4",
-            //        ProjectId="2",
-            //        LocationName  = "Project Location 4 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://media.istockphoto.com/photos/professional-engineer-worker-at-the-house-building-construction-site-picture-id905891244",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //    new ProjectLocation
-            //    {
-            //        Id = "5",
-            //        ProjectId="2",
-            //        LocationName  = "Project Location 5 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://media.istockphoto.com/photos/professional-engineer-worker-at-the-house-building-construction-site-picture-id905891244",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-            //     new ProjectLocation
-            //    {
-            //        Id = "6",
-            //        ProjectId="2",
-            //        LocationName  = "Project Location 6 ",
-            //        Description="This is sample project description.",
-            //        LocationImage="https://www.ukconstructionmedia.co.uk/wp-content/uploads/Screen-Shot-2016-04-21-at-11.55.06.jpg",
-            //        Attendent="Attendent Abhinov",
-            //        EmployeeName="Point5Nyble",
-
-            //        CreatedOn=" May 3 ,2020",
-
-
-            //    },
-
-            //};
-
+            
         }
         public async Task<Response> AddItemAsync(ProjectLocation item)
         {
@@ -176,6 +91,7 @@ namespace Mobile.Code.Services
             item.UserId = App.LogUser.Id.ToString();
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -186,14 +102,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                    //if (response.IsSuccessStatusCode == false)
-                    //{
-                    //    throw new ApiException
-                    //    {
-                    //        StatusCode = (int)response.StatusCode,
-                    //        Content = result.Message
-                    //    };
-                    //}
+                    
                     return await Task.FromResult(result);
 
 
@@ -205,6 +114,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
@@ -236,6 +146,7 @@ namespace Mobile.Code.Services
         {
             using (HttpClient client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromSeconds(60);
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(

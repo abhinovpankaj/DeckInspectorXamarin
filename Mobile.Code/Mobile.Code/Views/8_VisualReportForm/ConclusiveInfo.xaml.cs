@@ -15,10 +15,29 @@ namespace Mobile.Code.Views
     {
         private ISpeechToText _speechRecongnitionInstance;
        
-        public ConclusiveInfo(BaseViewModel vm)
+        public ConclusiveInfo(object vm)
         {
             InitializeComponent();
-            this.BindingContext = vm;
+
+            if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
+            {
+                var viewModel = vm as VisualProjectLocationFormViewModel;
+                if (viewModel != null)
+                    this.BindingContext = viewModel;
+            }
+            if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
+            {
+                var viewModel = vm as VisualBuildingLocationFormViewModel;
+                if (viewModel != null)
+                    this.BindingContext = viewModel;
+            }
+            if (vm.GetType() == typeof(VisualApartmentFormViewModel))
+            {
+                var viewModel = vm as VisualApartmentFormViewModel;
+                if (viewModel != null)
+                    this.BindingContext = viewModel;
+            }
+
             recordDesInv.Clicked += recordDesInv_Clicked;
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -114,9 +133,6 @@ namespace Mobile.Code.Views
 
         }
 
-        private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-
-        }
+       
     }
 }

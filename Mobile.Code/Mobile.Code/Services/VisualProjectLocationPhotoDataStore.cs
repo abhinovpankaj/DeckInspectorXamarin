@@ -117,21 +117,13 @@ namespace Mobile.Code.Services
             if (loadServer == false)
             {
                 return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false));
-                //if (App.IsInvasive == false)
-                //{
-                //    return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false));
-                //}
-                //else
-                //{
-                //    return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false&&c.InvasiveImage==true));
-                //}
-                //
+               
             }
             else
             {
                 using (HttpClient client = new HttpClient())
                 {
-                   
+                    client.Timeout = TimeSpan.FromSeconds(60);
                     client.BaseAddress = new Uri(App.AzureBackendUrl);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(
