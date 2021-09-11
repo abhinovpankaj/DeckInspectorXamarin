@@ -316,15 +316,45 @@ namespace Mobile.Code.ViewModels
 
                     if (App.IsInvasive == true)
                     {
-                        if (visualForm.IsPostInvasiveRepairsRequired)
+                        errorMessage = "";
+                        if (RadioList_OwnerAgreedToRepair.FirstOrDefault(c => c.Name == "Yes").IsSelected)
                         {
-                            VisualForm.IsInvasiveRepairApproved = RadioList_OwnerAgreedToRepair.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                            VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
-                            VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
-                            VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
-                            VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                            VisualForm.IsInvasiveRepairApproved = true;
+                            if (RadioList_RepairComplete.FirstOrDefault(c => c.Name == "Yes").IsSelected)
+                            {
+                                VisualForm.IsInvasiveRepairComplete = false;
+                                VisualForm.IsInvasiveRepairComplete = RadioList_RepairComplete.Where(c => c.IsSelected == true).Single().Name == "Yes" ? true : false;
+                                if (RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected).Any() == false)
+                                {
+                                    errorMessage += "\nConclusive: Life Expectancy Load Bearing Componenets (AWE) required\n";
+                                }
+                                if (RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected).Any() == false)
+                                {
+                                    errorMessage += "\nConclusive: Life Expectancy Load Bearing Componenets (LBC) required\n";
+                                }
+                                if (RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected).Any() == false)
+                                {
+                                    errorMessage += "\nConclusive: Life Expectancy Load Bearing Componenets (EEE) required\n";
+                                }
+                                if (!string.IsNullOrEmpty(errorMessage))
+                                {
+                                    response.Message = errorMessage;
+                                    response.Status = ApiResult.Fail;
+                                }
+                                else
+                                {
+                                    VisualForm.ConclusiveLifeExpAWE = RadioList_ConclusiveLifeExpectancyAWE.Where(c => c.IsSelected == true).Single().Name;
+                                    VisualForm.ConclusiveLifeExpLBC = RadioList_ConclusiveLifeExpectancyLBC.Where(c => c.IsSelected == true).Single().Name;
+                                    VisualForm.ConclusiveLifeExpEEE = RadioList_ConclusiveLifeExpectancyEEE.Where(c => c.IsSelected == true).Single().Name;
+                                }
+
+                            }
+                            else
+                                VisualForm.IsInvasiveRepairComplete = false;
                         }
-                        
+                        else
+                            VisualForm.IsInvasiveRepairApproved = false;
+
                     }
 
                     if (await VisualFormProjectLocationDataStore.GetItemAsync(VisualForm.Id) == null)

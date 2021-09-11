@@ -30,21 +30,12 @@ namespace Mobile.Code.Services
 
         public ProjectLocationDataStore()
         {
-            //items = new List<Item>()
-            //{
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-            //    new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
-            //};
+          
             items = new List<ProjectLocation>();
             
         }
         public async Task<Response> AddItemAsync(ProjectLocation item)
         {
-
 
 
             Response result = new Response();
@@ -61,12 +52,6 @@ namespace Mobile.Code.Services
             parameters.Add("ImageDescription", item.ImageDescription);
 
 
-            //Regex UrlMatch = new Regex(@"(?i)(http(s)?:\/\/)?(\w{2,25}\.)+\w{3}([a-z0-9\-?=$-_.+!*()]+)(?i)", RegexOptions.Singleline);
-            //if (item.ImageUrl == "blank.png" || UrlMatch.IsMatch(item.ImageUrl))
-            //{
-            //    item.ImageUrl = null;
-
-            //}
             string ImageUrl = HttpUtil.GetImageUrl(item.ImageUrl).Result;
             result = await HttpUtil.UploadSingleImage(item.Name, ImageUrl, "api/ProjectLocation/AddEdit", parameters);
 

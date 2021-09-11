@@ -108,7 +108,6 @@
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
 
-
                                         <Grid
                                             Margin="4"
                                             ColumnSpacing="0"

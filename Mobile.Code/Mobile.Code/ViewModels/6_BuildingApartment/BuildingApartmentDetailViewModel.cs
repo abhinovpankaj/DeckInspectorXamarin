@@ -412,13 +412,25 @@ namespace Mobile.Code.ViewModels
             {
                 if (parm.IsPostInvasiveRepairsRequired)
                 {
-                    vm.RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
-                    vm.RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
-                    vm.RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
-                    string isChked = parm.IsInvasiveRepairApproved ? "Yes" : "No";
-                    vm.RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked).IsSelected = true;
-                    isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
-                    vm.RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
+                    if (parm.IsInvasiveRepairApproved )
+                    {
+                        if (parm.IsInvasiveRepairComplete)
+                        {
+                            if (parm.ConclusiveLifeExpEEE.Length>0)
+                            {
+                                vm.RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
+                                vm.RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
+                                vm.RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
+                            }
+                            
+                        }  
+                        string isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+                        vm.RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
+                        
+                    }
+
+                    string isChked1 = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+                    vm.RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked1).IsSelected = true;
                 }
             }
             

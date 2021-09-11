@@ -32,50 +32,37 @@
                 <RowDefinition Height="*" />
 
             </Grid.RowDefinitions>
-            <!--<Grid
-                x:Name="gridtoolbar"
-                Padding="0"
+            <Frame
+                Grid.Row="0"
+                Margin="10"
+                IsEnabled="true">
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="20"
+                        HorizontalOptions="StartAndExpand"
+                        Text=" Visual Photos"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="20"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding UnitPhotoCount}"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
 
-        BackgroundColor="White">
-
-            <Grid.Margin>
-                <OnPlatform x:TypeArguments="Thickness">
-                    <On Platform="iOS" Value="0,25,0,0" />
-                    <On Platform="Android, WinPhone, Windows" Value="5,20,5,10" />
-                </OnPlatform>
-            </Grid.Margin>
-            <Image
-                    Grid.Column="0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.ArrowLeft},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                    WidthRequest="30">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Label Text="Visual Deck/Waterproofing"  FontSize="15" Margin="0,5,0,0"
-                   Style="{StaticResource LabelStyle}"
-                   TextColor="Black"
-                   FontAttributes="None"
-                   FontFamily="{StaticResource Montserrat-Regular}"
-                   VerticalOptions="StartAndExpand"
-                   HorizontalOptions="CenterAndExpand"/>
-
-            <Image Margin="0"
-
-
-                    HorizontalOptions="End"  IsVisible="false"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                 >
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
-
-        </Grid>-->
+                    <Label
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="40"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{x:Static helpers:IconFont.ImageArea}"
+                        TextColor="#2e479b" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
             <ScrollView Grid.Row="1" VerticalOptions="StartAndExpand">
                 <Grid IsEnabled="False">
 
@@ -153,7 +140,7 @@
                                 VerticalOptions="FillAndExpand" />
                         </Grid>
                     </Frame>
-                    <Frame
+                    <!--<Frame
                         Grid.Row="1"
                         Margin="10,2,10,2"
                         HasShadow="True">
@@ -187,8 +174,10 @@
                                     HorizontalTextAlignment="Start"
                                     Text="{x:Static helpers:IconFont.CameraPlus}"
                                     TextColor="#2e479b" />
-                                <!--<ImageButton  Command="{Binding ChoosePhotoFromCameraCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Column="2" BackgroundColor="White"
+                    -->
+                    <!--<ImageButton  Command="{Binding ChoosePhotoFromCameraCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Column="2" BackgroundColor="White"
                                   Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=#2e479b,Size=25}"></ImageButton>-->
+                    <!--
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ChoosePhotoFromCameraCommand}" />
                                 </StackLayout.GestureRecognizers>
@@ -220,8 +209,7 @@
                         </Grid>
 
 
-                    </Frame>
-
+                    </Frame>-->
 
 
                     <Frame
