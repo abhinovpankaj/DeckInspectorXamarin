@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Graphics.Drawables;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.Graphics.Drawables;
 using Android.Text.Method;
 using Android.Views;
-using Android.Widget;
 using Mobile.Code.Controls;
 
 using Mobile.Code.Droid.Renderer;
@@ -53,7 +43,7 @@ namespace Mobile.Code.Droid.Renderer
                 InitializeScrollbars(a);
                 a.Recycle();
             }
-            
+
         }
     }
 }

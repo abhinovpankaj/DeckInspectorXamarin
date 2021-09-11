@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.Graphics;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Xamarin.Forms;
+﻿using Android.Graphics;
 using System.IO;
+using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Mobile.Code.Droid.ScreenshotManager))]
 namespace Mobile.Code.Droid
 {
     public class ScreenshotManager : IScreenshotManager
     {
-       
+
 
         public async System.Threading.Tasks.Task<byte[]> CaptureAsync()
         {

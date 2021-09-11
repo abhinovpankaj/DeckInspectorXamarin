@@ -1,5 +1,4 @@
-﻿using Android;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Hardware.Camera2;
 using Android.Hardware.Camera2.Params;
@@ -9,19 +8,12 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-
-
-using Mobile.Code.Droid;
 using Java.Lang;
 using Mobile.Code.Camera2Forms;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Size = Android.Util.Size;
 using Resource = Mobile.Code.Droid.Resource;
-using Java.Util;
-using Mobile.Code.Droid.Camera2;
-using Android.App;
+using Size = Android.Util.Size;
 
 namespace Camera2Forms.Camera2
 {
@@ -125,7 +117,7 @@ namespace Camera2Forms.Camera2
         public void OnSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height)
         {
             //ConfigureTransform(_cameraTexture.Width, _cameraTexture.Height);
-          //  ConfigureTransform(width, height);
+            //  ConfigureTransform(width, height);
             //  ConfigureTransform(width, height);
         }
 

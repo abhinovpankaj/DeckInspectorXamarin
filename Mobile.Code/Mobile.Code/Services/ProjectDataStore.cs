@@ -63,9 +63,6 @@ namespace Mobile.Code.Services
         }
 
 
-
-
-
         public async Task<Response> UpdateItemAsync(Project item)
         {
             Response result = new Response();

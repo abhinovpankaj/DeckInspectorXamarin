@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Android.Graphics;
 using System.IO;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Mobile.Code.Droid.ResizeImage))]
@@ -20,15 +9,15 @@ namespace Mobile.Code.Droid
     {
         public byte[] ResizeTheImage(byte[] imageData, float width, float height)
         {
-            imageData= CropImage(imageData, 20);
+            imageData = CropImage(imageData, 20);
             Bitmap originalImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length);
-           // originalImage = getResizedBitmap(originalImage);
+            // originalImage = getResizedBitmap(originalImage);
             //  Bitmap resizedImage = Bitmap.CreateScaledBitmap(originalImage, (int)width, (int)height, false);
             int imageWidth = originalImage.Width;
             int imageHeight = originalImage.Height;
             int newHeight = (imageHeight * 800) / imageWidth;
-           
-            Bitmap resizedImage  = Bitmap.CreateScaledBitmap(originalImage, 2000, newHeight, false);
+
+            Bitmap resizedImage = Bitmap.CreateScaledBitmap(originalImage, 2000, newHeight, false);
 
 
             using MemoryStream ms = new MemoryStream();
@@ -48,8 +37,8 @@ namespace Mobile.Code.Droid
             //height = (width == 0) ? differ : 0;
             Matrix matrix = new Matrix();
             matrix.PostScale(0.5f, 0.5f);
-           // Bitmap croppedBitmap = Bitmap.createBitmap(bitmapOriginal, 100, 100, 100, 100, matrix, true);
-            Bitmap resizedBitmap = Bitmap.CreateBitmap(bm, bm.Width, bm.Height, bm.Width, bm.Height, matrix,true);
+            // Bitmap croppedBitmap = Bitmap.createBitmap(bitmapOriginal, 100, 100, 100, 100, matrix, true);
+            Bitmap resizedBitmap = Bitmap.CreateBitmap(bm, bm.Width, bm.Height, bm.Width, bm.Height, matrix, true);
             bm.Recycle();
             return resizedBitmap;
         }
@@ -62,8 +51,10 @@ namespace Mobile.Code.Droid
             // int viewHeight = (int)(bitmap.Height - (top * 2.8f));
             //// var navBarXY = 20;
             // int viewHeightMinusNavBar = viewHeight - 20;
+
             int height = bitmap.Height - 120;
             height = height - 120;
+            height = height > 0 ? height : bitmap.Height;
             Android.Graphics.Bitmap crop = Android.Graphics.Bitmap.CreateBitmap(bitmap, 0, 120, bitmap.Width, height);
 
             //Android.Graphics.Bitmap crop = Android.Graphics.Bitmap.CreateBitmap(bitmap,

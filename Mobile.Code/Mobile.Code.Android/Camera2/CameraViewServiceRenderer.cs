@@ -1,11 +1,7 @@
 ﻿using Android.Content;
-using Android.Graphics;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 using Camera2Forms.Camera2;
-using System;
-using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using CameraPreview = Mobile.Code.Camera2Forms.CameraPreview;
@@ -14,8 +10,8 @@ using CameraPreview = Mobile.Code.Camera2Forms.CameraPreview;
 namespace Camera2Forms.Camera2
 {
     public class CameraViewServiceRenderer : ViewRenderer<CameraPreview, CameraDroid>
-	{
-		private CameraDroid _camera;
+    {
+        private CameraDroid _camera;
         private CameraPreview _currentElement;
         private readonly Context _context;
         private readonly IWindowManager _windowManager;
@@ -23,32 +19,32 @@ namespace Camera2Forms.Camera2
         {
             _context = context;
             _windowManager = _context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
-          
-		}
 
-		protected override void OnElementChanged(ElementChangedEventArgs<CameraPreview> e)
-		{
-			base.OnElementChanged(e);
+        }
 
-			_camera = new CameraDroid(Context);
+        protected override void OnElementChanged(ElementChangedEventArgs<CameraPreview> e)
+        {
+            base.OnElementChanged(e);
+
+            _camera = new CameraDroid(Context);
 
             SetNativeControl(_camera);
 
             if (e.NewElement != null && _camera != null)
-			{
+            {
                 e.NewElement.CameraClick = new Command(() => TakePicture());
                 _currentElement = e.NewElement;
                 _camera.SetCameraOption(_currentElement.Camera);
                 _camera.Photo += OnPhoto;
             }
-		}
+        }
 
         public void TakePicture()
         {
-            
+
             _camera.LockFocus();
         }
-       
+
         private void OnPhoto(object sender, byte[] imgSource)
         {
             IWindowManager _windowManager = Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
@@ -92,14 +88,14 @@ namespace Camera2Forms.Camera2
             Device.BeginInvokeOnMainThread(() =>
             {
                 _currentElement?.PictureTaken(imgSource);
-            });   
+            });
         }
 
         protected override void Dispose(bool disposing)
-		{
-			_camera.Photo -= OnPhoto;
+        {
+            _camera.Photo -= OnPhoto;
 
-			base.Dispose(disposing);
-		}
-	}
+            base.Dispose(disposing);
+        }
+    }
 }

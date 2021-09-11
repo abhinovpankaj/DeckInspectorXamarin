@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.IO;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+﻿using Android.Graphics;
 using Mobile.Code.Droid;
 using Mobile.Code.Media;
+using System;
+using System.IO;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ImageHelpers))]
 namespace Mobile.Code.Droid

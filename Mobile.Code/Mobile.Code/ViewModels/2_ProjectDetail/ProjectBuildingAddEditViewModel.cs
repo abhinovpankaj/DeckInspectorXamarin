@@ -359,22 +359,5 @@ namespace Mobile.Code.ViewModels
 
 
     }
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+    
 }

@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Media;
-using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Mobile.Code.Droid;
-using Xamarin.Essentials;
-using Xamarin.Forms.Internals;
-using Orientation = Android.Media.Orientation;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SaveFile))]
 namespace Mobile.Code.Droid
 {
     class SaveFile : ISaveFile
     {
-        public int GetImageRotation() 
+        public int GetImageRotation()
         {
-       //     var wm = Android.App.Application.Context.GetSystemService(Android.Content.Context.WindowService)
-       //.JavaCast<IWindowManager>();
-       //     var d = wm.DefaultDisplay;
+            //     var wm = Android.App.Application.Context.GetSystemService(Android.Content.Context.WindowService)
+            //.JavaCast<IWindowManager>();
+            //     var d = wm.DefaultDisplay;
             IWindowManager windowManager = Android.App.Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
 
             SurfaceOrientation rotation = windowManager.DefaultDisplay.Rotation;
@@ -34,23 +26,23 @@ namespace Mobile.Code.Droid
             //    orientation == SurfaceOrientation.Rotation270;
             //return isLandscape ? DeviceOrientation.Landscape : DeviceOrientation.Portrait;
 
-           
-                if (rotation == SurfaceOrientation.Rotation90)
-                {
-                    return 0;
-                }
-                if (rotation == SurfaceOrientation.Rotation180)
-                {
-                    return 180;
-                }
-                if (rotation == SurfaceOrientation.Rotation270)
-                {
-                    return 180;
-                }
-                if (rotation == SurfaceOrientation.Rotation0)
-                {
-                    return 90;
-                }
+
+            if (rotation == SurfaceOrientation.Rotation90)
+            {
+                return 0;
+            }
+            if (rotation == SurfaceOrientation.Rotation180)
+            {
+                return 180;
+            }
+            if (rotation == SurfaceOrientation.Rotation270)
+            {
+                return 180;
+            }
+            if (rotation == SurfaceOrientation.Rotation0)
+            {
+                return 90;
+            }
             return 0;
         }
         Bitmap loadAndResizeBitmap(string filePath)
@@ -192,8 +184,8 @@ namespace Mobile.Code.Droid
             {
                 matrix.PostRotate(0);
             }
-            if (MainActivity.AppOrientation==2)
-            { 
+            if (MainActivity.AppOrientation == 2)
+            {
                 matrix.PostRotate(-90);
             }
             if (MainActivity.AppOrientation == 3)
@@ -230,7 +222,7 @@ namespace Mobile.Code.Droid
             var filePath = System.IO.Path.Combine(documentsPath, filename);
             File.WriteAllBytes(filePath, bytes);
             //  OpenFile(filePath, filename);
-            return await Task.FromResult( filePath);
+            return await Task.FromResult(filePath);
 
 
         }

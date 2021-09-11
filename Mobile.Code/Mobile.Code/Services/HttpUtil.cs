@@ -115,7 +115,7 @@ namespace Mobile.Code.Services
                         }
                         else
                         {
-                            byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(File.ReadAllBytes(ImageUrl), 2000, 1500);
+                            //byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(File.ReadAllBytes(ImageUrl), 2000, 1500);
                             formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
                         }
                            
@@ -147,13 +147,7 @@ namespace Mobile.Code.Services
                 client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
-                    //int Index = 1000;
-                    //foreach (MultiImage img in list)
-                    //{
-                    //    Index++;
-                    //    var extension = Path.GetExtension(img.Image);
-
-                    //}
+                    
                     string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {

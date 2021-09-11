@@ -8,10 +8,6 @@ namespace Mobile.Code.Models
     public class ProjectLocation : BindingModel
     {
 
-
-
-
-
         private string _pimage;
 
         public string ImageUrl

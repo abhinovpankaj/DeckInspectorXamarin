@@ -1,30 +1,29 @@
-﻿using System;
-
+﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Database;
+using Android.Hardware;
+using Android.OS;
+using Android.Provider;
 using Android.Runtime;
+using Android.Speech;
 using Android.Views;
 using Android.Widget;
-using Android.OS;
 using CarouselView.FormsPlugin.Android;
-using Android.Database;
-using Android.Provider;
-using Xamarin.Forms;
+using System;
 using System.Collections.Generic;
-using Android.Content;
-using Android.Speech;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
-using Environment = System.Environment;
 using Wibci.Xamarin.Images;
 using Wibci.Xamarin.Images.Droid;
-using Android;
-using Android.Hardware;
+using Xamarin.Forms;
+using Environment = System.Environment;
 
 namespace Mobile.Code.Droid
 {
-    [Activity(Label = "DECK INSPECTOR", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize,ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "DECK INSPECTOR", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMessageSender, ISensorEventListener
     {
         public const int CameraPermissionsCode = 1;
@@ -335,7 +334,7 @@ namespace Mobile.Code.Droid
 
         public void OnAccuracyChanged(Sensor sensor, [GeneratedEnum] SensorStatus accuracy)
         {
-            
+
         }
         public static int AppOrientation = 1;
         public void OnSensorChanged(SensorEvent sensorEvent)
@@ -350,7 +349,7 @@ namespace Mobile.Code.Droid
 
                 if (Math.Abs(mAccelerometerReading[0]) > Math.Abs(mAccelerometerReading[1]))
                 {
-                    if((mAccelerometerReading[0] > 0))
+                    if ((mAccelerometerReading[0] > 0))
                     {
                         AppOrientation = 2;
                     }
@@ -358,7 +357,7 @@ namespace Mobile.Code.Droid
                     {
                         AppOrientation = 3;
                     }
-                   // App.Orientation = (mAccelerometerReading[0] > 0) ? Models.Orientation.Landscape : Models.Orientation.ReverseLandscape;
+                    // App.Orientation = (mAccelerometerReading[0] > 0) ? Models.Orientation.Landscape : Models.Orientation.ReverseLandscape;
                 }
                 else
                 {

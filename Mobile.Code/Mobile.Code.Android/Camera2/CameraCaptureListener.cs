@@ -1,6 +1,5 @@
 ﻿using Android.Hardware.Camera2;
 using Java.Lang;
-using System;
 
 namespace Camera2Forms.Camera2
 {

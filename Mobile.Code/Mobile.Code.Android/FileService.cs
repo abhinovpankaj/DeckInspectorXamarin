@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Mobile.Code.Droid;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
-using Environment = System.Environment;
 
 [assembly: Dependency(typeof(FileService))]
 namespace Mobile.Code.Droid

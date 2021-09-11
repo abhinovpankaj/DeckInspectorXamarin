@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Java.Lang;
+﻿using Java.Lang;
 using Java.Util;
-using Android.Util;
-using Size = Android.Util.Size;
 using Object = Java.Lang.Object;
+using Size = Android.Util.Size;
 
 namespace Mobile.Code.Droid.Camera2
 {
