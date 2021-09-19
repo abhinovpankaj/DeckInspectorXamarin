@@ -98,25 +98,7 @@ namespace Mobile.Code.ViewModels
               
                 //await Shell.Current.Navigation.PopAsync().ConfigureAwait(true); ;
             }
-            //if (string.IsNullOrEmpty(ProjectLocation.Id))
-            //{
-            //    //  ProjectLocation.Id = Guid.NewGuid().ToString();
-            //    ProjectLocation.ProjectId = Project.Id;
-            //    //  ProjectLocation.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-            //    await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-            //    await Shell.Current.Navigation.PopAsync();
-            //    await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail() { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = ProjectLocation } });
-            //}
-            //else
-            //{
-            //    await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-            //    await Shell.Current.Navigation.PopAsync();
-            //}
-            // Project.ProjectCommanLocations.Add(ProjectLocation);
-
-            //await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail());
-            // await Shell.Current.Navigation.PopAsync();
-
+            
         }
 
         private async Task<Response> Running()
@@ -332,22 +314,5 @@ namespace Mobile.Code.ViewModels
         }
 
     }
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+   
 }

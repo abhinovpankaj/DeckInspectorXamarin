@@ -34,9 +34,6 @@ namespace Mobile.Code.ViewModels
         public ObservableCollection<Project> StatrtedProject { get; set; }
 
 
-        //public ObservableCollection<ProjectLocation> ProjectLocationItems { get; set; }
-        //public ObservableCollection<ProjectBuilding> ProjectBuildingItems { get; set; }
-
         private ObservableCollection<ProjectLocation> _projectLocationItems;
 
         public ObservableCollection<ProjectLocation> ProjectLocationItems
@@ -71,13 +68,7 @@ namespace Mobile.Code.ViewModels
             set { _id = value; OnPropertyChanged("Id"); }
         }
 
-        //string porjectId;
-        //public string Id
-        //{
-        //    set => porjectId = Uri.UnescapeDataString(value);
-        //    get => porjectId;
-
-        //}
+       
 
         public Command LocationDetailCommand { get; set; }
         public Command BuildingDetailCommand { get; set; }
@@ -178,7 +169,7 @@ namespace Mobile.Code.ViewModels
           //  SaveCommand = new Command(async () => await Save());
             EditCommand = new Command(async () => await Edit());
             SaveCommand = new Command(async () => await Save());
-            EditCommand = new Command(async () => await Edit());
+            
             NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
             NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
 
@@ -204,6 +195,7 @@ namespace Mobile.Code.ViewModels
                 if (response.Status == ApiResult.Success)
                 {
                     App.IsInvasive = true;
+
                     Project.Id = response.ID.ToString();
 
                     //if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectDetail))
@@ -235,12 +227,7 @@ namespace Mobile.Code.ViewModels
         async Task ExecuteLocationDetailCommand(ProjectLocation parm)
         {
 
-            // ShellNavigationState state = Shell.Current.CurrentState;
-            //  await App.Current.MainPage.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(image.ImageUrl) });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("ProjectLocationDetail");
+           
             if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectLocationDetail))
                 await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail()
                 { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = parm } }).ConfigureAwait(false);
@@ -249,14 +236,7 @@ namespace Mobile.Code.ViewModels
         {
             await Shell.Current.Navigation.PushAsync(new ProjectBuildingDetail()
             { BindingContext = new ProjectBuildingDetailViewModel() { ProjectBuilding = parm } });
-            // await Shell.Current.GoToAsync("ProjectBuildingDetail");
-            //  await Shell.Current.GoToAsync($"ProjectBuildingDetail/?projectBuildingID={parm.Id}");
-            // ShellNavigationState state = Shell.Current.CurrentState;
-            // await App.Current.MainPage.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(image.ImageUrl) });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("projectdetail");
+           
         }
         public async Task LoadData()
         {
@@ -313,14 +293,7 @@ namespace Mobile.Code.ViewModels
                 IsInvasiveControlDisable = true;
             }
             Project = await ProjectDataStore.GetItemAsync(Project.Id);
-            //if(Project.IsInvasive==true)
-            //{
-            //    IsCreateOrRefreshInvasive = true;
-            //}
-            //else
-            //{
-            //    IsCreateOrRefreshInvasive = false;
-            //}
+            
             if (App.LogUser.RoleName == "Admin")
             {
                 if (Project.ProjectType != "Invasive")
@@ -343,29 +316,7 @@ namespace Mobile.Code.ViewModels
                         CanInvasiveCreate = false;
                     }
                 }
-                //if(Project.ProjectType== "Invasive")
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else if(Project.IsInvaisveExist==true)
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else
-                //{
-                //    CanInvasiveCreate = false;
-                //}
-                //else
-                //{
-                //    if (Project.IsInvaisveExist == true)
-                //    {
-                //        CanInvasiveCreate = false;
-                //    }
-                //    else
-                //    {
-                //        CanInvasiveCreate = true;
-                //    }
-                //}
+               
                 IsEditDeleteAccess = true;
             }
             else if (Project.UserId == App.LogUser.Id.ToString())
@@ -390,25 +341,7 @@ namespace Mobile.Code.ViewModels
                         CanInvasiveCreate = false;
                     }
                 }
-                //if (Project.ProjectType == "Invasive" )
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else if (Project.IsInvaisveExist == true)
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else
-                //{
-                //    if (Project.IsInvaisveExist == false)
-                //    {
-                //        CanInvasiveCreate = true;
-                //    }
-                //    else
-                //    {
-                //        CanInvasiveCreate = false;
-                //    }
-                //}
+                
                 IsEditDeleteAccess = true;
             }
             else
@@ -439,22 +372,5 @@ namespace Mobile.Code.ViewModels
 
         }
     }
-    //public class ProjectViewModel : BaseViewModel
-    //{
-    //    public Command ProjectDetailCommand { get; set; }
-    //    public ProjectViewModel()
-    //    {
-    //        ProjectDetailCommand = new Command(async () => await ExecuteProjectDetailCommand());
-
-    //    }
-    //    public void Load()
-    //    {
-
-    //    }
-    //    async Task ExecuteProjectDetailCommand()
-    //    {
-    //      await  Application.Current.MainPage.DisplayAlert("Selected Peron", "Person id : ", "Ok","cancel");
-    //        // await Shell.Current.GoToAsync("projectdetail");
-    //    }
-    //}
+    
 }

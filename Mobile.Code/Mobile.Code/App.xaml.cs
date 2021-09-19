@@ -16,8 +16,8 @@ namespace Mobile.Code
     public partial class App : Application
     {
         public static string AzureBackendUrl =
-        //DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
-        DeviceInfo.Platform == DevicePlatform.Android ? "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/" : "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/";
+        DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
+        //DeviceInfo.Platform == DevicePlatform.Android ? "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/" : "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/";
         public static bool UseMockDataStore = true;
         public static readonly Guid UserID = new Guid("B339656A-C220-4ED5-88CF-A7EC500BD71A");
         public static int CompressionQuality { get; set; } = 100;

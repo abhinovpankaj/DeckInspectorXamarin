@@ -1,6 +1,7 @@
 ﻿using Mobile.Code.Models;
 using Mobile.Code.Utils;
 using Mobile.Code.Views;
+using Mobile.Code.Views._3_ProjectLocation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,15 @@ namespace Mobile.Code.ViewModels
 {
     public class ProjectViewModel : BaseViewModel
     {
-      
+
+        //private ObservableCollection<ProjectLocation_Visual> _visualFormProjectLocationItems;
+        //public ObservableCollection<ProjectLocation_Visual> VisualFormProjectLocationItems
+        //{
+        //    get { return _visualFormProjectLocationItems; }
+        //    set { _visualFormProjectLocationItems = value; OnPropertyChanged("VisualFormProjectLocationItems"); }
+        //}
+
+
         public Command ProjectDetailCommand { get; set; }
         public Command AddNewCommand { get; set; }
 
@@ -57,7 +66,17 @@ namespace Mobile.Code.ViewModels
 
             }
 
-            await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+            if (project.Category=="MultiLevel" || project.Category=="")
+            {
+                await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+            }
+            else
+            {
+                
+                await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                { BindingContext = new SingleLevelProjectDetailViewModel() { Project=project } }).ConfigureAwait(false);
+            }
+                
            
         }
 
@@ -90,21 +109,39 @@ namespace Mobile.Code.ViewModels
             InvasiveDetailCommand = new Command<Project>(async (Project project) => await ExecuteInvasiveDetailCommand(project));
             //LoadData();
         }
+
         async Task ExecuteAddNewCommand()
         {
             string ProjectType = string.Empty;
-            
+            string ProjectCategory = string.Empty;
+            string selectedOption = await App.Current.MainPage.DisplayActionSheet("Select Option", "Cancel", null,
+               new string[] { "Single Level", "Multi Level" });
+
+            switch (selectedOption)
+            {
+                case "Single Level":
+                    ProjectCategory = "SingleLevel";
+                    break;
+                case "Multi Level":
+                    ProjectCategory = "MultiLevel"; 
+                    break;
+                default:
+                    break;
+            }
+
             App.IsInvasive = false;
 
             ProjectType = "Visual Report";
-            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType } });
-
+            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType, ProjectCategory= ProjectCategory } });
 
         }
         private async Task<bool> Running()
         {
             IsBusyProgress = true;
             AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
+
+            
+            
             return await Task.FromResult(true);
 
 
@@ -115,8 +152,6 @@ namespace Mobile.Code.ViewModels
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
-
-
 
                 IsBusyProgress = false;
 
