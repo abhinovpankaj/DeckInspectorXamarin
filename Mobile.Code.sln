@@ -9,11 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Code.iOS", "Mobile.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile.Code", "Mobile.Code\Mobile.Code\Mobile.Code.csproj", "{15C807B3-6A5C-4DAB-B547-CFCBFAEE84BE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A2640785-5238-4018-A806-E4491E1984B8}"
-	ProjectSection(SolutionItems) = preProject
-		TextFile3.txt = TextFile3.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

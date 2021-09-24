@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,13 +22,13 @@ namespace Mobile.Code.Services
     }
     public class ProjectCommonLocationImagesDataStore : IProjectCommonLocationImages
     {
-         List<ProjectCommonLocationImages> items;
+        List<ProjectCommonLocationImages> items;
 
         public ProjectCommonLocationImagesDataStore()
         {
-           
+
             items = new List<ProjectCommonLocationImages>();
-           
+
         }
         public async Task<bool> AddItemAsync(ProjectCommonLocationImages item)
         {
@@ -87,7 +86,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<ProjectCommonLocationImages>> GetItemsAsyncByProjectLocationId(string projectLocationId)
         {
             using (HttpClient client = new HttpClient())
@@ -114,8 +113,8 @@ namespace Mobile.Code.Services
             }
         }
 
-        
 
-       
+
+
     }
 }

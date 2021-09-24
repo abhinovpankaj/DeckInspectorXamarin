@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mobile.Code.Models
 {
@@ -9,7 +7,7 @@ namespace Mobile.Code.Models
 
         public string Id { get; set; }
         public string VisualApartmentId { get; set; }
-      
+
 
         public string CreatedOn { get; set; }
 
@@ -30,6 +28,6 @@ namespace Mobile.Code.Models
             set { _mg = value; OnPropertyChanged("ImageUrl"); }
         }
         public DateTime DateCreated { get; set; }
-        public bool InvasiveImage { get;  set; }
+        public bool InvasiveImage { get; set; }
     }
 }

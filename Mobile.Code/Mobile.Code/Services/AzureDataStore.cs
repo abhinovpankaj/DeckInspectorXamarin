@@ -1,13 +1,4 @@
-﻿using Mobile.Code.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
-
-namespace Mobile.Code.Services
+﻿namespace Mobile.Code.Services
 {
     //public class AzureDataStore : IDataStore<Project>
     //{

@@ -1,17 +1,12 @@
 ﻿using Mobile.Code.Models;
-using Mobile.Code.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
-    public class CameraViewModel:BaseViewModel
+    public class CameraViewModel : BaseViewModel
     {
         private VisualProjectLocationPhoto _vpc;
         private ObservableCollection<MultiImage> _imageList;
@@ -46,7 +41,7 @@ namespace Mobile.Code.ViewModels
             set { _imageList = value; OnPropertyChanged("ImageList"); }
         }
 
-      
+
         public VisualProjectLocationPhoto VisualProjectLocationPhoto
         {
             get { return _vpc; }
@@ -72,7 +67,7 @@ namespace Mobile.Code.ViewModels
         public bool IsVisualProjectLocatoion
         {
             get { return _isprojectLoc; }
-            set { _isprojectLoc = value;OnPropertyChanged("IsVisualProjectLocatoion"); }
+            set { _isprojectLoc = value; OnPropertyChanged("IsVisualProjectLocatoion"); }
         }
         private bool _isbuildingLoc;
         public bool IsVisualBuilding
@@ -108,7 +103,7 @@ namespace Mobile.Code.ViewModels
 
         private async Task GoBack()
         {
-           await Shell.Current.Navigation.PopModalAsync();
+            await Shell.Current.Navigation.PopModalAsync();
         }
 
         private ObservableCollection<VisualProjectLocationPhoto> _visualProjectLocationPhotoItems;
@@ -139,26 +134,26 @@ namespace Mobile.Code.ViewModels
         public async Task AddNewPhoto(VisualProjectLocationPhoto obj)
         {
             await VisualProjectLocationPhotoDataStore.AddItemAsync(obj);
-            VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(ProjectLocation_Visual.Id,false));
+            VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(ProjectLocation_Visual.Id, false));
             CountItem = VisualProjectLocationPhotoItems.Count.ToString();
         }
         public async Task AddNewPhoto(VisualBuildingLocationPhoto obj)
         {
             await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
-            VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(BuildingLocation_Visual.Id,false));
+            VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(BuildingLocation_Visual.Id, false));
             CountItem = VisualBuildingLocationPhotoItems.Count.ToString();
         }
         public async Task AddNewPhoto(VisualApartmentLocationPhoto obj)
         {
             await VisualApartmentLocationPhotoDataStore.AddItemAsync(obj);
-            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(Apartment_Visual.Id,false));
+            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(Apartment_Visual.Id, false));
             CountItem = VisualApartmentLocationPhotoItems.Count.ToString();
         }
         public async Task AddNewPhoto(ProjectCommonLocationImages obj)
         {
             await ProjectCommonLocationImagesDataStore.AddItemAsync(obj);
-      //     ProjectCommonLocationImagesDataStore = new ObservableCollection<ProjectCommonLocationImages>(await ProjectCommonLocationImagesDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
-          //  CountItem = ProjectCommonLocationImagesDataStore.Count.ToString();
+            //     ProjectCommonLocationImagesDataStore = new ObservableCollection<ProjectCommonLocationImages>(await ProjectCommonLocationImagesDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+            //  CountItem = ProjectCommonLocationImagesDataStore.Count.ToString();
         }
         public async Task AddNewPhoto(BuildingCommonLocationImages obj)
         {

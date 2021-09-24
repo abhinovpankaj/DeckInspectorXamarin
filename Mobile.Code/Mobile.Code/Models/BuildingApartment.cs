@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-    public class BuildingApartment:BindingModel
+    public class BuildingApartment : BindingModel
     {
-      
+
         private string _img;
 
         public string ImageUrl
@@ -30,7 +25,7 @@ namespace Mobile.Code.Models
         public string Description { get; set; }
 
 
-        
+
 
         public string CreatedOn { get; set; }
 

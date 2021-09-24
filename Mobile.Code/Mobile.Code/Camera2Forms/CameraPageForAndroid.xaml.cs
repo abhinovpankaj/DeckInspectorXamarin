@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +16,7 @@ namespace Mobile.Code.Camera2Forms
     {
         private double width;
         private double height;
-       
+
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
@@ -33,14 +31,14 @@ namespace Mobile.Code.Camera2Forms
                     innerGrid.RowDefinitions.Clear();
                     innerGrid.ColumnDefinitions.Clear();
                     innerGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                    innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto ) });
+                    innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                     innerGrid.Children.Remove(controlsGrid);
                     innerGrid.Children.Add(controlsGrid, 1, 0);
                 }
                 else
                 {
-                    FlexTypes.Direction = FlexDirection.Row ;
+                    FlexTypes.Direction = FlexDirection.Row;
                     innerGrid.RowDefinitions.Clear();
                     innerGrid.ColumnDefinitions.Clear();
                     innerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -57,13 +55,13 @@ namespace Mobile.Code.Camera2Forms
         //public ObservableCollection<VisualApartmentLocationPhoto> VisualApartmentItems { get; set; }
         public CameraPageForAndroid()
         {
-           
+
             InitializeComponent();
             this.SizeChanged += CameraPageForAndroid_SizeChanged;
-           
-           // Items = new ObservableCollection<VisualProjectLocationPhoto>();
+
+            // Items = new ObservableCollection<VisualProjectLocationPhoto>();
             CameraPreview.PictureFinished += OnPictureFinished;
-          //  list = new ObservableCollection<MultiImage>();
+            //  list = new ObservableCollection<MultiImage>();
         }
 
         private void CameraPageForAndroid_SizeChanged(object sender, EventArgs e)
@@ -71,8 +69,8 @@ namespace Mobile.Code.Camera2Forms
             var stack = Navigation.NavigationStack;
             if (this.Width > this.Height) //Landscape
             {
-               // if (stack[stack.Count - 1].GetType() == typeof(ScoringPage))  //ScoringPage is my Portrait screen
-                  //  await Navigation.PushAsync(new ScoreCard_Landscape(), true);  //ScoreCard_Landscape is my Landscape screen
+                // if (stack[stack.Count - 1].GetType() == typeof(ScoringPage))  //ScoringPage is my Portrait screen
+                //  await Navigation.PushAsync(new ScoreCard_Landscape(), true);  //ScoreCard_Landscape is my Landscape screen
             }
             else
             {
@@ -85,7 +83,7 @@ namespace Mobile.Code.Camera2Forms
 
             CameraPreview.CameraClick.Execute(null);
         }
-     
+
         private async void OnPictureFinished()
         {
             //if (Device.RuntimePlatform == Device.Android)
@@ -98,12 +96,12 @@ namespace Mobile.Code.Camera2Forms
             // await DisplayAlert("Confirm", "Picture Taken", "", "Ok");
             if (Device.RuntimePlatform == Device.iOS)
             {
-               
-
-                
 
 
-                    string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+
+
+
+                string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
                 // img1.Source = filepath;
                 App.ListCamera2Api.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
 
@@ -129,7 +127,7 @@ namespace Mobile.Code.Camera2Forms
                 //    }
                 //}
             }
-           
+
             //if (vm.IsVisualBuilding)
             //{
             //    VisualBuildingLocationPhoto obj = new VisualBuildingLocationPhoto() { Image = filepath, Id = Guid.NewGuid().ToString(), VisualID = vm.BuildingLocation_Visual.Id };
@@ -167,30 +165,30 @@ namespace Mobile.Code.Camera2Forms
         {
             //CameraViewModel vm = (CameraViewModel)this.BindingContext;
             //vm.IsBusyProgress = true;
-           
 
-           
+
+
             //MessagingCenter.Send(this, "ImageList", vm.ImageList);
-           
-         
+
+
             CameraPreview.PictureFinished -= OnPictureFinished;
-          
-          //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
+
+            //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
             base.OnDisappearing();
-           // vm.ImageList.Clear();
-           // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
+            // vm.ImageList.Clear();
+            // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
         }
         protected override void OnAppearing()
         {
-            App.ListCamera2Api=new List<MultiImage>();
+            App.ListCamera2Api = new List<MultiImage>();
             base.OnAppearing();
         }
         private async void btnSave_Clicked(object sender, EventArgs e)
         {
-            
+
             await Shell.Current.Navigation.PopModalAsync();
-           // CameraViewModel vm = (CameraViewModel)this.BindingContext;
-          
+            // CameraViewModel vm = (CameraViewModel)this.BindingContext;
+
             //vm.IsBusyProgress = true;
 
             //bool complete = await Task.Run(Running);

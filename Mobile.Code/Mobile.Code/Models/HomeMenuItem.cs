@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CodeRepo.Mobile.Models
+﻿namespace CodeRepo.Mobile.Models
 {
     public enum MenuItemType
     {

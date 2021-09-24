@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-    public class CustomRadioItem: BindingModel
+    public class CustomRadioItem : BindingModel
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -16,14 +11,14 @@ namespace Mobile.Code.Models
         public bool IsSelected
         {
             get { return _isChk; }
-            set 
+            set
             {
                 //if (_isChk != value)
                 //{
-                    _isChk = value;
-                   // OnPropertyChanged("IsSelected");
+                _isChk = value;
+                // OnPropertyChanged("IsSelected");
                 //}
-                
+
             }
         }
 

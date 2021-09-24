@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class BuildingLocation : BindingModel
 
@@ -26,7 +21,7 @@ namespace Mobile.Code.Models
         public string Description { get; set; }
 
 
-    
+
 
         public string CreatedOn { get; set; }
 

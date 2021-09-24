@@ -1,9 +1,5 @@
 ﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,7 +10,7 @@ namespace Mobile.Code.Views
     public partial class ConclusiveInfo : ContentView
     {
         private ISpeechToText _speechRecongnitionInstance;
-       
+
         public ConclusiveInfo(object vm)
         {
             InitializeComponent();
@@ -83,7 +79,7 @@ namespace Mobile.Code.Views
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
@@ -118,7 +114,7 @@ namespace Mobile.Code.Views
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
 
@@ -133,6 +129,6 @@ namespace Mobile.Code.Views
 
         }
 
-       
+
     }
 }

@@ -1,20 +1,19 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
     public interface IVisualFormProjectLocationDataStore
     {
         Task<Response> AddItemAsync(ProjectLocation_Visual item, IEnumerable<string> ImageList = null);
-        Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList, string imgType="TRUE");
+        Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList, string imgType = "TRUE");
         Task<Response> DeleteItemAsync(ProjectLocation_Visual item);
         Task<ProjectLocation_Visual> GetItemAsync(string id);
         Task<IEnumerable<ProjectLocation_Visual>> GetItemsAsync(bool forceRefresh = false);
@@ -23,14 +22,14 @@ namespace Mobile.Code.Services
     }
     public class VisualFormProjectLocationDataStore : IVisualFormProjectLocationDataStore
     {
-         List<ProjectLocation_Visual> items;
+        List<ProjectLocation_Visual> items;
 
         public VisualFormProjectLocationDataStore()
         {
             items = new List<ProjectLocation_Visual>();
 
         }
-        public async Task<Response> AddItemAsync(ProjectLocation_Visual item,IEnumerable<string> ImageList=null)
+        public async Task<Response> AddItemAsync(ProjectLocation_Visual item, IEnumerable<string> ImageList = null)
         {
 
             Response result = new Response();
@@ -39,7 +38,7 @@ namespace Mobile.Code.Services
             parameters.Add("Name", item.Name);
             parameters.Add("ProjectLocationId", item.ProjectLocationId);
             parameters.Add("AdditionalConsideration", item.AdditionalConsideration);
-       
+
             parameters.Add("ExteriorElements", item.ExteriorElements);
             parameters.Add("WaterProofingElements", item.WaterProofingElements);
             parameters.Add("ConditionAssessment", item.ConditionAssessment);
@@ -56,13 +55,13 @@ namespace Mobile.Code.Services
 
 
 
-            result = await HttpUtil.VisualDataAdd(item.Name, "api/VisualProjectLocation/Add", parameters,ImageList);
+            result = await HttpUtil.VisualDataAdd(item.Name, "api/VisualProjectLocation/Add", parameters, ImageList);
 
 
             return await Task.FromResult(result);
         }
 
-        public async Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList,string imgType="TRUE")
+        public async Task<Response> UpdateItemAsync(ProjectLocation_Visual item, List<MultiImage> finelList, string imgType = "TRUE")
         {
             Response result = new Response();
 
@@ -97,16 +96,16 @@ namespace Mobile.Code.Services
             parameters.Add("IsInvasiveRepairComplete", item.IsInvasiveRepairComplete.ToString());
 
 
-            if (App.IsInvasive==true)
+            if (App.IsInvasive == true)
             {
-               
+
                 parameters.Add("IsInvaiveImage", imgType);
-               
+
             }
             else
             {
                 parameters.Add("IsInvaiveImage", null);
-      
+
             }
             // for invasive Images
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
@@ -117,14 +116,14 @@ namespace Mobile.Code.Services
 
                 using (var formData = new MultipartFormDataContent())
                 {
-                    
+
                     int Index = 1000;
                     foreach (MultiImage img in finelList)
                     {
                         Index++;
-                        if(img.IsServerData==false&&img.Status!= "FromServer")
+                        if (img.IsServerData == false && img.Status != "FromServer")
                         {
-                            string ServerFileName = "New_"+img.Id;
+                            string ServerFileName = "New_" + img.Id;
 
                             string[] array = ServerFileName.Split('_');
                             string operation = array[0];
@@ -142,7 +141,7 @@ namespace Mobile.Code.Services
                             var sevenThousandItems = new byte[7000];
                             formData.Add(new ByteArrayContent(sevenThousandItems), Index.ToString(), ServerFileName);
                         }
-                       
+
                     }
                     // var extension = Path.GetExtension(img);
                     formData.Add(DictionaryItems, "Model");
@@ -155,7 +154,7 @@ namespace Mobile.Code.Services
                     return await Task.FromResult(result);
                 }
             }
-            
+
         }
 
         public async Task<Response> DeleteItemAsync(ProjectLocation_Visual item)
@@ -193,7 +192,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<ProjectLocation_Visual>> GetItemsAsyncByProjectLocationId(string projectLocationId)
         {
             using (HttpClient client = new HttpClient())
@@ -203,7 +202,7 @@ namespace Mobile.Code.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-                using (HttpResponseMessage response = await client.GetAsync($"api/VisualProjectLocation/GetVisualProjectLocationByProjectLocationId?ProjectLocationId=" + projectLocationId+ "&isInvasive="+App.IsInvasive))
+                using (HttpResponseMessage response = await client.GetAsync($"api/VisualProjectLocation/GetVisualProjectLocationByProjectLocationId?ProjectLocationId=" + projectLocationId + "&isInvasive=" + App.IsInvasive))
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
@@ -220,8 +219,8 @@ namespace Mobile.Code.Services
             }
         }
 
-        
 
-       
+
+
     }
 }

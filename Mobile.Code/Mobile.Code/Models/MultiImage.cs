@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mobile.Code.Models
 {
@@ -16,7 +14,7 @@ namespace Mobile.Code.Models
         public DateTime CreateOn { get; set; }
         public byte[] ImageArray { get; set; }
 
-        public string Status{ get; set; }
+        public string Status { get; set; }
         public string ParentId { get; set; }
 
         public string ImageType { get; set; }

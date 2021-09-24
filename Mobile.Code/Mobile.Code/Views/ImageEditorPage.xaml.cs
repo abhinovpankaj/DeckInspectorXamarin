@@ -3,7 +3,6 @@ using Mobile.Code;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -12,15 +11,15 @@ using Xamarin.Forms.Xaml;
 namespace ImageEditor.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ImageEditorPage : ContentPage
-	{
+    public partial class ImageEditorPage : ContentPage
+    {
         List<IEnumerable<Point>> redostrokeslist;
         private ISpeechToText _speechRecongnitionInstance;
         public ICommand SaveImageCommand { get; set; }
-        public ImageEditorPage (string SelectedImage,string Name,string Description)
+        public ImageEditorPage(string SelectedImage, string Name, string Description)
         {
-			InitializeComponent ();
-            
+            InitializeComponent();
+
             txtName.Text = Name;
             txtDes.Text = Description;
             if (Device.RuntimePlatform == Device.iOS)
@@ -32,7 +31,7 @@ namespace ImageEditor.Pages
             //{
             //    string colorcode = item as string;
             //    signaturepad.StrokeColor= editorcomment.TextColor= labelcomment.TextColor = Color.FromHex(colorcode);
-                
+
             //});
             ////BindingContext = new ImageEditorViewModel(SelectedImage);
             //signaturepad.StrokeColor = editorcomment.TextColor= labelcomment.TextColor= Color.FromHex("#FF0000");
@@ -122,26 +121,26 @@ namespace ImageEditor.Pages
                 MessagingCenter.Send(this, "AddItem", "Hello");
                 await Navigation.PopModalAsync();
             }
-            catch (Exception )
+            catch (Exception)
             {
-               
+
             }
             finally
             {
-               
+
             }
         }
-       
+
 
         private async void TapGestureShowColor_Tapped(object sender, EventArgs e)
         {
-          //  signaturepad.StrokeColor = Color.FromHex("#0000FF");
+            //  signaturepad.StrokeColor = Color.FromHex("#0000FF");
             await Shell.Current.Navigation.PushModalAsync(new ColorPicker());
         }
 
         private void imagebackground_ImageSaved(object sender, Syncfusion.SfImageEditor.XForms.ImageSavedEventArgs args)
         {
-          
+
             // vm.SelectedImage = args.Location;
         }
 
@@ -151,14 +150,14 @@ namespace ImageEditor.Pages
             MemoryStream m = new MemoryStream();
             args.Stream.CopyTo(m);
 
-            vm.array= m.ToArray();
-          //  vm.SaveImageCommand(data,this);
+            vm.array = m.ToArray();
+            //  vm.SaveImageCommand(data,this);
             args.Cancel = true;
         }
 
         private void txtName_Focused(object sender, FocusEventArgs e)
         {
-          
+
         }
     }
 }

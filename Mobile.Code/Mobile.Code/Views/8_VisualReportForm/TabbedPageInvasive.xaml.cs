@@ -1,16 +1,11 @@
 ﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xam.Plugin.TabView;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace Mobile.Code.Views
-{ 
+{
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabbedPageInvasive : ContentPage
     {
@@ -24,7 +19,7 @@ namespace Mobile.Code.Views
 
         private void LoadAllTabs(object vm)
         {
-            
+
             if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
             {
                 var viewModel = vm as VisualProjectLocationFormViewModel;
@@ -40,7 +35,7 @@ namespace Mobile.Code.Views
                 this.BindingContext = viewModel;
                 TabItem visualTab = new TabItem("Visual", new InvasiveVisualBuildingLocationForm(viewModel));
 
-                tabbedControl.AddTab(visualTab) ;
+                tabbedControl.AddTab(visualTab);
                 tabbedControl.SelectFirst();
             }
             if (vm.GetType() == typeof(VisualApartmentFormViewModel))
@@ -53,7 +48,7 @@ namespace Mobile.Code.Views
                 tabbedControl.SelectFirst();
             }
 
-            
+
             AddRemoveConclusiveTab();
 
             AdditionalInvasive.AllowFurthurInvasive += AdditionalInvasive_AllowFurthurInvasive;
@@ -62,7 +57,7 @@ namespace Mobile.Code.Views
         {
             InitializeComponent();
         }
-        
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -72,7 +67,7 @@ namespace Mobile.Code.Views
                 await ((VisualBuildingLocationFormViewModel)this.BindingContext).Load();
             if (this.BindingContext is VisualApartmentFormViewModel)
                 await ((VisualApartmentFormViewModel)this.BindingContext).Load();
-            
+
 
         }
 
@@ -82,14 +77,14 @@ namespace Mobile.Code.Views
             AddRemoveConclusiveTab();
         }
         private bool added;
-        
+
         private void AddRemoveConclusiveTab()
         {
-            
+
             try
             {
                 var vm = this.BindingContext;
-                
+
                 if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
                 {
                     var viewModel = vm as VisualProjectLocationFormViewModel;
@@ -101,19 +96,19 @@ namespace Mobile.Code.Views
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab,2);
+                                tabbedControl.AddTab(conclusiveTab, 2);
                                 added = true;
                             }
-                            
+
                         }
                         else
                         {
                             if (added)
                             {
                                 tabbedControl.RemoveTab(2);
-                                added = false;                               
+                                added = false;
                             }
-                            
+
                         }
                     }
                 }
@@ -127,12 +122,12 @@ namespace Mobile.Code.Views
                         {
                             if (!added)
                             {
-                               
+
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
-                               
-                                tabbedControl.AddTab(conclusiveTab,2);
+
+                                tabbedControl.AddTab(conclusiveTab, 2);
                                 added = true;
-                               
+
                             }
 
                         }
@@ -142,7 +137,7 @@ namespace Mobile.Code.Views
                             {
                                 tabbedControl.RemoveTab(2);
                                 added = false;
-                                
+
                             }
                         }
 
@@ -159,7 +154,7 @@ namespace Mobile.Code.Views
                             {
                                 TabItem conclusiveTab = new TabItem("Conclusive", new ConclusiveInfo(viewModel));
 
-                                tabbedControl.AddTab(conclusiveTab,2);
+                                tabbedControl.AddTab(conclusiveTab, 2);
                                 added = true;
                             }
 
@@ -175,14 +170,14 @@ namespace Mobile.Code.Views
 
                     }
                 }
-                
+
                 tabbedControl.SelectFirst();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
-            
+
         }
     }
 }

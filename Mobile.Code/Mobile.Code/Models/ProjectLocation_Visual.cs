@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-    public class ProjectLocation_Visual: BindingModel
+    public class ProjectLocation_Visual : BindingModel
     {
         public string Id { get; set; }
         public string ProjectLocationId { get; set; }

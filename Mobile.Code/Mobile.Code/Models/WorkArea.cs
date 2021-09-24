@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-
-using Mobile.Code.Models;
-using Xamarin.Forms;
+﻿using System.Collections.ObjectModel;
 
 namespace Mobile.Code.Models
 {

@@ -1,23 +1,18 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Mobile.Code.Models;
 using Mobile.Code.Services;
-using Mobile.Code.Views;
-using Xamarin.Essentials;
-using Mobile.Code.Models;
+using System;
 using System.Collections.Generic;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace Mobile.Code
 {
-    
+
     public partial class App : Application
     {
         public static string AzureBackendUrl =
         //DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
-        DeviceInfo.Platform == DevicePlatform.Android ? "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/" : "http://xoricwebapi-prod.us-east-1.elasticbeanstalk.com/";
+        DeviceInfo.Platform == DevicePlatform.Android ? "https://api.deckinspectors.com/v2/" : "https://api.deckinspectors.com/v2/";
         public static bool UseMockDataStore = true;
         public static readonly Guid UserID = new Guid("B339656A-C220-4ED5-88CF-A7EC500BD71A");
         public static int CompressionQuality { get; set; } = 100;
@@ -28,7 +23,7 @@ namespace Mobile.Code
         public static List<MultiImage> VisualEditTrackingForInvasive { get; set; }
         public static bool IsInvasive { get; set; }
         public static bool IsVisualEdidingMode { get; set; }
-        public static string  projectBuildingID { get; set; }
+        public static string projectBuildingID { get; set; }
         public static int Orientation { get; set; }
         public static string FormString { get; set; }
         public static string ImageFormString { get; set; }
@@ -62,7 +57,7 @@ namespace Mobile.Code
             DependencyService.Register<VisualFormBuildingLocationDataStore>();
             DependencyService.Register<VisualBuildingLocationPhotoDataStore>();
 
-            
+
             DependencyService.Register<VisualFormApartmentDataStore>();
             DependencyService.Register<VisualApartmentLocationPhotoDataStore>();
             MainPage = new AppShell();
@@ -70,8 +65,8 @@ namespace Mobile.Code
         protected override void OnStart()
         {
             //AppCenter.Start("ios=5da4b8f5-4212-42ca-81df-3e2eb6d39000;" ,
-                    
-                    
+
+
             //         typeof(Analytics), typeof(Crashes));
             base.OnStart();
         }

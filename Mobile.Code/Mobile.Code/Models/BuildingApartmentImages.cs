@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class BuildingApartmentImages : BindingModel
     {
         public string Id { get; set; }
         public string BuildingApartmentId { get; set; }
-       
+
 
         public string CreatedOn { get; set; }
 
@@ -26,6 +22,6 @@ namespace Mobile.Code.Models
             get { return _image; }
             set { _image = value; OnPropertyChanged("ImageUrl"); }
         }
-        
+
     }
 }

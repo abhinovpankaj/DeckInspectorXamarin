@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace ImageEditor.Controls
 {
-   internal class RoundedBox : BoxView
+    internal class RoundedBox : BoxView
     {
         private double _size;
 

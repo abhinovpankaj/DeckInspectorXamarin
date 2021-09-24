@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Mobile.Code.ViewModels;
+using System;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,12 +9,12 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectDetail : ContentPage
     {
-      // ProjectDetailViewModel vm;
+        // ProjectDetailViewModel vm;
         public ProjectDetail()
         {
             InitializeComponent();
-           //vm= this.BindingContext = vm= new ProjectDetailViewModel();
-          
+            //vm= this.BindingContext = vm= new ProjectDetailViewModel();
+
         }
         protected async override void OnAppearing()
         {
@@ -61,8 +57,8 @@ namespace Mobile.Code.Views
         private async void TapGestureRecognizer_CommonLocation(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("projectLocation");
-        //   await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new ProjectLocationPage()));
-           
+            //   await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new ProjectLocationPage()));
+
         }
         private async void TapGestureRecognizer_TappedBN(object sender, EventArgs e)
         {

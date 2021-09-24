@@ -1,10 +1,6 @@
 ﻿using Mobile.Code.Models;
 using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,8 +14,8 @@ namespace Mobile.Code.Views
         //ProjectAddEditViewModel vm;
         public VisualFormType VisualFormType { get; set; }
         public UnitPhtoForm()
-        { 
-        InitializeComponent();
+        {
+            InitializeComponent();
             recordDes.Clicked += RecordDes_Clicked;
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -37,7 +33,7 @@ namespace Mobile.Code.Views
             MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
             {
                 ImageButton btn = sender as ImageButton;
-                
+
                 if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
@@ -58,23 +54,23 @@ namespace Mobile.Code.Views
             ImageButton btn = sender as ImageButton;
             try
             {
-                
 
-                 if (btn.ClassId == "recordDes")
+
+                if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
 
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-              
+
 
                 recordDes.IsEnabled = false;
             }
@@ -82,7 +78,7 @@ namespace Mobile.Code.Views
 
         private void SpeechToTextFinalResultRecieved(string args)
         {
-           
+
             if (txtDes.IsFocused)
             {
                 txtDes.Text += args;
@@ -94,23 +90,23 @@ namespace Mobile.Code.Views
             ImageButton btn = sender as ImageButton;
             try
             {
-               
-                 if (btn.ClassId == "recordDes")
+
+                if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
 
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
-               
+
             }
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-              
+
 
                 recordDes.IsEnabled = false;
             }
@@ -119,9 +115,9 @@ namespace Mobile.Code.Views
         protected async override void OnAppearing()
         {
             UnitPhotoViewModel vm = ((UnitPhotoViewModel)this.BindingContext);
-            await  ((UnitPhotoViewModel)this.BindingContext).LoadAsync();
-           
-           
+            await ((UnitPhotoViewModel)this.BindingContext).LoadAsync();
+
+
             base.OnAppearing();
             //vm.Load();
         }

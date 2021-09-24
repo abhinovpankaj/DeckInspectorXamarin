@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class BuildingLocation_Visual : BindingModel
     {

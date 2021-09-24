@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,7 +22,7 @@ namespace Mobile.Code.Services
     }
     public class VisualBuildingLocationPhotoDataStore : IVisualBuildingLocationPhotoDataStore
     {
-         List<VisualBuildingLocationPhoto> items;
+        List<VisualBuildingLocationPhoto> items;
 
         public VisualBuildingLocationPhotoDataStore()
         {
@@ -111,7 +110,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<VisualBuildingLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer)
         {
             if (loadServer == false)
@@ -134,7 +133,7 @@ namespace Mobile.Code.Services
 
 
                         items = JsonConvert.DeserializeObject<List<VisualBuildingLocationPhoto>>(result.Data.ToString());
-                        items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription!="CONCLUSIVE").ToList();
+                        items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
                         foreach (var item in items)
                         {
                             App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualBuildingId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });

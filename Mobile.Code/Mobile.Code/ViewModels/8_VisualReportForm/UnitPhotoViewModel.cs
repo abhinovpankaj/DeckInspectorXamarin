@@ -1,13 +1,7 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
-using Mobile.Code.Views;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -360,14 +354,15 @@ namespace Mobile.Code.ViewModels
                 await CurrentWithoutDetail.EditImage(ImgData, GetImage);
 
             }
-       
-       
+
+
         }
 
         public ICommand DeleteImageCommand => new Command<BindingModel>(async (BindingModel parm) => await DeleteImageCommandCommandExecute(parm));
         private async Task DeleteImageCommandCommandExecute(BindingModel parm)
         {
-            try {
+            try
+            {
                 var result = await Shell.Current.DisplayAlert(
                  "Alert",
                  "Are you sure you want to remove?",
@@ -413,18 +408,18 @@ namespace Mobile.Code.ViewModels
                         }
 
                     }
-                 //   await LoadAsync();
+                    //   await LoadAsync();
                 }
 
 
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
 
 
-           
+
 
         }
 
@@ -460,7 +455,7 @@ namespace Mobile.Code.ViewModels
             //    await VisualApartmentLocationPhotoDataStore.UpdateItemAsync(VisualApartmentLocationPhoto);
 
             //}
-           
+
             await LoadAsync();
         }
     }

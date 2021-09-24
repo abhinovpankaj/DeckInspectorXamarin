@@ -1,9 +1,4 @@
 ﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,8 +12,8 @@ namespace Mobile.Code.Views
         public SettingPage()
         {
             InitializeComponent();
-            this.BindingContext = vm= new SettingtViewModel();
-            
+            this.BindingContext = vm = new SettingtViewModel();
+
         }
         protected async override void OnAppearing()
         {

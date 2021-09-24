@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mobile.Code.Models
 {
-    public class CheckBoxItem:BindingModel
+    public class CheckBoxItem : BindingModel
     {
 
         public Guid Id { get; set; }

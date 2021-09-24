@@ -1,12 +1,9 @@
 ﻿using SignaturePad.Forms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace ImageEditor.Behaviors
 {
-    internal class ScratchView :  Behavior<SignaturePadView>
+    internal class ScratchView : Behavior<SignaturePadView>
     {
         protected override void OnAttachedTo(SignaturePadView bindable)
         {

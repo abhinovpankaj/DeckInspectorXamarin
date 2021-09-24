@@ -1,22 +1,18 @@
 ﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-
 using System.Threading.Tasks;
-
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
-   public interface ILoginServices
+    public interface ILoginServices
     {
         Task<Response> ValidateLogin(User user);
     }
 
-    public class LoginServices:ILoginServices
+    public class LoginServices : ILoginServices
     {
         public async Task<Response> ValidateLogin(User user)
         {

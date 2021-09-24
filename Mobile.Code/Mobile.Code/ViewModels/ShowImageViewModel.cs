@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using Mobile.Code.Models;
+﻿using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
@@ -45,7 +43,7 @@ namespace Mobile.Code.ViewModels
 
             await App.Current.MainPage.Navigation.PopModalAsync();
         }
-        public ShowImageViewModel(string Image,string name,string des,string _date)
+        public ShowImageViewModel(string Image, string name, string des, string _date)
         {
             ClosePageCommand = new Command(ClosePageCommandExecute);
             ImageUrl = Image;

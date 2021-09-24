@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,11 +22,11 @@ namespace Mobile.Code.Services
     }
     public class BuildingApartmentImagesDataStore : IBuildingApartmentImages
     {
-         List<BuildingApartmentImages> items;
+        List<BuildingApartmentImages> items;
 
         public BuildingApartmentImagesDataStore()
         {
-            
+
             items = new List<BuildingApartmentImages>();
 
         }
@@ -40,7 +39,7 @@ namespace Mobile.Code.Services
 
         public async Task<bool> UpdateItemAsync(BuildingApartmentImages item)
         {
-            
+
             Regex UrlMatch = new Regex(@"(?i)(http(s)?:\/\/)?(\w{2,25}\.)+\w{3}([a-z0-9\-?=$-_.+!*()]+)(?i)", RegexOptions.Singleline);
             if (item.ImageUrl == "blank.png" || UrlMatch.IsMatch(item.ImageUrl))
             {
@@ -48,7 +47,7 @@ namespace Mobile.Code.Services
                 return await Task.FromResult(true);
 
             }
-            Response result=  HttpUtil.Update_Image("Apartment", item.ImageUrl, "/api/BuildingApartmentImage/AddEdit?ParentId=" + item.BuildingApartmentId + "&UserId=" + App.LogUser.Id.ToString() + "&Id=" + item.Id).Result;
+            Response result = HttpUtil.Update_Image("Apartment", item.ImageUrl, "/api/BuildingApartmentImage/AddEdit?ParentId=" + item.BuildingApartmentId + "&UserId=" + App.LogUser.Id.ToString() + "&Id=" + item.Id).Result;
 
             return await Task.FromResult(true);
         }
@@ -69,7 +68,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                   
+
                     return await Task.FromResult(result);
 
 
@@ -87,7 +86,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<BuildingApartmentImages>> GetItemsAsyncByApartmentID(string ApartmentID)
         {
             using (HttpClient client = new HttpClient())
@@ -114,8 +113,8 @@ namespace Mobile.Code.Services
             }
         }
 
-        
 
-       
+
+
     }
 }

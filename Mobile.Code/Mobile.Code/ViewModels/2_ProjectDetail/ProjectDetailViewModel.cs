@@ -1,16 +1,9 @@
 ﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using Mobile.Code.Data;
 using Mobile.Code.Views;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
@@ -175,7 +168,7 @@ namespace Mobile.Code.ViewModels
         {
             CreateInvasiveCommand = new Command(async () => await CreateInvasive());
             GoBackCommand = new Command(async () => await GoBack());
-          //  SaveCommand = new Command(async () => await Save());
+            //  SaveCommand = new Command(async () => await Save());
             EditCommand = new Command(async () => await Edit());
             SaveCommand = new Command(async () => await Save());
             EditCommand = new Command(async () => await Edit());
@@ -208,7 +201,7 @@ namespace Mobile.Code.ViewModels
 
                     //if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectDetail))
                     //{
-                        await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
                     //}
                     IsBusyProgress = false;
                     //  await Shell.Current.Navigation.PopAsync();
@@ -217,7 +210,7 @@ namespace Mobile.Code.ViewModels
             else
             {
                 Project.IsInvasive = false;
-               // Project.Id = Project.InvasiveProjectID;
+                // Project.Id = Project.InvasiveProjectID;
                 var response = await Task.Run(() =>
                   ProjectDataStore.CreateInvasiveReport(Project)
                 );
@@ -308,7 +301,7 @@ namespace Mobile.Code.ViewModels
 
         async Task<bool> Running()
         {
-            if(App.IsInvasive)
+            if (App.IsInvasive)
             {
                 IsInvasiveControlDisable = true;
             }
@@ -420,20 +413,20 @@ namespace Mobile.Code.ViewModels
                         CanInvasiveCreate = true;
                         BtnInvasiveText = "Invasive";
                     }
-                    
+
                 }
                 if (Project.ProjectType == "Invasive" && Project.IsAccess)
                 {
                     CanInvasiveCreate = true;
                     BtnInvasiveText = "Refresh";
                 }
-                
+
             }
 
-           
-                ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore.GetItemsAsyncByProjectID(Project.Id));
-                ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore.GetItemsAsyncByProjectID(Project.Id));
-           
+
+            ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore.GetItemsAsyncByProjectID(Project.Id));
+            ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore.GetItemsAsyncByProjectID(Project.Id));
+
             return await Task.FromResult(true);
 
 

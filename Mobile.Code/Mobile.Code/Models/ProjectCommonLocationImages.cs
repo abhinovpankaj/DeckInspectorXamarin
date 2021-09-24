@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class ProjectCommonLocationImages : BindingModel
     {
-       
+
         private string _image;
 
         public string ImageUrl

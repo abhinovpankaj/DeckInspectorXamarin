@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mobile.Code.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Mobile.Code.Models;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
@@ -31,7 +27,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             await Shell.Current.Navigation.PopModalAsync();
-           
+
         }
         public ICommand ColorCommand => new Command<ColorSet>(async (ColorSet obj) => await ColorCommandExecute(obj));
         private async Task ColorCommandExecute(ColorSet obj)

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AVFoundation;
+﻿using AVFoundation;
 using Foundation;
 using Mobile.Code.iOS;
 using Speech;
-using UIKit;
+using System;
 using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SpeechToTextImplementation))]

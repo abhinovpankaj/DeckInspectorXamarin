@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Mobile.Code.ViewModels;
+using System;
 using System.Threading.Tasks;
-using Mobile.Code.Data;
-using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +10,7 @@ namespace Mobile.Code.Views
     public partial class BuildingLocationDetail : ContentPage
     {
 
-      //  BuildingLocationDetailViewModel vm;
+        //  BuildingLocationDetailViewModel vm;
         public BuildingLocationDetail()
         {
             InitializeComponent();
@@ -41,7 +36,7 @@ namespace Mobile.Code.Views
         {
             lblInvasive.IsVisible = App.IsInvasive;
             base.OnAppearing();
-           await ((BuildingLocationDetailViewModel)this.BindingContext).LoadData();
+            await ((BuildingLocationDetailViewModel)this.BindingContext).LoadData();
             //vm.LoadData();
         }
         //private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,8 +47,8 @@ namespace Mobile.Code.Views
 
         private async void TapGestureRecognizer_TappedLN(object sender, EventArgs e)
         {
-           await Task.FromResult(true);
-           // await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new AddProjectLocation()));
+            await Task.FromResult(true);
+            // await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new AddProjectLocation()));
         }
         private async void TapGestureRecognizer_CommonLocation(object sender, EventArgs e)
         {

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,13 +21,13 @@ namespace Mobile.Code.Services
     }
     public class ProjectBuildingDataStore : IProjectBuilding
     {
-         List<ProjectBuilding> items;
+        List<ProjectBuilding> items;
 
         public ProjectBuildingDataStore()
         {
-           
+
             items = new List<ProjectBuilding>();
-            
+
 
         }
         public async Task<bool> UpdateItemAsync(ProjectBuilding item)
@@ -104,7 +102,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(result);
 
         }
-       
+
 
         public async Task<ProjectBuilding> GetItemAsync(string id)
         {
@@ -136,7 +134,7 @@ namespace Mobile.Code.Services
         {
             return await Task.FromResult(items);
         }
-      
+
 
         public async Task<IEnumerable<ProjectBuilding>> GetItemsAsyncByProjectID(string projectId)
         {
@@ -149,7 +147,7 @@ namespace Mobile.Code.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-                using (HttpResponseMessage response = await client.GetAsync($"api/ProjectBuilding/GetBuildingByProjectID?ProjectID=" + projectId+ "&UserId="+App.LogUser.Id))
+                using (HttpResponseMessage response = await client.GetAsync($"api/ProjectBuilding/GetBuildingByProjectID?ProjectID=" + projectId + "&UserId=" + App.LogUser.Id))
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);

@@ -1,17 +1,10 @@
-﻿
-using Mobile.Code.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-   public class Project: BindingModel
+    public class Project : BindingModel
     {
 
-       // public ProjectType ProjectType { get; set; }
-      //  public string ProjectImage { get; set; }
+        // public ProjectType ProjectType { get; set; }
+        //  public string ProjectImage { get; set; }
         private string _pimage;
 
         public string ImageUrl
@@ -44,22 +37,23 @@ namespace Mobile.Code.Models
 
         public bool IsVisible
         {
-            get { 
-                if(IsInvasive==false)
+            get
+            {
+                if (IsInvasive == false)
                 {
                     return false;
                 }
-                else if(App.LogUser.Id.ToString()== UserId&&IsInvasive==true||App.LogUser.RoleName=="Admin"&& IsInvasive == true)
+                else if (App.LogUser.Id.ToString() == UserId && IsInvasive == true || App.LogUser.RoleName == "Admin" && IsInvasive == true)
                 {
                     return true;
                 }
                 return false;
-            
+
             }
             set { _isVisible = value; OnPropertyChanged("IsVisible"); }
         }
 
-       
+
         public string CreatedOn { get; set; }
         public string InvasiveProjectID { get; set; }
         public bool IsInvaisveExist { get; set; }
@@ -72,7 +66,7 @@ namespace Mobile.Code.Models
             set { _IsAccess = value; OnPropertyChanged("IsAccess"); }
         }
 
-      
+
     }
 
     public enum ProjectType

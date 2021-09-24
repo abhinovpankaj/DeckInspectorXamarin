@@ -1,8 +1,5 @@
-﻿using FFImageLoading.Work;
-using Mobile.Code.ViewModels;
+﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class ProjectBuilding : BindingModel
     {
@@ -19,7 +14,7 @@ namespace Mobile.Code.Models
         public string Description { get; set; }
 
 
-       
+
 
         public string CreatedOn { get; set; }
 
@@ -44,6 +39,6 @@ namespace Mobile.Code.Models
             set { _bimage = value; OnPropertyChanged("ImageUrl"); }
         }
 
-        
+
     }
 }

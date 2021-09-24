@@ -1,14 +1,10 @@
-﻿using Mobile.Code.Data;
+﻿using Mobile.Code.ViewModels;
+using Mobile.Code.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Mobile.Code.Views;
-using Xamarin.Forms.Xaml;
-using Mobile.Code.ViewModels;
-using Mobile.Code.Models;
 
 namespace Mobile.Code
 {
@@ -23,25 +19,25 @@ namespace Mobile.Code
         public ICommand GoNewProjectCommand => new Command(async () => await GoNewProjectCommandExecute());
 
         public ICommand LogoutCommand => new Command(async () => await GoLogoutCommandExecute());
-        async  Task GoLogoutCommandExecute()
+        async Task GoLogoutCommandExecute()
         {
             App.LogUser = null;
             App.Current.MainPage = new AppShell();
-             await Task.FromResult(true);
+            await Task.FromResult(true);
         }
-            public AppShell()
+        public AppShell()
         {
             InitializeComponent();
             RegisterRoutes();
             BindingContext = this;
-            
+
         }
-       
+
         protected override bool OnBackButtonPressed()
         {//page.GetType() == typeof(EditBuildingApartmentImage)|| page.GetType() == typeof(EditBuildingLocationImage) || page.GetType() == typeof(EditProjectLocationImage)||
             var page = (Shell.Current?.CurrentItem?.CurrentItem as IShellSectionController)?.PresentedPage;
-            if (page.GetType() == typeof(VisualProjectLocationForm)|| page.GetType() == typeof(VisualBuildingLocationForm)|| page.GetType() == typeof(ProjectAddEdit)||
-                page.GetType() == typeof(AddBuildingLocation)|| page.GetType() == typeof(AddBuildingApartment) || 
+            if (page.GetType() == typeof(VisualProjectLocationForm) || page.GetType() == typeof(VisualBuildingLocationForm) || page.GetType() == typeof(ProjectAddEdit) ||
+                page.GetType() == typeof(AddBuildingLocation) || page.GetType() == typeof(AddBuildingApartment) ||
                 page.GetType() == typeof(VisualApartmentLocationForm)
                 )
             {
@@ -81,15 +77,15 @@ namespace Mobile.Code
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
-           
+
+
         }
         private string _logUserName;
 
         public string LogUserName
         {
             get { return _logUserName; }
-            set { _logUserName = value;OnPropertyChanged("LogUserName"); }
+            set { _logUserName = value; OnPropertyChanged("LogUserName"); }
         }
 
         void RegisterRoutes()
@@ -163,10 +159,10 @@ namespace Mobile.Code
 
                 LogUserName = App.LogUser.FullName;
             }
-           
+
         }
 
-     //   protected override bool OnBackButtonPressed() => true;
+        //   protected override bool OnBackButtonPressed() => true;
         async Task GoNewProjectCommandExecute()
         {
             Shell.Current.FlyoutIsPresented = false;
@@ -247,7 +243,7 @@ namespace Mobile.Code
 
         void OnNavigated(object sender, ShellNavigatedEventArgs e)
         {
-           
+
         }
     }
 }

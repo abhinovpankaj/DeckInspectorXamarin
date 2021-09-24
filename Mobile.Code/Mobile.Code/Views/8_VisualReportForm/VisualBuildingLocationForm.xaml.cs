@@ -1,12 +1,5 @@
-﻿using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
+﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -61,9 +54,9 @@ namespace Mobile.Code.Views
         protected async override void OnAppearing()
         {
 
-         //   VisualBuildingLocationFormViewModel vm = ((VisualBuildingLocationFormViewModel)this.BindingContext);
-          //  MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
-          
+            //   VisualBuildingLocationFormViewModel vm = ((VisualBuildingLocationFormViewModel)this.BindingContext);
+            //  MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
+
             base.OnAppearing();
             await ((VisualBuildingLocationFormViewModel)this.BindingContext).Load();
 

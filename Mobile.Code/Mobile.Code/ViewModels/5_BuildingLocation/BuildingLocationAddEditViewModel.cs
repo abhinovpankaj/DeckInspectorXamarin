@@ -1,22 +1,18 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
-using Mobile.Code.Utils;
 using Mobile.Code.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
-    
+
     [QueryProperty("Id", "Id")]
     public class BuildingLocationAddEditViewModel : BaseViewModel
     {
@@ -39,7 +35,7 @@ namespace Mobile.Code.ViewModels
         }
 
         public string SelectedImage { get; set; }
-     
+
         public ICommand ChoosePhotoCommand { get; set; }
         private string _heading;
 
@@ -58,7 +54,7 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
-                await Shell.Current.Navigation.PopAsync() ;
+                await Shell.Current.Navigation.PopAsync();
             }
         }
         private ProjectBuilding projectBuilding;
@@ -66,7 +62,7 @@ namespace Mobile.Code.ViewModels
         public ProjectBuilding ProjectBuilding
         {
             get { return projectBuilding; }
-            set { projectBuilding = value;OnPropertyChanged("ProjectBuilding"); }
+            set { projectBuilding = value; OnPropertyChanged("ProjectBuilding"); }
         }
         private bool _Isbusyprog;
 
@@ -86,10 +82,10 @@ namespace Mobile.Code.ViewModels
         //    {
         //        buildingLocation.Id = Guid.NewGuid().ToString();
         //        buildingLocation.BuildingId = ProjectBuilding.Id;
-                
+
         //        buildingLocation.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
         //        await BuildingLocationDataStore.AddItemAsync(buildingLocation);
-                
+
         //        await Shell.Current.Navigation.PopAsync();
         //        await Shell.Current.Navigation.PushAsync(new BuildingLocationDetail() { BindingContext = new BuildingLocationDetailViewModel() { BuildingLocation = buildingLocation } });
         //    }
@@ -117,16 +113,16 @@ namespace Mobile.Code.ViewModels
                 {
                     buildingLocation.Id = result.ID.ToString();
                 }
-               
+
                 await Shell.Current.Navigation.PopAsync();
 
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(BuildingLocationDetail))
                     await Shell.Current.Navigation.PushAsync(new BuildingLocationDetail() { BindingContext = new BuildingLocationDetailViewModel() { BuildingLocation = buildingLocation } });
 
-               
+
             }
-           
+
 
         }
 
@@ -140,12 +136,12 @@ namespace Mobile.Code.ViewModels
                 result = await BuildingLocationDataStore.AddItemAsync(BuildingLocation);
 
 
-             
+
             }
             else
             {
                 result = await BuildingLocationDataStore.AddItemAsync(BuildingLocation);
-               
+
             }
             return await Task.FromResult(result);
 
@@ -159,11 +155,11 @@ namespace Mobile.Code.ViewModels
         }
         public BuildingLocationAddEditViewModel()
         {
-           // Title = "New Project";
+            // Title = "New Project";
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
-            
+
             //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
             //{
             //    var newItem = item as string;
@@ -329,12 +325,12 @@ namespace Mobile.Code.ViewModels
             set { _imgPath = value; OnPropertyChanged(); }
         }
 
-        private  void testphoto(ImageData ImgData)
+        private void testphoto(ImageData ImgData)
         {
             buildingLocation.ImageName = ImgData.Name;
             buildingLocation.ImageDescription = ImgData.Description;
             buildingLocation.ImageUrl = ImgData.Path;
-           // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
+            // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
         }
 
     }

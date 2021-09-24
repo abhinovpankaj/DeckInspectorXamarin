@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Database;
 using Android.Hardware;
+using Android.Media;
 using Android.OS;
 using Android.Provider;
 using Android.Runtime;
@@ -11,6 +12,7 @@ using Android.Speech;
 using Android.Views;
 using Android.Widget;
 using CarouselView.FormsPlugin.Android;
+using Mobile.Code.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -247,7 +249,7 @@ namespace Mobile.Code.Droid
             if (requestCode == OPENGALLERYCODE && resultCode == Result.Ok)
             {
                 List<string> images = new List<string>();
-
+                ExifInterface exif = null;
                 if (data != null)
                 {
                     //Separate all photos and get the path from them all individually.
@@ -263,6 +265,11 @@ namespace Mobile.Code.Droid
 
                             if (path != null)
                             {
+                                //exif = new ExifInterface(path);
+                                //string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
+                                //exif.SetAttribute(ExifInterface.TagOrientation, "0");
+                                //exif.SaveAttributes();
+                                //exif.SaveAttributes();
                                 images.Add(path);
                             }
                         }
@@ -270,10 +277,13 @@ namespace Mobile.Code.Droid
                     else
                     {
                         Android.Net.Uri uri = data.Data;
-                        var path = GetRealPathFromURI(uri);
+                        string path = GetRealPathFromURI(uri);
 
                         if (path != null)
                         {
+                            //exif = new ExifInterface(path);
+                            //string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
+                            //exif.SetAttribute(ExifInterface.TagOrientation, "0");
                             images.Add(path);
                         }
                     }
@@ -284,6 +294,8 @@ namespace Mobile.Code.Droid
             }
         }
 
+
+        
         /// <summary>
         ///     Get the real path for the current image passed.
         /// </summary>
@@ -336,7 +348,7 @@ namespace Mobile.Code.Droid
         {
 
         }
-        public static int AppOrientation = 1;
+        public static int AppOrientation = 0;
         public void OnSensorChanged(SensorEvent sensorEvent)
         {
             if (sensorEvent.Sensor.Type == SensorType.Gravity)

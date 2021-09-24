@@ -1,18 +1,9 @@
 ﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using Mobile.Code.Data;
 using Mobile.Code.Views;
-using Mobile.Code.Services;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
@@ -24,7 +15,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoHome()
         {
             await Shell.Current.Navigation.PopAsync();
-           // int count=Shell.Current.Navigation.NavigationStack.Count;
+            // int count=Shell.Current.Navigation.NavigationStack.Count;
             //for (var count = 1; count <= 3; count++)
             //{
             //    Navigation.RemovePage(this.Navigation.NavigationStack[6 - count]);
@@ -46,7 +37,7 @@ namespace Mobile.Code.ViewModels
         public string projectBuildingID
         {
             get { return _projectBuildingID; }
-            set { _projectBuildingID = value;OnPropertyChanged("projectBuildingID"); }
+            set { _projectBuildingID = value; OnPropertyChanged("projectBuildingID"); }
         }
 
         public Command ProjectDetailCommand { get; set; }
@@ -71,14 +62,14 @@ namespace Mobile.Code.ViewModels
         public ObservableCollection<BuildingApartment> BuildingApartments
         {
             get { return buildingApartment; }
-            set { buildingApartment = value;OnPropertyChanged("BuildingApartments"); }
+            set { buildingApartment = value; OnPropertyChanged("BuildingApartments"); }
         }
 
         async Task ExecuteProjectEditCommand()
         {
-           // ShellNavigationState state = Shell.Current.CurrentState;
+            // ShellNavigationState state = Shell.Current.CurrentState;
             await Shell.Current.GoToAsync($"newProject?Id={Id}");
-           
+
             //   await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
             //   await Shell.Current.GoToAsync("projectdetail");
         }
@@ -88,7 +79,7 @@ namespace Mobile.Code.ViewModels
         public string Id
         {
             get { return _id; }
-            set { _id = value;  OnPropertyChanged("Id"); }
+            set { _id = value; OnPropertyChanged("Id"); }
         }
 
         //string porjectId;
@@ -130,7 +121,7 @@ namespace Mobile.Code.ViewModels
         {
             EditCommand = new Command(async () => await Edit());
 
-        GoBackCommand = new Command(async () => await GoBack());
+            GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
             LocationDetailCommand = new Command<BuildingLocation>(async (BuildingLocation parm) => await ExecuteLocationDetailCommand(parm));
             BuildingDetailCommand = new Command<BuildingApartment>(async (BuildingApartment parm) => await ExecuteBuildingDetailCommand(parm));
@@ -140,8 +131,8 @@ namespace Mobile.Code.ViewModels
             NewBuildingApartmentCommand = new Command(async () => await ExecuteNewBuildingApartmentCommand());
             ProjectEditCommand = new Command(async () => await ExecuteProjectEditCommand());
 
-            }
-       
+        }
+
         private async Task ExecuteNewBuildingLocationCommand()
         {
             await Shell.Current.Navigation.PushAsync(new AddBuildingLocation()
@@ -216,9 +207,9 @@ namespace Mobile.Code.ViewModels
                     await Shell.Current.Navigation.PopAsync();
                 }
 
-          //     await ProjectBuildingDataStore.DeleteItemAsync(ProjectBuilding.Id);
+                //     await ProjectBuildingDataStore.DeleteItemAsync(ProjectBuilding.Id);
                 // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-            //    await Shell.Current.Navigation.PopAsync();
+                //    await Shell.Current.Navigation.PopAsync();
                 // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
 
             }
@@ -241,7 +232,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-          
+
 
             ProjectBuilding = await ProjectBuildingDataStore.GetItemAsync(ProjectBuilding.Id);
 
@@ -292,5 +283,5 @@ namespace Mobile.Code.ViewModels
 
         }
     }
-   
+
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Mobile.Code.ViewModels;
+using System;
 using System.Threading.Tasks;
-using Mobile.Code.Data;
-using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +10,7 @@ namespace Mobile.Code.Views
     public partial class BuildingApartmentDetail : ContentPage
     {
 
-       
+
         public BuildingApartmentDetail()
         {
             InitializeComponent();

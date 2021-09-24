@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -39,37 +37,37 @@ namespace Mobile.Code.Services
             //    item.InvasiveImage = true;
             //}
             items.Add(item);
-            App.VisualEditTracking.Add(new MultiImage() { Id = item.Id,Image=item.ImageUrl, ParentId = item.VisualLocationId, Status = "New" , IsServerData = false });
+            App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "New", IsServerData = false });
             return await Task.FromResult(true);
         }
 
         public async Task<bool> UpdateItemAsync(VisualProjectLocationPhoto item, bool IsEditVisual)
         {
-            
 
-          
+
+
             var oldItem = items.Where((VisualProjectLocationPhoto arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(oldItem);
             items.Add(item);
-            if(App.VisualEditTracking.Where(c => c.Id == item.Id && c.IsServerData == false&&c.Status== "New").Any())
+            if (App.VisualEditTracking.Where(c => c.Id == item.Id && c.IsServerData == false && c.Status == "New").Any())
             {
                 var t = App.VisualEditTracking.Where(c => c.Id == item.Id && c.IsServerData == false && c.Status == "New").Single();
                 t.Image = item.ImageUrl;
 
             }
 
-            var oldITRaktem = App.VisualEditTracking.Where(c => c.Id == item.Id&&c.IsServerData==true).SingleOrDefault();
-            if(oldITRaktem!=null)
+            var oldITRaktem = App.VisualEditTracking.Where(c => c.Id == item.Id && c.IsServerData == true).SingleOrDefault();
+            if (oldITRaktem != null)
             {
                 App.VisualEditTracking.Remove(oldITRaktem);
-                
-                App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Update" , IsServerData = true });
-              
+
+                App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Update", IsServerData = true });
+
             }
-           
-          
-          
-           
+
+
+
+
             return await Task.FromResult(true);
         }
 
@@ -83,20 +81,20 @@ namespace Mobile.Code.Services
             if (oldITRaktem != null)
             {
                 App.VisualEditTracking.Remove(oldITRaktem);
-               
+
                 App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "Delete", IsDelete = true, IsServerData = true });
-               
-               
-                
+
+
+
             }
             var oldDelete = App.VisualEditTracking.Where(c => c.Id == item.Id && c.IsServerData == false && c.Status == "New").SingleOrDefault();
-            if (oldDelete!=null)
+            if (oldDelete != null)
             {
                 App.VisualEditTracking.Remove(oldDelete);
-              
+
             }
             return await Task.FromResult(true);
-           
+
 
         }
 
@@ -117,7 +115,7 @@ namespace Mobile.Code.Services
             if (loadServer == false)
             {
                 return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false));
-               
+
             }
             else
             {
@@ -133,15 +131,15 @@ namespace Mobile.Code.Services
                         var responseBody = await response.Content.ReadAsStringAsync();
                         Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
-                        
-                            items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
-                            items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription!="CONCLUSIVE").ToList();
+
+                        items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
+                        items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
                         foreach (var item in items)
-                            {
-                                App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                                App.ImageFormString= JsonConvert.SerializeObject(App.VisualEditTracking);
+                        {
+                            App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
                         }
-                        
+
                         response.EnsureSuccessStatusCode();
 
                         return await Task.FromResult(items);

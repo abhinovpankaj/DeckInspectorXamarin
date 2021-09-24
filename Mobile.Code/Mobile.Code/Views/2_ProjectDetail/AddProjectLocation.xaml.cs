@@ -1,9 +1,4 @@
-﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -105,7 +100,7 @@ namespace Mobile.Code.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-         //   Shell.Current.Navigation.RemovePage(this);
+            //   Shell.Current.Navigation.RemovePage(this);
         }
     }
 }

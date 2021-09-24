@@ -4,19 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace Mobile.Code.Services
 {
     public class HttpUtil
     {
-       public  static bool Upload(string FileName,String endpointUrl, IEnumerable<MultiImage> list)
+        public static bool Upload(string FileName, String endpointUrl, IEnumerable<MultiImage> list)
         {
-            
-            using (var client = new HttpClient()) {
+
+            using (var client = new HttpClient())
+            {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
                 client.Timeout = TimeSpan.FromSeconds(60);
@@ -27,7 +26,7 @@ namespace Mobile.Code.Services
                     {
                         Index++;
                         var extension = Path.GetExtension(img.Image);
-                        string ServerFileName = FileName.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF")+ "_"+Index + ".png";
+                        string ServerFileName = FileName.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(img.Image)), Index.ToString(), ServerFileName);
                     }
                     var response = client.PostAsync(endpointUrl, formData).Result;
@@ -43,7 +42,7 @@ namespace Mobile.Code.Services
                     {
 
                     }
-                   
+
                 }
                 return true;
             }
@@ -85,7 +84,7 @@ namespace Mobile.Code.Services
                 return true;
             }
         }
-        public static async Task<Response> UploadSingleImage(string Name,string ImageUrl, string endpointUrl, Dictionary<string, string> parameters)
+        public static async Task<Response> UploadSingleImage(string Name, string ImageUrl, string endpointUrl, Dictionary<string, string> parameters)
         {
 
 
@@ -109,7 +108,7 @@ namespace Mobile.Code.Services
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {
                         Regex UrlMatch = new Regex(@"^(http|https)://", RegexOptions.Singleline);
-                        if (ImageUrl == "blank.png"|| UrlMatch.IsMatch(ImageUrl))
+                        if (ImageUrl == "blank.png" || UrlMatch.IsMatch(ImageUrl))
                         {
                             ImageUrl = null;
                         }
@@ -118,10 +117,10 @@ namespace Mobile.Code.Services
                             //byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(File.ReadAllBytes(ImageUrl), 2000, 1500);
                             formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
                         }
-                           
 
-                       
-                       // formData.Add(new ByteArrayContent(resizedImage), "fileToUpload", ServerFileName);
+
+
+                        // formData.Add(new ByteArrayContent(resizedImage), "fileToUpload", ServerFileName);
                     }
                     formData.Add(DictionaryItems, "Model");
                     var response = client.PostAsync(endpointUrl, formData).Result;
@@ -136,10 +135,10 @@ namespace Mobile.Code.Services
         }
         public static async Task<Response> Update_Image(string Name, string ImageUrl, string endpointUrl)
         {
-           string UserID= App.LogUser.Id.ToString();
+            string UserID = App.LogUser.Id.ToString();
 
             Response result = new Response();
-         
+
             using (var client = new HttpClient())
             {
 
@@ -147,13 +146,13 @@ namespace Mobile.Code.Services
                 client.Timeout = TimeSpan.FromSeconds(60);
                 using (var formData = new MultipartFormDataContent())
                 {
-                    
+
                     string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
                     }
-                  
+
                     var response = client.PostAsync(endpointUrl, formData).Result;
 
                     var responseBody = await response.Content.ReadAsStringAsync();
@@ -168,9 +167,9 @@ namespace Mobile.Code.Services
 
         public static async Task<Response> VisualDataAdd(string Name, string endpointUrl, Dictionary<string, string> parameters, IEnumerable<string> list)
         {
-           
 
-           
+
+
             Response result = new Response();
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
             using (var client = new HttpClient())
@@ -191,7 +190,7 @@ namespace Mobile.Code.Services
                     foreach (string img in list)
                     {
                         Index++;
-                      // var extension = Path.GetExtension(img);
+                        // var extension = Path.GetExtension(img);
                         string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(img)), Index.ToString(), ServerFileName);
                     }

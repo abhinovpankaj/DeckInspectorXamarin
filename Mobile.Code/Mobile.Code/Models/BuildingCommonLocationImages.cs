@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
     public class BuildingCommonLocationImages : BindingModel
     {
         public string Id { get; set; }
         public string BuildingLocationId { get; set; }
 
-       
+
 
         public string CreatedOn { get; set; }
 
@@ -29,6 +25,6 @@ namespace Mobile.Code.Models
             get { return _image; }
             set { _image = value; OnPropertyChanged("ImageUrl"); }
         }
-       
+
     }
 }

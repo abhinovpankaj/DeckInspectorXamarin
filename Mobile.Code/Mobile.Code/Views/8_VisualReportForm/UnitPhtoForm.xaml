@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controles="clr-namespace:Mobile.Code.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:fontawesome="clr-namespace:FontAwesome"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -68,17 +69,7 @@
                     TextColor="Black"
                     VerticalOptions="CenterAndExpand" />
 
-                <!--<Image Margin="5"
 
-
-                    HorizontalOptions="End"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                 >
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                </Image.GestureRecognizers>
-            </Image>-->
 
             </Grid>
             <ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
@@ -113,7 +104,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <Image
+                                    <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -124,7 +115,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </Image>
+                                    </ffimageloading:CachedImage>
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -191,7 +182,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <Image
+                                    <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -202,7 +193,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </Image>
+                                    </ffimageloading:CachedImage>
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -270,7 +261,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <Image
+                                    <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -281,7 +272,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </Image>
+                                    </ffimageloading:CachedImage>
 
                                 </yummy:PancakeView>
                                 <ImageButton

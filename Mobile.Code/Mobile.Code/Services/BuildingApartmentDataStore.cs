@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
-   
+
 
     public interface IBuildingApartment
     {
@@ -25,13 +23,13 @@ namespace Mobile.Code.Services
     }
     public class BuildingApartmentDataStore : IBuildingApartment
     {
-         List<BuildingApartment> items;
+        List<BuildingApartment> items;
 
         public BuildingApartmentDataStore()
         {
-            
+
             items = new List<BuildingApartment>();
-           
+
 
         }
         public async Task<Response> AddItemAsync(BuildingApartment item)
@@ -94,7 +92,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                    
+
                     return await Task.FromResult(result);
 
 

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -22,7 +21,7 @@ namespace Mobile.Code.Services
     }
     public class InvasiveVisualApartmentLocationPhotoDataStore : IInvasiveVisualApartmentLocationPhotoDataStore
     {
-         List<VisualApartmentLocationPhoto> items;
+        List<VisualApartmentLocationPhoto> items;
 
         public InvasiveVisualApartmentLocationPhotoDataStore()
         {
@@ -36,20 +35,20 @@ namespace Mobile.Code.Services
                 item.InvasiveImage = true;
             }
             items.Add(item);
-            App.VisualEditTrackingForInvasive.Add(new MultiImage() {  Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
+            App.VisualEditTrackingForInvasive.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false, ImageType = item.ImageDescription });
             return await Task.FromResult(true);
         }
 
         public async Task<bool> UpdateItemAsync(VisualApartmentLocationPhoto item)
         {
-           
+
             if (App.IsInvasive == true)
             {
                 item.InvasiveImage = true;
             }
             var oldItem = items.Where((VisualApartmentLocationPhoto arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(oldItem);
-           
+
             var oldITRaktem = App.VisualEditTrackingForInvasive.Where(c => c.Id == item.Id && c.IsServerData == true).SingleOrDefault();
             if (oldITRaktem != null)
             {
@@ -67,13 +66,13 @@ namespace Mobile.Code.Services
                 {
                     oldDelete.Image = item.ImageUrl;
                     App.VisualEditTrackingForInvasive.Remove(oldDelete);
-                  
+
                     App.VisualEditTrackingForInvasive.Add(oldDelete);
 
                 }
             }
-            
-   
+
+
             return await Task.FromResult(true);
         }
 
@@ -92,7 +91,7 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() {ImageType=item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true });
 
             }
             var oldDelete = App.VisualEditTrackingForInvasive.Where(c => c.Id == item.Id && c.IsServerData == false && c.Status == "New").SingleOrDefault();
@@ -114,7 +113,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer)
         {
 

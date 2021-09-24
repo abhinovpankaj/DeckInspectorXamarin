@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -18,7 +17,7 @@ namespace Mobile.Code.ViewModels
 {
     public class VisualProjectLocationFormViewModel : BaseViewModel
     {
-       
+
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
@@ -31,7 +30,7 @@ namespace Mobile.Code.ViewModels
 
         public string SelectedImage { get; set; }
 
-      
+
         private string _heading;
 
         public string Heading
@@ -51,7 +50,7 @@ namespace Mobile.Code.ViewModels
                 int check = string.Compare(App.FormString, currentForm);
                 string currentImage = JsonConvert.SerializeObject(InvasiveVisualProjectLocationPhotoItems);
                 int countImage = string.Compare(App.InvaiveImages, currentImage);
-                if (check == 0 && countImage == 0 )
+                if (check == 0 && countImage == 0)
                 {
                     await Shell.Current.Navigation.PopAsync();
                     App.IsNewForm = false;
@@ -81,7 +80,7 @@ namespace Mobile.Code.ViewModels
                     {
                         checkElements = true;
                     }
-                   
+
                     if (check == 0 && countImage == 0 && checkElements == false)
                     {
                         await Shell.Current.Navigation.PopAsync();
@@ -168,7 +167,7 @@ namespace Mobile.Code.ViewModels
                     }
                 }
             }
-           
+
             var result = await Shell.Current.DisplayAlert(
                   "Alert",
                   "Are you sure you want to go back?",
@@ -221,7 +220,7 @@ namespace Mobile.Code.ViewModels
                 {
 
 
-                   
+
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
 
@@ -244,7 +243,7 @@ namespace Mobile.Code.ViewModels
                 {
                     errorMessage += "\nName is required\n";
                 }
-                if (string.IsNullOrEmpty(UnitPhotoCount)|| UnitPhotoCount=="0")
+                if (string.IsNullOrEmpty(UnitPhotoCount) || UnitPhotoCount == "0")
                 {
                     errorMessage += "\nUnit photo required\n";
                 }
@@ -288,7 +287,7 @@ namespace Mobile.Code.ViewModels
                 {
                     response.Message = errorMessage;
                     response.Status = ApiResult.Fail;
-                   
+
                     // await Shell.Current.DisplayAlert("Validation Error", errorMessage, "OK");
                 }
                 else
@@ -360,27 +359,27 @@ namespace Mobile.Code.ViewModels
                     if (await VisualFormProjectLocationDataStore.GetItemAsync(VisualForm.Id) == null)
                     {
                         List<string> list = VisualProjectLocationPhotoItems.Select(c => c.ImageUrl).ToList();
-                        response=  await VisualFormProjectLocationDataStore.AddItemAsync(VisualForm, list);
-                       // VisualProjectLocationPhotoItems.Clear();
-                                             
+                        response = await VisualFormProjectLocationDataStore.AddItemAsync(VisualForm, list);
+                        // VisualProjectLocationPhotoItems.Clear();
+
                     }
                     else
                     {
                         List<MultiImage> finelList = new List<MultiImage>();
-                        if(App.IsInvasive==false)
+                        if (App.IsInvasive == false)
                             response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTracking);
                         else
                         {
-                            
-                            if (InvasiveVisualProjectLocationPhotoItems.Count==0)
+
+                            if (InvasiveVisualProjectLocationPhotoItems.Count == 0)
                             {
                                 errorMessage += "\nInvasive photo required\n"; ;
-                                
+
                             }
-                            if(string.IsNullOrEmpty( visualForm.ImageDescription))
+                            if (string.IsNullOrEmpty(visualForm.ImageDescription))
                             {
                                 errorMessage += "\nDescription required\n"; ;
-                                
+
                             }
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
@@ -388,13 +387,13 @@ namespace Mobile.Code.ViewModels
                                 response.Status = ApiResult.Fail;
                             }
                             else
-                            {                                
+                            {
                                 response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "TRUE").ToList());
 
-                                response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive.Where(x=>x.ImageType=="CONCLUSIVE").ToList(),"CONCLUSIVE");
+                                response = await VisualFormProjectLocationDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "CONCLUSIVE").ToList(), "CONCLUSIVE");
                             }
-                           
-                        }                    
+
+                        }
 
                     }
                 }
@@ -404,7 +403,7 @@ namespace Mobile.Code.ViewModels
             {
                 response.Message = ex.Message;
                 response.Status = ApiResult.Fail;
-              
+
             }
             return await Task.FromResult(response);
 
@@ -429,7 +428,7 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<CustomRadioItem> RadioList_OwnerAgreedToRepair { get; set; }
         public ObservableCollection<CustomRadioItem> RadioList_RepairComplete { get; set; }
-        
+
 
         private void PopulateConclusiveRadios()
         {
@@ -503,7 +502,7 @@ namespace Mobile.Code.ViewModels
             IsVisualBuilding = false;
 
             RadioList_VisualReviewItems = new ObservableCollection<CustomRadioItem>();
-            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 1, Name = "Good", IsSelected = false , GroupName ="VR"});
+            RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 1, Name = "Good", IsSelected = false, GroupName = "VR" });
             RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 2, Name = "Bad", IsSelected = false, GroupName = "VR" });
             RadioList_VisualReviewItems.Add(new CustomRadioItem() { ID = 3, Name = "Fair", IsSelected = false, GroupName = "VR" });
 
@@ -550,34 +549,34 @@ namespace Mobile.Code.ViewModels
             SaveCommand = new Command(async () => await Save());
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
-            
+
             ImgData = new ImageData();
-            MessagingCenter.Subscribe<PopUpCheakListBox, ObservableCollection<string>>(this, "SelectedItem",  (obj, item) =>
-            {
-                ExteriorElements = item as ObservableCollection<string>;
-                CountExteriorElements = ExteriorElements.Count.ToString();
+            MessagingCenter.Subscribe<PopUpCheakListBox, ObservableCollection<string>>(this, "SelectedItem", (obj, item) =>
+           {
+               ExteriorElements = item as ObservableCollection<string>;
+               CountExteriorElements = ExteriorElements.Count.ToString();
 
 
-            });
-            MessagingCenter.Subscribe<PopUpCheakListBoxWaterProofing, ObservableCollection<string>>(this, "SelectedItem",  (obj, item) =>
-            {
-                WaterProofingElements = item as ObservableCollection<string>;
-                CountWaterProofingElements = WaterProofingElements.Count.ToString();
+           });
+            MessagingCenter.Subscribe<PopUpCheakListBoxWaterProofing, ObservableCollection<string>>(this, "SelectedItem", (obj, item) =>
+           {
+               WaterProofingElements = item as ObservableCollection<string>;
+               CountWaterProofingElements = WaterProofingElements.Count.ToString();
 
 
-            });
+           });
             App.ListCamera2Api = new List<MultiImage>();
-            
+
 
         }
 
-        
+
         private string _countExteriorElements;
 
         public string CountExteriorElements
         {
             get { return _countExteriorElements; }
-            set { _countExteriorElements = value;OnPropertyChanged("CountExteriorElements"); }
+            set { _countExteriorElements = value; OnPropertyChanged("CountExteriorElements"); }
         }
 
         private string _countWaterProofingElements;
@@ -593,18 +592,18 @@ namespace Mobile.Code.ViewModels
         public ObservableCollection<VisualProjectLocationPhoto> VisualProjectLocationPhotoItems
         {
             get { return _visualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
-          //  get { return _visualProjectLocationPhotoItems; }
+            //  get { return _visualProjectLocationPhotoItems; }
             set { _visualProjectLocationPhotoItems = value; OnPropertyChanged("VisualProjectLocationPhotoItems"); }
         }
         private ObservableCollection<VisualProjectLocationPhoto> _InvvisualProjectLocationPhotoItems;
 
         public ObservableCollection<VisualProjectLocationPhoto> InvasiveVisualProjectLocationPhotoItems
         {
-           // get { return _InvvisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
-              get { return _InvvisualProjectLocationPhotoItems; }
+            // get { return _InvvisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            get { return _InvvisualProjectLocationPhotoItems; }
             set { _InvvisualProjectLocationPhotoItems = value; OnPropertyChanged("InvasiveVisualProjectLocationPhotoItems"); }
         }
-        
+
 
         private string _unitPhotCount;
 
@@ -629,19 +628,19 @@ namespace Mobile.Code.ViewModels
             get { return _unitPhoto; }
             set { _unitPhoto = value; OnPropertyChanged("UnitPhotos"); }
         }
-        
+
 
         public ICommand ShowImagesCommand => new Command(async () => await ShowImagesExecute());
 
         private async Task ShowImagesExecute()
         {
-            if (!string.IsNullOrEmpty(UnitPhotoCount) )
+            if (!string.IsNullOrEmpty(UnitPhotoCount))
             {
                 if (UnitPhotoCount != "0")
                 {
                     if (string.IsNullOrEmpty(visualForm.Id))
                     {
-                        await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true ,IsEdit= true } });
+                        await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = true } });
                     }
                     else
                     {
@@ -663,10 +662,10 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var photo in App.ListCamera2Api)
                 {
-                    VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id};
+                    VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id };
                     newObj.ImageDescription = photo.ImageType;
                     _ = AddNewPhoto(newObj).ConfigureAwait(false);
-    
+
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -680,29 +679,29 @@ namespace Mobile.Code.ViewModels
                 }
                 else
                 {
-                    App.IsVisualEdidingMode =true;
+                    App.IsVisualEdidingMode = true;
                     VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false).ConfigureAwait(false));
                     if (App.IsInvasive == true)
                     {
                         var photos = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false).ConfigureAwait(false));
-                        
+
                         InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                         InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
 
                         ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                         ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
                     }
-                   
+
 
                 }
                 UnitPhotoCount = VisualProjectLocationPhotoItems.Count.ToString();
-              
+
             }
             return await Task.FromResult(true);
         }
-        public async Task<bool>  Load()
+        public async Task<bool> Load()
         {
-            
+
             IsBusyProgress = true;
             bool complete = await Task.Run(Running).ConfigureAwait(false);
             if (complete == true)
@@ -710,7 +709,7 @@ namespace Mobile.Code.ViewModels
                 IsBusyProgress = false;
             }
             return await Task.FromResult(true);
-           
+
         }
         private string _title;
 
@@ -730,9 +729,9 @@ namespace Mobile.Code.ViewModels
 
         public ICommand ChooseConclusivePhotoFromCameraCommand => new Command(async () => await ChooseConclusvePhotoFromCameraCommandExecute());
 
-        private  async Task ChooseConclusvePhotoFromCameraCommandExecute()
+        private async Task ChooseConclusvePhotoFromCameraCommandExecute()
         {
-           await ChoosePhotoFromCameraCommandExecute("CONCLUSIVE");
+            await ChoosePhotoFromCameraCommandExecute("CONCLUSIVE");
         }
 
         private bool _Isbusyprog;
@@ -742,7 +741,7 @@ namespace Mobile.Code.ViewModels
             get { return _Isbusyprog; }
             set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
         }
-        private async Task ChoosePhotoFromCameraCommandExecute( string imgType="TRUE")
+        private async Task ChoosePhotoFromCameraCommandExecute(string imgType = "TRUE")
         {
             string selectedOption = await App.Current.MainPage.DisplayActionSheet("Select Option", "Cancel", null,
                new string[] { "Take New Photo", "From Gallery" });
@@ -760,8 +759,8 @@ namespace Mobile.Code.ViewModels
                     {
                         await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, ImageType = imgType } });
                     }
-                    
-                    
+
+
                     break;
                 case "From Gallery":
                     if (Device.RuntimePlatform == Device.iOS)
@@ -785,7 +784,7 @@ namespace Mobile.Code.ViewModels
                             {
                                 foreach (var item in images)
                                 {
-                                    VisualProjectLocationPhoto obj = new VisualProjectLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id,ImageDescription=imgType };
+                                    VisualProjectLocationPhoto obj = new VisualProjectLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id, ImageDescription = imgType };
                                     _ = AddNewPhoto(obj);
                                 }
                             }
@@ -800,18 +799,18 @@ namespace Mobile.Code.ViewModels
                         {
                             foreach (var item in images)
                             {
-                                VisualProjectLocationPhoto obj = new VisualProjectLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id,ImageDescription=imgType };
+                                VisualProjectLocationPhoto obj = new VisualProjectLocationPhoto() { ImageUrl = item, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id, ImageDescription = imgType };
                                 _ = AddNewPhoto(obj).ConfigureAwait(false);
                             }
-                           
+
                         });
                     }
-               
+
                     break;
                 default:
                     break;
             }
-           
+
         }
         public async Task AddNewPhoto(VisualProjectLocationPhoto obj)
         {
@@ -844,7 +843,7 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
-                
+
                 VisualProjectLocationPhoto obj = parm as VisualProjectLocationPhoto;
                 await InvasiveVisualProjectLocationPhotoDataStore.DeleteItemAsync(obj, true);
                 //UPDATED FOR CONCLUSIVE 
@@ -855,7 +854,7 @@ namespace Mobile.Code.ViewModels
 
                 ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
-               
+
                 //InvasiveVisualProjectLocationPhotoItems.Remove(obj); // = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
 
                 //ConclusiveVisualProjectLocationPhotoItems.Remove(obj);
@@ -874,7 +873,7 @@ namespace Mobile.Code.ViewModels
             ImgData.ParentID = parm.VisualLocationId;
             ImgData.VisualProjectLocationPhoto = parm;
             ImgData.IsEditVisual = true;
-               
+
             ImgData.FormType = "VP";
             await CurrentWithoutDetail.EditImage(ImgData, GetImage);
 
@@ -902,20 +901,20 @@ namespace Mobile.Code.ViewModels
         }
         private async void GetImage(ImageData ImgData)
         {
-            
+
 
             await Load();
         }
         public ICommand ChooseExteriorCommand => new Command(async () => await ChooseExteriorCommandCommandExecute());
         private async Task ChooseExteriorCommandCommandExecute()
         {
-            await Shell.Current.Navigation.PushModalAsync(new PopUpCheakListBox() { BindingContext=new PopUpCheakListBoxViewModel() { CheakBoxSelectedItems = ExteriorElements } });
+            await Shell.Current.Navigation.PushModalAsync(new PopUpCheakListBox() { BindingContext = new PopUpCheakListBoxViewModel() { CheakBoxSelectedItems = ExteriorElements } });
         }
 
         public ICommand ChooseWaterproofingCommand => new Command(async () => await ChooseWaterproofingCommandCommandExecute());
         private async Task ChooseWaterproofingCommandCommandExecute()
         {
-            await Shell.Current.Navigation.PushModalAsync(new PopUpCheakListBoxWaterProofing() { BindingContext = new PopUpCheakListBoxWaterproofingViewModel() { CheakBoxSelectedItems = WaterProofingElements  } });
+            await Shell.Current.Navigation.PushModalAsync(new PopUpCheakListBoxWaterProofing() { BindingContext = new PopUpCheakListBoxWaterproofingViewModel() { CheakBoxSelectedItems = WaterProofingElements } });
         }
         private async Task<string> TakePictureFromLibrary()
         {
@@ -927,7 +926,7 @@ namespace Mobile.Code.ViewModels
                     PhotoSize = PhotoSize.MaxWidthHeight,
                     CompressionQuality = App.CompressionQuality
 
-                }); 
+                });
 
             IsBusy = false;
             if (file == null)
@@ -936,7 +935,7 @@ namespace Mobile.Code.ViewModels
             return file.Path;
 
         }
-      
+
         private async Task<string> TakePictureFromCamera()
         {
             IsBusy = true;
@@ -964,7 +963,7 @@ namespace Mobile.Code.ViewModels
 
         private void testphoto(ImageData ImgData)
         {
-            
+
         }
     }
 }

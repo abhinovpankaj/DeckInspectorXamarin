@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Mobile.Code.Services
+﻿namespace Mobile.Code.Services
 {
     //public interface IDataStore<T>
     //{
@@ -11,6 +7,6 @@ namespace Mobile.Code.Services
     //    Task<bool> DeleteItemAsync(string id);
     //    Task<T> GetItemAsync(string id);
     //    Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
-        
+
     //}
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -59,18 +55,18 @@ namespace Mobile.Code.ViewModels
             if (response.Status == ApiResult.Success)
             {
                 Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-                Shell.Current.BindingContext = new AppShell() {LogUserName=App.LogUser.FullName };
-                 IsBusyProgress = false;
+                Shell.Current.BindingContext = new AppShell() { LogUserName = App.LogUser.FullName };
+                IsBusyProgress = false;
                 await Shell.Current.GoToAsync("//main");
-                
-              //  await Shell.Current.Navigation.PopAsync();
+
+                //  await Shell.Current.Navigation.PopAsync();
             }
             else
             {
                 IsBusyProgress = false;
                 await Shell.Current.DisplayAlert("Message", response.Message, "OK");
             }
-           
+
             //await Shell.Current.GoToAsync("//main");
         }
         private bool _Isbusyprog;
@@ -97,7 +93,7 @@ namespace Mobile.Code.ViewModels
                     user = JsonConvert.DeserializeObject<User>(response.Data.ToString());
                     if (user.ErrNo == 1)
                     {
-                        if (user.RoleName == "Mobile" || user.RoleName == "Admin"|| user.RoleName == "Desktop,Mobile")
+                        if (user.RoleName == "Mobile" || user.RoleName == "Admin" || user.RoleName == "Desktop,Mobile")
                         {
                             App.LogUser = user;
                             if (Savecredentials == true)
@@ -113,11 +109,11 @@ namespace Mobile.Code.ViewModels
                                 await SecureStorage.SetAsync("Savecredential", "False");
                             }
                             result.Status = ApiResult.Success; ;
-                            
+
                         }
                         else
                         {
-                           
+
                             result.Message = "you are not authorized to access this application";
                             result.Status = ApiResult.Fail; ;
                         }
@@ -134,7 +130,7 @@ namespace Mobile.Code.ViewModels
             {
                 result.Message = ex.Message;
                 result.Status = ApiResult.Fail; ;
-              
+
             }
             return await Task.FromResult(result);
         }
@@ -164,10 +160,10 @@ namespace Mobile.Code.ViewModels
                     SecureStorage.Remove("Username");
                     SecureStorage.Remove("Password");
                 }
-             
+
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 // Possible that device doesn't support secure storage on device.
             }

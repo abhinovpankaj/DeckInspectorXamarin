@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AVFoundation;
+﻿using AVFoundation;
 using CoreGraphics;
 using Foundation;
 using Mobile.Code.Camera2Forms;
-using Mobile.Code.iOS.View;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
 using UIKit;
-using Xamarin.Forms;
 
 
 namespace Mobile.Code.iOS.View

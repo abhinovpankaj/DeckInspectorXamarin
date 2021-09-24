@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Dynamic;
-using System.Text;
-using Plugin.Media.Abstractions;
 
 
 
@@ -19,7 +16,7 @@ namespace Mobile.Code.Models
         public string FormType { get; set; }
         public string Size { get; set; }
         public string Path { get; set; }
-        public DateTime  CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         public bool IsEditVisual { get; set; }
         public VisualProjectLocationPhoto VisualProjectLocationPhoto { get; set; }

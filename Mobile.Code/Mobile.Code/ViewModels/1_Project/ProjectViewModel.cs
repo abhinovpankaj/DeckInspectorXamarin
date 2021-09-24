@@ -1,19 +1,14 @@
 ﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
 using Mobile.Code.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
     public class ProjectViewModel : BaseViewModel
     {
-      
+
         public Command ProjectDetailCommand { get; set; }
         public Command AddNewCommand { get; set; }
 
@@ -39,16 +34,16 @@ namespace Mobile.Code.ViewModels
         {
             App.IsInvasive = false;
             string action = project.ProjectType;
-           
+
             if (action == "Visual Report")
             {
                 App.ReportType = ReportType.Visual;
-                
+
             }
             else if (action == "Invasive Report")
             {
                 App.ReportType = ReportType.Invasive;
-              
+
             }
             else if (action == "Final Report")
             {
@@ -58,18 +53,18 @@ namespace Mobile.Code.ViewModels
             }
 
             await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-           
+
         }
 
         async Task ExecuteInvasiveDetailCommand(Project project)
         {
             App.IsInvasive = true;
             string action = project.ProjectType;
-           
+
             App.IsInvasive = true;
             project.Id = project.InvasiveProjectID;
             await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-           
+
         }
         private bool _Isbusyprog;
 
@@ -85,7 +80,7 @@ namespace Mobile.Code.ViewModels
             //AllProjects = new ObservableCollection<Project>();
             StatrtedProject = new ObservableCollection<Project>();
             ProjectDetailCommand = new Command<Project>(async (Project project) => await ExecuteProjectDetailCommand(project));
-            CreateInvasiveCommand= new Command<Project>(async (Project project) => await CreateInvasive(project));
+            CreateInvasiveCommand = new Command<Project>(async (Project project) => await CreateInvasive(project));
             AddNewCommand = new Command(async () => await ExecuteAddNewCommand());
             InvasiveDetailCommand = new Command<Project>(async (Project project) => await ExecuteInvasiveDetailCommand(project));
             //LoadData();
@@ -93,7 +88,7 @@ namespace Mobile.Code.ViewModels
         async Task ExecuteAddNewCommand()
         {
             string ProjectType = string.Empty;
-            
+
             App.IsInvasive = false;
 
             ProjectType = "Visual Report";
@@ -111,19 +106,16 @@ namespace Mobile.Code.ViewModels
         }
         public async Task LoadData()
         {
-           // AllProjects = new ObservableCollection<Project>();
+            // AllProjects = new ObservableCollection<Project>();
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
-
-
-
                 IsBusyProgress = false;
 
             }
         }
         public Command<Project> CreateInvasiveCommand { get; set; }
-      //  CreateInvasiveCommand => new Command<Project>(async (Project project) => await CreateInvasive(project));
+        //  CreateInvasiveCommand => new Command<Project>(async (Project project) => await CreateInvasive(project));
         private async Task CreateInvasive(Project project)
         {
             //var result = await Shell.Current.DisplayAlert(
@@ -133,21 +125,21 @@ namespace Mobile.Code.ViewModels
 
             //if (result)
             //{
-                IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                    ProjectDataStore.CreateInvasiveReport(project)
-                );
-                if (response.Status == ApiResult.Success)
-                {
-                    App.IsInvasive = true;
-                    IsBusyProgress = false;
-                    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-                }
-                
+            IsBusyProgress = true;
+            var response = await Task.Run(() =>
+                ProjectDataStore.CreateInvasiveReport(project)
+            );
+            if (response.Status == ApiResult.Success)
+            {
+                App.IsInvasive = true;
+                IsBusyProgress = false;
+                await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+            }
+
 
             //}
         }
     }
-    
-   
+
+
 }

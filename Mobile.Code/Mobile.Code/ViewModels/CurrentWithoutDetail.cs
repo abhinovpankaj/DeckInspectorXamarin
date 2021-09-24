@@ -2,22 +2,15 @@
 using ImageEditor.Pages;
 using Mobile.Code;
 using Mobile.Code.Models;
-using Mobile.Code.Views;
+using Mobile.Code.ViewModels;
 using Plugin.Screenshot;
-using SignaturePad.Forms;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Mobile.Code.Controls;
-using System.IO;
-using System.Collections.ObjectModel;
-using Mobile.Code.ViewModels;
-using Mobile.Code.Services;
 
 namespace ImageEditor.ViewModels
 {
@@ -74,7 +67,7 @@ namespace ImageEditor.ViewModels
             get { return _buildingCommonLocationImages; }
             set { _buildingCommonLocationImages = value; OnPropertyChanged("BuildingCommonLocationImagesItems"); }
         }
-        private ObservableCollection<BuildingApartmentImages > _buildingApartmentImages;
+        private ObservableCollection<BuildingApartmentImages> _buildingApartmentImages;
 
         public ObservableCollection<BuildingApartmentImages> BuildingApartmentImagesItems
         {
@@ -98,7 +91,7 @@ namespace ImageEditor.ViewModels
             set { _imageSize = value; OnPropertyChanged("ImageSize"); }
         }
 
-        public  CurrentWithoutDetail(ImageData _data)
+        public CurrentWithoutDetail(ImageData _data)
         {
 
             imageData = new ImageData();
@@ -114,16 +107,16 @@ namespace ImageEditor.ViewModels
             //var fileLength = new FileInfo(SelectedImage).Length;
             //  ImageSize = GetFileSize(fileLength);
             Task.Run(() => this.Load()).Wait();
-            
+
         }
         public async Task Load()
         {
             if (imageData.FormType == "VP")
             {
-                if(App.IsInvasive==false)
-                VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualLocationId,false));
+                if (App.IsInvasive == false)
+                    VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualLocationId, false));
                 else
-                 VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualLocationId, false));
+                    VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualLocationId, false));
 
                 i = VisualProjectLocationPhotoItems.IndexOf(VisualProjectLocationPhotoItems.Where(c => c.Id == imageData.VisualProjectLocationPhoto.Id).Single());
                 //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
@@ -132,7 +125,7 @@ namespace ImageEditor.ViewModels
             else if (imageData.FormType == "VB")
             {
                 if (App.IsInvasive == false)
-                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId,false));
+                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId, false));
                 else
                     VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId, false));
 
@@ -144,7 +137,7 @@ namespace ImageEditor.ViewModels
             else if (imageData.FormType == "VA")
             {
                 if (App.IsInvasive == false)
-                    VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId,false));
+                    VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId, false));
                 else
                     VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId, false));
                 i = VisualApartmentLocationPhotoItems.IndexOf(VisualApartmentLocationPhotoItems.Where(c => c.Id == imageData.VisualApartmentLocationPhoto.Id).Single());
@@ -179,42 +172,42 @@ namespace ImageEditor.ViewModels
 
         private async Task Next(object obj)
         {
-          // MessagingCenter.Send(this, "Change", "Change");
-           // var editorPage = obj as ImageEditorPageWithoutDetail;
-         //   var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-         //   var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
-          //  labelcomment.IsVisible = false;
-           // labelcomment.Text = string.Empty;
-          //  var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
+            // MessagingCenter.Send(this, "Change", "Change");
+            // var editorPage = obj as ImageEditorPageWithoutDetail;
+            //   var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
+            //   var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
+            //  labelcomment.IsVisible = false;
+            // labelcomment.Text = string.Empty;
+            //  var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
             //signaturepad.Clear();
-         //   signaturepad.ClearLabel.IsVisible = false;
+            //   signaturepad.ClearLabel.IsVisible = false;
 
-           // prvBtn.IsVisible = false;
+            // prvBtn.IsVisible = false;
             if (imageData.FormType == "VP")
             {
                 if (i != VisualProjectLocationPhotoItems.Count - 1)
                 {
-                  //  signaturepad.Clear();
+                    //  signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = VisualProjectLocationPhotoItems[i].ImageUrl;
                 }
                 else
                 {
-                //    SelectedImage = VisualProjectLocationPhotoItems[i].ImageUrl;
-                  //  return;
+                    //    SelectedImage = VisualProjectLocationPhotoItems[i].ImageUrl;
+                    //  return;
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
                     //var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                 //   Nextbutton.IsVisible = false;
+                    //   Nextbutton.IsVisible = false;
                 }
             }
             else if (imageData.FormType == "VB")
             {
                 if (i != VisualBuildingLocationPhotoItems.Count - 1)
                 {
-                   // signaturepad.Clear();
+                    // signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = VisualBuildingLocationPhotoItems[i].ImageUrl;
@@ -225,8 +218,8 @@ namespace ImageEditor.ViewModels
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
-                  //  var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                  //  Nextbutton.IsVisible = false;
+                    //  var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
+                    //  Nextbutton.IsVisible = false;
                 }
 
             }
@@ -234,7 +227,7 @@ namespace ImageEditor.ViewModels
             {
                 if (i != VisualApartmentLocationPhotoItems.Count - 1)
                 {
-                 //   signaturepad.Clear();
+                    //   signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = VisualApartmentLocationPhotoItems[i].ImageUrl;
@@ -245,8 +238,8 @@ namespace ImageEditor.ViewModels
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
-                   // var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                 //   Nextbutton.IsVisible = false;
+                    // var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
+                    //   Nextbutton.IsVisible = false;
                 }
 
             }
@@ -254,7 +247,7 @@ namespace ImageEditor.ViewModels
             {
                 if (i != ProjectCommonLocationImagesItems.Count - 1)
                 {
-                  //  signaturepad.Clear();
+                    //  signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = ProjectCommonLocationImagesItems[i].ImageUrl;
@@ -265,15 +258,15 @@ namespace ImageEditor.ViewModels
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
-                  //  var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                  //  Nextbutton.IsVisible = false;
+                    //  var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
+                    //  Nextbutton.IsVisible = false;
                 }
             }
             else if (imageData.FormType == "B")
             {
                 if (i != BuildingCommonLocationImagesItems.Count - 1)
                 {
-                  //  signaturepad.Clear();
+                    //  signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = BuildingCommonLocationImagesItems[i].ImageUrl;
@@ -284,15 +277,15 @@ namespace ImageEditor.ViewModels
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
-                 //   var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                  //  Nextbutton.IsVisible = false;
+                    //   var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
+                    //  Nextbutton.IsVisible = false;
                 }
             }
             else if (imageData.FormType == "A")
             {
                 if (i != BuildingApartmentImagesItems.Count - 1)
                 {
-                  //  signaturepad.Clear();
+                    //  signaturepad.Clear();
                     i++;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = BuildingApartmentImagesItems[i].ImageUrl;
@@ -303,8 +296,8 @@ namespace ImageEditor.ViewModels
                     //await Shell.Current.DisplayAlert("Alert", "It is last photo", "Ok", "cancel");
                     //  i = i - 1;
 
-                 //   var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-                   // Nextbutton.IsVisible = false;
+                    //   var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
+                    // Nextbutton.IsVisible = false;
                 }
             }
 
@@ -312,16 +305,16 @@ namespace ImageEditor.ViewModels
         }
         private async Task Prv(object obj)
         {
-           // MessagingCenter.Send(this, "Change", "Change");
+            // MessagingCenter.Send(this, "Change", "Change");
             var editorPage = obj as ImageEditorPageWithoutDetail;
             var Nextbutton = editorPage.Content.FindByName("btnNext") as ImageButton;
-          //  var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
+            //  var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
             //  labelcomment.IsVisible = false;
-          //  labelcomment.Text = string.Empty;
-          //  Nextbutton.IsVisible = false;
+            //  labelcomment.Text = string.Empty;
+            //  Nextbutton.IsVisible = false;
 
-           // var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
-           // signaturepad.Clear();
+            // var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
+            // signaturepad.Clear();
             //signaturepad.ClearLabel.IsVisible = false;
             if (imageData.FormType == "VP")
             {
@@ -330,11 +323,11 @@ namespace ImageEditor.ViewModels
                     i--;
                     //imageData.VisualProjectLocationPhoto = VisualProjectLocationPhotoItems[i];
                     SelectedImage = VisualProjectLocationPhotoItems[i].ImageUrl;
-                  
+
                 }
                 else
                 {
-                   // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
+                    // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
                     //prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
@@ -355,7 +348,7 @@ namespace ImageEditor.ViewModels
                 else
                 {
                     //var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-                  //  prvBtn.IsVisible = false;
+                    //  prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
 
@@ -374,8 +367,8 @@ namespace ImageEditor.ViewModels
                 }
                 else
                 {
-                   // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-                  //  prvBtn.IsVisible = false;
+                    // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
+                    //  prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
 
@@ -393,8 +386,8 @@ namespace ImageEditor.ViewModels
                 }
                 else
                 {
-                   // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-                  //  prvBtn.IsVisible = false;
+                    // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
+                    //  prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
 
@@ -412,8 +405,8 @@ namespace ImageEditor.ViewModels
                 }
                 else
                 {
-                   // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-                  //  prvBtn.IsVisible = false;
+                    // var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
+                    //  prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
 
@@ -432,7 +425,7 @@ namespace ImageEditor.ViewModels
                 else
                 {
                     var prvBtn = editorPage.Content.FindByName("prvBtn") as ImageButton;
-                 //   prvBtn.IsVisible = false;
+                    //   prvBtn.IsVisible = false;
                     //  await Shell.Current.DisplayAlert("Alert", "It is first photo", "Ok", "cancel");
                     //  i = i + 1;
 
@@ -474,17 +467,17 @@ namespace ImageEditor.ViewModels
                     if (Count == 0)
                     {
                         await App.Current.MainPage.Navigation.PopAsync();
-                       
+
                     }
                     if (Count == 1)
                     {
-                           i = 1;
-                           await Prv(obj);
-                        
+                        i = 1;
+                        await Prv(obj);
+
                     }
 
 
-                    if (i== Count - 1)
+                    if (i == Count - 1)
                     {
                         //i = 0;
                         await Prv(obj);
@@ -510,7 +503,7 @@ namespace ImageEditor.ViewModels
 
 
                     if (App.IsInvasive == false)
-                        VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId,false));
+                        VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId, false));
                     else
                         VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualBuildingLocationPhoto.VisualBuildingId, false));
                     i--;
@@ -534,14 +527,14 @@ namespace ImageEditor.ViewModels
 
 
                     if (i == Count - 1)
-                 
+
                         await Prv(obj);
-                   
+
                     else
-                    
+
                         await Next(obj);
 
-                    
+
                 }
                 else if (imageData.FormType == "VA")
                 {
@@ -550,7 +543,7 @@ namespace ImageEditor.ViewModels
                     else
                         await InvasiveVisualApartmentLocationPhotoDataStore.DeleteItemAsync(VisualApartmentLocationPhotoItems[i]);
                     if (App.IsInvasive == false)
-                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId,false));
+                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId, false));
                     else
                         VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualApartmentLocationPhoto.VisualApartmentId, false));
 
@@ -680,7 +673,7 @@ namespace ImageEditor.ViewModels
         public ICommand PrvCommand => new Command<object>(async (object obj) => await Prv(obj));
 
 
-      
+
 
 
         public static string GetFileSize(long length)
@@ -726,14 +719,15 @@ namespace ImageEditor.ViewModels
 
             await Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() => {
-                     App.Current.MainPage.Navigation.PopAsync();
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    App.Current.MainPage.Navigation.PopAsync();
                 });
             });
-           
-        //    var selectedOption = await App.Current.MainPage.DisplayAlert("Discard Photo",
-        //         "if you discard now,you'll lose your photos and edits.", "Discard", "Keep");
-        //    if (selectedOption) await App.Current.MainPage.Navigation.PopAsync();
+
+            //    var selectedOption = await App.Current.MainPage.DisplayAlert("Discard Photo",
+            //         "if you discard now,you'll lose your photos and edits.", "Discard", "Keep");
+            //    if (selectedOption) await App.Current.MainPage.Navigation.PopAsync();
         }
 
         private void OnScratchSliderValueChanged()
@@ -764,19 +758,19 @@ namespace ImageEditor.ViewModels
             //var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
             //signaturepad.ClearLabel.IsVisible = false;
 
-           // var gritoolbar = editorPage.Content.FindByName("gridtoolbar") as Grid;
-          //  gritoolbar.IsVisible = false;
+            // var gritoolbar = editorPage.Content.FindByName("gridtoolbar") as Grid;
+            //  gritoolbar.IsVisible = false;
 
             var savebutton = editorPage.Content.FindByName("GridOperation") as Grid;
             savebutton.IsVisible = false;
             //var detailGrid = editorPage.Content.FindByName("detailGrid") as Grid;
             //detailGrid.IsVisible = false;
 
-           // var imgcolors = editorPage.Content.FindByName("imgcolors") as Image;
-          //  imgcolors.IsVisible = false;
+            // var imgcolors = editorPage.Content.FindByName("imgcolors") as Image;
+            //  imgcolors.IsVisible = false;
 
-           // var commentslider = editorPage.Content.FindByName("commentcolorslider") as Slider;
-           // commentslider.IsVisible = false;
+            // var commentslider = editorPage.Content.FindByName("commentcolorslider") as Slider;
+            // commentslider.IsVisible = false;
 
             // var txtName = editorPage.Content.FindByName("txtName") as BorderlessEntry;
             //  commentslider.IsVisible = false;
@@ -787,18 +781,18 @@ namespace ImageEditor.ViewModels
             //scratchslider.IsVisible = false;
 
 
-         //  string path = await CrossScreenshot.Current.CaptureAndSaveAsync();
-              byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(await CrossScreenshot.Current.CaptureAsync(), 2000, 1800);
+            //  string path = await CrossScreenshot.Current.CaptureAndSaveAsync();
+            byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(await CrossScreenshot.Current.CaptureAsync(), 2000, 1800);
             string path = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), resizedImage);
-           // imageData.Path = filepath;
+            // imageData.Path = filepath;
             //     await App.Current.MainPage.Navigation.PopAsync();
             //ImageData d = new ImageData();
             imageData.Path = path;
             if (imageData.FormType == "VP")
             {
                 VisualProjectLocationPhotoItems[i].ImageUrl = path;
-                if(App.IsInvasive==false)
-                await VisualProjectLocationPhotoDataStore.UpdateItemAsync(VisualProjectLocationPhotoItems[i], imageData.IsEditVisual);
+                if (App.IsInvasive == false)
+                    await VisualProjectLocationPhotoDataStore.UpdateItemAsync(VisualProjectLocationPhotoItems[i], imageData.IsEditVisual);
                 else
                     await InvasiveVisualProjectLocationPhotoDataStore.UpdateItemAsync(VisualProjectLocationPhotoItems[i], imageData.IsEditVisual);
             }
@@ -833,12 +827,12 @@ namespace ImageEditor.ViewModels
             else if (imageData.FormType == "A")
             {
                 BuildingApartmentImagesItems[i].ImageUrl = path;
-                 
+
                 await BuildingApartmentImagesDataStore.UpdateItemAsync(BuildingApartmentImagesItems[i]);
             }
 
-           // signaturepad.Clear();
-          //  gritoolbar.IsVisible = true;
+            // signaturepad.Clear();
+            //  gritoolbar.IsVisible = true;
             savebutton.IsVisible = true;
             //commentslider.IsVisible = true;
             //scratchslider.IsVisible = true;
@@ -847,7 +841,7 @@ namespace ImageEditor.ViewModels
             //  labelcomment.IsVisible = false;
             labelcomment.Text = string.Empty;
             //  VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualID));
-           // await Next(obj);
+            // await Next(obj);
 
             // imageData.Name = txtName.Text;
             // imageData.Description = txtDescription.Text;
@@ -857,7 +851,7 @@ namespace ImageEditor.ViewModels
         public async void Save(byte[] arr)
         {
             IsBusyProgress = true;
-          //  var editorPage = obj as ImageEditorPageWithoutDetail;
+            //  var editorPage = obj as ImageEditorPageWithoutDetail;
 
             //var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
             //signaturepad.ClearLabel.IsVisible = false;
@@ -865,8 +859,8 @@ namespace ImageEditor.ViewModels
             // var gritoolbar = editorPage.Content.FindByName("gridtoolbar") as Grid;
             //  gritoolbar.IsVisible = false;
 
-          //  var savebutton = editorPage.Content.FindByName("GridOperation") as Grid;
-           // savebutton.IsVisible = false;
+            //  var savebutton = editorPage.Content.FindByName("GridOperation") as Grid;
+            // savebutton.IsVisible = false;
             //var detailGrid = editorPage.Content.FindByName("detailGrid") as Grid;
             //detailGrid.IsVisible = false;
 
@@ -887,12 +881,12 @@ namespace ImageEditor.ViewModels
 
             //  string path = await CrossScreenshot.Current.CaptureAndSaveAsync();
             //byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(await CrossScreenshot.Current.CaptureAsync(), 2000, 1800);
-          string path = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(),arr );
+            string path = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
 
             // imageData.Path = filepath;
             //     await App.Current.MainPage.Navigation.PopAsync();
             //ImageData d = new ImageData();
-           // SelectedImage= imageData.Path = path;
+            // SelectedImage= imageData.Path = path;
             if (imageData.FormType == "VP")
             {
                 VisualProjectLocationPhotoItems[i].ImageUrl = path;
@@ -942,9 +936,9 @@ namespace ImageEditor.ViewModels
             //commentslider.IsVisible = true;
             //scratchslider.IsVisible = true;
             IsBusyProgress = false;
-           // var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
+            // var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
             //  labelcomment.IsVisible = false;
-          //  labelcomment.Text = string.Empty;
+            //  labelcomment.Text = string.Empty;
             //  VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualID));
             await Next(null);
 
@@ -976,18 +970,18 @@ namespace ImageEditor.ViewModels
                 imgpage.BindingContext = imgviewmodel;
                 await App.Current.MainPage.Navigation.PushAsync(imgpage, true);
             }
-            
+
         }
 
-      /*  public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }*/
+        /*  public event PropertyChangedEventHandler PropertyChanged;
+          protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+          {
+              PropertyChangedEventHandler handler = PropertyChanged;
+              if (handler != null)
+              {
+                  PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+              }
+          }*/
     }
 }
 

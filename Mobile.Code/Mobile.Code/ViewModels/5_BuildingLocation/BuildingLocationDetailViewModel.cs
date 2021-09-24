@@ -1,23 +1,18 @@
-﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
+﻿using ImageEditor.ViewModels;
+using Mobile.Code.Media;
+using Mobile.Code.Models;
+using Mobile.Code.Services;
+using Mobile.Code.Views;
+using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using Mobile.Code.Data;
-using System.Windows.Input;
-using ImageEditor.ViewModels;
-using Plugin.Media.Abstractions;
-using Plugin.Media;
-using Mobile.Code.Views;
 using System.Linq;
-using Mobile.Code.Media;
-using Mobile.Code.Services;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
@@ -59,7 +54,7 @@ namespace Mobile.Code.ViewModels
             get { return _bcimage; }
             set { _bcimage = value; OnPropertyChanged("BuildingCommonLocationImages"); }
         }
-        public ObservableCollection<WorkImage> Items { get; set; }
+        
 
         private BuildingCommonLocationImages _buildingCommonLocationImages;
 
@@ -74,11 +69,11 @@ namespace Mobile.Code.ViewModels
         {
             BuildingCommonLocationImage = parm;
             ImgData.Path = parm.ImageUrl;
-         
+
             ImgData.BuildingCommonLocationImages = parm;
             ImgData.FormType = "B";
             await CurrentWithoutDetail.EditImage(ImgData, GetImageFromEditor);
-          //  await Shell.Current.Navigation.PushAsync(new EditBuildingLocationImage() { BindingContext = new EditBuildingLocationImageViewModel() { Title = "Edit Building Common Location Image", BuildingCommonLocationImages = parm, BuildingLocation = BuildingLocation } });
+            //  await Shell.Current.Navigation.PushAsync(new EditBuildingLocationImage() { BindingContext = new EditBuildingLocationImageViewModel() { Title = "Edit Building Common Location Image", BuildingCommonLocationImages = parm, BuildingLocation = BuildingLocation } });
 
             // await App.Current.MainPage.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(parm.Image,parm.Name,parm.Description,parm.CreatedOn) });
 
@@ -107,9 +102,9 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await LoadData();
                 }
-               
+
                 // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-               
+
                 // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
 
             }
@@ -119,15 +114,15 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             //await Shell.Current.GoToAsync("ProjectBuildingDetail");
-            await Shell.Current.Navigation.PopAsync(); 
+            await Shell.Current.Navigation.PopAsync();
         }
         private async Task Save()
         {
-             await Task.FromResult(true);
-           // await App.Current.MainPage.Navigation.PushAsync(new ProjectLocationDetail());
+            await Task.FromResult(true);
+            // await App.Current.MainPage.Navigation.PushAsync(new ProjectLocationDetail());
 
         }
-        
+
         public Command EditCommand { get; set; }
         private async Task Edit()
         {
@@ -175,7 +170,7 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<BuildingCommonLocationImages>(async (BuildingCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-           
+
 
         }
         public string SelectedImage { get; set; }
@@ -256,7 +251,7 @@ namespace Mobile.Code.ViewModels
         private void GetImageDetail(ImageData ImgData)
         {
             ImageData data = ImgData;
-             BuildingCommonLocationImages _locImage = new BuildingCommonLocationImages();
+            BuildingCommonLocationImages _locImage = new BuildingCommonLocationImages();
             _locImage.Id = Guid.NewGuid().ToString();
             _locImage.ImageUrl = data.Path;
             _locImage.ImageName = data.Name;
@@ -265,7 +260,7 @@ namespace Mobile.Code.ViewModels
 
             BuildingCommonLocationImagesDataStore.AddItemAsync(_locImage);
             Task.Run(() => this.LoadData()).Wait();
-           // LoadData();
+            // LoadData();
             //ImgPatah = ImgData.Path;
             // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
         }
@@ -328,14 +323,14 @@ namespace Mobile.Code.ViewModels
                                 Task.Run(() => UploadGallary(images));
 
                             }
-                           
+
                         });
                     }
                     break;
                 default:
                     break;
             }
-            
+
         }
         public async Task<bool> UploadGallary(List<string> images)
         {
@@ -382,12 +377,12 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-           
+
             if (BuildingLocation != null)
             {
 
                 BuildingLocation = await BuildingLocationDataStore.GetItemAsync(BuildingLocation.Id).ConfigureAwait(true);
-               // BuildingCommonLocationImages = new ObservableCollection<BuildingCommonLocationImages>(await BuildingCommonLocationImagesDataStore.GetItemsAsyncByBuildingId(BuildingLocation.Id));
+                // BuildingCommonLocationImages = new ObservableCollection<BuildingCommonLocationImages>(await BuildingCommonLocationImagesDataStore.GetItemsAsyncByBuildingId(BuildingLocation.Id));
 
                 VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationDataStore.GetItemsAsyncByBuildingLocationId(BuildingLocation.Id));
                 if (App.LogUser.RoleName == "Admin")
@@ -517,8 +512,8 @@ namespace Mobile.Code.ViewModels
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
             VisualBuildingLocationPhotoDataStore.Clear();
             InvasiveVisualBuildingLocationPhotoDataStore.Clear();
-           
-            
+
+
             vm.VisualForm = parm;
             vm.BuildingLocation = BuildingLocation;
 
@@ -526,7 +521,7 @@ namespace Mobile.Code.ViewModels
             vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
             if (App.IsInvasive == false)
             {
-                
+
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualBuildingLocationForm))
                 {
@@ -536,13 +531,13 @@ namespace Mobile.Code.ViewModels
             else
             {
                 var photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
-                vm.InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x=>x.ImageDescription=="TRUE"));
+                vm.InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                     await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm));
             }
-             
+
         }
 
         public ICommand DeleteVisualFormCommand => new Command<BuildingLocation_Visual>(async (BuildingLocation_Visual obj) => await DeleteVisualFormCommandExecute(obj));
@@ -564,9 +559,9 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await LoadData();
                 }
-                 
+
                 // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-               
+
                 // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
 
             }

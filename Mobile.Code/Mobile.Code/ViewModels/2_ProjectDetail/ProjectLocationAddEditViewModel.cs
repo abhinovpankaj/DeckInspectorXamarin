@@ -1,23 +1,18 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
-using Mobile.Code.Utils;
 using Mobile.Code.Views;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
-    
+
     [QueryProperty("Id", "Id")]
     public class ProjectLocationAddEditViewModel : BaseViewModel
     {
@@ -25,13 +20,13 @@ namespace Mobile.Code.ViewModels
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
 
-       
+
         private ProjectLocation _projectLocation;
 
         public ProjectLocation ProjectLocation
         {
             get { return _projectLocation; }
-            set { _projectLocation = value;OnPropertyChanged("ProjectLocation"); }
+            set { _projectLocation = value; OnPropertyChanged("ProjectLocation"); }
         }
 
         public ImageData ImgData
@@ -41,7 +36,7 @@ namespace Mobile.Code.ViewModels
         }
 
         public string SelectedImage { get; set; }
-     
+
         public ICommand ChoosePhotoCommand { get; set; }
         private string _heading;
 
@@ -60,7 +55,7 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
-                await Shell.Current.Navigation.PopAsync() ;
+                await Shell.Current.Navigation.PopAsync();
 
             }
         }
@@ -86,8 +81,8 @@ namespace Mobile.Code.ViewModels
             if (result.Status == ApiResult.Success)
             {
                 IsBusyProgress = false;
-               //  await Shell.Current.Navigation.PopAsync().ConfigureAwait(false);
-                 ProjectLocation location = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
+                //  await Shell.Current.Navigation.PopAsync().ConfigureAwait(false);
+                ProjectLocation location = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
                 // DependencyService.Get<ILodingPageService>().HideLoadingPage();
                 // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
                 await Shell.Current.Navigation.PopAsync();
@@ -95,7 +90,7 @@ namespace Mobile.Code.ViewModels
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectLocationDetail))
                     await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail() { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = location } }).ConfigureAwait(false); ;
-              
+
                 //await Shell.Current.Navigation.PopAsync().ConfigureAwait(true); ;
             }
             //if (string.IsNullOrEmpty(ProjectLocation.Id))
@@ -126,7 +121,7 @@ namespace Mobile.Code.ViewModels
             {
 
                 ProjectLocation.ProjectId = Project.Id;
-                 result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
+                result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
 
 
                 //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
@@ -135,7 +130,7 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-                 result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
+                result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
                 //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
 
                 ////await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
@@ -154,11 +149,11 @@ namespace Mobile.Code.ViewModels
         public ProjectLocationAddEditViewModel()
         {
 
-            
+
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
-         
+
             //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
             //{
             //    var newItem = item as string;
@@ -187,17 +182,17 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopToRootAsync();
                 }
-              //  await ProjectLocationDataStore.DeleteItemAsync(ProjectLocation);
-               // await Shell.Current.Navigation.PopToRootAsync();
-               // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+                //  await ProjectLocationDataStore.DeleteItemAsync(ProjectLocation);
+                // await Shell.Current.Navigation.PopToRootAsync();
+                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
 
             }
         }
         public void Load()
         {
-            
+
         }
-       private string _title;
+        private string _title;
 
         public string Title
         {
@@ -323,12 +318,12 @@ namespace Mobile.Code.ViewModels
             set { _imgPath = value; OnPropertyChanged(); }
         }
 
-        private  void testphoto(ImageData ImgData)
+        private void testphoto(ImageData ImgData)
         {
             ProjectLocation.ImageName = ImgData.Name;
             ProjectLocation.ImageDescription = ImgData.Description;
             ProjectLocation.ImageUrl = ImgData.Path;
-           // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
+            // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
         }
 
     }

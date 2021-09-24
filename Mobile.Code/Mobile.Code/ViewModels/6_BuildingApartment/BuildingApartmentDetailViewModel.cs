@@ -1,23 +1,18 @@
-﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
+﻿using ImageEditor.ViewModels;
+using Mobile.Code.Media;
+using Mobile.Code.Models;
+using Mobile.Code.Services;
+using Mobile.Code.Views;
+using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Xamarin.Forms;
-using Mobile.Code.Data;
-using System.Windows.Input;
-using ImageEditor.ViewModels;
-using Plugin.Media.Abstractions;
-using Plugin.Media;
-using Mobile.Code.Views;
 using System.Linq;
-using Mobile.Code.Services;
-using Mobile.Code.Media;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Mobile.Code.ViewModels
 {
@@ -40,7 +35,7 @@ namespace Mobile.Code.ViewModels
             set { _app = value; OnPropertyChanged("BuildingApartment"); }
         }
         public ICommand ChoosePhotoCommand { get; set; }
-       
+
         public ObservableCollection<BuildingApartmentImages> _bcimage { get; set; }
 
         public ObservableCollection<BuildingApartmentImages> BuildingApartmentImages
@@ -48,8 +43,8 @@ namespace Mobile.Code.ViewModels
             get { return _bcimage; }
             set { _bcimage = value; OnPropertyChanged("BuildingApartmentImages"); }
         }
-        public ObservableCollection<WorkImage> Items { get; set; }
-       
+        
+
         public Command ImageDetailCommand { get; set; }
         private async void GetImageFromEditor(ImageData ImgData)
         {
@@ -65,7 +60,7 @@ namespace Mobile.Code.ViewModels
             ImgData.BuildingApartmentImages = parm;
             ImgData.FormType = "A";
             await CurrentWithoutDetail.EditImage(ImgData, GetImageFromEditor);
-            
+
         }
 
         public ICommand DeleteImagCommand => new Command<BuildingApartmentImages>(async (BuildingApartmentImages obj) => await DeleteImagCommandExecute(obj));
@@ -88,7 +83,7 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await LoadData();
                 }
-               
+
             }
         }
         public Command GoBackCommand { get; set; }
@@ -96,7 +91,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             await Shell.Current.Navigation.PopAsync();
-            
+
         }
 
         private async Task Save()
@@ -104,7 +99,7 @@ namespace Mobile.Code.ViewModels
             await Task.FromResult(true);
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
-        
+
         public Command EditCommand { get; set; }
         private async Task Edit()
         {
@@ -130,7 +125,7 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
                 }
-               
+
             }
         }
         public BuildingApartmentDetailViewModel()
@@ -151,7 +146,7 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<BuildingApartmentImages>(async (BuildingApartmentImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-            
+
 
         }
         public ICommand NewImagCommand => new Command(async () => await NewImage());
@@ -206,7 +201,7 @@ namespace Mobile.Code.ViewModels
                                 Task.Run(() => UploadGallary(images));
 
                             }
-                            
+
 
                         });
                     }
@@ -236,7 +231,7 @@ namespace Mobile.Code.ViewModels
         public BuildingApartmentImages BuildingApartmentImage
         {
             get { return _buildingApartmentImage; }
-            set { _buildingApartmentImage = value;OnPropertyChanged("BuildingApartmentImage"); }
+            set { _buildingApartmentImage = value; OnPropertyChanged("BuildingApartmentImage"); }
         }
 
         public async Task AddNewPhoto(BuildingApartmentImages obj)
@@ -336,7 +331,7 @@ namespace Mobile.Code.ViewModels
 
             Task.Run(() => this.LoadData()).Wait();
         }
-       
+
         private bool _isVisualReport = false;
 
         public bool IsViusalReport
@@ -357,10 +352,10 @@ namespace Mobile.Code.ViewModels
         {
             Apartment_Visual visualForm = new Apartment_Visual();
             visualForm = new Apartment_Visual();
-           // visualForm.Id = Guid.NewGuid().ToString();
+            // visualForm.Id = Guid.NewGuid().ToString();
             visualForm.BuildingApartmentId = BuildingApartment.Id;
 
-         
+
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
@@ -369,7 +364,7 @@ namespace Mobile.Code.ViewModels
 
             App.FormString = JsonConvert.SerializeObject(visualForm);
             App.IsNewForm = true;
-            
+
             await Shell.Current.Navigation.PushAsync(new VisualApartmentLocationForm() { BindingContext = new VisualApartmentFormViewModel() { BuildingApartment = BuildingApartment, VisualForm = visualForm } });
             //{ BindingContext = new EditProjectLocationeageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
         }
@@ -384,7 +379,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoToVisualFormCommand => new Command<Apartment_Visual>(async (Apartment_Visual parm) => await GoToVisualForm(parm));
 
         private VisualApartmentFormViewModel _apartmentViewModel;
-        
+
 
         public VisualApartmentFormViewModel vm
         {
@@ -394,13 +389,13 @@ namespace Mobile.Code.ViewModels
         private async Task GoToVisualForm(Apartment_Visual parm)
         {
             App.IsNewForm = false;
-             vm = new VisualApartmentFormViewModel();
+            vm = new VisualApartmentFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
             vm.CountExteriorElements = vm.ExteriorElements.Count.ToString();
             vm.CountWaterProofingElements = vm.WaterProofingElements.Count.ToString();
             vm.RadioList_VisualReviewItems.Single(c => c.Name == parm.VisualReview).IsSelected = true;
-            
+
             vm.RadioList_AnyVisualSignItems.Single(c => c.Name == parm.AnyVisualSign).IsSelected = true;
             vm.RadioList_FurtherInasiveItems.Single(c => c.Name == parm.FurtherInasive).IsSelected = true;
             vm.RadioList_ConditionAssessment.Single(c => c.Name == parm.ConditionAssessment).IsSelected = true;
@@ -412,28 +407,28 @@ namespace Mobile.Code.ViewModels
             {
                 if (parm.IsPostInvasiveRepairsRequired)
                 {
-                    if (parm.IsInvasiveRepairApproved )
+                    if (parm.IsInvasiveRepairApproved)
                     {
                         if (parm.IsInvasiveRepairComplete)
                         {
-                            if (parm.ConclusiveLifeExpEEE.Length>0)
+                            if (parm.ConclusiveLifeExpEEE.Length > 0)
                             {
                                 vm.RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
                                 vm.RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
                                 vm.RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
                             }
-                            
-                        }  
+
+                        }
                         string isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
                         vm.RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
-                        
+
                     }
 
                     string isChked1 = parm.IsInvasiveRepairApproved ? "Yes" : "No";
                     vm.RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked1).IsSelected = true;
                 }
             }
-            
+
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
@@ -446,12 +441,12 @@ namespace Mobile.Code.ViewModels
             vm.BuildingApartment = BuildingApartment;
             vm.VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
-           
+
 
             App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
             if (App.IsInvasive == false)
             {
-                
+
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualApartmentLocationForm))
                 {
                     await Shell.Current.Navigation.PushAsync(new VisualApartmentLocationForm() { BindingContext = vm });
@@ -459,18 +454,18 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-               
+
                 var photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
                 vm.InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualApartmentLocationPhotoItems);
-                
+
                 vm.ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                
+
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm) );
-                
+                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm));
+
             }
-           
+
         }
 
         public ICommand DeleteVisualFormCommand => new Command<Apartment_Visual>(async (Apartment_Visual obj) => await DeleteVisualFormCommandExecute(obj));
@@ -492,8 +487,8 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await LoadData();
                 }
-                
-               
+
+
             }
         }
         private bool _isEditDeleteAccess;
@@ -512,10 +507,10 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-            
+
             BuildingApartment = await BuildingApartmentDataStore.GetItemAsync(BuildingApartment.Id);
-           
-         //   BuildingApartmentImages = new ObservableCollection<BuildingApartmentImages>(await BuildingApartmentImagesDataStore.GetItemsAsyncByApartmentID(BuildingApartment.Id));
+
+            //   BuildingApartmentImages = new ObservableCollection<BuildingApartmentImages>(await BuildingApartmentImagesDataStore.GetItemsAsyncByApartmentID(BuildingApartment.Id));
             VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>(await VisualFormApartmentDataStore.GetItemsAsyncByApartmentId(BuildingApartment.Id));
             if (App.LogUser.RoleName == "Admin")
             {
@@ -558,5 +553,5 @@ namespace Mobile.Code.ViewModels
 
         }
     }
-    
+
 }

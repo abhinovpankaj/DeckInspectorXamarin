@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -31,18 +28,16 @@ namespace Mobile.Code.Services
 
         public ProjectDataStore()
         {
-           
+
             items = new List<Project>();
-           
+
 
         }
         public async Task<Response> AddItemAsync(Project item)
         {
 
-
-
             Response result = new Response();
-            
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("Id", item.Id);
             parameters.Add("Name", item.Name);
@@ -59,7 +54,7 @@ namespace Mobile.Code.Services
 
             result = await HttpUtil.UploadSingleImage(item.Name, item.ImageUrl, "api/Project/AddEdit", parameters);
             return await Task.FromResult(result);
-            
+
         }
 
 
@@ -152,13 +147,13 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                   
+
                     return await Task.FromResult(result);
 
 
                 }
             }
-           
+
         }
 
         public async Task<Response> CreateInvasiveReport(Project item)
@@ -176,7 +171,7 @@ namespace Mobile.Code.Services
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
                     response.EnsureSuccessStatusCode();
-                 
+
                     return await Task.FromResult(result);
 
 
@@ -188,9 +183,9 @@ namespace Mobile.Code.Services
         public async Task<Project> GetItemAsync(string id)
         {
 
-           
-            string Query = string.Format("api/Project/GetProjectByIDMobile?Id={0}&UserId={1}", id,App.LogUser.Id.ToString());
-           
+
+            string Query = string.Format("api/Project/GetProjectByIDMobile?Id={0}&UserId={1}", id, App.LogUser.Id.ToString());
+
 
             using (HttpClient client = new HttpClient())
             {
@@ -221,13 +216,13 @@ namespace Mobile.Code.Services
             string Query = string.Empty;
             if (App.LogUser.RoleName == "Admin")
             {
-                 Query = string.Format("api/Project/GetProjectList?CreatedOn={0}&isActive={1}&searchText={2}&ProjectType={3}", null, false, string.Empty, string.Empty);
+                Query = string.Format("api/Project/GetProjectList?CreatedOn={0}&isActive={1}&searchText={2}&ProjectType={3}", null, false, string.Empty, string.Empty);
             }
             else
             {
-                 Query = string.Format("api/Project/GetProjectForMobile?UserID={0}&CreatedOn={1}&isActive={2}&searchText={3}&ProjectType={4}", App.LogUser.Id.ToString(), null, false, string.Empty, string.Empty);
+                Query = string.Format("api/Project/GetProjectForMobile?UserID={0}&CreatedOn={1}&isActive={2}&searchText={3}&ProjectType={4}", App.LogUser.Id.ToString(), null, false, string.Empty, string.Empty);
             }
-            
+
             using (HttpClient client = new HttpClient())
             {
                 client.Timeout = TimeSpan.FromSeconds(60);

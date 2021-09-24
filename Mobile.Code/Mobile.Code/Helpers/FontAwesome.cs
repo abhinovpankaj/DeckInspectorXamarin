@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FontAwesome
+﻿namespace FontAwesome
 {
     public static partial class FontAwesomeIcons
     {

@@ -1,16 +1,10 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
-using Mobile.Code.Utils;
 using Mobile.Code.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -68,7 +62,7 @@ namespace Mobile.Code.ViewModels
             set { projectBuilding = value; OnPropertyChanged("ProjectBuilding"); }
         }
 
-       
+
         private async Task Save()
         {
             if (string.IsNullOrEmpty(BuildingApartment.Name))
@@ -142,11 +136,11 @@ namespace Mobile.Code.ViewModels
         }
         public void Load()
         {
-         
+
         }
         private string _title;
 
-        public  string Title
+        public string Title
         {
             get { return _title; }
             set { _title = value; OnPropertyChanged("Title"); }
@@ -201,7 +195,7 @@ namespace Mobile.Code.ViewModels
                 return null;
 
 
-            
+
             return file.Path;
 
         }
@@ -282,5 +276,5 @@ namespace Mobile.Code.ViewModels
         }
 
     }
-   
+
 }

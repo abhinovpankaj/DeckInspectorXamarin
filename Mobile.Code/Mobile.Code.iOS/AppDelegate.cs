@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CarouselView.FormsPlugin.iOS;
+﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using UIKit;
 
@@ -22,7 +19,7 @@ namespace Mobile.Code.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-          //  global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
+            //  global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.SetFlags(new string[] { "CollectionView_Experimental", "Expander_Experimental", "RadioButton_Experimental" });
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
@@ -33,10 +30,9 @@ namespace Mobile.Code.iOS
             Syncfusion.SfImageEditor.XForms.iOS.SfImageEditorRenderer.Init();
             LoadApplication(new App());
 
-           // Xamarin.Forms.DependencyService.Register<Xamarin.Forms.ImagePicker.IImagePickerService, Xamarin.Forms.ImagePicker.iOS.ImagePickerService>();
+            // Xamarin.Forms.DependencyService.Register<Xamarin.Forms.ImagePicker.IImagePickerService, Xamarin.Forms.ImagePicker.iOS.ImagePickerService>();
             return base.FinishedLaunching(app, options);
         }
 
-    }   
+    }
 }
-    

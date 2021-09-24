@@ -1,10 +1,5 @@
 ﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -102,17 +97,17 @@ namespace Mobile.Code.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-           await ((VisualApartmentFormViewModel)this.BindingContext).Load();
+            await ((VisualApartmentFormViewModel)this.BindingContext).Load();
             //vm.Load();
         }
-         protected override bool OnBackButtonPressed() => false;
+        protected override bool OnBackButtonPressed() => false;
 
         private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             VisualApartmentFormViewModel vm = (VisualApartmentFormViewModel)this.BindingContext;
             vm.CheckAnyRadioButtonChecked = true;
         }
-        
+
 
 
     }

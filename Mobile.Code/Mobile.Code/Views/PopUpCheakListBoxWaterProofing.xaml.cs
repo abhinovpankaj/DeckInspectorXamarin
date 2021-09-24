@@ -1,10 +1,5 @@
-﻿using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using Mobile.Code.ViewModels;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,36 +9,36 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PopUpCheakListBoxWaterProofing : ContentPage
     {
-       // PopUpCheakListBoxViewModel vm;
+        // PopUpCheakListBoxViewModel vm;
         public PopUpCheakListBoxWaterProofing()
         {
             InitializeComponent();
-          //  this.BindingContext =vm= new PopUpCheakListBoxViewModel();
+            //  this.BindingContext =vm= new PopUpCheakListBoxViewModel();
         }
         protected override void OnDisappearing()
         {
-            
-           /* PopUpCheakListBoxWaterproofingViewModel vm =(PopUpCheakListBoxWaterproofingViewModel) this.BindingContext;
-            vm.CheakBoxSelectedItems = new System.Collections.ObjectModel.ObservableCollection<string>();
-            //List<Cheac response = new CheakBoxListReturntModel();
-            foreach (var item in vm.Items)
-            {
-                if (item.IsSelected == true)
-                {
-                    // response.selectedList.Add(item.Name);
-                    vm.CheakBoxSelectedItems.Add(item.Name);
-                }
-            }*/
+
+            /* PopUpCheakListBoxWaterproofingViewModel vm =(PopUpCheakListBoxWaterproofingViewModel) this.BindingContext;
+             vm.CheakBoxSelectedItems = new System.Collections.ObjectModel.ObservableCollection<string>();
+             //List<Cheac response = new CheakBoxListReturntModel();
+             foreach (var item in vm.Items)
+             {
+                 if (item.IsSelected == true)
+                 {
+                     // response.selectedList.Add(item.Name);
+                     vm.CheakBoxSelectedItems.Add(item.Name);
+                 }
+             }*/
             //response.Count = vm.Items.Where(c => c.IsSelected == true).Count();
 
-           // MessagingCenter.Send(this, "SelectedItem", vm.CheakBoxSelectedItems);
+            // MessagingCenter.Send(this, "SelectedItem", vm.CheakBoxSelectedItems);
             base.OnDisappearing();
         }
         protected override void OnAppearing()
         {
 
             PopUpCheakListBoxWaterproofingViewModel vm = (PopUpCheakListBoxWaterproofingViewModel)this.BindingContext;
-            if(vm.CheakBoxSelectedItems.Count!=0)
+            if (vm.CheakBoxSelectedItems.Count != 0)
             {
                 foreach (var item in vm.CheakBoxSelectedItems)
                 {
@@ -59,20 +54,20 @@ namespace Mobile.Code.Views
 
         void btnDone_Clicked(System.Object sender, System.EventArgs e)
         {
-             PopUpCheakListBoxWaterproofingViewModel vm =(PopUpCheakListBoxWaterproofingViewModel) this.BindingContext;
-          vm.CheakBoxSelectedItems = new System.Collections.ObjectModel.ObservableCollection<string>();
-          //List<Cheac response = new CheakBoxListReturntModel();
-          foreach (var item in vm.Items)
-          {
-              if (item.IsSelected == true)
-              {
-                  // response.selectedList.Add(item.Name);
-                  vm.CheakBoxSelectedItems.Add(item.Name);
-              }
-          }
+            PopUpCheakListBoxWaterproofingViewModel vm = (PopUpCheakListBoxWaterproofingViewModel)this.BindingContext;
+            vm.CheakBoxSelectedItems = new System.Collections.ObjectModel.ObservableCollection<string>();
+            //List<Cheac response = new CheakBoxListReturntModel();
+            foreach (var item in vm.Items)
+            {
+                if (item.IsSelected == true)
+                {
+                    // response.selectedList.Add(item.Name);
+                    vm.CheakBoxSelectedItems.Add(item.Name);
+                }
+            }
             //response.Count = vm.Items.Where(c => c.IsSelected == true).Count();
 
-             MessagingCenter.Send(this, "SelectedItem", vm.CheakBoxSelectedItems);
+            MessagingCenter.Send(this, "SelectedItem", vm.CheakBoxSelectedItems);
             vm.GoBackCommand.Execute(null);
 
         }

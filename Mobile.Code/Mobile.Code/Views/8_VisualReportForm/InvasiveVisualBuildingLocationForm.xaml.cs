@@ -1,10 +1,5 @@
 ﻿using Mobile.Code.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -63,7 +58,7 @@ namespace Mobile.Code.Views
             this.BindingContext = viewModel;
         }
 
-       
+
         private void SpeechToTextFinalResultRecieved(string args)
         {
             if (txtName.IsFocused)
@@ -109,7 +104,7 @@ namespace Mobile.Code.Views
             }
 
         }
-    
+
 
 
     }

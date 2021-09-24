@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,7 +22,7 @@ namespace Mobile.Code.Services
     }
     public class InvasiveVisualBuildingLocationPhotoDataStore : IInvasiveVisualBuildingLocationPhotoDataStore
     {
-         List<VisualBuildingLocationPhoto> items;
+        List<VisualBuildingLocationPhoto> items;
 
         public InvasiveVisualBuildingLocationPhotoDataStore()
         {
@@ -53,7 +52,7 @@ namespace Mobile.Code.Services
             //return await Task.FromResult(true);
             var oldItem = items.Where((VisualBuildingLocationPhoto arg) => arg.Id == item.Id).FirstOrDefault();
             items.Remove(oldItem);
-           
+
             var oldITRaktem = App.VisualEditTrackingForInvasive.Where(c => c.Id == item.Id && c.IsServerData == true).SingleOrDefault();
             if (oldITRaktem != null)
             {
@@ -97,7 +96,7 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTrackingForInvasive.Remove(oldITRaktem);
 
-                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription,  Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "Delete", IsDelete = true, IsServerData = true });
+                App.VisualEditTrackingForInvasive.Add(new MultiImage() { ImageType = item.ImageDescription, Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "Delete", IsDelete = true, IsServerData = true });
 
 
 
@@ -121,7 +120,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<VisualBuildingLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer)
         {
             if (loadServer == false)
@@ -144,7 +143,7 @@ namespace Mobile.Code.Services
 
 
                         items = JsonConvert.DeserializeObject<List<VisualBuildingLocationPhoto>>(result.Data.ToString());
-                       
+
                         items = items.Where(c => c.ImageDescription == "TRUE" || c.ImageDescription == "CONCLUSIVE").ToList();
                         foreach (var item in items)
                         {

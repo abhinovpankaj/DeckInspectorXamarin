@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controles="clr-namespace:Mobile.Code.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
@@ -412,7 +413,7 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <yummy:PancakeView CornerRadius="5">
-                                        <Image
+                                        <ffimageloading:CachedImage
                                             Aspect="AspectFill"
                                             BackgroundColor="{DynamicResource Gray-200}"
                                             HeightRequest="140"
@@ -471,7 +472,7 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <yummy:PancakeView CornerRadius="5">
-                                        <Image
+                                        <ffimageloading:CachedImage
                                             Aspect="AspectFill"
                                             BackgroundColor="{DynamicResource Gray-200}"
                                             HeightRequest="140"
@@ -534,7 +535,7 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <yummy:PancakeView BackgroundColor="LightBlue" CornerRadius="5">
-                                        <Image
+                                        <ffimageloading:CachedImage
                                             Margin="1"
                                             Aspect="AspectFill"
                                             BackgroundColor="{DynamicResource Gray-200}"

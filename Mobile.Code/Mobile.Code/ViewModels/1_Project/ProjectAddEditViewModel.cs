@@ -1,16 +1,12 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
-using Mobile.Code.Utils;
 using Mobile.Code.Views;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -21,7 +17,7 @@ namespace Mobile.Code.ViewModels
     [QueryProperty("Id", "Id")]
     public class ProjectAddEditViewModel : BaseViewModel
     {
-      
+
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
@@ -81,13 +77,13 @@ namespace Mobile.Code.ViewModels
                 return;
             }
             IsBusyProgress = true;
-         //   DependencyService.Get<ILodingPageService>().InitLoadingPage(new LoadingIndicatorPage1());
-           // DependencyService.Get<ILodingPageService>().ShowLoadingPage();
+            //   DependencyService.Get<ILodingPageService>().InitLoadingPage(new LoadingIndicatorPage1());
+            // DependencyService.Get<ILodingPageService>().ShowLoadingPage();
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
                 IsBusyProgress = false;
-                
+
                 // DependencyService.Get<ILodingPageService>().HideLoadingPage();
                 await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
             }
@@ -99,16 +95,16 @@ namespace Mobile.Code.ViewModels
             if (string.IsNullOrEmpty(Project.Id))
             {
 
-               // Project.Id = Guid.NewGuid().ToString();
+                // Project.Id = Guid.NewGuid().ToString();
 
                 //Project.
                 Project.ProjectType = ProjectType;
                 // Project.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
                 Response result = await ProjectDataStore.AddItemAsync(Project);
-                
-               
+
+
                 Project = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
-                
+
                 return await Task.FromResult(true);
             }
             else
@@ -141,9 +137,9 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
 
-          
+
             ImgData = new ImageData();
-           IsBusyProgress = false;
+            IsBusyProgress = false;
         }
         public void Load()
         {
@@ -160,7 +156,7 @@ namespace Mobile.Code.ViewModels
                 {
                     Heading = "Project Name";
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -204,7 +200,7 @@ namespace Mobile.Code.ViewModels
             }
             if (!string.IsNullOrEmpty(SelectedImage))
             {
-                
+
                 ImgData.Name = Project.ImageName;
                 ImgData.Description = Project.ImageDescription;
                 ImgData.Path = SelectedImage;
@@ -243,7 +239,7 @@ namespace Mobile.Code.ViewModels
         }
         public static string GetFileSize(long length)
         {
-            
+
             long B = 0, KB = 1024, MB = KB * 1024, GB = MB * 1024, TB = GB * 1024;
             double size = length;
             string suffix = nameof(B);
@@ -277,41 +273,42 @@ namespace Mobile.Code.ViewModels
             var file = await CrossMedia.Current.TakePhotoAsync
                 (new StoreCameraMediaOptions()
                 {
-                  //  SaveToAlbum = true,
+                    //  SaveToAlbum = true,
                     SaveMetaData = false,
                     DefaultCamera = CameraDevice.Rear,
                     CompressionQuality = App.CompressionQuality
-                }); 
+                });
 
             IsBusy = false;
             if (file == null)
                 return null;
-         //   return file.Path;
-              if (Device.RuntimePlatform == Device.iOS)
-               {
+            //   return file.Path;
+            if (Device.RuntimePlatform == Device.iOS)
+            {
 
                 byte[] arr = null;
-               var buffer = new byte[16 * 1024];
-               using (MemoryStream ms = new MemoryStream())
-               {
-                   int read = 0;
-                   var readstream =file.GetStreamWithImageRotatedForExternalStorage();
-                   while ((read = readstream.Read(buffer, 0, buffer.Length)) > 0)
-                       ms.Write(buffer, 0, read);
+                var buffer = new byte[16 * 1024];
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int read = 0;
+                    var readstream = file.GetStreamWithImageRotatedForExternalStorage();
+                    while ((read = readstream.Read(buffer, 0, buffer.Length)) > 0)
+                        ms.Write(buffer, 0, read);
 
-                   file.GetStream().CopyTo(ms);
+                    file.GetStream().CopyTo(ms);
 
-                 //  file.Dispose();
-                   readstream.Dispose();
-                   arr = ms.ToArray();
-                   readstream = null;
-               }
-               string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
+                    //  file.Dispose();
+                    readstream.Dispose();
+                    arr = ms.ToArray();
+                    readstream = null;
+                }
+                string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
                 //  ImgData.mediaFile = arr;
                 return filepath;
-             
+
             }
-            else {
+            else
+            {
 
 
                 return file.Path;
@@ -319,7 +316,7 @@ namespace Mobile.Code.ViewModels
             }
 
 
-            }
+        }
         private string _imgPath;
 
         public string ImgPata
@@ -332,13 +329,13 @@ namespace Mobile.Code.ViewModels
         {
             Project.ImageName = ImgData.Name;
             Project.ImageDescription = ImgData.Description;
-            
-            
+
+
             Project.ImageUrl = ImgData.Path;
 
             // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
         }
 
     }
-   
+
 }

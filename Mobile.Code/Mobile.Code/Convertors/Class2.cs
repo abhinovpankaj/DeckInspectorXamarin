@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Mobile.Code.Convertors
@@ -11,11 +9,11 @@ namespace Mobile.Code.Convertors
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string LogUserId = value as string;
-            if(App.LogUser.RoleName == "Admin")
+            if (App.LogUser.RoleName == "Admin")
             {
                 return true;
             }
-            else if (App.LogUser.Id.ToString() == LogUserId&& App.LogUser.RoleName=="Mobile")
+            else if (App.LogUser.Id.ToString() == LogUserId && App.LogUser.RoleName == "Mobile")
             {
                 return true;
             }

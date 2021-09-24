@@ -1,9 +1,4 @@
-﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,7 +35,7 @@ namespace Mobile.Code.Views
                     recordName.IsEnabled = true;
 
                 }
-               
+
                 else if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
@@ -79,7 +74,7 @@ namespace Mobile.Code.Views
                     txtName.Focus();
 
                 }
-              
+
                 else if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
@@ -96,7 +91,7 @@ namespace Mobile.Code.Views
             if (Device.RuntimePlatform == Device.iOS)
             {
                 recordName.IsEnabled = false;
-             
+
                 recordDes.IsEnabled = false;
             }
 

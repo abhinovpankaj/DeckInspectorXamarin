@@ -1,9 +1,4 @@
-﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,7 +23,7 @@ namespace Mobile.Code.Views
             }
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {
-                
+
                 SpeechToTextFinalResultRecieved(args);
             });
 
@@ -50,7 +45,7 @@ namespace Mobile.Code.Views
                     recordDes.IsEnabled = true;
 
                 }
-                
+
             });
 
             MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
@@ -83,7 +78,7 @@ namespace Mobile.Code.Views
             //vm.Load();
         }
 
-      
+
         private void recordClick(object sender, EventArgs e)
         {
             ImageButton btn = sender as ImageButton;
@@ -91,28 +86,28 @@ namespace Mobile.Code.Views
             {
                 if (btn.ClassId == "recordName")
                 {
-                     txtName.Focus();
-                   
+                    txtName.Focus();
+
                 }
                 else if (btn.ClassId == "recordAddress")
                 {
                     txtAddress.Focus();
-                   
+
                 }
                 else if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
-                  
+
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
             catch (Exception ex)
             {
-               
+
                 txtName.Text = ex.Message;
             }
 
-         if (Device.RuntimePlatform == Device.iOS)
+            if (Device.RuntimePlatform == Device.iOS)
             {
                 recordName.IsEnabled = false;
                 recordAddress.IsEnabled = false;
@@ -120,7 +115,7 @@ namespace Mobile.Code.Views
             }
 
         }
-       
+
         //protected override bool OnBackButtonPressed()
         //{
 

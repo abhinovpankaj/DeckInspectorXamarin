@@ -1,9 +1,4 @@
-﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,7 +14,7 @@ namespace Mobile.Code.Views
         public AdditionalInvasive()
         {
             InitializeComponent();
-            
+
             recordDesInv.Clicked += recordDesInv_Clicked;
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -65,7 +60,7 @@ namespace Mobile.Code.Views
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
@@ -100,7 +95,7 @@ namespace Mobile.Code.Views
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
 
@@ -119,7 +114,7 @@ namespace Mobile.Code.Views
         {
             Device.BeginInvokeOnMainThread(
             () => { AllowFurthurInvasive?.Invoke(this, null); });
-            
+
         }
     }
 }

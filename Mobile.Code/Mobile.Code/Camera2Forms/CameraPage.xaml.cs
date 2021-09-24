@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,40 +17,40 @@ namespace Mobile.Code.Camera2Forms
         private double width;
         private double height;
 
-   
+
         public CameraPage()
         {
-           
+
             InitializeComponent();
 
-           
-           // Items = new ObservableCollection<VisualProjectLocationPhoto>();
+
+            // Items = new ObservableCollection<VisualProjectLocationPhoto>();
             CameraPreview.PictureFinished += OnPictureFinished;
-          //  list = new ObservableCollection<MultiImage>();
+            //  list = new ObservableCollection<MultiImage>();
         }
-       
+
         void OnCameraClicked(object sender, EventArgs e)
         {
 
             CameraPreview.CameraClick.Execute(null);
         }
-     
+
         private async void OnPictureFinished()
         {
             CameraViewModel vm = (CameraViewModel)this.BindingContext;
-            string filepath=string.Empty;
+            string filepath = string.Empty;
 
 
             if (Device.RuntimePlatform == Device.iOS)
             {
 
-                 filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
-          
+                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+
             }
             if (Device.RuntimePlatform == Device.Android)
             {
-                 filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
-              
+                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+
             }
 
             App.ListCamera2Api.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType });
@@ -74,30 +72,30 @@ namespace Mobile.Code.Camera2Forms
         {
             //CameraViewModel vm = (CameraViewModel)this.BindingContext;
             //vm.IsBusyProgress = true;
-           
 
-           
+
+
             //MessagingCenter.Send(this, "ImageList", vm.ImageList);
-           
-         
+
+
             CameraPreview.PictureFinished -= OnPictureFinished;
-          
-          //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
+
+            //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
             base.OnDisappearing();
-           // vm.ImageList.Clear();
-           // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
+            // vm.ImageList.Clear();
+            // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
         }
         protected override void OnAppearing()
         {
-            App.ListCamera2Api=new List<MultiImage>();
+            App.ListCamera2Api = new List<MultiImage>();
             base.OnAppearing();
         }
         private async void btnSave_Clicked(object sender, EventArgs e)
         {
-            
+
             await Shell.Current.Navigation.PopModalAsync();
-           // CameraViewModel vm = (CameraViewModel)this.BindingContext;
-          
+            // CameraViewModel vm = (CameraViewModel)this.BindingContext;
+
             //vm.IsBusyProgress = true;
 
             //bool complete = await Task.Run(Running);

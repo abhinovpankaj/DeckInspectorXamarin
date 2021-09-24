@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-    public class CameraSetting:BindingModel
+    public class CameraSetting : BindingModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,9 +11,9 @@ namespace Mobile.Code.Models
         public bool IsSelected
         {
             get { return _isSelect; }
-            set { _isSelect = value;OnPropertyChanged("IsSelected"); }
+            set { _isSelect = value; OnPropertyChanged("IsSelected"); }
         }
 
-       // public bool IsSelected { get; set; } = false;
+        // public bool IsSelected { get; set; } = false;
     }
 }

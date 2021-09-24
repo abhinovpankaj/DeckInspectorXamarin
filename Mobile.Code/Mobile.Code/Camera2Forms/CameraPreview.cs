@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Mobile.Code.Camera2Forms
@@ -49,13 +47,13 @@ namespace Mobile.Code.Camera2Forms
             set { _aa = value; }
         }
 
-        public void  PictureTaken(byte[] imgSource )
+        public void PictureTaken(byte[] imgSource)
         {
-               byteArr = imgSource;
-               var stream1 = new MemoryStream(imgSource);
+            byteArr = imgSource;
+            var stream1 = new MemoryStream(imgSource);
             ImageSource = ImageSource.FromStream(() => new MemoryStream(imgSource));
             PictureFinished?.Invoke();
-           
+
         }
 
         public event Action PictureFinished;

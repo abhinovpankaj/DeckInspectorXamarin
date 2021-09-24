@@ -1,23 +1,15 @@
 ﻿using ImageEditor.Helpers;
 using ImageEditor.Pages;
 using Mobile.Code;
+using Mobile.Code.Controls;
 using Mobile.Code.Models;
-using Mobile.Code.Views;
-using Plugin.Screenshot;
-using SignaturePad.Forms;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Mobile.Code.Controls;
-using System.IO;
-using Plugin.ImageEdit;
-using Wibci.Xamarin.Images;
-using Wibci.LogicCommand;
 
 namespace ImageEditor.ViewModels
 {
@@ -41,7 +33,7 @@ namespace ImageEditor.ViewModels
             set { _imageData = value; OnPropertyChanged("ImageSize"); }
         }
 
-       // public ImageData imageData { get; set; }
+        // public ImageData imageData { get; set; }
 
         private string _imageSize;
 
@@ -60,7 +52,7 @@ namespace ImageEditor.ViewModels
             CommentColor = StrokeColor = "Black";
             SaveImageCommand = new Command(SaveImageCommandExecute);
             ClosePageCommand = new Command(ClosePageCommandExecute);
-           
+
             var fileLength = new FileInfo(SelectedImage).Length;
             ImageSize = GetFileSize(fileLength);
         }
@@ -110,12 +102,13 @@ namespace ImageEditor.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
                         App.Current.MainPage.Navigation.PopAsync();
                     });
                 });
             }
-          //  await App.Current.MainPage.Navigation.PopAsync();
+            //  await App.Current.MainPage.Navigation.PopAsync();
         }
 
         private void OnScratchSliderValueChanged()
@@ -130,7 +123,7 @@ namespace ImageEditor.ViewModels
             var selectedcolor = SliderColorsList.SliderColors.FirstOrDefault(x => x.ID == colorvalue);
             CommentColor = selectedcolor.ColorOnHEX;
         }
-       public byte[] array = null;
+        public byte[] array = null;
         public async void SaveImageCommandExecute(object obj)
         {
             if (Device.RuntimePlatform == Device.Android)
@@ -177,7 +170,7 @@ namespace ImageEditor.ViewModels
                 if (array != null)
                 {
                     string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), array);
-                    imageData.Path =  filepath;
+                    imageData.Path = filepath;
                 }
                 else
                 {
@@ -191,20 +184,20 @@ namespace ImageEditor.ViewModels
                 Callback?.Invoke(imageData);
                 await Shell.Current.Navigation.PopAsync();
             }
-            
+
         }
 
         private async void SaveImageCommandExecute1(object obj)
         {
             var editorPage = obj as ImageEditorPageForIOS;
             var txtName = editorPage.Content.FindByName("txtName") as BorderlessEntry;
-           
+
             var detailGrid = editorPage.Content.FindByName("detailGrid") as Grid;
             detailGrid.IsVisible = false;
 
-          
+
             var txtDescription = editorPage.Content.FindByName("txtDes") as XEditor;
-            
+
 
             imageData.Name = txtName.Text;
             imageData.Description = txtDescription.Text;
@@ -220,10 +213,10 @@ namespace ImageEditor.ViewModels
         /// <returns>return ImagePath on callback(imagepath)</returns>
         public static async Task EditImage(ImageData data, CallbackEventHandler callbackEventHandler)
         {
-          
+
 
             // string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(data.Path, null);
-          ////  data.Path = filepath;
+            ////  data.Path = filepath;
             var imgviewmodel = new Current(data);
             imgviewmodel.Callback += callbackEventHandler;
             if (Device.RuntimePlatform == Device.Android)

@@ -1,9 +1,4 @@
-﻿using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,7 +18,7 @@ namespace Mobile.Code.Views
             {
                 recordDes.IsVisible = true;
                 recordDes.IsEnabled = false;
-            }   
+            }
 
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {

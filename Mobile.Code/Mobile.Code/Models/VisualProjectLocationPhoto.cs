@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mobile.Code.Models
+﻿namespace Mobile.Code.Models
 {
-    public class VisualProjectLocationPhoto:BindingModel
+    public class VisualProjectLocationPhoto : BindingModel
     {
 
 
         public string Id { get; set; }
         public string VisualLocationId { get; set; }
-      
+
         public string CreatedOn { get; set; }
 
         public bool IsOriginal { get; set; }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AVFoundation;
-using Foundation;
+﻿using AVFoundation;
 using Mobile.Code.Camera2Forms;
 using Mobile.Code.iOS.Renderers;
 using Mobile.Code.iOS.View;
+using System;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -33,15 +28,15 @@ namespace Mobile.Code.iOS.Renderers
             if (e.OldElement != null)
             {
                 // Unsubscribe
-             //   uiCameraPreview.Tapped -= OnCameraPreviewTapped;
+                //   uiCameraPreview.Tapped -= OnCameraPreviewTapped;
             }
             if (e.NewElement != null)
             {
                 e.NewElement.CameraClick = new Command(() => TakePicture());
                 // Subscribe
                 _currentElement = e.NewElement;
-               // uiCameraPreview.Tapped += OnCameraPreviewTapped;
-               // uiCameraPreview.Photo += OnPhoto;
+                // uiCameraPreview.Tapped += OnCameraPreviewTapped;
+                // uiCameraPreview.Photo += OnPhoto;
             }
         }
         //public async Task<NSData> CapturePhoto()
@@ -54,19 +49,19 @@ namespace Mobile.Code.iOS.Renderers
         //private async void OnPhoto(object sender, byte[] imgSource)
         //{
 
-           
+
         //    //UIImage imageInfo = new UIImage(data);
 
         //    //(Element as CameraPage).SetPhotoResult(data.ToArray(),
         //    //                                            (int)imageInfo.Size.Width,
         //    //                                            (int)imageInfo.Size.Height);
-           
+
         //}
         private async void TakePicture()
         {
             var data = await uiCameraPreview.CapturePhoto();
             UIImage imageInfo = new UIImage(data);
-          
+
             //(Element as CameraPage).SetPhotoResult(data.ToArray(),
             //                                            (int)imageInfo.Size.Width,
             //                                            (int)imageInfo.Size.Height);
@@ -109,7 +104,7 @@ namespace Mobile.Code.iOS.Renderers
                 Control.Dispose();
             }
             //  uiCameraPreview.Photo -= OnPhoto;
-           // base.Dispose(disposing);
+            // base.Dispose(disposing);
         }
     }
 }

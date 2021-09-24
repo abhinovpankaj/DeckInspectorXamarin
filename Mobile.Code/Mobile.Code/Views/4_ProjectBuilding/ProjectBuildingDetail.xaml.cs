@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
+﻿using Mobile.Code.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,12 +8,12 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectBuildingDetail : ContentPage
     {
-      
+
         public ProjectBuildingDetail()
         {
             InitializeComponent();
-           // this.BindingContext = vm = new ProjectBuildingDetailViewModel();
-          
+            // this.BindingContext = vm = new ProjectBuildingDetailViewModel();
+
         }
         protected async override void OnAppearing()
         {
@@ -27,9 +22,9 @@ namespace Mobile.Code.Views
             await ((ProjectBuildingDetailViewModel)this.BindingContext).LoadData();
             base.OnAppearing();
         }
-      
 
-       
+
+
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("AddBuildingApartment");

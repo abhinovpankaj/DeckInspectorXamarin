@@ -1,20 +1,19 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
     public interface IVisualFormApartmentDataStore
     {
-        Task<Response> AddItemAsync(Apartment_Visual item, IEnumerable<string> ImageList );
-        Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList,string imgType="TRUE");
+        Task<Response> AddItemAsync(Apartment_Visual item, IEnumerable<string> ImageList);
+        Task<Response> UpdateItemAsync(Apartment_Visual item, List<MultiImage> finelList, string imgType = "TRUE");
         Task<Response> DeleteItemAsync(Apartment_Visual item);
         Task<Apartment_Visual> GetItemAsync(string id);
         Task<IEnumerable<Apartment_Visual>> GetItemsAsync(bool forceRefresh = false);
@@ -23,7 +22,7 @@ namespace Mobile.Code.Services
     }
     public class VisualFormApartmentDataStore : IVisualFormApartmentDataStore
     {
-         List<Apartment_Visual> items;
+        List<Apartment_Visual> items;
 
         public VisualFormApartmentDataStore()
         {
@@ -100,12 +99,12 @@ namespace Mobile.Code.Services
             {
 
                 parameters.Add("IsInvaiveImage", imgType);
-               
+
             }
             else
             {
                 parameters.Add("IsInvaiveImage", null);
-                
+
 
             }
 
@@ -184,7 +183,7 @@ namespace Mobile.Code.Services
                     return await Task.FromResult(result);
 
 
-                } 
+                }
             }
         }
 
@@ -199,7 +198,7 @@ namespace Mobile.Code.Services
             return await Task.FromResult(items);
         }
 
-        
+
         public async Task<IEnumerable<Apartment_Visual>> GetItemsAsyncByApartmentId(string ApartmentLocationId)
         {
             using (HttpClient client = new HttpClient())
@@ -209,14 +208,14 @@ namespace Mobile.Code.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-                using (HttpResponseMessage response = await client.GetAsync($"api/VisualBuildingApartment/GetVisualBuildingApartmentByBuildingApartmentId?BuildingApartmentId=" + ApartmentLocationId+"&isInvasive=" + App.IsInvasive))
+                using (HttpResponseMessage response = await client.GetAsync($"api/VisualBuildingApartment/GetVisualBuildingApartmentByBuildingApartmentId?BuildingApartmentId=" + ApartmentLocationId + "&isInvasive=" + App.IsInvasive))
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
 
 
                     items = JsonConvert.DeserializeObject<List<Apartment_Visual>>(result.Data.ToString());
-                    
+
                     response.EnsureSuccessStatusCode();
 
                     return await Task.FromResult(items);
@@ -226,8 +225,8 @@ namespace Mobile.Code.Services
             }
         }
 
-        
 
-       
+
+
     }
 }

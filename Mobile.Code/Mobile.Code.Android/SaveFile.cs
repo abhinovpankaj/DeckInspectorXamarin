@@ -45,7 +45,7 @@ namespace Mobile.Code.Droid
             }
             return 0;
         }
-        Bitmap loadAndResizeBitmap(string filePath)
+        Bitmap LoadAndResizeBitmap(string filePath)
         {
             BitmapFactory.Options options = new BitmapFactory.Options { InJustDecodeBounds = true };
             BitmapFactory.DecodeFile(filePath, options);

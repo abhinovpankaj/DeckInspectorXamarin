@@ -1,10 +1,5 @@
-﻿using Mobile.Code.Models;
-using Mobile.Code.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using Mobile.Code.ViewModels;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,13 +9,13 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PopUpCheakListBox : ContentPage
     {
-       // PopUpCheakListBoxViewModel vm;
+        // PopUpCheakListBoxViewModel vm;
         public PopUpCheakListBox()
         {
             InitializeComponent();
-          //  this.BindingContext =vm= new PopUpCheakListBoxViewModel();
+            //  this.BindingContext =vm= new PopUpCheakListBoxViewModel();
         }
-     
+
         protected override void OnAppearing()
         {
 

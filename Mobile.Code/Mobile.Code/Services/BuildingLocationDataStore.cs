@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Mobile.Code.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mobile.Code.Models;
-using Newtonsoft.Json;
 
 namespace Mobile.Code.Services
 {
@@ -23,7 +21,7 @@ namespace Mobile.Code.Services
     }
     public class BuildingLocationDataStore : IBuildingLocation
     {
-         List<BuildingLocation> items;
+        List<BuildingLocation> items;
 
         public BuildingLocationDataStore()
         {
@@ -200,7 +198,7 @@ namespace Mobile.Code.Services
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     Response result = JsonConvert.DeserializeObject<Response>(responseBody);
-                  
+
 
                     BuildingLocation location = JsonConvert.DeserializeObject<BuildingLocation>(result.Data.ToString());
 
@@ -254,7 +252,7 @@ namespace Mobile.Code.Services
             }
         }
 
-       
+
 
         public async Task<IEnumerable<BuildingLocation>> GetItemsAsync(bool forceRefresh = false)
         {
