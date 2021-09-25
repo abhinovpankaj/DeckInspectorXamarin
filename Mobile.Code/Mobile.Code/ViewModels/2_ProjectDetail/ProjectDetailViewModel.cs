@@ -336,29 +336,7 @@ namespace Mobile.Code.ViewModels
                         CanInvasiveCreate = false;
                     }
                 }
-                //if(Project.ProjectType== "Invasive")
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else if(Project.IsInvaisveExist==true)
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else
-                //{
-                //    CanInvasiveCreate = false;
-                //}
-                //else
-                //{
-                //    if (Project.IsInvaisveExist == true)
-                //    {
-                //        CanInvasiveCreate = false;
-                //    }
-                //    else
-                //    {
-                //        CanInvasiveCreate = true;
-                //    }
-                //}
+               
                 IsEditDeleteAccess = true;
             }
             else if (Project.UserId == App.LogUser.Id.ToString())
@@ -383,25 +361,7 @@ namespace Mobile.Code.ViewModels
                         CanInvasiveCreate = false;
                     }
                 }
-                //if (Project.ProjectType == "Invasive" )
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else if (Project.IsInvaisveExist == true)
-                //{
-                //    CanInvasiveCreate = true;
-                //}
-                //else
-                //{
-                //    if (Project.IsInvaisveExist == false)
-                //    {
-                //        CanInvasiveCreate = true;
-                //    }
-                //    else
-                //    {
-                //        CanInvasiveCreate = false;
-                //    }
-                //}
+               
                 IsEditDeleteAccess = true;
             }
             else

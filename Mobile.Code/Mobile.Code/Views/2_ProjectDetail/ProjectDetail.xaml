@@ -38,8 +38,6 @@
                     x:Name="gridtoolbar"
                     Padding="0"
                     BackgroundColor="White">
-
-
                     <ffimageloading:CachedImage
                         Aspect="AspectFill"
                         HeightRequest="260"

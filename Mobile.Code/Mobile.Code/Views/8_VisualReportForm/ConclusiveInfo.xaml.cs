@@ -14,24 +14,43 @@ namespace Mobile.Code.Views
         public ConclusiveInfo(object vm)
         {
             InitializeComponent();
-
+            ConclusiveDetails.IsVisible = false;
             if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
             {
                 var viewModel = vm as VisualProjectLocationFormViewModel;
                 if (viewModel != null)
+                {
                     this.BindingContext = viewModel;
+                    if (viewModel.VisualForm.IsInvasiveRepairComplete)
+                    {
+                        ConclusiveDetails.IsVisible = true;
+                    }
+                }
+                   
             }
             if (vm.GetType() == typeof(VisualBuildingLocationFormViewModel))
             {
                 var viewModel = vm as VisualBuildingLocationFormViewModel;
                 if (viewModel != null)
+                {
                     this.BindingContext = viewModel;
+                    if (viewModel.VisualForm.IsInvasiveRepairComplete)
+                    {
+                        ConclusiveDetails.IsVisible = true;
+                    }
+                }
             }
             if (vm.GetType() == typeof(VisualApartmentFormViewModel))
             {
                 var viewModel = vm as VisualApartmentFormViewModel;
                 if (viewModel != null)
+                {
                     this.BindingContext = viewModel;
+                    if (viewModel.VisualForm.IsInvasiveRepairComplete)
+                    {
+                        ConclusiveDetails.IsVisible = true;
+                    }
+                }
             }
 
             recordDesInv.Clicked += recordDesInv_Clicked;
@@ -123,12 +142,15 @@ namespace Mobile.Code.Views
             if (Device.RuntimePlatform == Device.iOS)
             {
 
-
                 recordDesInv.IsEnabled = false;
             }
 
         }
 
-
+        private void repairCOmplete_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            var selected = sender as RadioButton;
+            ConclusiveDetails.IsVisible = selected.Content.ToString()=="Yes";
+        }
     }
 }

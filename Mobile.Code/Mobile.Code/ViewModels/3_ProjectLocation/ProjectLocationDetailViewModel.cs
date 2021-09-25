@@ -488,7 +488,7 @@ namespace Mobile.Code.ViewModels
             var file = await CrossMedia.Current.PickPhotoAsync
                 (new PickMediaOptions()
                 {
-                    SaveMetaData = true,
+                    SaveMetaData = false,
                     PhotoSize = PhotoSize.MaxWidthHeight,
                     CompressionQuality = App.CompressionQuality
                 });

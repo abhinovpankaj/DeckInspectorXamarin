@@ -21,6 +21,7 @@ namespace Mobile.Code.Droid
                 imageIntent.SetType("image/*");
                 imageIntent.PutExtra(Intent.ExtraAllowMultiple, true);
                 imageIntent.SetAction(Intent.ActionGetContent);
+                
                 ((Activity)Forms.Context).StartActivityForResult(Intent.CreateChooser(imageIntent, "Select photo"), OPENGALLERYCODE);
                 Toast.MakeText(Xamarin.Forms.Forms.Context, "Tap and hold to select multiple photos.", ToastLength.Short).Show();
             }

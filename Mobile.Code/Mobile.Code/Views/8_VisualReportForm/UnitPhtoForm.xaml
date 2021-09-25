@@ -104,7 +104,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <ffimageloading:CachedImage
+                                    <Image
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -115,7 +115,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                    </Image>
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -182,7 +182,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <ffimageloading:CachedImage
+                                    <Image
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -193,7 +193,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                    </Image>
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -261,7 +261,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <yummy:PancakeView CornerRadius="5">
-                                    <ffimageloading:CachedImage
+                                    <Image
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
                                         HeightRequest="140"
@@ -272,7 +272,7 @@
                                                         CachingEnabled="true"
                                                         Uri="{Binding ProjectLocation.LocationImage}" />
                                         </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                    </Image>
 
                                 </yummy:PancakeView>
                                 <ImageButton
