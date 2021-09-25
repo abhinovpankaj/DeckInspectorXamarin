@@ -74,7 +74,7 @@
                     FontSize="15"
                     HorizontalOptions="StartAndExpand"
                     Style="{StaticResource LabelStyle}"
-                    Text="Visual Deck/Waterproofing"
+                    Text="{Binding VisualForm.Name}"
                     TextColor="Black"
                     VerticalOptions="StartAndExpand" />
 

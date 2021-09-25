@@ -26,7 +26,6 @@ namespace Mobile.Code.Droid
             Bitmap newresizedImage = Bitmap.CreateScaledBitmap(resizedImage, 2000, newHeight, false);
 
 
-
             using (MemoryStream ms = new MemoryStream())
             {
                 newresizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
