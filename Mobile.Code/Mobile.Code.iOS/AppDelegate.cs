@@ -23,10 +23,10 @@ namespace Mobile.Code.iOS
             global::Xamarin.Forms.Forms.SetFlags(new string[] { "CollectionView_Experimental", "Expander_Experimental", "RadioButton_Experimental" });
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
-            CarouselViewRenderer.Init();
+            
             // global::Xamarin.Forms.Forms.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
-
+            
             Syncfusion.SfImageEditor.XForms.iOS.SfImageEditorRenderer.Init();
             LoadApplication(new App());
 

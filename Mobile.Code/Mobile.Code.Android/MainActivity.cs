@@ -12,8 +12,7 @@ using Android.Runtime;
 using Android.Speech;
 using Android.Views;
 using Android.Widget;
-using CarouselView.FormsPlugin.Android;
-using Mobile.Code.Media;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -101,10 +100,12 @@ namespace Mobile.Code.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             DependencyService.Register<IResizeImageCommand, AndroidResizeImageCommand>();
             Xamarin.Forms.Forms.SetFlags(new string[] { "CollectionView_Experimental", "Expander_Experimental", "RadioButton_Experimental" });
-            CarouselViewRenderer.Init();
+            
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            
+           
             LoadApplication(new App());
         }
         //public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)

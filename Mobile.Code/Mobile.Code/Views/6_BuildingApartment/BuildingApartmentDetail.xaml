@@ -39,12 +39,7 @@
                         Aspect="AspectFill"
                         HeightRequest="260"
                         Source="{Binding BuildingApartment.ImageUrl}">
-                        <!--<Image.Source>
-                        <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectImage}" />
-                    </Image.Source>-->
+                       
                     </ffimageloading:CachedImage>
                     <!--<ImageButton  Command="{Binding ProjectEditCommand}" Margin="10" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30"  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PencilCircle},Color=White,Size=24}" ></ImageButton>-->
                     <Label

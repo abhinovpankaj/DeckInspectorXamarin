@@ -2,6 +2,7 @@
 using Mobile.Code.Media;
 using Mobile.Code.Models;
 using Mobile.Code.Views;
+using Mobile.Code.Views._8_VisualReportForm;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -638,14 +639,29 @@ namespace Mobile.Code.ViewModels
             {
                 if (UnitPhotoCount != "0")
                 {
-                    if (string.IsNullOrEmpty(visualForm.Id))
+                    if (App.IsInvasive)
                     {
-                        await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = true } });
+                        if (string.IsNullOrEmpty(visualForm.Id))
+                        {
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                        }
+                        else
+                        {
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                        }
                     }
                     else
                     {
-                        await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = true } });
+                        if (string.IsNullOrEmpty(visualForm.Id))
+                        {
+                            await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = true } });
+                        }
+                        else
+                        {
+                            await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = true } });
+                        }
                     }
+                    
                 }
             }
         }

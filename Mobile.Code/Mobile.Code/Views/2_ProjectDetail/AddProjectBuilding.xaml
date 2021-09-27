@@ -212,17 +212,6 @@
                             Style="{StaticResource BoxViewStyle}"
                             VerticalOptions="FillAndExpand"
                             Color="#2e479b" />
-
-
-
-
-
-
-
-
-
-
-
                     </Grid>
 
                 </Frame>

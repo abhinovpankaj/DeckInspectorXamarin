@@ -2,6 +2,7 @@
 using Mobile.Code.Media;
 using Mobile.Code.Models;
 using Mobile.Code.Views;
+using Mobile.Code.Views._8_VisualReportForm;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -652,8 +653,21 @@ namespace Mobile.Code.ViewModels
             {
                 if (UnitPhotoCount != "0")
                 {
-                    //Later
-                    await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
+
+
+                    if (App.IsInvasive)
+                    {
+                        if (string.IsNullOrEmpty(visualForm.Id))
+                        {
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { Apartment_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                        }
+                        else
+                        {
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { Apartment_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                        }
+                    }
+                    else                  
+                        await Shell.Current.Navigation.PushAsync(new UnitPhtoForm() { BindingContext = new UnitPhotoViewModel() { Apartment_Visual = VisualForm, IsVisualApartment = true } });
                 }
             }
         }
