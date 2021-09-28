@@ -100,9 +100,7 @@ namespace Mobile.Code.ViewModels
             if (string.IsNullOrEmpty(Project.Id))
             {
 
-                // Project.Id = Guid.NewGuid().ToString();
-
-                //Project.
+                
                 Project.ProjectType = ProjectType;
 
                 Project.Category = ProjectCategory;

@@ -232,7 +232,7 @@
                                             Grid.RowSpan="2"
                                             Grid.Column="1"
                                             Margin="5"
-                                            Command="{Binding BindingContext.DeleteVisualFormCommand, Source={x:Reference FlexTypes}}"
+                                            Command="{Binding BindingContext.DeleteVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}"
                                             CommandParameter="{Binding}"
                                             IsVisible="{Binding Id, Converter={StaticResource ImageButtonInvasive}}"
                                             Opacity="1"
@@ -267,8 +267,7 @@
 
                                     </Grid>
                                     <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}"
-                                                              CommandParameter="{Binding}" />
+                                        <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}" CommandParameter="{Binding}" />
 
 
                                     </Frame.GestureRecognizers>

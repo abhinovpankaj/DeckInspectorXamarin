@@ -98,7 +98,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Edit()
         {
-            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType } });
+            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType,ProjectCategory=Project.Category } });
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
         public Command NewProjectCommonLocationCommand { get; set; }

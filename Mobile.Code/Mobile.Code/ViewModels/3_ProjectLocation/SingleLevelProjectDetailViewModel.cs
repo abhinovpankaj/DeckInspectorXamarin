@@ -232,10 +232,9 @@ namespace Mobile.Code.ViewModels
         private async Task NewViusalReportCommandExecue()
         {
             ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
-            visualForm = new ProjectLocation_Visual();
-            //visualForm.Id = Guid.NewGuid().ToString();
+            
             visualForm.ProjectLocationId = Project.Id;
-            // vm.VisualProjectLocationPhotoItems.Clear();
+            
 
             VisualProjectLocationPhotoDataStore.Clear();
 
@@ -249,7 +248,8 @@ namespace Mobile.Code.ViewModels
             {
                 App.FormString = JsonConvert.SerializeObject(visualForm);
                 App.IsNewForm = true;
-                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() 
+                { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
 
             }
             else
@@ -431,7 +431,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Edit()
         {
-            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType } });
+            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType, ProjectCategory=Project.Category } });
         }
         public string SelectedImage { get; set; }
        
@@ -505,26 +505,12 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
 
-            if (App.LogUser.RoleName == "Admin")
-            {
-                IsEditDeleteAccess = true;
-            }
-            else if (Project.UserId == App.LogUser.Id.ToString())
-            {
-                IsEditDeleteAccess = true;
-            }
-            if (App.IsInvasive)
-            {
-                IsInvasiveControlDisable = true;
-                IsEditDeleteAccess = false;
-            }
-
             if (App.IsInvasive)
             {
                 IsInvasiveControlDisable = true;
             }
             Project = await ProjectDataStore.GetItemAsync(Project.Id);
-            
+
             if (App.LogUser.RoleName == "Admin")
             {
                 if (Project.ProjectType != "Invasive")
