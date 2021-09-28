@@ -634,7 +634,7 @@ namespace Mobile.Code.ViewModels
                         }
                         else
                         {
-                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { ProjectLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
                         }
                     }
                     else

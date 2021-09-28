@@ -14,7 +14,7 @@
     <AssemblyName>Mobile.Code.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
     <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -30,8 +30,8 @@
     <MtouchDebug>true</MtouchDebug>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignKey>iPhone Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
-    <CodesignProvision>wiceappstore</CodesignProvision>
+    <CodesignKey>Apple Development: Abhinov Pankaj (9FA75ZC35U)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -42,7 +42,7 @@
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
-    <CodesignProvision>KD711</CodesignProvision>
+    <CodesignProvision>DeckInspectors</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
