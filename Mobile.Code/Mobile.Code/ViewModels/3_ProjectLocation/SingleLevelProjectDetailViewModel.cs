@@ -1,5 +1,5 @@
 ﻿using Mobile.Code.Models;
-using Mobile.Code.Utils;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
-using Mobile.Code.Data;
+
 using System.Windows.Input;
 using ImageEditor.ViewModels;
 using Plugin.Media.Abstractions;
@@ -234,7 +234,7 @@ namespace Mobile.Code.ViewModels
             ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
             visualForm = new ProjectLocation_Visual();
             //visualForm.Id = Guid.NewGuid().ToString();
-            visualForm.ProjectLocationId = ProjectLocation.Id;
+            visualForm.ProjectLocationId = Project.Id;
             // vm.VisualProjectLocationPhotoItems.Clear();
 
             VisualProjectLocationPhotoDataStore.Clear();
@@ -450,7 +450,7 @@ namespace Mobile.Code.ViewModels
             var file = await CrossMedia.Current.PickPhotoAsync
                 (new PickMediaOptions()
                 {
-                    SaveMetaData = true,
+                    SaveMetaData = false,
                     PhotoSize = PhotoSize.MaxWidthHeight,
                     CompressionQuality = App.CompressionQuality
                 });

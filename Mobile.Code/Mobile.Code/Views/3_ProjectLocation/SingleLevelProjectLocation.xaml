@@ -265,8 +265,6 @@
                                             Text="{Binding CreatedOn}"
                                             TextColor="DarkGray" />
 
-
-
                                     </Grid>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}"

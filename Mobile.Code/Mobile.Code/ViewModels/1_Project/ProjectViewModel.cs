@@ -55,7 +55,7 @@ namespace Mobile.Code.ViewModels
 
             }
 
-            if (project.Category=="MultiLevel" || project.Category=="")
+            if (project.Category=="MultiLevel" || string.IsNullOrEmpty( project.Category))
             {
                 await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
             }

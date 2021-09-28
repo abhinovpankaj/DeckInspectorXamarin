@@ -206,7 +206,7 @@ namespace Mobile.Code.ViewModels
                 (new StoreCameraMediaOptions()
                 {
                     //  SaveToAlbum = true,
-                    SaveMetaData = false,
+                    SaveMetaData = true,
                     DefaultCamera = CameraDevice.Rear,
                     CompressionQuality = App.CompressionQuality
                 });

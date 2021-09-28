@@ -49,6 +49,7 @@ namespace Mobile.Code.Services
             parameters.Add("ImageUrl", item.ImageUrl);
             parameters.Add("ImageDescription", item.ImageDescription);
 
+            parameters.Add("Category", item.Category);
             //Regex UrlMatch = new Regex(@"^(http|https)://", RegexOptions.Singleline);
             //string ImageUrl = HttpUtil.GetImageUrl(item.ImageUrl).Result;
 
@@ -74,6 +75,9 @@ namespace Mobile.Code.Services
                 parameters.Add("ImageName", item.ImageName);
                 parameters.Add("ImageDescription", item.ImageDescription);
                 parameters.Add("ImageUrl", item.ImageUrl);
+
+                parameters.Add("Category", item.Category);
+
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 HttpContent content = new StringContent("fileToUpload");
                 HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);

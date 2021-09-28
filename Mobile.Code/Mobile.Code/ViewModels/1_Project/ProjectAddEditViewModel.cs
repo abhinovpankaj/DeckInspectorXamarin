@@ -1,6 +1,7 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
 using Mobile.Code.Views;
+using Mobile.Code.Views._3_ProjectLocation;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -83,9 +84,13 @@ namespace Mobile.Code.ViewModels
             if (complete == true)
             {
                 IsBusyProgress = false;
-
-                // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-                await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                if (Project.Category== "SingleLevel")
+                {
+                    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                    { BindingContext = new SingleLevelProjectDetailViewModel() { Project = Project } }).ConfigureAwait(false);
+                }
+                else
+                    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
             }
 
         }
@@ -99,7 +104,8 @@ namespace Mobile.Code.ViewModels
 
                 //Project.
                 Project.ProjectType = ProjectType;
-                // Project.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
+
+                Project.Category = ProjectCategory;
                 Response result = await ProjectDataStore.AddItemAsync(Project);
 
 
@@ -109,7 +115,9 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
+                Project.ProjectType = ProjectType;
 
+                Project.Category = ProjectCategory;
                 await ProjectDataStore.AddItemAsync(project);
                 return await Task.FromResult(true);
             }
@@ -138,6 +146,7 @@ namespace Mobile.Code.ViewModels
 
             Project = new Project();
             project.ProjectType = ProjectType;
+            project.Category = ProjectCategory;
             Project.ImageUrl = "blank.png";
             Title = "New Project";
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
@@ -282,7 +291,7 @@ namespace Mobile.Code.ViewModels
                 (new StoreCameraMediaOptions()
                 {
                     //  SaveToAlbum = true,
-                    SaveMetaData = false,
+                    SaveMetaData = true,
                     DefaultCamera = CameraDevice.Rear,
                     CompressionQuality = App.CompressionQuality
                 });

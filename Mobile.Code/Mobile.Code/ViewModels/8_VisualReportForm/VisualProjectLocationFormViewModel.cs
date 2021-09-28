@@ -871,14 +871,8 @@ namespace Mobile.Code.ViewModels
                 ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
 
-                //InvasiveVisualProjectLocationPhotoItems.Remove(obj); // = new ObservableCollection<VisualProjectLocationPhoto>(await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
-
-                //ConclusiveVisualProjectLocationPhotoItems.Remove(obj);
-                //InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
-                //ConclusiveUnitPhotoCount = ConclusiveVisualProjectLocationPhotoItems.Count.ToString();
+                
             }
-
-
         }
 
         public ICommand ImageDetailCommand => new Command<VisualProjectLocationPhoto>(async (VisualProjectLocationPhoto parm) => await ImageDetailCommandCommandExecute(parm));
