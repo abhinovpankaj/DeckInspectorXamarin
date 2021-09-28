@@ -1,30 +1,58 @@
-﻿using ImageEditor.ViewModels;
-using Mobile.Code.Media;
-using Mobile.Code.Models;
-using Mobile.Code.Services;
-using Mobile.Code.Views;
-using Newtonsoft.Json;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
+﻿using Mobile.Code.Models;
+using Mobile.Code.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Xamarin.Forms;
+using Mobile.Code.Data;
+using System.Windows.Input;
+using ImageEditor.ViewModels;
+using Plugin.Media.Abstractions;
+using Plugin.Media;
+using Mobile.Code.Views;
+using System.Linq;
+using Mobile.Code.Services;
+using Mobile.Code.Media;
+using Newtonsoft.Json;
+using Mobile.Code.Views._3_ProjectLocation;
 
 namespace Mobile.Code.ViewModels
 {
-    [QueryProperty("projectLocationID", "projectLocationID")]
+    [QueryProperty("Id", "Id")]
     //[QueryProperty("Title", "Id")]
-    public class ProjectLocationDetailViewModel : BaseViewModel
+    public class SingleLevelProjectDetailViewModel : BaseViewModel
     {
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
             await Shell.Current.Navigation.PopAsync();
 
+        }
+
+        private bool _canInvasiveCreate;
+
+        public bool CanInvasiveCreate
+        {
+            get { return _canInvasiveCreate; }
+            set { _canInvasiveCreate = value; OnPropertyChanged("CanInvasiveCreate"); }
+        }
+        private bool _isCreateOrRefreshInvasive;
+
+        public bool IsCreateOrRefreshInvasive
+        {
+            get { return _isCreateOrRefreshInvasive; }
+            set { _isCreateOrRefreshInvasive = value; OnPropertyChanged("IsCreateOrRefreshInvasive"); }
+        }
+        private string _btnInvasiveText;
+
+        public string BtnInvasiveText
+        {
+            get { return _btnInvasiveText; }
+            set { _btnInvasiveText = value; OnPropertyChanged("BtnInvasiveText"); }
         }
 
         private Project project;
@@ -34,6 +62,16 @@ namespace Mobile.Code.ViewModels
             get { return project; }
             set { project = value; OnPropertyChanged("Project"); }
         }
+        
+
+        private string _projectID;
+
+        public string ProjectID
+        {
+            get { return _projectID; }
+            set { _projectID = value; OnPropertyChanged("ProjectID"); }
+        }
+
         private ProjectLocation _projectLocation;
 
         public ProjectLocation ProjectLocation
@@ -44,10 +82,10 @@ namespace Mobile.Code.ViewModels
 
         private string _projectLocationID;
 
-        public string projectLocationID
+        public string ProjectLocationID
         {
             get { return _projectLocationID; }
-            set { _projectLocationID = value; OnPropertyChanged("projectLocationID"); }
+            set { _projectLocationID = value; OnPropertyChanged("ProjectLocationID"); }
         }
 
         public ICommand ChoosePhotoCommand { get; set; }
@@ -55,6 +93,7 @@ namespace Mobile.Code.ViewModels
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
         public Command EditCommand { get; set; }
+        public Command DeleteCommand { get; set; }
 
         private bool _isVisualReport = false;
 
@@ -78,7 +117,8 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Save()
         {
-            await App.Current.MainPage.Navigation.PushAsync(new ProjectLocationDetail());
+            //await App.Current.MainPage.Navigation.PushAsync(new SingleLevelProjectLocation());
+            await Task.FromResult(true);
 
         }
         public ObservableCollection<ProjectCommonLocationImages> _projectCommonLocationImagesItems { get; set; }
@@ -98,22 +138,21 @@ namespace Mobile.Code.ViewModels
             get { return _projectCommonLocationImages; }
             set { _projectCommonLocationImages = value; OnPropertyChanged("ProjectCommonLocationImages"); }
         }
-
-        async Task ExecuteImageDetailCommand(ProjectCommonLocationImages parm)
+       
+        private string _id;
+        public string Id
         {
-            ProjectCommonLocationImages = parm;
-            ImgData.Path = parm.ImageUrl;
-            ImgData.ProjectCommonLocationImages = parm;
-            ImgData.FormType = "P";
-            await CurrentWithoutDetail.EditImage(ImgData, GetImageProjectCommonLocationImages);
-
+            get { return _id; }
+            set { _id = value; OnPropertyChanged("Id"); }
         }
-        private async void GetImageProjectCommonLocationImages(ImageData ImgData)
+        async Task ExecuteProjectEditCommand()
         {
-            ProjectCommonLocationImages.ImageUrl = ImgData.Path;
-            await ProjectCommonLocationImagesDataStore.UpdateItemAsync(ProjectCommonLocationImages);
+            await Shell.Current.GoToAsync($"newProject?Id={Id}");
         }
-        public ProjectLocationDetailViewModel()
+
+       
+
+        public SingleLevelProjectDetailViewModel()
         {
             if (App.ReportType == ReportType.Visual)
             {
@@ -125,15 +164,60 @@ namespace Mobile.Code.ViewModels
                 IsViusalReport = false;
                 IsFinelOrInvasiveReport = true;
             }
+            CreateInvasiveCommand = new Command(async () => await CreateInvasive());
             GoBackCommand = new Command(async () => await GoBack());
-            SaveCommand = new Command(async () => await Save());
+            
             EditCommand = new Command(async () => await Edit());
-            ImageDetailCommand = new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
-            ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
-            ImgData = new ImageData();
+            SaveCommand = new Command(async () => await Save());
+            DeleteCommand = new Command(async () => await Delete());
 
+
+    }
+        public Command CreateInvasiveCommand { get; set; }
+        async Task CreateInvasive()
+        {
+
+            IsBusyProgress = true;
+
+            if (App.IsInvasive == true)
+            {
+                Project.IsInvasive = true;
+                Project.Id = Project.InvasiveProjectID;
+                var response = await Task.Run(() =>
+                  ProjectDataStore.CreateInvasiveReport(Project)
+                );
+                if (response.Status == ApiResult.Success)
+                {
+                    App.IsInvasive = true;
+
+                    Project.Id = response.ID.ToString();
+
+                    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation() { BindingContext = new SingleLevelProjectDetailViewModel()
+                    { Project = Project } });
+                    
+                    IsBusyProgress = false;
+                    
+                }
+            }
+            else
+            {
+                Project.IsInvasive = false;
+                // Project.Id = Project.InvasiveProjectID;
+                var response = await Task.Run(() =>
+                  ProjectDataStore.CreateInvasiveReport(Project)
+                );
+                if (response.Status == ApiResult.Success)
+                {
+                    App.IsInvasive = true;
+                    Project.Id = response.ID.ToString();
+                    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation() { BindingContext = new SingleLevelProjectDetailViewModel()
+                    { Project = Project } });
+
+                    IsBusyProgress = false;
+                   
+                }
+            }
         }
-
 
         public ICommand NewViusalReportCommand => new Command(async () => await NewViusalReportCommandExecue());
         private ObservableCollection<ProjectLocation_Visual> _visualFormProjectLocationItems;
@@ -172,80 +256,16 @@ namespace Mobile.Code.ViewModels
 
             {
                 App.IsNewForm = false;
-               
+
+                //await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                     await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
-                
+                //await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
             }
 
             //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
         }
 
-        public ICommand NewImagCommand => new Command(async () => await NewImage());
-        private async Task NewImage()
-        {
-            string selectedOption = await App.Current.MainPage.DisplayActionSheet("Select Option", "Cancel", null,
-                 new string[] { "Take New Photo", "From Gallery" });
-
-            switch (selectedOption)
-            {
-                case "Take New Photo":
-                    await Shell.Current.Navigation.PushModalAsync(new Camera2Forms.CameraPage() { BindingContext = new CameraViewModel() { ProjectLocation = ProjectLocation, IsProjectLocation = true } });
-                    break;
-                case "From Gallery":
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        //If the image is modified (drawings, etc) by the users, you will need to change the delivery mode to HighQualityFormat.
-                        bool imageModifiedWithDrawings = false;
-                        if (imageModifiedWithDrawings)
-                        {
-                            await GMMultiImagePicker.Current.PickMultiImage(true);
-                        }
-                        else
-                        {
-                            await GMMultiImagePicker.Current.PickMultiImage();
-                        }
-
-                        //  MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS");
-                        MessagingCenter.Subscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS", (s, images) =>
-                        {
-                            //If we have selected images, put them into the carousel view.
-                            if (images.Count > 0)
-                            {
-                                IsBusyProgress = true;
-                                // var listOfImages = images as List<string>;
-                                Task.Run(() => UploadGallary(images));
-
-                            }
-                        });
-                    }
-                    if (Device.RuntimePlatform == Device.Android)
-                    {
-                        // List<MultiImage> imageList = new List<MultiImage>();
-                        DependencyService.Get<IMediaService>().OpenGallery();
-                        MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectedAndroid");
-                        MessagingCenter.Subscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectedAndroid", (s, images) =>
-                        {
-                            if (images.Count > 0)
-                            {
-                                IsBusyProgress = true;
-                                // var listOfImages = images as List<string>;
-                                Task.Run(() => UploadGallary(images));
-
-                            }
-
-                        });
-
-
-                    }
-                    break;
-                default:
-                    break;
-            }
-            IsBusyProgress = false;
-            //await Shell.Current.Navigation.PushAsync(new EditProjectLocationImage() 
-            //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl="blank.png"} , ProjectLocation = ProjectLocation } });
-        }
         public async Task<bool> UploadGallary(List<string> images)
         {
 
@@ -386,90 +406,35 @@ namespace Mobile.Code.ViewModels
 
             }
         }
-        public ICommand DeleteImagCommand => new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages obj) => await DeleteImagCommandExecute(obj));
-        private async Task DeleteImagCommandExecute(ProjectCommonLocationImages obj)
-        {
-            var result = await Shell.Current.DisplayAlert(
-                  "Alert",
-                  "Are you sure you want to remove?",
-                  "Yes", "No");
 
-            if (result)
-            {
-                IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                    ProjectCommonLocationImagesDataStore.DeleteItemAsync(obj)
-                );
-                if (response.Status == ApiResult.Success)
-                {
-                    IsBusyProgress = false;
-                    await LoadData();
-                    // await Shell.Current.Navigation.PopAsync();
-                }
-                //  await ProjectCommonLocationImagesDataStore.DeleteItemAsync(obj);
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-                await LoadData();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
-            }
-        }
-
-        public ICommand DeleteCommand => new Command(async () => await Delete());
-
-
+        
         private async Task Delete()
         {
             var result = await Shell.Current.DisplayAlert(
                 "Alert",
-                "Are you sure you want to remove?",
+                "Project will be deleted completely. Are you sure?",
                 "Yes", "No");
 
             if (result)
             {
                 IsBusyProgress = true;
                 var response = await Task.Run(() =>
-                     ProjectLocationDataStore.DeleteItemAsync(ProjectLocation)
+                    ProjectDataStore.DeleteItemAsync(Project)
                 );
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
                 }
-
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-                // await Shell.Current.Navigation.PopAsync();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+              
             }
         }
         private async Task Edit()
         {
-            await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } });
-            // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
+            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType } });
         }
         public string SelectedImage { get; set; }
-        private async Task ChoosePhotoCommandExecute()
-        {
-            string selectedOption = await App.Current.MainPage.DisplayActionSheet("Select Option", "Cancel", null,
-                new string[] { "Take New Photo", "From Gallery" });
-
-            switch (selectedOption)
-            {
-                case "Take New Photo":
-                    SelectedImage = await TakePictureFromCamera();
-                    break;
-                case "From Gallery":
-                    SelectedImage = await TakePictureFromLibrary();
-                    break;
-                default:
-                    break;
-            }
-            if (!string.IsNullOrEmpty(SelectedImage))
-            {
-                ImgData.Path = SelectedImage;
-                await Current.EditImage(ImgData, GetImageDetail);
-            }
-        }
+       
 
         private ImageData _imgData;
 
@@ -485,7 +450,7 @@ namespace Mobile.Code.ViewModels
             var file = await CrossMedia.Current.PickPhotoAsync
                 (new PickMediaOptions()
                 {
-                    SaveMetaData = false,
+                    SaveMetaData = true,
                     PhotoSize = PhotoSize.MaxWidthHeight,
                     CompressionQuality = App.CompressionQuality
                 });
@@ -522,20 +487,7 @@ namespace Mobile.Code.ViewModels
             set { _imgPath = value; OnPropertyChanged(); }
         }
 
-        private void GetImageDetail(ImageData ImgData)
-        {
-            ImageData data = ImgData;
-            ProjectCommonLocationImages _locImage = new ProjectCommonLocationImages();
-            _locImage.Id = Guid.NewGuid().ToString();
-            _locImage.ImageUrl = data.Path;
-            _locImage.ImageName = data.Name;
-            _locImage.ImageDescription = data.Description;
-            _locImage.ProjectLocationId = ProjectLocation.Id;
-
-            ProjectCommonLocationImagesDataStore.AddItemAsync(_locImage);
-            Task.Run(() => this.LoadData()).Wait();
-            //LoadData();
-        }
+       
         private bool _isEditDeleteAccess;
 
         public bool IsEditDeleteAccess
@@ -553,13 +505,11 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
 
-               
-                
             if (App.LogUser.RoleName == "Admin")
             {
                 IsEditDeleteAccess = true;
             }
-            else if (ProjectLocation.UserId == App.LogUser.Id.ToString())
+            else if (Project.UserId == App.LogUser.Id.ToString())
             {
                 IsEditDeleteAccess = true;
             }
@@ -568,12 +518,82 @@ namespace Mobile.Code.ViewModels
                 IsInvasiveControlDisable = true;
                 IsEditDeleteAccess = false;
             }
-            if (ProjectLocation!=null)
+
+            if (App.IsInvasive)
             {
-                ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
-                VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                IsInvasiveControlDisable = true;
+            }
+            Project = await ProjectDataStore.GetItemAsync(Project.Id);
+            
+            if (App.LogUser.RoleName == "Admin")
+            {
+                if (Project.ProjectType != "Invasive")
+                {
+                    if (Project.IsInvaisveExist == true)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Invasive";
+                    }
+                }
+                else
+                {
+                    if (Project.IsAccess == true)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Refresh";
+                    }
+                    else
+                    {
+                        CanInvasiveCreate = false;
+                    }
+                }
+
+                IsEditDeleteAccess = true;
+            }
+            else if (Project.UserId == App.LogUser.Id.ToString())
+            {
+                if (Project.ProjectType != "Invasive")
+                {
+                    if (Project.IsInvaisveExist == true)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Invasive";
+                    }
+                }
+                else
+                {
+                    if (Project.IsAccess == true)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Refresh";
+                    }
+                    else
+                    {
+                        CanInvasiveCreate = false;
+                    }
+                }
+
+                IsEditDeleteAccess = true;
+            }
+            else
+            {
+                if (Project.ProjectType != "Invasive" && Project.IsAccess)
+                {
+                    if (Project.IsInvaisveExist == true)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Invasive";
+                    }
+
+                }
+                if (Project.ProjectType == "Invasive" && Project.IsAccess)
+                {
+                    CanInvasiveCreate = true;
+                    BtnInvasiveText = "Refresh";
+                }
 
             }
+            VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
 
             return await Task.FromResult(true);
 
@@ -587,7 +607,7 @@ namespace Mobile.Code.ViewModels
                 IsBusyProgress = false;
             }
             return await Task.FromResult(true);
-            // ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
+           
 
         }
 

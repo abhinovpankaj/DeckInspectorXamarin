@@ -1,5 +1,8 @@
 ﻿using Mobile.Code.Models;
 using Mobile.Code.Views;
+using Mobile.Code.Views._3_ProjectLocation;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -52,8 +55,18 @@ namespace Mobile.Code.ViewModels
 
             }
 
-            await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+            if (project.Category=="MultiLevel" || project.Category=="")
+            {
+                await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+            }
+            else
+            {
+                
+                await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                { BindingContext = new SingleLevelProjectDetailViewModel() { Project=project } }).ConfigureAwait(false);
+            }
+                
+           
         }
 
         async Task ExecuteInvasiveDetailCommand(Project project)
@@ -85,15 +98,30 @@ namespace Mobile.Code.ViewModels
             InvasiveDetailCommand = new Command<Project>(async (Project project) => await ExecuteInvasiveDetailCommand(project));
             //LoadData();
         }
+
         async Task ExecuteAddNewCommand()
         {
             string ProjectType = string.Empty;
+            string ProjectCategory = string.Empty;
+            string selectedOption = await App.Current.MainPage.DisplayActionSheet("Select Option", "Cancel", null,
+               new string[] { "Single Level", "Multi Level" });
+
+            switch (selectedOption)
+            {
+                case "Single Level":
+                    ProjectCategory = "SingleLevel";
+                    break;
+                case "Multi Level":
+                    ProjectCategory = "MultiLevel"; 
+                    break;
+                default:
+                    break;
+            }
 
             App.IsInvasive = false;
 
             ProjectType = "Visual Report";
-            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType } });
-
+            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType, ProjectCategory= ProjectCategory } });
 
         }
         private async Task<bool> Running()
@@ -110,6 +138,7 @@ namespace Mobile.Code.ViewModels
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
+
                 IsBusyProgress = false;
 
             }

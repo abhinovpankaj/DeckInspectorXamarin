@@ -66,10 +66,11 @@
             set { _IsAccess = value; OnPropertyChanged("IsAccess"); }
         }
 
+        public string Category { get; set; }
 
     }
 
-    public enum ProjectType
+    public enum ProjectCategory
     {
         MultiLevel,
         SingleLevel

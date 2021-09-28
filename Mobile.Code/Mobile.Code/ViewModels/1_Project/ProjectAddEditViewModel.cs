@@ -126,6 +126,13 @@ namespace Mobile.Code.ViewModels
             set { projectType = value; OnPropertyChanged("ProjectType"); }
         }
 
+        private string projectCat;
+        public string ProjectCategory
+        {
+            get { return projectCat; }
+            set { projectCat = value; OnPropertyChanged("ProjectCategory"); }
+        }
+
         public ProjectAddEditViewModel()
         {
 

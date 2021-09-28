@@ -135,9 +135,6 @@
                     Margin="0"
                     VerticalOptions="FillAndExpand">
 
-
-
-
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -166,8 +163,6 @@
                                 LineHeight="1.5"
                                 Text="{Binding Project.Description}"
                                 TextColor="{DynamicResource Gray-900}" />
-
-
 
                         </StackLayout>
 
