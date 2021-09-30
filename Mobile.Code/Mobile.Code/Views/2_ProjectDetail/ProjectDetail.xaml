@@ -230,7 +230,10 @@
                                                     <ffimageloading:CachedImage
                                                         Aspect="AspectFill"
                                                         BackgroundColor="{DynamicResource Gray-200}"
+                                                        DownsampleToViewSize="True"
+                                                        ErrorPlaceholder="blank.png"
                                                         HeightRequest="120"
+                                                        LoadingPlaceholder="loading.png"
                                                         Source="{Binding ImageUrl}"
                                                         WidthRequest="200">
                                                         <!--<Image.Source>
@@ -332,7 +335,10 @@
                                                     <ffimageloading:CachedImage
                                                         Aspect="AspectFill"
                                                         BackgroundColor="{DynamicResource Gray-200}"
+                                                        DownsampleToViewSize="True"
+                                                        ErrorPlaceholder="blank.png"
                                                         HeightRequest="120"
+                                                        LoadingPlaceholder="loading.png"
                                                         Source="{Binding ImageUrl}"
                                                         WidthRequest="200" />
                                                 </yummy:PancakeView>

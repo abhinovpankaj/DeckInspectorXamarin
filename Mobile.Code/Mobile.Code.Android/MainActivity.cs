@@ -267,10 +267,10 @@ namespace Mobile.Code.Droid
 
                             if (path != null)
                             {
-                                exif = new ExifInterface(path);
-                                string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
-                                exif.SetAttribute(ExifInterface.TagOrientation,"0");
-                                exif.SaveAttributes();
+                                //exif = new ExifInterface(path);
+                                //string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
+                                //exif.SetAttribute(ExifInterface.TagOrientation,"0");
+                                //exif.SaveAttributes();
                                 
                                 images.Add(path);
                             }
@@ -283,10 +283,10 @@ namespace Mobile.Code.Droid
 
                         if (path != null)
                         {
-                            exif = new ExifInterface(path);
-                            string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
-                            exif.SetAttribute(ExifInterface.TagOrientation, "0");
-                            exif.SaveAttributes();
+                            //exif = new ExifInterface(path);
+                            //string orientation = exif.GetAttribute(ExifInterface.TagOrientation);
+                            //exif.SetAttribute(ExifInterface.TagOrientation, "0");
+                            //exif.SaveAttributes();
                             images.Add(path);
                         }
                     }

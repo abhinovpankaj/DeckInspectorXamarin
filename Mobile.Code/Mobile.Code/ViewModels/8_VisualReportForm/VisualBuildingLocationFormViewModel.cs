@@ -630,11 +630,11 @@ namespace Mobile.Code.ViewModels
                     {
                         if (string.IsNullOrEmpty(visualForm.Id))
                         {
-                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true, IsEdit = false } });
                         }
                         else
                         {
-                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualProjectLocatoion = true, IsEdit = false } });
+                            await Shell.Current.Navigation.PushAsync(new InvasiveUnitPhotoForm() { BindingContext = new UnitPhotoViewModel() { BuildingLocation_Visual = VisualForm, IsVisualBuilding = true, IsEdit = false } });
                         }
                     }
                     else

@@ -246,14 +246,11 @@
                                             <ffimageloading:CachedImage
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
-                                                HeightRequest="140"
+                                                HeightRequest="140" DownsampleToViewSize="True"
+                                                    ErrorPlaceholder="blank.png"
+                                                    LoadingPlaceholder="loading.png"
                                                 Source="{Binding ImageUrl}">
-                                                <!--<Image.Source>
-                                        <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ImageUrl}" />
-                                    </Image.Source>-->
+                                               
                                             </ffimageloading:CachedImage>
                                         </yummy:PancakeView>
                                         <ImageButton

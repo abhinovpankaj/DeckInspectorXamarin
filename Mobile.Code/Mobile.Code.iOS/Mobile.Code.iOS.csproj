@@ -399,4 +399,7 @@
   <ItemGroup>
     <Folder Include="CustomRenderer\" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\loading.png" />
+  </ItemGroup>
 </Project>

@@ -42,7 +42,10 @@
             </Grid.ColumnDefinitions>-->
                 <ffimageloading:CachedImage
                     Aspect="AspectFill"
+                    DownsampleToViewSize="True"
+                    ErrorPlaceholder="blank.png"
                     HeightRequest="260"
+                    LoadingPlaceholder="loading.png"
                     Source="{Binding ProjectLocation.ImageUrl}" />
                 <!--<ImageButton  Command="{Binding ProjectEditCommand}" Margin="10" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30"  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PencilCircle},Color=White,Size=24}" ></ImageButton>-->
                 <Label
@@ -251,15 +254,11 @@
                                     <yummy:PancakeView CornerRadius="5">
                                         <ffimageloading:CachedImage
                                             Aspect="AspectFill"
+                                            DownsampleToViewSize="True"
+                                            ErrorPlaceholder="blank.png"
                                             HeightRequest="140"
-                                            Source="{Binding ImageUrl}">
-                                            <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                        </ffimageloading:CachedImage>
+                                            LoadingPlaceholder="loading.png"
+                                            Source="{Binding ImageUrl}" />
 
                                     </yummy:PancakeView>
                                     <ImageButton
