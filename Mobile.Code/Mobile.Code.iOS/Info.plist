@@ -45,7 +45,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>2</string>
 	<key>App Uses Non-Exempt Encryption	</key>
 	<false/>
 	<key>CFBundleDisplayName</key>
@@ -53,7 +53,7 @@
 	<key>CustomProperty1</key>
 	<string></string>
 	<key>CFBundleVersion</key>
-	<string>2.17</string>
+	<string>1.3</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application uses device microphone to record.</string>
 	<key>NSCameraUsageDescription</key>

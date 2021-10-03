@@ -40,7 +40,10 @@
                     BackgroundColor="White">
                     <ffimageloading:CachedImage
                         Aspect="AspectFill"
+                        DownsampleToViewSize="True"
+                        ErrorPlaceholder="blank.png"
                         HeightRequest="260"
+                        LoadingPlaceholder="loading.png"
                         Source="{Binding Project.ImageUrl}" />
                     <Button
                         x:Name="btnInvasive"
