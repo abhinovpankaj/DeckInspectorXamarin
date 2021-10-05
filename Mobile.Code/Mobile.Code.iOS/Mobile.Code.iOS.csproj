@@ -30,8 +30,12 @@
     <MtouchDebug>true</MtouchDebug>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignKey>Apple Development: Abhinov Pankaj (9FA75ZC35U)</CodesignKey>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
+    <CodesignProvision>DeckInspectors</CodesignProvision>
+    <MtouchSdkVersion>
+    </MtouchSdkVersion>
+    <MtouchFloat32>true</MtouchFloat32>
+    <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -44,6 +48,8 @@
     <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
     <CodesignProvision>DeckInspectors</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchSdkVersion>
+    </MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -398,5 +404,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomRenderer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\loading.png" />
   </ItemGroup>
 </Project>

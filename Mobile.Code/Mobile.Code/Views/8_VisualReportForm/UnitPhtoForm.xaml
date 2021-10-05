@@ -85,8 +85,6 @@
                     Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4"
-                      HasShadow="True" CornerRadius="5">-->
 
 
                             <Grid
@@ -107,15 +105,11 @@
                                     <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
+                                        DownsampleToViewSize="True"
+                                        ErrorPlaceholder="blank.png"
                                         HeightRequest="140"
-                                        Source="{Binding Path=ImageUrl}">
-                                        <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                        LoadingPlaceholder="loading.png"
+                                        Source="{Binding Path=ImageUrl}" />
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -141,12 +135,7 @@
                                 </Grid.GestureRecognizers>
 
                             </Grid>
-                            <!--<Frame.GestureRecognizers>
 
-                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
-
-                                            </Frame.GestureRecognizers>-->
-                            <!--</Frame>-->
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
@@ -164,9 +153,6 @@
                     Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4"
-                      HasShadow="True" CornerRadius="5">-->
-
 
                             <Grid
                                 Margin="4"
@@ -186,15 +172,10 @@
                                     <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
-                                        HeightRequest="140"
-                                        Source="{Binding Path=ImageUrl}">
-                                        <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                        HeightRequest="140" DownsampleToViewSize="True"
+                                                    ErrorPlaceholder="blank.png"
+                                                    LoadingPlaceholder="loading.png"
+                                        Source="{Binding Path=ImageUrl}" />
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -220,12 +201,7 @@
                                 </Grid.GestureRecognizers>
 
                             </Grid>
-                            <!--<Frame.GestureRecognizers>
 
-                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
-
-                                            </Frame.GestureRecognizers>-->
-                            <!--</Frame>-->
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
@@ -266,15 +242,10 @@
                                     <ffimageloading:CachedImage
                                         Aspect="AspectFill"
                                         BackgroundColor="{DynamicResource Gray-200}"
-                                        HeightRequest="140"
-                                        Source="{Binding Path=ImageUrl}">
-                                        <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                    </ffimageloading:CachedImage>
+                                        HeightRequest="140" DownsampleToViewSize="True"
+                                                    ErrorPlaceholder="blank.png"
+                                                    LoadingPlaceholder="loading.png"
+                                        Source="{Binding Path=ImageUrl}" />
 
                                 </yummy:PancakeView>
                                 <ImageButton
@@ -300,12 +271,7 @@
                                 </Grid.GestureRecognizers>
 
                             </Grid>
-                            <!--<Frame.GestureRecognizers>
 
-                                                <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
-
-                                            </Frame.GestureRecognizers>-->
-                            <!--</Frame>-->
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>

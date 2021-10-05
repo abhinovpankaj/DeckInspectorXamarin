@@ -28,6 +28,7 @@ namespace Mobile.Code.iOS
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             
             Syncfusion.SfImageEditor.XForms.iOS.SfImageEditorRenderer.Init();
+            CarouselViewRenderer.Init();
             LoadApplication(new App());
 
             // Xamarin.Forms.DependencyService.Register<Xamarin.Forms.ImagePicker.IImagePickerService, Xamarin.Forms.ImagePicker.iOS.ImagePickerService>();

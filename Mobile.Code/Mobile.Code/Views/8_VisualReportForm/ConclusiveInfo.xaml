@@ -393,9 +393,6 @@
                                         FlexLayout.Basis="{OnIdiom Phone='50%',
                                                                    Tablet='50%'}"
                                         RowSpacing="0">
-
-
-
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
@@ -404,7 +401,10 @@
                                             <ffimageloading:CachedImage
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
+                                                DownsampleToViewSize="True"
+                                                ErrorPlaceholder="blank.png"
                                                 HeightRequest="140"
+                                                LoadingPlaceholder="loading.png"
                                                 Source="{Binding Path=ImageUrl}" />
 
                                         </yummy:PancakeView>
@@ -462,7 +462,10 @@
                                             <ffimageloading:CachedImage
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
+                                                DownsampleToViewSize="True"
+                                                ErrorPlaceholder="blank.png"
                                                 HeightRequest="140"
+                                                LoadingPlaceholder="loading.png"
                                                 Source="{Binding Path=ImageUrl}" />
 
                                         </yummy:PancakeView>
@@ -525,7 +528,10 @@
                                                 Margin="1"
                                                 Aspect="AspectFill"
                                                 BackgroundColor="{DynamicResource Gray-200}"
+                                                DownsampleToViewSize="True"
+                                                ErrorPlaceholder="blank.png"
                                                 HeightRequest="140"
+                                                LoadingPlaceholder="loading.png"
                                                 Source="{Binding Path=ImageUrl}" />
 
                                         </yummy:PancakeView>

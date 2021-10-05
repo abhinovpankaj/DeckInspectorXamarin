@@ -39,21 +39,9 @@
                         <On Platform="Android, WinPhone, Windows" Value="5,20,5,0" />
                     </OnPlatform>
                 </Grid.Margin>
-                <!--<Image
-                    Grid.Column="0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.ArrowLeft},
-                                       Color=#2e479b,
-                                       Size=30}"
-                    VerticalOptions="Start"
-                    WidthRequest="30">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>-->
+
                 <Label
+                    Padding="0"
                     FontAttributes="None"
                     FontFamily="{StaticResource Montserrat-Regular}"
                     FontSize="18"
@@ -62,9 +50,6 @@
                     Text="Unit Photo(s)"
                     TextColor="Black"
                     VerticalOptions="CenterAndExpand" />
-
-
-
             </Grid>
             <ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
                 <FlexLayout
@@ -79,18 +64,18 @@
                       HasShadow="True" CornerRadius="5">-->
 
 
-                            <yummy:PancakeView Margin="10" CornerRadius="5">
+                            <yummy:PancakeView
+                                Margin="10"
+                                CornerRadius="5"
+                                HeightRequest="300"
+                                WidthRequest="350">
                                 <ffimageloading:CachedImage
-                                    Aspect="AspectFit"
+                                    Aspect="Fill"
                                     BackgroundColor="{DynamicResource Gray-200}"
-                                    Source="{Binding Path=ImageUrl}">
-                                    <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                </ffimageloading:CachedImage>
+                                    DownsampleToViewSize="True"
+                                    ErrorPlaceholder="blank.png"
+                                    LoadingPlaceholder="loading.png"
+                                    Source="{Binding Path=ImageUrl}" />
 
                             </yummy:PancakeView>
 
@@ -112,18 +97,19 @@
                       HasShadow="True" CornerRadius="5">-->
 
 
-                            <yummy:PancakeView Margin="10" CornerRadius="5">
+                            <yummy:PancakeView
+                                Margin="10,10,10,10"
+                                BackgroundColor="{DynamicResource Gray-200}"
+                                CornerRadius="5"
+                                HeightRequest="300"
+                                WidthRequest="350">
                                 <ffimageloading:CachedImage
-                                    Aspect="AspectFit"
+                                    Aspect="Fill"
                                     BackgroundColor="{DynamicResource Gray-200}"
-                                    Source="{Binding Path=ImageUrl}">
-                                    <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                </ffimageloading:CachedImage>
+                                    DownsampleToViewSize="True"
+                                    ErrorPlaceholder="blank.png"
+                                    LoadingPlaceholder="loading.png"
+                                    Source="{Binding Path=ImageUrl}" />
 
                             </yummy:PancakeView>
 
@@ -143,27 +129,20 @@
                     Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4"
-                      HasShadow="True" CornerRadius="5">-->
 
-
-
-                            <yummy:PancakeView Margin="10" CornerRadius="5">
+                            <yummy:PancakeView
+                                Margin="10"
+                                CornerRadius="5"
+                                HeightRequest="300"
+                                WidthRequest="350">
                                 <ffimageloading:CachedImage
-                                    Aspect="AspectFill"
+                                    Aspect="Fill"
                                     BackgroundColor="{DynamicResource Gray-200}"
-                                    Source="{Binding Path=ImageUrl}">
-                                    <!--<Image.Source>
-                                            <UriImageSource
-                                                        CacheValidity="14"
-                                                        CachingEnabled="true"
-                                                        Uri="{Binding ProjectLocation.LocationImage}" />
-                                        </Image.Source>-->
-                                </ffimageloading:CachedImage>
-
+                                    DownsampleToViewSize="True"
+                                    ErrorPlaceholder="blank.png"
+                                    LoadingPlaceholder="loading.png"
+                                    Source="{Binding Path=ImageUrl}" />
                             </yummy:PancakeView>
-
-
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>

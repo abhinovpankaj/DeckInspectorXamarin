@@ -299,15 +299,9 @@ namespace Mobile.Code.ViewModels
                 }
                 else
                 {
-                    if (Project.IsAccess == true)
-                    {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
-                    }
-                    else
-                    {
-                        CanInvasiveCreate = false;
-                    }
+                    
+                    CanInvasiveCreate = true;
+                    BtnInvasiveText = "Refresh";      
                 }
                
                 IsEditDeleteAccess = true;

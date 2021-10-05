@@ -86,8 +86,6 @@ namespace Mobile.Code.Services
                     response.EnsureSuccessStatusCode();
 
                     return await Task.FromResult(result);
-
-
                 }
             }
         }
