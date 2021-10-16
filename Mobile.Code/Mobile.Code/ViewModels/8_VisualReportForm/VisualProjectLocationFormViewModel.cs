@@ -43,6 +43,11 @@ namespace Mobile.Code.ViewModels
 
         public bool CheckAnyRadioButtonChecked { get; set; }
 
+        public void UpdateUI()
+        {
+            OnPropertyChanged("RadioList_OwnerAgreedToRepair");
+            OnPropertyChanged("IsSelected");
+        }
         private async Task GoBack()
         {
             if (App.IsInvasive == true)

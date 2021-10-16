@@ -61,17 +61,7 @@
                         <ColumnDefinition Width="Auto" />
 
                     </Grid.ColumnDefinitions>
-                    <!--<Image
-                    Grid.Column="0" Margin="10,2,0,0"
-                    HeightRequest="{x:OnPlatform Android=30, iOS=30, UWP=30}"
-                    HorizontalOptions="Start"
-                    Source="delete.png"
-                    VerticalOptions="Center"
-                    WidthRequest="{x:OnPlatform Android=30, iOS=30, UWP=30}">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
-                            </Image.GestureRecognizers>
-                        </Image>-->
+
 
                     <Image
                         Grid.Column="0"
@@ -100,6 +90,7 @@
                     Margin="0,0,0,0"
                     BackgroundColor="Transparent"
                     HorizontalOptions="CenterAndExpand"
+                    ImageLoaded="imagebackground_ImageLoaded"
                     ImageSaved="imagebackground_ImageSaved"
                     ImageSaving="imagebackground_ImageSaving"
                     Source="{Binding SelectedImage}"

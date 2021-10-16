@@ -851,42 +851,10 @@ namespace ImageEditor.ViewModels
         public async void Save(byte[] arr)
         {
             IsBusyProgress = true;
-            //  var editorPage = obj as ImageEditorPageWithoutDetail;
-
-            //var signaturepad = editorPage.Content.FindByName("signaturepad") as SignaturePadView;
-            //signaturepad.ClearLabel.IsVisible = false;
-
-            // var gritoolbar = editorPage.Content.FindByName("gridtoolbar") as Grid;
-            //  gritoolbar.IsVisible = false;
-
-            //  var savebutton = editorPage.Content.FindByName("GridOperation") as Grid;
-            // savebutton.IsVisible = false;
-            //var detailGrid = editorPage.Content.FindByName("detailGrid") as Grid;
-            //detailGrid.IsVisible = false;
-
-            // var imgcolors = editorPage.Content.FindByName("imgcolors") as Image;
-            //  imgcolors.IsVisible = false;
-
-            // var commentslider = editorPage.Content.FindByName("commentcolorslider") as Slider;
-            // commentslider.IsVisible = false;
-
-            // var txtName = editorPage.Content.FindByName("txtName") as BorderlessEntry;
-            //  commentslider.IsVisible = false;
-            //   var txtDescription = editorPage.Content.FindByName("txtDescription") as XEditor;
-            //commentslider.IsVisible = false;
-
-            //var scratchslider = editorPage.Content.FindByName("scratchcolorslider") as Slider;
-            //scratchslider.IsVisible = false;
-
-
-            //  string path = await CrossScreenshot.Current.CaptureAndSaveAsync();
-            //byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(await CrossScreenshot.Current.CaptureAsync(), 2000, 1800);
+           
             string path = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
 
-            // imageData.Path = filepath;
-            //     await App.Current.MainPage.Navigation.PopAsync();
-            //ImageData d = new ImageData();
-            // SelectedImage= imageData.Path = path;
+           
             if (imageData.FormType == "VP")
             {
                 VisualProjectLocationPhotoItems[i].ImageUrl = path;
@@ -930,22 +898,12 @@ namespace ImageEditor.ViewModels
                 await BuildingApartmentImagesDataStore.UpdateItemAsync(BuildingApartmentImagesItems[i]);
             }
 
-            // signaturepad.Clear();
-            //  gritoolbar.IsVisible = true;
-            //savebutton.IsVisible = true;
-            //commentslider.IsVisible = true;
-            //scratchslider.IsVisible = true;
+           
             IsBusyProgress = false;
-            // var labelcomment = editorPage.Content.FindByName("labelcomment") as Label;
-            //  labelcomment.IsVisible = false;
-            //  labelcomment.Text = string.Empty;
-            //  VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(imageData.VisualProjectLocationPhoto.VisualID));
+            
             await Next(null);
 
-            // imageData.Name = txtName.Text;
-            // imageData.Description = txtDescription.Text;
-            //  Callback?.Invoke(imageData);
-
+           
         }
         /// <summary>
         /// 
@@ -973,15 +931,6 @@ namespace ImageEditor.ViewModels
 
         }
 
-        /*  public event PropertyChangedEventHandler PropertyChanged;
-          protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-          {
-              PropertyChangedEventHandler handler = PropertyChanged;
-              if (handler != null)
-              {
-                  PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-              }
-          }*/
     }
 }
 

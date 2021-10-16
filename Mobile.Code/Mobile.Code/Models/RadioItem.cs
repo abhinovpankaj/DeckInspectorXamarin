@@ -16,7 +16,7 @@
                 //if (_isChk != value)
                 //{
                 _isChk = value;
-                // OnPropertyChanged("IsSelected");
+                OnPropertyChanged("IsSelected");
                 //}
 
             }

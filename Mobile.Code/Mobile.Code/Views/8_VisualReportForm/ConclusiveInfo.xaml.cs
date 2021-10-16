@@ -1,8 +1,9 @@
 ﻿using Mobile.Code.ViewModels;
 using System;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Linq;
 
 namespace Mobile.Code.Views
 {
@@ -10,10 +11,11 @@ namespace Mobile.Code.Views
     public partial class ConclusiveInfo : ContentView
     {
         private ISpeechToText _speechRecongnitionInstance;
-
+        
         public ConclusiveInfo(object vm)
         {
             InitializeComponent();
+           
             ConclusiveDetails.IsVisible = false;
             if (vm.GetType() == typeof(VisualProjectLocationFormViewModel))
             {
@@ -150,7 +152,21 @@ namespace Mobile.Code.Views
         private void repairCOmplete_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             var selected = sender as RadioButton;
+           
             ConclusiveDetails.IsVisible = selected.Content.ToString()=="Yes";
+
+            var source= BindableLayout.GetItemsSource(ownerControl);
+            if(selected.Content.ToString() == "Yes")
+            {
+                var enumerator = source.GetEnumerator();
+                enumerator.MoveNext();
+                Models.CustomRadioItem radios = enumerator.Current as Models.CustomRadioItem;
+                
+                
+                radios.IsSelected = true;
+            }
+                
+
         }
     }
 }
