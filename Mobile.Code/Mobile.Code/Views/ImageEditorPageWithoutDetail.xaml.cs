@@ -85,5 +85,10 @@ namespace ImageEditor.Pages
             vm.Save(data);
             // args.Cancel = true;
         }
+
+        private void imagebackground_ImageLoaded(object sender, Syncfusion.SfImageEditor.XForms.ImageLoadedEventArgs args)
+        {
+            
+        }
     }
 }

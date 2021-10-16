@@ -217,6 +217,7 @@ namespace Mobile.Code.ViewModels
         private async Task Delete(MultiImage parm)
         {
             ImageList.Remove(parm);
+            App.ListCamera2Api.Remove(parm);
             CountPhoto = ImageList.Count + " Photo(s)";
             await Task.FromResult(true);
             // int count=Shell.Current.Navigation.NavigationStack.Count;

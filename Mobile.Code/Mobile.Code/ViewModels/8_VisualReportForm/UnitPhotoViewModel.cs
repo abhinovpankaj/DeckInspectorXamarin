@@ -66,32 +66,7 @@ namespace Mobile.Code.ViewModels
         private async Task Save()
         {
             await Task.FromResult(true);
-            //var picker = new GMImagePickerController();
-            //picker.FinishedPickingAssets += (sender, args) => {
-            //    Console.WriteLine("User finished picking assets. {0} items selected.", args.Assets.Length);
-            //};
-            //await PresentViewControllerAsync(picker, true);
-
-
-            //if (string.IsNullOrEmpty(project.ProjectName))
-            //{
-            //    await Shell.Current.DisplayAlert("Alert", "Project name is required", "OK");
-            //    return;
-            //}
-            //if (string.IsNullOrEmpty(Project.Id))
-            //{
-            //    Project.Id = Guid.NewGuid().ToString();
-
-            //    //Project.
-            //    //   Project.ProjectImage = ImgPata;
-            //    Project.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-            //    await ProjectDataStore.AddItemAsync(Project);
-            //}
-            //else
-            //{
-            //    await ProjectDataStore.UpdateItemAsync(project);
-            //}
-            //await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+           
         }
         private ProjectLocation_Visual visualForm;
 
@@ -145,33 +120,7 @@ namespace Mobile.Code.ViewModels
             ImgData = new ImageData();
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
-            //    ExteriorElements = new CheakBoxListReturntModel();
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
-            //ImgData = new ImageData();
-            //MessagingCenter.Subscribe<PopUpCheakListBox, CheakBoxListReturntModel>(this, "SelectedItem", async (obj, item) =>
-            //{
-            //    ExteriorElements = item as CheakBoxListReturntModel;
-
-            //});
-            //UnitPhotos = new ObservableCollection<ImageSource>();
-            //MessagingCenter.Subscribe<Camera2Forms.CameraPage, ObservableCollection<ImageSource>>(this, "Images", async (obj, item) =>
-            //{
-            //    //UnitPhotos.Clear();
-            //    ObservableCollection < ImageSource > listTempImage = item as ObservableCollection<ImageSource>;
-
-            //    foreach (var img in listTempImage)
-            //    {
-            //        UnitPhotos.Add(img);
-            //    }
-            //    UnitPhotoCount = UnitPhotos.Count.ToString();
-
-            //});
+            
         }
         private string _unitPhotCount;
 

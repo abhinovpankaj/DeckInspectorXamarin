@@ -52,10 +52,11 @@ namespace Mobile.Code.Camera2Forms
                 filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
 
             }
+            MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType };
+            App.ListCamera2Api.Add(img);
 
-            App.ListCamera2Api.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType });
-
-            vm.ImageList.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
+            // vm.ImageList.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
+            vm.ImageList.Add(img);
             vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
             vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
 
