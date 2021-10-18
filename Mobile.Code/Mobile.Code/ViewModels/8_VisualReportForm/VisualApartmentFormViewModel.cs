@@ -819,7 +819,7 @@ namespace Mobile.Code.ViewModels
                     if (Device.RuntimePlatform == Device.iOS)
                     {
                         //If the image is modified (drawings, etc) by the users, you will need to change the delivery mode to HighQualityFormat.
-                        bool imageModifiedWithDrawings = false;
+                        bool imageModifiedWithDrawings = true;
                         if (imageModifiedWithDrawings)
                         {
                             await GMMultiImagePicker.Current.PickMultiImage(true);

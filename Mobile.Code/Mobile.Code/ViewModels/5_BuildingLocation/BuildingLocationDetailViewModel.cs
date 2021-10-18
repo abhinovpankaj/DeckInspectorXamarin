@@ -279,7 +279,7 @@ namespace Mobile.Code.ViewModels
                     if (Device.RuntimePlatform == Device.iOS)
                     {
                         //If the image is modified (drawings, etc) by the users, you will need to change the delivery mode to HighQualityFormat.
-                        bool imageModifiedWithDrawings = false;
+                        bool imageModifiedWithDrawings = true;
                         if (imageModifiedWithDrawings)
                         {
                             await GMMultiImagePicker.Current.PickMultiImage(true);
@@ -289,18 +289,10 @@ namespace Mobile.Code.ViewModels
                             await GMMultiImagePicker.Current.PickMultiImage();
                         }
 
-                        //  MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS");
+                         MessagingCenter.Unsubscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS");
                         MessagingCenter.Subscribe<App, List<string>>((App)Xamarin.Forms.Application.Current, "ImagesSelectediOS", (s, images) =>
                         {
-                            //If we have selected images, put them into the carousel view.
-                            //if (images.Count > 0)
-                            //{
-                            //    foreach (var item in images)
-                            //    {
-                            //        BuildingCommonLocationImages obj = new BuildingCommonLocationImages() { ImageUrl = item, Id = Guid.NewGuid().ToString(), BuildingId = BuildingLocation.Id, DateCreated = DateTime.Now };
-                            //        _ = AddNewPhoto(obj);
-                            //    }
-                            //}
+                           
                             if (images.Count > 0)
                             {
                                 IsBusyProgress = true;
