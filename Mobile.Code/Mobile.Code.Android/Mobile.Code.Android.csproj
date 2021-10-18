@@ -39,10 +39,10 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
-    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidKeyStore>true</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\Abhinov\AppData\Local\Xamarin\Mono for Android\Keystore\decknew\decknew.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>Deck@21</AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>Deck</AndroidSigningKeyAlias>
+    <AndroidSigningKeyAlias>decknew</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Deck@21</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

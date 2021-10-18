@@ -22,7 +22,7 @@ namespace Mobile.Code.ViewModels
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
-
+        public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
         {
             get { return _imgData; }
@@ -239,6 +239,51 @@ namespace Mobile.Code.ViewModels
             }
 
         }
+        private async Task SaveCreateNew()
+        {
+            IsBusyProgress = true;
+            Response result = await Task.Run(SaveLoad);
+            if (result != null)
+            {
+                if (result.Status == ApiResult.Success)
+                {
+                    //Create New.
+                    IsBusyProgress = false;
+                    await Shell.Current.Navigation.PopAsync();
+                    ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
+                    visualForm = new ProjectLocation_Visual();
+                    
+                    visualForm.ProjectLocationId = ProjectLocation.Id;
+                    
+                    VisualProjectLocationPhotoDataStore.Clear();
+
+                    App.VisualEditTracking = new List<MultiImage>();
+                    App.VisualEditTrackingForInvasive = new List<MultiImage>();
+                    VisualProjectLocationPhotoDataStore.Clear();
+                    InvasiveVisualProjectLocationPhotoDataStore.Clear();
+
+
+                    App.FormString = JsonConvert.SerializeObject(visualForm);
+                    App.IsNewForm = true;
+                    var locPage= new VisualProjectLocationForm() { BindingContext = 
+                        new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } };
+                    await Shell.Current.Navigation.PushAsync(locPage, true);
+
+                   
+
+                }
+                else
+                {
+                    IsBusyProgress = false;
+                    await Shell.Current.DisplayAlert("Validation Error", result.Message, "OK");
+                }
+            }
+
+
+
+
+        }
+
         private async Task<Response> SaveLoad()
         {
             Response response = new Response();
@@ -553,6 +598,7 @@ namespace Mobile.Code.ViewModels
 
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
+            SaveAndCreateNewCommand=new Command(async () => await SaveCreateNew());
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
 

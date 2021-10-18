@@ -30,6 +30,7 @@ namespace Mobile.Code.ViewModels
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
 
+        public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
         {
             get { return _imgData; }
@@ -224,6 +225,44 @@ namespace Mobile.Code.ViewModels
                     await Shell.Current.DisplayAlert("Validation Error", result.Message, "OK");
                 }
             }
+
+        }
+        private async Task SaveCreateNew()
+        {
+            IsBusyProgress = true;
+            Response result = await Task.Run(SaveLoad);
+            if (result != null)
+            {
+                if (result.Status == ApiResult.Success)
+                {
+                    //Create New.
+                    IsBusyProgress = false;
+                    await Shell.Current.Navigation.PopAsync();
+                    visualForm = new BuildingLocation_Visual();
+                   
+                    visualForm.BuildingLocationId = BuildingLocation.Id;
+                    VisualBuildingLocationPhotoDataStore.Clear();
+
+                    App.VisualEditTracking = new List<MultiImage>();
+                    App.VisualEditTrackingForInvasive = new List<MultiImage>();
+                    VisualBuildingLocationPhotoDataStore.Clear();
+                    InvasiveVisualBuildingLocationPhotoDataStore.Clear();
+
+                    App.FormString = JsonConvert.SerializeObject(visualForm);
+                    App.IsNewForm = true;
+                    
+                    var locPage= new VisualBuildingLocationForm() { BindingContext = new VisualBuildingLocationFormViewModel() { BuildingLocation = BuildingLocation, VisualForm = visualForm } };
+                    await Shell.Current.Navigation.PushAsync(locPage,true);
+                }
+                else
+                {
+                    IsBusyProgress = false;
+                    await Shell.Current.DisplayAlert("Validation Error", result.Message, "OK");
+                }
+            }
+
+
+
 
         }
         private async Task<Response> SaveLoad()
@@ -550,6 +589,7 @@ namespace Mobile.Code.ViewModels
 
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
+            SaveAndCreateNewCommand = new Command(async () => await SaveCreateNew());
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
 

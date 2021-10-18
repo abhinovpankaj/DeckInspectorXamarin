@@ -768,6 +768,26 @@
 
                 </Grid>
             </ScrollView>
+            <Button
+                x:Name="btnSaveNNew"
+                Grid.Row="1"
+                Margin="20"
+                BackgroundColor="#2e479b"
+                BorderColor="Orange"
+                BorderWidth="2"
+                Command="{Binding SaveAndCreateNewCommand}"
+                CornerRadius="28"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Caption"
+                HeightRequest="56"
+                HorizontalOptions="End"
+                ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.ContentSaveMove},
+                                        Color=White,
+                                        Size=20}"
+                TextColor="White"
+                VerticalOptions="End"
+                WidthRequest="56" />
         </Grid>
     </AbsoluteLayout>
 
