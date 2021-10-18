@@ -109,7 +109,7 @@ namespace Mobile.Code.iOS
             };
 
             //Set a limit on the number of photos the user can select. I use 12 selected photos beause of memory limitations on iOS.
-            picker.ShouldSelectAsset += (sender, args) => args.Cancel = picker.SelectedAssets.Count > 11;
+            picker.ShouldSelectAsset += (sender, args) => args.Cancel = picker.SelectedAssets.Count > 29;
 
             // select image handler
             GMImagePickerController.MultiAssetEventHandler[] handler = { null };
