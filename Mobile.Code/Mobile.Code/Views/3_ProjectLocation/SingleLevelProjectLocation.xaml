@@ -80,18 +80,7 @@
                     VerticalOptions="End"
                     VerticalTextAlignment="Center" />
 
-                <Image
-                    Grid.Column="0"
-                    Margin="0,15,0,0"
-                    HeightRequest="35"
-                    HorizontalOptions="Start"
-                    Source="LeftArrow.png"
-                    VerticalOptions="Start"
-                    WidthRequest="35">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
+                <uc:HomeBackView />
                 <Label
                     FontAttributes="None"
                     FontFamily="{StaticResource Montserrat-Regular}"

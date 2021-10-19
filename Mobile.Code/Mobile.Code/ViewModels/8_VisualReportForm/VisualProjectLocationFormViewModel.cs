@@ -214,7 +214,7 @@ namespace Mobile.Code.ViewModels
             get { return _projectLocation; }
             set { _projectLocation = value; OnPropertyChanged("ProjectLocation"); }
         }
-
+        public string ProjectID { get; set; }
         private async Task Save()
         {
             IsBusyProgress = true;
@@ -241,6 +241,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task SaveCreateNew()
         {
+            ProjectID = visualForm.ProjectLocationId;
             IsBusyProgress = true;
             Response result = await Task.Run(SaveLoad);
             if (result != null)
@@ -253,7 +254,7 @@ namespace Mobile.Code.ViewModels
                     ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
                     visualForm = new ProjectLocation_Visual();
                     
-                    visualForm.ProjectLocationId = ProjectLocation.Id;
+                    visualForm.ProjectLocationId = ProjectID;
                     
                     VisualProjectLocationPhotoDataStore.Clear();
 
@@ -268,8 +269,6 @@ namespace Mobile.Code.ViewModels
                     var locPage= new VisualProjectLocationForm() { BindingContext = 
                         new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } };
                     await Shell.Current.Navigation.PushAsync(locPage, true);
-
-                   
 
                 }
                 else

@@ -76,7 +76,18 @@ namespace Mobile.Code.ViewModels
 
             App.IsInvasive = true;
             project.Id = project.InvasiveProjectID;
-            await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+            if (project.Category == "MultiLevel" || string.IsNullOrEmpty(project.Category))
+            {
+                await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+                
+            }
+            else
+            {
+
+                await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                { BindingContext = new SingleLevelProjectDetailViewModel() { Project = project } }).ConfigureAwait(false);
+            }
+            
 
         }
         private bool _Isbusyprog;

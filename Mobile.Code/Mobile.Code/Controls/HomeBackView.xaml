@@ -1,44 +1,46 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
-             x:Class="Mobile.Code.Controls.HomeBackView">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Mobile.Code.Controls.HomeBackView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
 
-    <Grid  Margin="0,0,0,0" >
+    <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <StackLayout Grid.Column="0" Margin="5,0,0,0">
             <Image
-                    Grid.Column="0" Margin="0,15,0,0"
-                    HeightRequest="35"
-                    HorizontalOptions="Start"
-                    Source="LeftArrow.png"
-                    VerticalOptions="Start"
-                    WidthRequest="35">
+                Grid.Column="0"
+                Margin="0,15,0,0"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Source="LeftArrow.png"
+                VerticalOptions="Start"
+                WidthRequest="35">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                 </Image.GestureRecognizers>
             </Image>
         </StackLayout>
         <StackLayout Grid.Column="1" Margin="5,0,0,0">
-        <Image 
-                   
-                    HeightRequest="35" Margin="0,15,0,0"
-                    HorizontalOptions="Start"
-                    Source="home.png"
-                    VerticalOptions="Start"
-                    WidthRequest="35">
+            <Image
+                Margin="0,15,0,0"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Source="home.png"
+                VerticalOptions="Start"
+                WidthRequest="35">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoHomeCommand}" />
                 </Image.GestureRecognizers>
 
             </Image>
-           
+
         </StackLayout>
     </Grid>
 

@@ -29,7 +29,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopToRootAsync();
 
         }
 
@@ -111,8 +111,8 @@ namespace Mobile.Code.ViewModels
         }
         private async Task GoBack()
         {
-            //await Shell.Current.Navigation.PopAsync();
-            await Shell.Current.Navigation.PopAsync();
+            
+            await Shell.Current.Navigation.PopToRootAsync();
 
         }
         private async Task Save()
@@ -149,8 +149,6 @@ namespace Mobile.Code.ViewModels
         {
             await Shell.Current.GoToAsync($"newProject?Id={Id}");
         }
-
-       
 
         public SingleLevelProjectDetailViewModel()
         {
@@ -249,7 +247,7 @@ namespace Mobile.Code.ViewModels
                 App.FormString = JsonConvert.SerializeObject(visualForm);
                 App.IsNewForm = true;
                 await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() 
-                { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+                { ProjectLocation = ProjectLocation, VisualForm = visualForm, ProjectID= Project.Id } });
 
             }
             else
