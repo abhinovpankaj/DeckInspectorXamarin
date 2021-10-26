@@ -1,7 +1,10 @@
-﻿namespace Mobile.Code.Models
+﻿using SQLite;
+
+namespace Mobile.Code.Models
 {
     public class ProjectLocation_Visual : BindingModel
     {
+        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
         public string ProjectLocationId { get; set; }
         public string Name { get; set; }

@@ -35,8 +35,6 @@ namespace Mobile.Code.Services
         public async Task<Response> AddItemAsync(BuildingApartment item)
         {
 
-
-
             Response result = new Response();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -51,12 +49,6 @@ namespace Mobile.Code.Services
             parameters.Add("ImageDescription", item.ImageDescription);
 
 
-            //Regex UrlMatch = new Regex(@"(?i)(http(s)?:\/\/)?(\w{2,25}\.)+\w{3}([a-z0-9\-?=$-_.+!*()]+)(?i)", RegexOptions.Singleline);
-            //if (item.ImageUrl == "blank.png" || UrlMatch.IsMatch(item.ImageUrl))
-            //{
-            //    item.ImageUrl = null;
-
-            //}
             string ImageUrl = HttpUtil.GetImageUrl(item.ImageUrl).Result;
             result = await HttpUtil.UploadSingleImage(item.Name, ImageUrl, "api/BuildingApartment/AddEdit", parameters);
 

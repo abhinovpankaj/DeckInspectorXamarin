@@ -1,4 +1,6 @@
-﻿namespace Mobile.Code.Models
+﻿using SQLite;
+
+namespace Mobile.Code.Models
 {
     public class ProjectLocation : BindingModel
     {
@@ -11,7 +13,7 @@
             set { _pimage = value; OnPropertyChanged("ImageUrl"); }
         }
 
-
+        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
 
 

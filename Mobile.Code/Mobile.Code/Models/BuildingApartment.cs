@@ -1,4 +1,6 @@
-﻿namespace Mobile.Code.Models
+﻿using SQLite;
+
+namespace Mobile.Code.Models
 {
     public class BuildingApartment : BindingModel
     {
@@ -12,7 +14,7 @@
         }
 
 
-
+        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
         public string BuildingId { get; set; }
 

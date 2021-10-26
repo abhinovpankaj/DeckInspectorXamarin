@@ -1,71 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
-             x:Class="Mobile.Code.ColorPicker">
-       <ContentPage.Padding>
-    <OnPlatform x:TypeArguments="Thickness">
-        <On Platform="iOS" Value="0,45,0,0" />
-    </OnPlatform>
-</ContentPage.Padding>
-        <Grid>
+<ContentPage
+    x:Class="Mobile.Code.ColorPicker"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Frame  Margin="10,10,10,0" IsVisible="{Binding IsFinelOrInvasiveReport}">
-            <Grid  BackgroundColor="White" VerticalOptions="FillAndExpand" >
+        <Frame Margin="10,10,10,0" IsVisible="{Binding IsFinelOrInvasiveReport}">
+            <Grid BackgroundColor="White" VerticalOptions="FillAndExpand">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="8"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="8" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="18"                           
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Pick Color"
-                                    TextColor="Black" />
-                <Label Grid.Column="1" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="18"                           
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="|"
-                                    TextColor="{DynamicResource Gray-200}" />
-                <Label  VerticalOptions="CenterAndExpand" TextColor="#2e479b" HorizontalOptions="EndAndExpand"  FontSize="30"  Grid.Column="2" BackgroundColor="White"
-                                  FontFamily="{StaticResource MaterialFontFamily}"
-                            Text="{x:Static helpers:IconFont.SelectColor}"></Label>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="18"
+                    Style="{StaticResource LabelStyle}"
+                    Text="Pick Color"
+                    TextColor="Black"
+                    VerticalOptions="CenterAndExpand"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    Grid.Column="1"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="18"
+                    Style="{StaticResource LabelStyle}"
+                    Text="|"
+                    TextColor="{DynamicResource Gray-200}"
+                    VerticalOptions="CenterAndExpand"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    Grid.Column="2"
+                    BackgroundColor="White"
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontSize="30"
+                    HorizontalOptions="EndAndExpand"
+                    Text="{x:Static helpers:IconFont.SelectColor}"
+                    TextColor="#2e479b"
+                    VerticalOptions="CenterAndExpand" />
             </Grid>
             <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NewImagCommand}"></TapGestureRecognizer>
+                <TapGestureRecognizer Command="{Binding NewImagCommand}" />
             </Frame.GestureRecognizers>
 
         </Frame>
-        <FlexLayout x:Name="FlexTypes" Grid.Row="1" IsVisible="{Binding IsFinelOrInvasiveReport}"
-        AlignContent="Start"
-        AlignItems="Start"
-        AlignSelf="Start"
-        BindableLayout.ItemsSource="{Binding Colors}"
-        Direction="Row"
-        JustifyContent="Start"
-        Wrap="Wrap">
+        <FlexLayout
+            x:Name="FlexTypes"
+            Grid.Row="1"
+            AlignContent="Start"
+            AlignItems="Start"
+            AlignSelf="Start"
+            BindableLayout.ItemsSource="{Binding Colors}"
+            Direction="Row"
+            IsVisible="{Binding IsFinelOrInvasiveReport}"
+            JustifyContent="Start"
+            Wrap="Wrap">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4" 
+                    <!--<Frame x:Name="FrameTypes"  Margin="4,4,4,4"
                       HasShadow="True" CornerRadius="5">-->
 
 
-                    <Grid RowSpacing="0" BackgroundColor="{Binding Color}"  HeightRequest="40" WidthRequest="40" ColumnSpacing="0" Margin="4" FlexLayout.AlignSelf="Start" FlexLayout.Basis="{OnIdiom Phone='20%', Tablet='20%'}">
+                    <Grid
+                        Margin="4"
+                        BackgroundColor="{Binding Color}"
+                        ColumnSpacing="0"
+                        FlexLayout.AlignSelf="Start"
+                        FlexLayout.Basis="{OnIdiom Phone='20%',
+                                                   Tablet='20%'}"
+                        HeightRequest="40"
+                        RowSpacing="0"
+                        WidthRequest="40">
 
 
 
 
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BindingContext.ColorCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+                            <TapGestureRecognizer Command="{Binding BindingContext.ColorCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
 
 
                         </Grid.GestureRecognizers>
@@ -80,16 +105,24 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
-        <Button Grid.Row="2"   Text="Save"  TextColor="White" BackgroundColor="#2e479b"   Margin="10"
-                                    BorderWidth="1"
-                                    HeightRequest="35" WidthRequest="100"
-                                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=White,Size=30}"
-                                         FontFamily="{StaticResource Montserrat-Regular}"
-                                    x:Name="savebutton"
-                                  
-                                     Command="{Binding GoBackCommand}"
-                                   
-                                    HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></Button>
-        </Grid>
+        <Button
+            x:Name="savebutton"
+            Grid.Row="2"
+            Margin="10"
+            BackgroundColor="#2e479b"
+            BorderWidth="1"
+            Command="{Binding GoBackCommand}"
+            FontFamily="{StaticResource Montserrat-Regular}"
+            HeightRequest="35"
+            HorizontalOptions="CenterAndExpand"
+            ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                    Glyph={x:Static helpers:IconFont.Floppy},
+                                    Color=White,
+                                    Size=30}"
+            Text="Save"
+            TextColor="White"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="100" />
+    </Grid>
 
 </ContentPage>

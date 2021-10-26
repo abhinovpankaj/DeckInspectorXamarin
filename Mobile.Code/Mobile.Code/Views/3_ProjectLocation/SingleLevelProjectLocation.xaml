@@ -40,24 +40,7 @@
                     Aspect="AspectFill"
                     HeightRequest="260"
                     Source="{Binding Project.ImageUrl}" />
-                <Button
-                    x:Name="btnInvasive"
-                    Margin="5"
-                    BackgroundColor="#2e479b"
-                    BorderWidth="1"
-                    Command="{Binding CreateInvasiveCommand}"
-                    FontFamily="{StaticResource Montserrat-Regular}"
-                    HeightRequest="35"
-                    HorizontalOptions="Center"
-                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                            Glyph={x:Static helpers:IconFont.Refresh},
-                                            Color=White,
-                                            Size=20}"
-                    IsVisible="{Binding CanInvasiveCreate}"
-                    Text="{Binding BtnInvasiveText}"
-                    TextColor="White"
-                    VerticalOptions="End"
-                    WidthRequest="120" />
+                
 
                 <Label
                     Margin="5,20,0,0"
@@ -115,7 +98,24 @@
                         <TapGestureRecognizer Command="{Binding DeleteCommand}" />
                     </Image.GestureRecognizers>
                 </Image>
-
+                <Button
+                    x:Name="btnInvasive"
+                    Margin="5"
+                    BackgroundColor="#2e479b"
+                    BorderWidth="1"
+                    Command="{Binding CreateInvasiveCommand}"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                            Glyph={x:Static helpers:IconFont.Refresh},
+                                            Color=White,
+                                            Size=20}" IsEnabled="True"
+                    IsVisible="{Binding CanInvasiveCreate}"
+                    Text="{Binding BtnInvasiveText}"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    WidthRequest="120" />
             </Grid>
             <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
 

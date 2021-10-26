@@ -116,13 +116,6 @@
                                 Margin="0"
                                 FlexLayout.AlignSelf="Start">
 
-
-
-
-
-
-
-
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />

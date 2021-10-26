@@ -1,87 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
-       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       mc:Ignorable="d"
-       xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
-       xmlns:controls="clr-namespace:Mobile.Code.Controls"
-       xmlns:views="clr-namespace:Mobile.Code.Views"
-       Title="Mobile.Code" FlyoutBehavior="Disabled" 
-       x:Class="Mobile.Code.AppShell">
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Mobile.Code.AppShell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:Mobile.Code.Views"
+    Title="Mobile.Code"
+    FlyoutBehavior="Disabled"
+    mc:Ignorable="d">
 
     <Shell.Resources>
-        <Style x:Key="BaseStyle"
-               TargetType="Element">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="White" />
-            <Setter Property="Shell.ForegroundColor"
-                    Value="White" />
-            <Setter Property="Shell.TitleColor"
-                    Value="White" />
-            <Setter Property="Shell.DisabledColor"
-                    Value="#B4FFFFFF" />
-            <Setter Property="Shell.UnselectedColor"
-                    Value="#95FFFFFF" />
+        <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="White" />
+            <Setter Property="Shell.ForegroundColor" Value="White" />
+            <Setter Property="Shell.TitleColor" Value="White" />
+            <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+            <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
         </Style>
-        <Style TargetType="ShellItem"
-               BasedOn="{StaticResource BaseStyle}" />
-        <Style x:Key="HomeShell"
-               TargetType="Element"
-               BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="#2e479b" />
-         
+        <Style BasedOn="{StaticResource BaseStyle}" TargetType="ShellItem" />
+        <Style
+            x:Key="HomeShell"
+            BasedOn="{StaticResource BaseStyle}"
+            TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#2e479b" />
+
         </Style>
-        <Style x:Key="MonkeysShell"
-               TargetType="Element"
-               BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="#689F39" />
+        <Style
+            x:Key="MonkeysShell"
+            BasedOn="{StaticResource BaseStyle}"
+            TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#689F39" />
         </Style>
-        <Style x:Key="ElephantsShell"
-               TargetType="Element"
-               BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="#ED3B3B" />
+        <Style
+            x:Key="ElephantsShell"
+            BasedOn="{StaticResource BaseStyle}"
+            TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#ED3B3B" />
         </Style>
-        <Style x:Key="BearsShell"
-               TargetType="Element"
-               BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="#546DFE" />
+        <Style
+            x:Key="BearsShell"
+            BasedOn="{StaticResource BaseStyle}"
+            TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#546DFE" />
         </Style>
-        <Style x:Key="AboutShell"
-               TargetType="Element"
-               BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor"
-                    Value="#96d1ff" />
+        <Style
+            x:Key="AboutShell"
+            BasedOn="{StaticResource BaseStyle}"
+            TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#96d1ff" />
         </Style>
     </Shell.Resources>
 
     <Shell.FlyoutHeader>
-        <controls:FlyoutHeader  />
+        <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
 
-    <!-- Template for FlyoutHeader -->
-    <!-- Not required, as the FlyoutHeader is set above -->
+    <!--  Template for FlyoutHeader  -->
+    <!--  Not required, as the FlyoutHeader is set above  -->
     <!--    <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <Grid BackgroundColor="Black"
                   HeightRequest="200">
-                <Image Aspect="AspectFill" 
-                       Source="xamarinstore.jpg" 
+                <Image Aspect="AspectFill"
+                       Source="xamarinstore.jpg"
                        Opacity="0.6" />
-                <Label Text="Animals" 
-                       TextColor="White" 
-                       FontAttributes="Bold" 
+                <Label Text="Animals"
+                       TextColor="White"
+                       FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center" />
-            </Grid>            
+            </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>-->
 
-    <!-- Template each FlyoutItem -->
+    <!--  Template each FlyoutItem  -->
     <!--    <Shell.ItemTemplate>
         <DataTemplate>
             <Grid>
@@ -95,12 +90,12 @@
                 <Label Grid.Column="1"
                        Text="{Binding Title}"
                        FontAttributes="Italic"
-                       VerticalTextAlignment="Center" /> 
+                       VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>-->
 
-    <!-- Template each MenuItem -->
+    <!--  Template each MenuItem  -->
     <!--    <Shell.MenuItemTemplate>
         <DataTemplate>
             <Grid>
@@ -114,53 +109,60 @@
                 <Label Grid.Column="1"
                        Text="{Binding Text}"
                        FontAttributes="Italic"
-                       VerticalTextAlignment="Center" /> 
+                       VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>
     </Shell.MenuItemTemplate>-->
-    <ShellItem Route="login" Style="{StaticResource HomeShell}" IsTabStop="False" >
+    <ShellItem
+        IsTabStop="False"
+        Route="login"
+        Style="{StaticResource HomeShell}">
         <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
     </ShellItem>
-    <FlyoutItem Route="main" Shell.TabBarIsVisible="False" 
-                FlyoutDisplayOptions="AsMultipleItems" IsTabStop="False">
+    <FlyoutItem
+        FlyoutDisplayOptions="AsMultipleItems"
+        IsTabStop="False"
+        Route="main"
+        Shell.TabBarIsVisible="False">
 
-        <ShellContent Route="project"    Style="{StaticResource HomeShell}"
-                      IsTabStop="False" Icon="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Home},Color=#2e479b,Size=24}"
-                      ContentTemplate="{DataTemplate views:HomePage}"
-                      Title="Project(s)" />
+        <ShellContent
+            Title="Project(s)"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Icon="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                             Glyph={x:Static helpers:IconFont.Home},
+                             Color=#2e479b,
+                             Size=24}"
+            IsTabStop="False"
+            Route="project"
+            Style="{StaticResource HomeShell}" />
 
     </FlyoutItem>
+
+    <MenuItem
+        Command="{Binding GoNewProjectCommand}"
+        IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                    Glyph={x:Static helpers:IconFont.PlusCircle},
+                                    Color=#2e479b,
+                                    Size=24}"
+        Text="New Project" />
+    <MenuItem
+        Command="{Binding GoSettingCommand}"
+        IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                    Glyph={x:Static helpers:IconFont.Cog},
+                                    Color=#2e479b,
+                                    Size=24}"
+        Text="Settings" />
+
+    <MenuItem
+        Command="{Binding LogoutCommand}"
+        IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                    Glyph={x:Static helpers:IconFont.Logout},
+                                    Color=#2e479b,
+                                    Size=24}"
+        Text="Logout" />
     
-    <MenuItem 
-                       IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PlusCircle},Color=#2e479b,Size=24}"
-                      Command="{Binding GoNewProjectCommand}"
-                      Text="New Project" />
-    <MenuItem Text="Settings"  Command="{Binding GoSettingCommand}"
-                       IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Cog},Color=#2e479b,Size=24}"
-                     
-                      />
-
-    <MenuItem Text="Logout"  Command="{Binding LogoutCommand}"
-                       IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Logout},Color=#2e479b,Size=24}"
-                     
-                      />
-    <!--<ShellContent Route="Logout"    Style="{StaticResource HomeShell}"
-                      IsTabStop="False" Icon="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Logout},Color=#2e479b,Size=24}"
-                      ContentTemplate="{DataTemplate views:LoginPage}"
-                      Title="Logout" />-->
-    <!--<ShellContent Route="about"
-                  Style="{StaticResource AboutShell}"
-                  Title="About"
-                  Icon="info.png"
-                  ContentTemplate="{DataTemplate views:AboutPage}" />-->
-
-    <!--<MenuItem Text="Random"
-              IconImageSource="random.png"
-              Command="{Binding RandomPageCommand}" />
-    <MenuItem Text="Help"
-              IconImageSource="help.png"
-              Command="{Binding HelpCommand}"
-              CommandParameter="https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell" />-->
+    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V2.4" />
+    
 
 
 

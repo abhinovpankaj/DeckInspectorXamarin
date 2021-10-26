@@ -1,7 +1,10 @@
-﻿namespace Mobile.Code.Models
+﻿using SQLite;
+
+namespace Mobile.Code.Models
 {
     public class BuildingCommonLocationImages : BindingModel
     {
+        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
         public string BuildingLocationId { get; set; }
 

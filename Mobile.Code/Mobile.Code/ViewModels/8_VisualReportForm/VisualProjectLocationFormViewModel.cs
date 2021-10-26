@@ -225,19 +225,17 @@ namespace Mobile.Code.ViewModels
                 if (result.Status == ApiResult.Success)
                 {
 
-
-
-                    IsBusyProgress = false;
+                   //// IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
 
                 }
                 else
                 {
-                    IsBusyProgress = false;
+                    //IsBusyProgress = false;
                     await Shell.Current.DisplayAlert("Validation Error", result.Message, "OK");
                 }
             }
-
+            IsBusyProgress = false;
         }
         private async Task SaveCreateNew()
         {
@@ -249,7 +247,7 @@ namespace Mobile.Code.ViewModels
                 if (result.Status == ApiResult.Success)
                 {
                     //Create New.
-                    IsBusyProgress = false;
+                    
                     await Shell.Current.Navigation.PopAsync();
                     ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
                     visualForm = new ProjectLocation_Visual();
@@ -269,6 +267,7 @@ namespace Mobile.Code.ViewModels
                     var locPage= new VisualProjectLocationForm() { BindingContext = 
                         new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } };
                     await Shell.Current.Navigation.PushAsync(locPage, true);
+                    IsBusyProgress = false;
 
                 }
                 else
@@ -285,6 +284,7 @@ namespace Mobile.Code.ViewModels
 
         private async Task<Response> SaveLoad()
         {
+            IsBusyProgress = true;
             Response response = new Response();
             try
             {
@@ -454,6 +454,10 @@ namespace Mobile.Code.ViewModels
                 response.Message = ex.Message;
                 response.Status = ApiResult.Fail;
 
+            }
+            finally
+            {
+                IsBusyProgress = false;
             }
             return await Task.FromResult(response);
 

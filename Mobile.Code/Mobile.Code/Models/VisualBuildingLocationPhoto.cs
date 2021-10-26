@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace Mobile.Code.Models
 {
     public class VisualBuildingLocationPhoto : BindingModel
     {
+        [PrimaryKey, AutoIncrement]
         public string Id { get; set; }
         public string VisualBuildingId { get; set; }
 
