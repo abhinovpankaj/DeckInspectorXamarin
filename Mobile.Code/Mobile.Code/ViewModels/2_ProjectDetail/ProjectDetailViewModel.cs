@@ -1,4 +1,5 @@
 ﻿using Mobile.Code.Models;
+using Mobile.Code.Services.SQLiteLocal;
 using Mobile.Code.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -285,75 +286,102 @@ namespace Mobile.Code.ViewModels
             {
                 IsInvasiveControlDisable = true;
             }
-            Project = await ProjectDataStore.GetItemAsync(Project.Id);
-            
-            if (App.LogUser.RoleName == "Admin")
+            if (App.IsAppOffline)
             {
-                if (Project.ProjectType != "Invasive")
-                {
-                    if (Project.IsInvaisveExist == true)
-                    {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Invasive";
-                    }
-                }
-                else
-                {
-                    
-                    CanInvasiveCreate = true;
-                    BtnInvasiveText = "Refresh";      
-                }
-               
-                IsEditDeleteAccess = true;
-            }
-            else if (Project.UserId == App.LogUser.Id.ToString())
-            {
-                if (Project.ProjectType != "Invasive")
-                {
-                    if (Project.IsInvaisveExist == true)
-                    {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Invasive";
-                    }
-                }
-                else
-                {
-                    if (Project.IsAccess == true)
-                    {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
-                    }
-                    else
-                    {
-                        CanInvasiveCreate = false;
-                    }
-                }
+                Project = await ProjectSQLiteDataStore.GetItemAsync(Project.Id);
                 
-                IsEditDeleteAccess = true;
-            }
-            else
-            {
-                if (Project.ProjectType != "Invasive" && Project.IsAccess)
+                if (Project.ProjectType != "Invasive")
                 {
-                    if (Project.IsInvaisveExist == true)
+                    if (Project.IsInvaisveExist)
                     {
                         CanInvasiveCreate = true;
                         BtnInvasiveText = "Invasive";
                     }
-
                 }
-                if (Project.ProjectType == "Invasive" && Project.IsAccess)
+                else
                 {
                     CanInvasiveCreate = true;
                     BtnInvasiveText = "Refresh";
                 }
 
+                IsEditDeleteAccess = true;
+
+
+                ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
+                ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
             }
+            //online part
+            else
+            {
+                Project = await ProjectDataStore.GetItemAsync(Project.Id);
 
+                if (App.LogUser.RoleName == "Admin")
+                {
+                    if (Project.ProjectType != "Invasive")
+                    {
+                        if (Project.IsInvaisveExist == true)
+                        {
+                            CanInvasiveCreate = true;
+                            BtnInvasiveText = "Invasive";
+                        }
+                    }
+                    else
+                    {
 
-            ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore.GetItemsAsyncByProjectID(Project.Id));
-            ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore.GetItemsAsyncByProjectID(Project.Id));
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Refresh";
+                    }
 
+                    IsEditDeleteAccess = true;
+                }
+                else if (Project.UserId == App.LogUser.Id.ToString())
+                {
+                    if (Project.ProjectType != "Invasive")
+                    {
+                        if (Project.IsInvaisveExist == true)
+                        {
+                            CanInvasiveCreate = true;
+                            BtnInvasiveText = "Invasive";
+                        }
+                    }
+                    else
+                    {
+                        if (Project.IsAccess == true)
+                        {
+                            CanInvasiveCreate = true;
+                            BtnInvasiveText = "Refresh";
+                        }
+                        else
+                        {
+                            CanInvasiveCreate = false;
+                        }
+                    }
+
+                    IsEditDeleteAccess = true;
+                }
+                else
+                {
+                    if (Project.ProjectType != "Invasive" && Project.IsAccess)
+                    {
+                        if (Project.IsInvaisveExist == true)
+                        {
+                            CanInvasiveCreate = true;
+                            BtnInvasiveText = "Invasive";
+                        }
+
+                    }
+                    if (Project.ProjectType == "Invasive" && Project.IsAccess)
+                    {
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Refresh";
+                    }
+
+                }
+
+                ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore.GetItemsAsyncByProjectID(Project.Id));
+                ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore.GetItemsAsyncByProjectID(Project.Id));
+            }
+   
             return await Task.FromResult(true);
 
 

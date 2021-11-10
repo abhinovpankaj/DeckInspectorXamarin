@@ -1,4 +1,5 @@
 ﻿using Mobile.Code.Models;
+using Mobile.Code.Services.SQLiteLocal;
 using Mobile.Code.Views;
 using Mobile.Code.Views._3_ProjectLocation;
 using System;
@@ -138,7 +139,12 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
             IsBusyProgress = true;
-            AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
+            if (App.IsAppOffline)
+            {
+                AllProjects = new ObservableCollection<Project>(await ProjectSQLiteDataStore.GetItemsAsync(true));
+            }
+            else
+                AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
             return await Task.FromResult(true);
 
 

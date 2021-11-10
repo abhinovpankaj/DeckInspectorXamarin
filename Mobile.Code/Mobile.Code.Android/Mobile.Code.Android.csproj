@@ -163,7 +163,6 @@
     <Compile Include="Renderer\XEditorRenderer.cs" />
     <Compile Include="Renderer\CustomEntryRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLite_Android.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\PlayfairDisplay-Black.ttf" />
@@ -185,6 +184,9 @@
     <AndroidAsset Include="Assets\Montserrat-SemiBold.ttf" />
     <AndroidAsset Include="Assets\UIFontIcons.ttf" />
     <AndroidAsset Include="Assets\materialdesignicons-webfont.ttf" />
+    <AndroidAsset Include="Assets\DeckInspectorsLocalDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

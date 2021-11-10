@@ -1,4 +1,5 @@
 ﻿using Mobile.Code.Services;
+using Mobile.Code.Services.SQLiteLocal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ namespace Mobile.Code.ViewModels
     {
 
         public ILoginServices LogDataStore => DependencyService.Get<ILoginServices>();
-
+        
         public IProjectDataStore ProjectDataStore => DependencyService.Get<IProjectDataStore>();
         public IProjectLocation ProjectLocationDataStore => DependencyService.Get<IProjectLocation>();
         public IProjectBuilding ProjectBuildingDataStore => DependencyService.Get<IProjectBuilding>();
@@ -37,6 +38,31 @@ namespace Mobile.Code.ViewModels
         public IVisualFormApartmentDataStore VisualFormApartmentDataStore => DependencyService.Get<IVisualFormApartmentDataStore>();
         public IVisualApartmentLocationPhotoDataStore VisualApartmentLocationPhotoDataStore => DependencyService.Get<IVisualApartmentLocationPhotoDataStore>();
 
+        //SQLite DataStores
+        public IProjectDataStore ProjectSQLiteDataStore => DependencyService.Get<ProjectSqLiteDataStore>();
+        public IProjectLocation ProjectLocationSqLiteDataStore => DependencyService.Get<ProjectLocationSqLiteDataStore>();
+        public IProjectBuilding ProjectBuildingSqLiteDataStore => DependencyService.Get<ProjectBuildingSqLiteDataStore>();
+
+        public IBuildingLocation BuildingLocationSqLiteDataStore => DependencyService.Get<BuildingLocationSqLiteDataStore>();
+        public IBuildingApartment BuildingApartmentSqLiteDataStore => DependencyService.Get<BuildingApartmentSqLiteDataStore>();
+
+        //public IProjectCommonLocationImages ProjectCommonLocationImagesSqLiteDataStore => DependencyService.Get<ProjectCommonLocationImagesSqLiteDataStore>();
+        public IBuildingCommonLocationImages BuildingCommonLocationImagesSqLiteDataStore => DependencyService.Get<BuildingCommonLocationImagesSqLiteDataStore>();
+
+        public IBuildingApartmentImages BuildingApartmentImagesSqLiteDataStore => DependencyService.Get<BuildingApartmentImagesSqLiteDataStore>();
+
+        public IVisualFormProjectLocationDataStore VisualFormProjectLocationSqLiteDataStore => DependencyService.Get<VisualFormProjectLocationSqLiteDataStore>();
+        public IVisualProjectLocationPhotoDataStore VisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<VisualProjectLocationPhotoSqLiteDataStore>();
+        public IInvasiveVisualProjectLocationPhotoDataStore InvasiveVisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
+        public IInvasiveVisualBuildingLocationPhotoDataStore InvasiveVisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
+        public IInvasiveVisualApartmentLocationPhotoDataStore InvasiveVisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
+
+        public IVisualBuildingLocationPhotoDataStore VisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<VisualBuildingLocationPhotoSqLiteDataStore>();
+        public IVisualFormBuildingLocationDataStore VisualFormBuildingLocationSqLiteDataStore => DependencyService.Get<VisualFormBuildingLocationSqLiteDataStore>();
+
+
+        public IVisualFormApartmentDataStore VisualFormApartmentSqLiteDataStore => DependencyService.Get<VisualFormApartmentSqLiteDataStore>();
+        public IVisualApartmentLocationPhotoDataStore VisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<VisualApartmentLocationPhotoSqLiteDataStore>();
         bool isBusy = false;
         public bool IsBusy
         {

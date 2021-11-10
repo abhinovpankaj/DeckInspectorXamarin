@@ -96,7 +96,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-
+            Response result;
             if (string.IsNullOrEmpty(Project.Id))
             {
 
@@ -104,10 +104,15 @@ namespace Mobile.Code.ViewModels
                 Project.ProjectType = ProjectType;
 
                 Project.Category = ProjectCategory;
-                Response result = await ProjectDataStore.AddItemAsync(Project);
+                if (App.IsAppOffline)
+                {
+                    result = await ProjectSQLiteDataStore.AddItemAsync(Project);
+                }
+                else
+                    result = await ProjectDataStore.AddItemAsync(Project);
 
 
-                Project = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
+                Project = (Project)result.Data;
 
                 return await Task.FromResult(true);
             }
@@ -116,7 +121,13 @@ namespace Mobile.Code.ViewModels
                 Project.ProjectType = ProjectType;
 
                 Project.Category = ProjectCategory;
-                await ProjectDataStore.AddItemAsync(project);
+                if (App.IsAppOffline)
+                {
+                    await ProjectSQLiteDataStore.UpdateItemAsync(project);
+                }
+                else
+                    await ProjectDataStore.AddItemAsync(project);
+                
                 return await Task.FromResult(true);
             }
 

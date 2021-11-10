@@ -139,14 +139,21 @@
                             <TapGestureRecognizer Command="{Binding SavecredentialCommand, Source={x:Reference GridRemember}}" />
                         </Grid.GestureRecognizers>
                     </Grid>
+                    <StackLayout Grid.Row="7" Orientation="Horizontal">
+                        <Button
+                            Margin="0,16"
+                            BackgroundColor="#2e479b"
+                            Command="{Binding LoginCommand}"
+                            Text="LOG IN"
+                            TextColor="White" />
+                        <Button
+                            Margin="0,16"
+                            BackgroundColor="#2e479b"
+                            Command="{Binding WorkOfflineCommand}"
+                            Text="Work Offline"
+                            TextColor="White" />
+                    </StackLayout>
 
-                    <Button
-                        Grid.Row="7"
-                        Margin="0,16"
-                        BackgroundColor="#2e479b"
-                        Command="{Binding LoginCommand}"
-                        Text="LOG IN"
-                        TextColor="White" />
 
                 </Grid>
 

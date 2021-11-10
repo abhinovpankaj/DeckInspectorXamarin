@@ -27,9 +27,6 @@
     <Compile Remove="ViewModels\BuildingLocationImageViewModel.cs" />
     <Compile Remove="ViewModels\ItemsViewModel.cs" />
     <Compile Remove="ViewModels\ProjectPageViewModel.cs" />
-    <Compile Remove="Views\7_DetailImages\EditBuildingApartmentImage.xaml.cs" />
-    <Compile Remove="Views\7_DetailImages\EditBuildingLocationImage.xaml.cs" />
-    <Compile Remove="Views\7_DetailImages\EditProjectLocationImage.xaml.cs" />
     <Compile Remove="Views\AboutPage.xaml.cs" />
     <Compile Remove="Views\AddProjectLocationImage.xaml.cs" />
     <Compile Remove="Views\BearDetailPage.xaml.cs" />
@@ -64,9 +61,6 @@
     <EmbeddedResource Remove="Camera2Forms\CameraPageOLD.xaml" />
     <EmbeddedResource Remove="Controls\CarouselIndicatorView.xaml" />
     <EmbeddedResource Remove="Page1.xaml" />
-    <EmbeddedResource Remove="Views\7_DetailImages\EditBuildingApartmentImage.xaml" />
-    <EmbeddedResource Remove="Views\7_DetailImages\EditBuildingLocationImage.xaml" />
-    <EmbeddedResource Remove="Views\7_DetailImages\EditProjectLocationImage.xaml" />
     <EmbeddedResource Remove="Views\AboutPage.xaml" />
     <EmbeddedResource Remove="Views\AddProjectLocationImage.xaml" />
     <EmbeddedResource Remove="Views\BearDetailPage.xaml" />
@@ -192,7 +186,6 @@
 
   <ItemGroup>
     <Folder Include="CameraIOS\" />
-    <Folder Include="Views\7_DetailImages\" />
   </ItemGroup>
 
   <ItemGroup>

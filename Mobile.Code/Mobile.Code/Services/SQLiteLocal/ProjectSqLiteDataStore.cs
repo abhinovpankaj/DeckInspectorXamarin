@@ -18,7 +18,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         {
 
             items = new List<Project>();
-            _connection = DependencyService.Get<ISQLite>().GetConnection();
+            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
             _connection.CreateTable<Project>();
 
         }
@@ -32,6 +32,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var project = new Project
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Name = item.Name,
                     Address = item.Address,
                     Description = item.Description,
@@ -42,7 +43,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                     ImageUrl = item.ImageUrl,
                     Category = item.Category
                
-            };
+                };
 
                 res.TotalCount = _connection.Insert(project);
                 SQLiteCommand Command = new SQLiteCommand(_connection);
@@ -52,7 +53,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                 Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
 
                 res.ID = LastRowID64.ToString();
-
+                res.Data = project;
                 res.Message = "Record Inserted Successfully";
                 res.Status = ApiResult.Success;
                 
@@ -70,6 +71,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public Task<Response> CreateInvasiveReport(Project item)
         {
+            //need to implement.
             return Task.FromResult(new Response());
         }
 
