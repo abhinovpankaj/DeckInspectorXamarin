@@ -46,13 +46,9 @@ namespace Mobile.Code.Services.SQLiteLocal
                 };
 
                 res.TotalCount = _connection.Insert(project);
-                SQLiteCommand Command = new SQLiteCommand(_connection);
+               
 
-                Command.CommandText = "select last_insert_rowid()";
-
-                Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
-
-                res.ID = LastRowID64.ToString();
+                res.ID =project.Id;
                 res.Data = project;
                 res.Message = "Record Inserted Successfully";
                 res.Status = ApiResult.Success;

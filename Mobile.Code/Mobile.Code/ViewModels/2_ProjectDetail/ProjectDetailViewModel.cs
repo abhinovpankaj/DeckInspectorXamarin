@@ -126,6 +126,7 @@ namespace Mobile.Code.ViewModels
         public ICommand DeleteCommand => new Command(async () => await Delete());
         private async Task Delete()
         {
+            Response response;
             var result = await Shell.Current.DisplayAlert(
                 "Alert",
                 "Project will be deleted completely. Are you sure?",
@@ -134,18 +135,23 @@ namespace Mobile.Code.ViewModels
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
+
+                if (App.IsAppOffline)
+                {
+                   response = await Task.Run(() =>
+                    ProjectSQLiteDataStore.DeleteItemAsync(Project)
+                    );
+                }
+                else
+                    response =  await Task.Run(() =>
                     ProjectDataStore.DeleteItemAsync(Project)
-                );
+                    );
+
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
-                }
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+                }             
             }
         }
         private bool _IsAccess;
@@ -296,6 +302,12 @@ namespace Mobile.Code.ViewModels
                     {
                         CanInvasiveCreate = true;
                         BtnInvasiveText = "Invasive";
+                    }
+                    else
+                    {
+
+                        CanInvasiveCreate = true;
+                        BtnInvasiveText = "Refresh";
                     }
                 }
                 else

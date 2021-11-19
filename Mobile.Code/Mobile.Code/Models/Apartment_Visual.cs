@@ -4,7 +4,7 @@ namespace Mobile.Code.Models
 {
     public class Apartment_Visual : BindingModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string BuildingApartmentId { get; set; }
         public string Name { get; set; }

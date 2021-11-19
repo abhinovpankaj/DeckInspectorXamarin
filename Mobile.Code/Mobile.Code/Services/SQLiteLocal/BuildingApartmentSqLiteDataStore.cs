@@ -28,6 +28,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var buildingApartment = new BuildingApartment
                 {
+                    Id =  Guid.NewGuid().ToString(),
                     BuildingId = item.BuildingId,
                     Name = item.Name,
 
@@ -40,14 +41,14 @@ namespace Mobile.Code.Services.SQLiteLocal
                 };
 
                 res.TotalCount = _connection.Insert(buildingApartment);
-                SQLiteCommand Command= new SQLiteCommand(_connection);
+                //SQLiteCommand Command= new SQLiteCommand(_connection);
                 
-                Command.CommandText = "select last_insert_rowid()";
+                //Command.CommandText = "select last_insert_rowid()";
 
-                Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
+                //Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
 
-                res.ID = LastRowID64.ToString();
-
+                res.ID = buildingApartment.Id;
+                res.Data = buildingApartment;
                 res.Message = "Record Inserted Successfully";
                 res.Status = ApiResult.Success;
                 

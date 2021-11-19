@@ -13,7 +13,7 @@ namespace Mobile.Code.Models
             set { _pimage = value; OnPropertyChanged("ImageUrl"); }
         }
 
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
 
 

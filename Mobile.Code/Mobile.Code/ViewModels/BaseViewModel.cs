@@ -47,22 +47,22 @@ namespace Mobile.Code.ViewModels
         public IBuildingApartment BuildingApartmentSqLiteDataStore => DependencyService.Get<BuildingApartmentSqLiteDataStore>();
 
         //public IProjectCommonLocationImages ProjectCommonLocationImagesSqLiteDataStore => DependencyService.Get<ProjectCommonLocationImagesSqLiteDataStore>();
-        public IBuildingCommonLocationImages BuildingCommonLocationImagesSqLiteDataStore => DependencyService.Get<BuildingCommonLocationImagesSqLiteDataStore>();
+       // public IBuildingCommonLocationImages BuildingCommonLocationImagesSqLiteDataStore => DependencyService.Get<BuildingCommonLocationImagesSqLiteDataStore>();
 
-        public IBuildingApartmentImages BuildingApartmentImagesSqLiteDataStore => DependencyService.Get<BuildingApartmentImagesSqLiteDataStore>();
+       // public IBuildingApartmentImages BuildingApartmentImagesSqLiteDataStore => DependencyService.Get<BuildingApartmentImagesSqLiteDataStore>();
 
         public IVisualFormProjectLocationDataStore VisualFormProjectLocationSqLiteDataStore => DependencyService.Get<VisualFormProjectLocationSqLiteDataStore>();
-        public IVisualProjectLocationPhotoDataStore VisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<VisualProjectLocationPhotoSqLiteDataStore>();
-        public IInvasiveVisualProjectLocationPhotoDataStore InvasiveVisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
-        public IInvasiveVisualBuildingLocationPhotoDataStore InvasiveVisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
-        public IInvasiveVisualApartmentLocationPhotoDataStore InvasiveVisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
+        //public IVisualProjectLocationPhotoDataStore VisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<VisualProjectLocationPhotoSqLiteDataStore>();
+        //public IInvasiveVisualProjectLocationPhotoDataStore InvasiveVisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
+        //public IInvasiveVisualBuildingLocationPhotoDataStore InvasiveVisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
+        //public IInvasiveVisualApartmentLocationPhotoDataStore InvasiveVisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
 
-        public IVisualBuildingLocationPhotoDataStore VisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<VisualBuildingLocationPhotoSqLiteDataStore>();
+        //public IVisualBuildingLocationPhotoDataStore VisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<VisualBuildingLocationPhotoSqLiteDataStore>();
         public IVisualFormBuildingLocationDataStore VisualFormBuildingLocationSqLiteDataStore => DependencyService.Get<VisualFormBuildingLocationSqLiteDataStore>();
 
 
         public IVisualFormApartmentDataStore VisualFormApartmentSqLiteDataStore => DependencyService.Get<VisualFormApartmentSqLiteDataStore>();
-        public IVisualApartmentLocationPhotoDataStore VisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<VisualApartmentLocationPhotoSqLiteDataStore>();
+     //   public IVisualApartmentLocationPhotoDataStore VisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<VisualApartmentLocationPhotoSqLiteDataStore>();
         bool isBusy = false;
         public bool IsBusy
         {

@@ -59,29 +59,7 @@ namespace Mobile.Code.ViewModels
                 await Shell.Current.Navigation.PopAsync();
             }
         }
-        //private async Task Save()
-        //{
-        //    if (string.IsNullOrEmpty(ProjectBuilding.Name))
-        //    {
-        //        await Shell.Current.DisplayAlert("Alert", "Building name is required", "OK");
-        //        return;
-        //    }
-        //    if (string.IsNullOrEmpty(ProjectBuilding.Id))
-        //    {
-        //        ProjectBuilding.Id = Guid.NewGuid().ToString();
-        //        ProjectBuilding.ProjectId = Project.Id;
-        //        ProjectBuilding.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-        //        await ProjectBuildingDataStore.AddItemAsync(ProjectBuilding);
-        //        await Shell.Current.Navigation.PopAsync();
-        //        await Shell.Current.Navigation.PushAsync(new ProjectBuildingDetail() { BindingContext = new ProjectBuildingDetailViewModel() { ProjectBuilding = ProjectBuilding } });
-        //    }
-        //    else
-        //    {
-        //        await ProjectBuildingDataStore.UpdateItemAsync(ProjectBuilding);
-        //        await Shell.Current.Navigation.PopAsync();
-        //    }
-        //}
-
+      
         private async Task Save()
         {
             if (string.IsNullOrEmpty(ProjectBuilding.Name))
@@ -95,40 +73,27 @@ namespace Mobile.Code.ViewModels
             if (result.Status == ApiResult.Success)
             {
                 IsBusyProgress = false;
-                if (!string.IsNullOrEmpty(result.ID))
+                if (App.IsAppOffline)
                 {
-                    ProjectBuilding.Id = result.ID.ToString();
+                    ProjectBuilding = (ProjectBuilding)result.Data;
                 }
-                //  await Shell.Current.Navigation.PopAsync().ConfigureAwait(false);
-                //  ProjectLocation location = JsonConvert.DeserializeObject<ProjectLocation>(result.ID.ToString());
-                // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                else
+                {
+                    if (!string.IsNullOrEmpty(result.ID))
+                    {
+                        ProjectBuilding.Id = result.ID.ToString();
+                    }
+
+                }
+
                 await Shell.Current.Navigation.PopAsync();
 
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectBuildingDetail))
                     await Shell.Current.Navigation.PushAsync(new ProjectBuildingDetail() { BindingContext = new ProjectBuildingDetailViewModel() { ProjectBuilding = ProjectBuilding } });
-
-                //await Shell.Current.Navigation.PopAsync().ConfigureAwait(true); ;
+               
             }
-            //if (string.IsNullOrEmpty(ProjectLocation.Id))
-            //{
-            //    //  ProjectLocation.Id = Guid.NewGuid().ToString();
-            //    ProjectLocation.ProjectId = Project.Id;
-            //    //  ProjectLocation.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-            //    await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-            //    await Shell.Current.Navigation.PopAsync();
-            //    await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail() { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = ProjectLocation } });
-            //}
-            //else
-            //{
-            //    await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-            //    await Shell.Current.Navigation.PopAsync();
-            //}
-            // Project.ProjectCommanLocations.Add(ProjectLocation);
-
-            //await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail());
-            // await Shell.Current.Navigation.PopAsync();
+            
 
         }
 
@@ -137,23 +102,16 @@ namespace Mobile.Code.ViewModels
             Response result = new Response();
             if (string.IsNullOrEmpty(ProjectBuilding.Id))
             {
-
                 ProjectBuilding.ProjectId = Project.Id;
-                result = await ProjectBuildingDataStore.AddItemAsync(ProjectBuilding);
-
-
-                //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
-
-                //return await Task.FromResult(true);
+            }
+          
+            if (App.IsAppOffline)
+            {
+                result = await ProjectBuildingSqLiteDataStore.AddItemAsync(ProjectBuilding);
             }
             else
-            {
                 result = await ProjectBuildingDataStore.AddItemAsync(ProjectBuilding);
-                //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
-
-                ////await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-                //return await Task.FromResult(true);
-            }
+            
             return await Task.FromResult(result);
 
         }
@@ -172,13 +130,6 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
 
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
             ImgData = new ImageData();
         }
         public void Load()
@@ -195,12 +146,7 @@ namespace Mobile.Code.ViewModels
                 {
                     Heading = "Project Name";
                 }
-                //Items.Clear();
-                //var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-                //}
+                
             }
             catch (Exception ex)
             {

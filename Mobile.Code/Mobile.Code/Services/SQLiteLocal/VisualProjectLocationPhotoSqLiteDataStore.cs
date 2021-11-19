@@ -33,6 +33,11 @@ namespace Mobile.Code.Services.SQLiteLocal
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<VisualProjectLocationPhoto>> GetItemsAsyncByLoacationIDSqLite(string locationVisualID,bool local)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<VisualProjectLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer)
         {
             throw new NotImplementedException();

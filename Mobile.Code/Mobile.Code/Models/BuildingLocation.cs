@@ -11,7 +11,7 @@ namespace Mobile.Code.Models
             get { return _image; }
             set { _image = value; OnPropertyChanged("ImageUrl"); }
         }
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string BuildingId { get; set; }
 

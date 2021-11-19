@@ -93,7 +93,9 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
+                
                 IsBusyProgress = true;
+               
                 var response = await Task.Run(() =>
                       BuildingCommonLocationImagesDataStore.DeleteItemAsync(obj)
                 );
@@ -139,10 +141,17 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
+                Response response = new Response();
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                   BuildingLocationDataStore.DeleteItemAsync(BuildingLocation)
-                );
+                if (App.IsAppOffline)
+                {
+                     response = await Task.Run(() =>
+                   BuildingLocationSqLiteDataStore.DeleteItemAsync(BuildingLocation));
+                }
+                else
+                     response = await Task.Run(() =>
+                       BuildingLocationDataStore.DeleteItemAsync(BuildingLocation));
+
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
@@ -260,9 +269,7 @@ namespace Mobile.Code.ViewModels
 
             BuildingCommonLocationImagesDataStore.AddItemAsync(_locImage);
             Task.Run(() => this.LoadData()).Wait();
-            // LoadData();
-            //ImgPatah = ImgData.Path;
-            // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
+            
         }
         public ICommand NewImagCommand => new Command(async () => await NewImage());
         private async Task NewImage()
@@ -369,29 +376,39 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-
-            if (BuildingLocation != null)
+            if (App.IsAppOffline)
             {
-
-                BuildingLocation = await BuildingLocationDataStore.GetItemAsync(BuildingLocation.Id).ConfigureAwait(true);
-                // BuildingCommonLocationImages = new ObservableCollection<BuildingCommonLocationImages>(await BuildingCommonLocationImagesDataStore.GetItemsAsyncByBuildingId(BuildingLocation.Id));
-
-                VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationDataStore.GetItemsAsyncByBuildingLocationId(BuildingLocation.Id));
-                if (App.LogUser.RoleName == "Admin")
+                IsEditDeleteAccess = true;
+                BuildingLocation = await BuildingLocationSqLiteDataStore.GetItemAsync(BuildingLocation.Id).ConfigureAwait(true);
+                
+                VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationSqLiteDataStore.GetItemsAsyncByBuildingLocationId(BuildingLocation.Id));
+            }
+            else
+            {
+                if (BuildingLocation != null)
                 {
 
-                    IsEditDeleteAccess = true;
-                }
-                else if (BuildingLocation.UserId == App.LogUser.Id.ToString())
-                {
+                    BuildingLocation = await BuildingLocationDataStore.GetItemAsync(BuildingLocation.Id).ConfigureAwait(true);
+                    // BuildingCommonLocationImages = new ObservableCollection<BuildingCommonLocationImages>(await BuildingCommonLocationImagesDataStore.GetItemsAsyncByBuildingId(BuildingLocation.Id));
 
-                    IsEditDeleteAccess = true;
+                    VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationDataStore.GetItemsAsyncByBuildingLocationId(BuildingLocation.Id));
+                    if (App.LogUser.RoleName == "Admin")
+                    {
+
+                        IsEditDeleteAccess = true;
+                    }
+                    else if (BuildingLocation.UserId == App.LogUser.Id.ToString())
+                    {
+
+                        IsEditDeleteAccess = true;
+                    }
+                   
                 }
-                if (App.IsInvasive)
-                {
-                    IsInvasiveControlDisable = true;
-                    IsEditDeleteAccess = false;
-                }
+            }
+            if (App.IsInvasive)
+            {
+                IsInvasiveControlDisable = true;
+                IsEditDeleteAccess = false;
             }
             return await Task.FromResult(true);
         }
@@ -402,11 +419,7 @@ namespace Mobile.Code.ViewModels
             if (complete == true)
             {
 
-
-
                 IsBusyProgress = false;
-
-
             }
             return await Task.FromResult(true);
 
@@ -434,7 +447,7 @@ namespace Mobile.Code.ViewModels
             visualForm = new BuildingLocation_Visual();
             //visualForm.Id = Guid.NewGuid().ToString();
             visualForm.BuildingLocationId = BuildingLocation.Id;
-            VisualBuildingLocationPhotoDataStore.Clear();
+            
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
@@ -510,7 +523,12 @@ namespace Mobile.Code.ViewModels
             vm.BuildingLocation = BuildingLocation;
 
             App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
-            vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+            if (App.IsAppOffline)
+            {
+                vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(parm.Id, false));
+            }
+            else
+                vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
             if (App.IsInvasive == false)
             {
 
@@ -539,22 +557,25 @@ namespace Mobile.Code.ViewModels
                   "Alert",
                   "Are you sure you want to remove?",
                   "Yes", "No");
-
+            Response response;
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                    VisualFormBuildingLocationDataStore.DeleteItemAsync(obj)
-                );
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                    VisualFormBuildingLocationSqLiteDataStore.DeleteItemAsync(obj));
+                }
+                else
+                    response = await Task.Run(() =>
+                    VisualFormBuildingLocationDataStore.DeleteItemAsync(obj));
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
                     await LoadData();
                 }
 
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
+              
 
             }
         }

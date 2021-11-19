@@ -4,7 +4,7 @@ namespace Mobile.Code.Models
 {
     public class VisualProjectLocation
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string ProjectLocationId { get; set; }
         public string Name { get; set; }

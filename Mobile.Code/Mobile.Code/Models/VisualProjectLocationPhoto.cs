@@ -5,7 +5,7 @@ namespace Mobile.Code.Models
     public class VisualProjectLocationPhoto : BindingModel
     {
 
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string VisualLocationId { get; set; }
 

@@ -117,9 +117,15 @@ namespace Mobile.Code.ViewModels
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                    BuildingApartmentDataStore.DeleteItemAsync(BuildingApartment)
-                );
+                Response response = new Response();
+                if (App.IsAppOffline)
+                {
+                     response = await Task.Run(() =>
+                    BuildingApartmentSqLiteDataStore.DeleteItemAsync(BuildingApartment));
+                }
+                else
+                     response = await Task.Run(() => BuildingApartmentDataStore.DeleteItemAsync(BuildingApartment));
+                
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
@@ -439,7 +445,12 @@ namespace Mobile.Code.ViewModels
             //vm.WaterProofingElements.selectedList = parm.ExteriorElements.Split(',').ToList();
             vm.VisualForm = parm;
             vm.BuildingApartment = BuildingApartment;
-            vm.VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+            if (App.IsAppOffline)
+            {
+                vm.VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(parm.Id, false));
+            }
+            else
+                vm.VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
 
 
@@ -454,7 +465,7 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-
+                //todo
                 var photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
                 vm.InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualApartmentLocationPhotoItems);
@@ -479,9 +490,15 @@ namespace Mobile.Code.ViewModels
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                     VisualFormApartmentDataStore.DeleteItemAsync(obj)
-                );
+                Response response = new Response();
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                    VisualFormApartmentSqLiteDataStore.DeleteItemAsync(obj));
+                }
+                else
+                     response = await Task.Run(() =>
+                     VisualFormApartmentDataStore.DeleteItemAsync(obj));
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
@@ -507,20 +524,36 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-
-            BuildingApartment = await BuildingApartmentDataStore.GetItemAsync(BuildingApartment.Id);
-
-            //   BuildingApartmentImages = new ObservableCollection<BuildingApartmentImages>(await BuildingApartmentImagesDataStore.GetItemsAsyncByApartmentID(BuildingApartment.Id));
-            VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>(await VisualFormApartmentDataStore.GetItemsAsyncByApartmentId(BuildingApartment.Id));
-            if (App.LogUser.RoleName == "Admin")
+            if (App.IsAppOffline)
             {
+                if (BuildingApartment!=null)
+                {
+                    BuildingApartment = await BuildingApartmentSqLiteDataStore.GetItemAsync(BuildingApartment.Id);
 
+                    VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>(await VisualFormApartmentSqLiteDataStore.GetItemsAsyncByApartmentId(BuildingApartment.Id));
+                }
+                
+                
                 IsEditDeleteAccess = true;
+                
             }
-            else if (BuildingApartment.UserId == App.LogUser.Id.ToString())
+            else
             {
+                BuildingApartment = await BuildingApartmentDataStore.GetItemAsync(BuildingApartment.Id);
 
-                IsEditDeleteAccess = true;
+                //   BuildingApartmentImages = new ObservableCollection<BuildingApartmentImages>(await BuildingApartmentImagesDataStore.GetItemsAsyncByApartmentID(BuildingApartment.Id));
+                VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>(await VisualFormApartmentDataStore.GetItemsAsyncByApartmentId(BuildingApartment.Id));
+                if (App.LogUser.RoleName == "Admin")
+                {
+
+                    IsEditDeleteAccess = true;
+                }
+                else if (BuildingApartment.UserId == App.LogUser.Id.ToString())
+                {
+
+                    IsEditDeleteAccess = true;
+                }
+               
             }
             if (App.IsInvasive)
             {

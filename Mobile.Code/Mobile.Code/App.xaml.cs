@@ -72,15 +72,15 @@ namespace Mobile.Code
             DependencyService.Register<BuildingCommonLocationImagesSqLiteDataStore>();
             DependencyService.Register<BuildingApartmentImagesSqLiteDataStore>();
             DependencyService.Register<VisualFormProjectLocationSqLiteDataStore>();
-            DependencyService.Register<VisualProjectLocationPhotoSqLiteDataStore>();
+           // DependencyService.Register<VisualProjectLocationPhotoSqLiteDataStore>();
             
-            DependencyService.Register<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
-            DependencyService.Register<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
-            DependencyService.Register<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
             DependencyService.Register<VisualFormBuildingLocationSqLiteDataStore>();
-            DependencyService.Register<VisualBuildingLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<VisualBuildingLocationPhotoSqLiteDataStore>();
             DependencyService.Register<VisualFormApartmentSqLiteDataStore>();
-            DependencyService.Register<VisualApartmentLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<VisualApartmentLocationPhotoSqLiteDataStore>();
 
 
 
