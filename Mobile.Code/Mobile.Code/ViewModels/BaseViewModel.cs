@@ -52,12 +52,7 @@ namespace Mobile.Code.ViewModels
        // public IBuildingApartmentImages BuildingApartmentImagesSqLiteDataStore => DependencyService.Get<BuildingApartmentImagesSqLiteDataStore>();
 
         public IVisualFormProjectLocationDataStore VisualFormProjectLocationSqLiteDataStore => DependencyService.Get<VisualFormProjectLocationSqLiteDataStore>();
-        //public IVisualProjectLocationPhotoDataStore VisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<VisualProjectLocationPhotoSqLiteDataStore>();
-        //public IInvasiveVisualProjectLocationPhotoDataStore InvasiveVisualProjectLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
-        //public IInvasiveVisualBuildingLocationPhotoDataStore InvasiveVisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
-        //public IInvasiveVisualApartmentLocationPhotoDataStore InvasiveVisualApartmentLocationPhotoSqLiteDataStore => DependencyService.Get<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
-
-        //public IVisualBuildingLocationPhotoDataStore VisualBuildingLocationPhotoSqLiteDataStore => DependencyService.Get<VisualBuildingLocationPhotoSqLiteDataStore>();
+       
         public IVisualFormBuildingLocationDataStore VisualFormBuildingLocationSqLiteDataStore => DependencyService.Get<VisualFormBuildingLocationSqLiteDataStore>();
 
 

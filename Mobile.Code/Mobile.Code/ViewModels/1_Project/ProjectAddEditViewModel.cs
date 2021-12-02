@@ -107,12 +107,16 @@ namespace Mobile.Code.ViewModels
                 if (App.IsAppOffline)
                 {
                     result = await ProjectSQLiteDataStore.AddItemAsync(Project);
+
+                    Project = (Project)result.Data;
                 }
                 else
+                {
                     result = await ProjectDataStore.AddItemAsync(Project);
+                    Project = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
+                }
+                    
 
-
-                Project = (Project)result.Data;
 
                 return await Task.FromResult(true);
             }

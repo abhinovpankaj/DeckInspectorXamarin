@@ -30,11 +30,11 @@ namespace Mobile.Code.Services
         public VisualBuildingLocationPhotoDataStore()
         {
             items = new List<VisualBuildingLocationPhoto>();
-            if (App.IsAppOffline)
-            {
+            //if (App.IsAppOffline)
+            //{
                 _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
                 _connection.CreateTable<VisualBuildingLocationPhoto>();
-            }
+            //}
         }
         public async Task<bool> AddItemAsync(VisualBuildingLocationPhoto item)
         {

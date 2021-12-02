@@ -117,10 +117,7 @@ namespace Mobile.Code.Services
                             //byte[] resizedImage = DependencyService.Get<IImageService>().ResizeTheImage(File.ReadAllBytes(ImageUrl), 2000, 1500);
                             formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
                         }
-
-
-
-                        // formData.Add(new ByteArrayContent(resizedImage), "fileToUpload", ServerFileName);
+                       // formData.Add(new ByteArrayContent(resizedImage), "fileToUpload", ServerFileName);
                     }
                     formData.Add(DictionaryItems, "Model");
                     var response = client.PostAsync(endpointUrl, formData).Result;

@@ -98,7 +98,7 @@ namespace Mobile.Code.ViewModels
                 Shell.Current.BindingContext = new AppShell() { LogUserName = App.LogUser.FullName };
                 IsBusyProgress = false;
                 await Shell.Current.GoToAsync("//main");
-
+                App.IsAppOffline = false;
                 //  await Shell.Current.Navigation.PopAsync();
             }
             else

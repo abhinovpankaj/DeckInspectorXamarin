@@ -1,4 +1,5 @@
-﻿using Mobile.Code.ViewModels;
+﻿using Mobile.Code.Models;
+using Mobile.Code.ViewModels;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -22,33 +23,10 @@ namespace Mobile.Code.Views
             base.OnAppearing();
             ProjectDetailViewModel vm = ((ProjectDetailViewModel)this.BindingContext);
             await vm.LoadData();
-            //if(vm.Project.ProjectType == "Invasive"&&vm.CanInvasiveCreate==true)
-            //{
-            //    btnInvasive.Text = "Refresh";
-            //    btnInvasive.IsVisible = true;
-            //}
-            //if (vm.Project.IsAccess==true)
-            //{
-            //    //btnInvasive.Text = "Refresh";
-            //    btnInvasive.IsVisible = true;
-            //}
-            //if (vm.Project.IsAccess==true&& vm.Project.ProjectType == "Invasive")
-            //{
-            //    btnInvasive.Text = "Refresh";
-            //    btnInvasive.IsVisible = true;
-            //}
-            //else
-            //{
-            //    btnInvasive.Text = "Refresh";
-            //    btnInvasive.IsVisible = true;
-            //}
-            // vm.LoadData();
+           
         }
-        //private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    WorkArea p = e.CurrentSelection.FirstOrDefault() as WorkArea;
-        //    await Navigation.PushModalAsync(new Xamarin.Forms.NavigationPage(new WorkAreasPage() { BindingContext = new WorkAreasViewModel(p) }));
-        //}
+        
+
 
         private async void TapGestureRecognizer_TappedLN(object sender, EventArgs e)
         {
@@ -81,6 +59,26 @@ namespace Mobile.Code.Views
         private async void ImageButton_Clicked_1(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("addprojectlocation");
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            offlineProjectPicker.IsEnabled = true;
+            offlineProjectPicker.IsVisible = true;
+        }
+
+        private async void offlineProjectPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (offlineProjectPicker.SelectedIndex > -1)
+            {
+                //Project prj = offlineProjectPicker.Items[offlineProjectPicker.SelectedIndex];
+
+                ProjectDetailViewModel vm = (ProjectDetailViewModel)BindingContext;
+                await vm.PushProjectToServer();
+            }
+
+            offlineProjectPicker.IsEnabled = false;
+            offlineProjectPicker.IsVisible = false;
         }
     }
 }

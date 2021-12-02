@@ -71,6 +71,14 @@ namespace Mobile.Code.Models
 
         public string Category { get; set; }
 
+        private bool _isSynced;
+
+        public bool IsSynced
+        {
+            get { return _isSynced; }
+            set { _isSynced = value; OnPropertyChanged("IsSynced"); }
+        }
+        
     }
 
     public enum ProjectCategory

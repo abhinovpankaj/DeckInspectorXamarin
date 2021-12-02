@@ -17,6 +17,13 @@ namespace Mobile.Code
         //     public ICommand HelpCommand => new Command<string>((url) => Device.OpenUri(new Uri(url)));
         public ICommand GoSettingCommand => new Command(async () => await GoSettingCommandExecute());
         public ICommand GoNewProjectCommand => new Command(async () => await GoNewProjectCommandExecute());
+        public ICommand GoOfflineProjectCommand => new Command(async () => await GoOfflineProject());
+
+        private async Task GoOfflineProject()
+        {
+            Shell.Current.FlyoutIsPresented = false;
+            await Shell.Current.Navigation.PushAsync(new OfflineHomePage());
+        }
 
         public ICommand LogoutCommand => new Command(async () => await GoLogoutCommandExecute());
         async Task GoLogoutCommandExecute()
@@ -65,6 +72,7 @@ namespace Mobile.Code
         void RegisterRoutes()
         {
             Routing.RegisterRoute("home", typeof(HomePage));
+            Routing.RegisterRoute("offlineProject", typeof(OfflineHomePage));
             Routing.RegisterRoute("newProject", typeof(ProjectAddEdit));
             Routing.RegisterRoute("projectDetail", typeof(ProjectDetail));
           

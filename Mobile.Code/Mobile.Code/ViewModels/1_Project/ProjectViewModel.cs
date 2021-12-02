@@ -5,6 +5,7 @@ using Mobile.Code.Views._3_ProjectLocation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -14,6 +15,7 @@ namespace Mobile.Code.ViewModels
     {
 
         public Command ProjectDetailCommand { get; set; }
+        
         public Command AddNewCommand { get; set; }
 
         public ObservableCollection<Project> Items { get; set; }
@@ -26,6 +28,7 @@ namespace Mobile.Code.ViewModels
             get { return _allProjects; }
             set { _allProjects = value; OnPropertyChanged("AllProjects"); }
         }
+        
         private ObservableCollection<Project> _aProjectslist;
 
         public ObservableCollection<Project> Projects
@@ -108,6 +111,7 @@ namespace Mobile.Code.ViewModels
             CreateInvasiveCommand = new Command<Project>(async (Project project) => await CreateInvasive(project));
             AddNewCommand = new Command(async () => await ExecuteAddNewCommand());
             InvasiveDetailCommand = new Command<Project>(async (Project project) => await ExecuteInvasiveDetailCommand(project));
+           
             //LoadData();
         }
 
@@ -145,6 +149,8 @@ namespace Mobile.Code.ViewModels
             }
             else
                 AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
+
+            
             return await Task.FromResult(true);
 
 
@@ -182,9 +188,10 @@ namespace Mobile.Code.ViewModels
                 await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
             }
 
-
+            
             //}
         }
+      
     }
 
 

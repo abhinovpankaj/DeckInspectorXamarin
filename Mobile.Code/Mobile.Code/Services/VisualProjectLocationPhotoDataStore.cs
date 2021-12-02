@@ -32,11 +32,15 @@ namespace Mobile.Code.Services
         public VisualProjectLocationPhotoDataStore()
         {
             items = new List<VisualProjectLocationPhoto>();
-            if (App.IsAppOffline)
-            {
-                _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
-                _connection.CreateTable<VisualProjectLocationPhoto>();
-            }
+            //if (App.IsAppOffline)
+            //{
+                createConnection();
+           // }
+        }
+        private void createConnection()
+        {
+            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection.CreateTable<VisualProjectLocationPhoto>();
         }
         public async Task<bool> AddItemAsync(VisualProjectLocationPhoto item)
         {
