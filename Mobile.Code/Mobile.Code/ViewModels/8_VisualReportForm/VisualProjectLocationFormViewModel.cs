@@ -414,7 +414,14 @@ namespace Mobile.Code.ViewModels
                         {
                             List<string> list = VisualProjectLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                             response = await VisualFormProjectLocationSqLiteDataStore.AddItemAsync(VisualForm, list);
-                            
+                            if (response.Status == ApiResult.Success)
+                            {
+                                foreach (var item in VisualProjectLocationPhotoItems)
+                                {
+                                    item.VisualLocationId = response.ID;
+                                    await VisualProjectLocationPhotoDataStore.AddItemAsync(item, true);
+                                }
+                            }
 
                         }
                         else
@@ -457,7 +464,9 @@ namespace Mobile.Code.ViewModels
                         {
                             List<string> list = VisualProjectLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                             response = await VisualFormProjectLocationDataStore.AddItemAsync(VisualForm, list);
-                            // VisualProjectLocationPhotoItems.Clear();
+
+                            
+
 
                         }
                         else

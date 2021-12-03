@@ -467,6 +467,11 @@ namespace Mobile.Code.ViewModels
                             List<string> list = VisualApartmentLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                             response = await VisualFormApartmentSqLiteDataStore.AddItemAsync(VisualForm, list);
                             // return await Task.FromResult(response);
+                            foreach (var item in VisualApartmentLocationPhotoItems)
+                            {
+                                item.VisualApartmentId = response.ID;
+                                await VisualApartmentLocationPhotoDataStore.AddItemAsync(item, true);
+                            }
                         }
                         else
                         {
@@ -498,7 +503,7 @@ namespace Mobile.Code.ViewModels
 
                                     //response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, App.VisualEditTrackingForInvasive);
                                     var invasiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "TRUE").ToList();
-                                    response = await VisualFormApartmentDataStore.UpdateItemAsync(VisualForm, invasiveImages);
+                                    response = await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(VisualForm, invasiveImages);
                                     var conclusiveImages = App.VisualEditTrackingForInvasive.Where(x => x.ImageType == "CONCLUSIVE").ToList();
                                     response = await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(VisualForm, conclusiveImages, "CONCLUSIVE");
                                 }

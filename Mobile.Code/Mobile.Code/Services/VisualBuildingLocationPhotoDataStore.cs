@@ -14,7 +14,7 @@ namespace Mobile.Code.Services
     public interface IVisualBuildingLocationPhotoDataStore
     {
         void Clear();
-        Task<bool> AddItemAsync(VisualBuildingLocationPhoto item);
+        Task<bool> AddItemAsync(VisualBuildingLocationPhoto item , bool isOffline=false);
         Task<bool> UpdateItemAsync(VisualBuildingLocationPhoto item);
         Task<bool> DeleteItemAsync(VisualBuildingLocationPhoto item);
         Task<VisualBuildingLocationPhoto> GetItemAsync(string id);
@@ -36,14 +36,14 @@ namespace Mobile.Code.Services
                 _connection.CreateTable<VisualBuildingLocationPhoto>();
             //}
         }
-        public async Task<bool> AddItemAsync(VisualBuildingLocationPhoto item)
+        public async Task<bool> AddItemAsync(VisualBuildingLocationPhoto item, bool isOffline=false)
         {
             //items.Add(item);
 
             //return await Task.FromResult(true);
             items.Add(item);
             App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualBuildingId, Status = "New", IsServerData = false });
-            if (App.IsAppOffline)
+            if (isOffline)
             {
                 InsertPhoto(item);
             }

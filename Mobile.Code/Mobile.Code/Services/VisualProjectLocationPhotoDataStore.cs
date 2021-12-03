@@ -13,7 +13,7 @@ namespace Mobile.Code.Services
 {
     public interface IVisualProjectLocationPhotoDataStore
     {
-        Task<bool> AddItemAsync(VisualProjectLocationPhoto item);
+        Task<bool> AddItemAsync(VisualProjectLocationPhoto item, bool isOffline = false);
 
         void Clear();
         Task<bool> UpdateItemAsync(VisualProjectLocationPhoto item, bool IsEditVisual);
@@ -42,7 +42,7 @@ namespace Mobile.Code.Services
             _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
             _connection.CreateTable<VisualProjectLocationPhoto>();
         }
-        public async Task<bool> AddItemAsync(VisualProjectLocationPhoto item)
+        public async Task<bool> AddItemAsync(VisualProjectLocationPhoto item, bool isOffline = false)
         {
             //if(App.IsInvasive==true)
             //{
@@ -50,7 +50,7 @@ namespace Mobile.Code.Services
             //}
             items.Add(item);
             App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualLocationId, Status = "New", IsServerData = false });
-            if (App.IsAppOffline)
+            if (isOffline)
             {
                 InsertPhoto(item);
             }

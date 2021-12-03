@@ -13,6 +13,11 @@ namespace Mobile.Code.Services.SQLiteLocal
             throw new NotImplementedException();
         }
 
+        public Task<bool> AddItemAsync(VisualProjectLocationPhoto item, bool isOffline = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Clear()
         {
             throw new NotImplementedException();

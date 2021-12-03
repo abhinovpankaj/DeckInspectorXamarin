@@ -394,6 +394,11 @@ namespace Mobile.Code.ViewModels
                         {
                             List<string> list = VisualBuildingLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                             response = await VisualFormBuildingLocationSqLiteDataStore.AddItemAsync(VisualForm, list);
+                            foreach (var item in VisualBuildingLocationPhotoItems)
+                            {
+                                item.VisualBuildingId = response.ID;
+                                await VisualBuildingLocationPhotoDataStore.AddItemAsync(item, true);
+                            }
                             //  return await Task.FromResult(response);
                         }
                         else

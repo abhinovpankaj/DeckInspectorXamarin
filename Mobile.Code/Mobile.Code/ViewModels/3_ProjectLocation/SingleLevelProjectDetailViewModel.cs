@@ -552,7 +552,9 @@ namespace Mobile.Code.ViewModels
                 }
 
                 IsEditDeleteAccess = true;
+                VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
             }
+            //online
             else
             {
                 Project = await ProjectDataStore.GetItemAsync(Project.Id);
@@ -574,7 +576,7 @@ namespace Mobile.Code.ViewModels
                     }
 
                     IsEditDeleteAccess = true;
-                    VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
+                    
                 }
                 else if (Project.UserId == App.LogUser.Id.ToString())
                 {

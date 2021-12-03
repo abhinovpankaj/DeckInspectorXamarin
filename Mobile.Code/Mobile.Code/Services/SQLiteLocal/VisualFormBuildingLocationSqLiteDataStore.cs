@@ -42,13 +42,9 @@ namespace Mobile.Code.Services.SQLiteLocal
                     ImageDescription = item.ImageDescription
                 };
                 res.TotalCount = _connection.Insert(visualApt);
-                SQLiteCommand Command = new SQLiteCommand(_connection);
+               
 
-                Command.CommandText = "select last_insert_rowid()";
-
-                Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
-
-                res.ID = LastRowID64.ToString();
+                res.ID = visualApt.Id;
                 res.Data = visualApt;
                 res.Message = "Record Inserted Successfully";
                 res.Status = ApiResult.Success;
