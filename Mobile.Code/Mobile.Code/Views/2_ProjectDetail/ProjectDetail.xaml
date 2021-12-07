@@ -21,16 +21,12 @@
     <ContentPage.Content>
 
         <AbsoluteLayout>
-            <Picker x:Name="offlineProjectPicker"
-                IsVisible="{Binding ShowOfflineProjects}"
-                ItemDisplayBinding="{Binding Name}"
-                ItemsSource="{Binding OfflineProjects}"
-                SelectedItem="{Binding SelectedOfflineProject}"
-                    SelectedIndexChanged="offlineProjectPicker_SelectedIndexChanged"/>
+
             <controls:Loading
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress}" />
+            <!--<d:Editor Text="{Binding SyncProgress}" IsVisible="{Binding IsBusyProgress}"/>-->
             <Grid
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
@@ -39,6 +35,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <Grid
                     x:Name="gridtoolbar"
                     Padding="0"
@@ -111,22 +108,30 @@
                         Text=""
                         TextColor="Black"
                         VerticalOptions="CenterAndExpand" />
-                    <Button
+
+                    <Picker
+                        x:Name="offlineProjectPicker"
                         Margin="0,15,0,0"
-                        BackgroundColor="#2e479b"
-                        BorderWidth="1"
-                         Clicked="Button_Clicked"
-                        FontFamily="{StaticResource Montserrat-Regular}"
+                        Background=" #2e479b"
                         HeightRequest="35"
-                        HorizontalOptions="CenterAndExpand"
-                        ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                Glyph={x:Static helpers:IconFont.Sync},
-                                                Color=White,
-                                                Size=20}"
-                        Text="Sync"
-                        TextColor="White"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsOnline}"
+                        ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding OfflineProjects}"
+                        SelectedIndexChanged="offlineProjectPicker_SelectedIndexChanged"
+                        SelectedItem="{Binding SelectedOfflineProject}"
                         VerticalOptions="StartAndExpand"
                         WidthRequest="100" />
+                    <Label
+                        Margin="0,20,0,0"
+                        BackgroundColor="Transparent"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="15"
+                        HorizontalOptions="CenterAndExpand"
+                        IsVisible="{Binding IsOnline}"
+                        Text="Sync With"
+                        TextColor="White"
+                        VerticalOptions="StartAndExpand" />
                     <Image
                         x:Name="imgbtnEdit"
                         Margin="10"
@@ -404,10 +409,6 @@
                 </ScrollView>
             </Grid>
         </AbsoluteLayout>
-
-
-
-
     </ContentPage.Content>
 
 

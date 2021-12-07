@@ -16,6 +16,7 @@ namespace Mobile.Code.Models
 
         public string Description { get; set; }
 
+        public string OnlineId { get; set; }
 
 
 

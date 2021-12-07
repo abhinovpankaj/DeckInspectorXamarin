@@ -139,7 +139,10 @@
                             <TapGestureRecognizer Command="{Binding SavecredentialCommand, Source={x:Reference GridRemember}}" />
                         </Grid.GestureRecognizers>
                     </Grid>
-                    <StackLayout Grid.Row="7" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <StackLayout
+                        Grid.Row="7"
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal">
                         <Button
                             Margin="0,16"
                             BackgroundColor="#2e479b"

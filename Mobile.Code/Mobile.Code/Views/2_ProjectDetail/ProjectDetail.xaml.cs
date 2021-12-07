@@ -40,7 +40,6 @@ namespace Mobile.Code.Views
         }
         private async void TapGestureRecognizer_TappedBN(object sender, EventArgs e)
         {
-
             await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new AddProjectBuilding()));
         }
         private async void TapGestureRecognizer_Building(object sender, EventArgs e)
@@ -75,10 +74,11 @@ namespace Mobile.Code.Views
 
                 ProjectDetailViewModel vm = (ProjectDetailViewModel)BindingContext;
                 await vm.PushProjectToServer();
+                vm.IsPickerVisible = false;
             }
 
-            offlineProjectPicker.IsEnabled = false;
-            offlineProjectPicker.IsVisible = false;
+            //offlineProjectPicker.IsEnabled = false;
+            //offlineProjectPicker.IsVisible = false;
         }
     }
 }

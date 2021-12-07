@@ -35,7 +35,8 @@ namespace Mobile.Code.Services.SQLiteLocal
                     UserId = App.LogUser.Id.ToString(),
                     ImageDescription = item.ImageDescription,
                     ImageName = item.ImageName,
-                    ImageUrl = item.ImageUrl
+                    ImageUrl = item.ImageUrl,
+                    OnlineId= item.OnlineId
                 };
 
                 res.TotalCount = _connection.Insert(projectLocation);
@@ -63,7 +64,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                _connection.Update(item);
+                var reult= _connection.Update(item);
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
                 

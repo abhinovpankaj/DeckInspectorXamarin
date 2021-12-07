@@ -13,7 +13,7 @@ namespace Mobile.Code.Models
 
         public string ExteriorElements { get; set; }
 
-
+        public string OnlineId { get; set; }
         public string WaterProofingElements { get; set; }
         public string ConditionAssessment { get; set; }
         public string VisualReview { get; set; }

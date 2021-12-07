@@ -19,7 +19,7 @@ namespace Mobile.Code.Models
         public string BuildingId { get; set; }
 
 
-
+        public string OnlineId { get; set; }
 
 
         public string Name { get; set; }

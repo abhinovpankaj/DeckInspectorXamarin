@@ -99,34 +99,11 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             try
             {
-                var visualApt = new BuildingLocation_Visual
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = item.Name,
-                    BuildingLocationId = item.BuildingLocationId,
-                    AdditionalConsideration = item.AdditionalConsideration,
-                    ExteriorElements = item.ExteriorElements,
-                    WaterProofingElements = item.WaterProofingElements,
-                    ConditionAssessment = item.ConditionAssessment,
-                    VisualReview = item.VisualReview,
-                    AnyVisualSign = item.AnyVisualSign,
-                    FurtherInasive = item.FurtherInasive,
-                    LifeExpectancyEEE = item.LifeExpectancyEEE,
-                    LifeExpectancyAWE = item.LifeExpectancyAWE,
-                    ImageDescription = item.ImageDescription,
-                    ConclusiveComments = item.ConclusiveComments,
-                    ConclusiveLifeExpEEE = item.ConclusiveLifeExpEEE,
-                    ConclusiveLifeExpLBC = item.ConclusiveLifeExpLBC,
-                    ConclusiveLifeExpAWE = item.ConclusiveLifeExpAWE,
-                    ConclusiveAdditionalConcerns = item.ConclusiveAdditionalConcerns,
-                    IsPostInvasiveRepairsRequired = item.IsPostInvasiveRepairsRequired,
-                    IsInvasiveRepairApproved = item.IsInvasiveRepairApproved,
-                    IsInvasiveRepairComplete = item.IsInvasiveRepairComplete
-                };
-                res.TotalCount = _connection.Update(visualApt);
-                SQLiteCommand Command = new SQLiteCommand(_connection);
+                
+                res.TotalCount = _connection.Update(item);
+                
 
-                res.Data = visualApt;
+                res.Data = item;
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
             }

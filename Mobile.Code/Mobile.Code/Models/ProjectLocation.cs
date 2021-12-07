@@ -35,5 +35,7 @@ namespace Mobile.Code.Models
         public int SeqNo { get; set; }
         public string AssignTo { get; set; }
         public string Username { get; set; }
+
+        public string OnlineId { get; set; }
     }
 }

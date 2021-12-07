@@ -5,6 +5,7 @@ using Mobile.Code.Views._3_ProjectLocation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -142,6 +143,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
+            Debug.WriteLine("On Project list page");
             IsBusyProgress = true;
             if (App.IsAppOffline)
             {

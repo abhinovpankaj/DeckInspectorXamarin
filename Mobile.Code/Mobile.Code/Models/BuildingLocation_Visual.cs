@@ -47,5 +47,7 @@ namespace Mobile.Code.Models
         public string ConclusiveLifeExpLBC { get; set; }
         public string ConclusiveLifeExpAWE { get; set; }
         public string ConclusiveAdditionalConcerns { get; set; }
+
+        public string OnlineId  { get; set; }
     }
 }
