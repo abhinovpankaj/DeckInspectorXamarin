@@ -18,36 +18,57 @@ namespace Mobile.Code.Services
         Task<bool> DeleteItemAsync(VisualApartmentLocationPhoto item);
         Task<VisualApartmentLocationPhoto> GetItemAsync(string id);
         Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsync(bool forceRefresh = false);
-        Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer);
+        Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer, bool  isSync=false);
         Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectIDSqLite(string aptId, bool loadLocally);
+        Task<IEnumerable<MultiImage>> GetMultiImagesAsyncByLocationIDSqLite(string locationVisualID, bool loadLocally);
         void Clear();
     }
     public class VisualApartmentLocationPhotoDataStore : IVisualApartmentLocationPhotoDataStore
     {
         List<VisualApartmentLocationPhoto> items;
-
+        List<MultiImage> multiImages;
         private SQLiteConnection _connection;
         public VisualApartmentLocationPhotoDataStore()
         {
             items = new List<VisualApartmentLocationPhoto>();
+            multiImages = new List<MultiImage>();
             //if (App.IsAppOffline)
             //{
-                _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
-                _connection.CreateTable<VisualApartmentLocationPhoto>();
+            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection.CreateTable<VisualApartmentLocationPhoto>();
+            _connection.CreateTable<MultiImage>();
             //}
         }
         public async Task<bool> AddItemAsync(VisualApartmentLocationPhoto item, bool isOffline)
         {
+
             items.Add(item);
-            App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false });
+            var multiImage = new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "New", IsServerData = false };
+            App.VisualEditTracking.Add(multiImage);
+
             if (isOffline)
             {
                 InsertPhoto(item);
+                InsertMultiPhoto(multiImage);
             }
-
             return await Task.FromResult(true);
+          
         }
+        private void InsertMultiPhoto(MultiImage multiImage)
+        {
+            Response res = new Response();
+            var multi = _connection.Table<MultiImage>().FirstOrDefault(t => t.Id == multiImage.Id);
+            if (multi == null)
+            {
+                res.TotalCount = _connection.Insert(multiImage);
+            }
+            else
+                res.TotalCount = _connection.Update(multiImage);
 
+
+            res.ID = multiImage.Id;
+            res.Data = multiImage;
+        }
         public async Task<bool> UpdateItemAsync(VisualApartmentLocationPhoto item)
         {
 
@@ -67,9 +88,13 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTracking.Remove(oldITRaktem);
 
-
-                App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Update", IsServerData = true });
-
+                var updateMulti = new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Update", IsServerData = true };
+                App.VisualEditTracking.Add(updateMulti);
+                if (App.IsAppOffline)
+                {
+                    DeleteMultiPhoto(oldITRaktem);
+                    InsertMultiPhoto(updateMulti);
+                }
             }
             if (App.IsAppOffline)
             {
@@ -95,8 +120,13 @@ namespace Mobile.Code.Services
             {
                 App.VisualEditTracking.Remove(oldITRaktem);
 
-                App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true });
-
+                var delMulti = new MultiImage() { Id = item.Id, Image = item.ImageUrl, ParentId = item.VisualApartmentId, Status = "Delete", IsDelete = true, IsServerData = true };
+                App.VisualEditTracking.Add(delMulti);
+                if (App.IsAppOffline)
+                {
+                    DeleteMultiPhoto(oldITRaktem);
+                    InsertMultiPhoto(delMulti);
+                }
 
 
             }
@@ -104,7 +134,10 @@ namespace Mobile.Code.Services
             if (oldDelete != null)
             {
                 App.VisualEditTracking.Remove(oldDelete);
-
+                if (App.IsAppOffline)
+                {
+                    DeleteMultiPhoto(oldDelete);
+                }
             }
             if (App.IsAppOffline)
             {
@@ -125,7 +158,7 @@ namespace Mobile.Code.Services
         }
 
 
-        public async Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer)
+        public async Task<IEnumerable<VisualApartmentLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer, bool isSync=false)
         {
 
             if (loadServer == false)
@@ -151,7 +184,13 @@ namespace Mobile.Code.Services
                         items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
                         foreach (var item in items)
                         {
-                            App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                            var onlineImage = new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
+                            if (isSync)
+                            {
+                                InsertMultiPhoto(onlineImage);
+                            }
+                            
+                            App.VisualEditTracking.Add(onlineImage);
                             App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
                         }
                         response.EnsureSuccessStatusCode();
@@ -184,9 +223,25 @@ namespace Mobile.Code.Services
 
             return await Task.FromResult(items);
         }
+        public async Task<IEnumerable<MultiImage>> GetMultiImagesAsyncByLocationIDSqLite(string locationVisualID, bool loadLocally)
+        {
+            if (loadLocally)
+            {
+                return await Task.FromResult(multiImages.Where(c => c.ParentId == locationVisualID && c.IsDelete == false));
+            }
+            else
+            {
+                multiImages = _connection.Table<MultiImage>().Where(t => t.ParentId == locationVisualID).ToList();
+
+            }
+
+            return await Task.FromResult(multiImages);
+        }
         public void Clear()
         {
             items.Clear();
+            multiImages.Clear();
+            //_connection.DeleteAll<MultiImage>();
         }
 
 
@@ -195,15 +250,12 @@ namespace Mobile.Code.Services
         {
 
             Response res = new Response();
-            
-            res.TotalCount = _connection.Insert(item);
-            SQLiteCommand Command = new SQLiteCommand(_connection);
-
-            Command.CommandText = "select last_insert_rowid()";
-
-            Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
-
-            res.ID = LastRowID64.ToString();
+            var pic = _connection.Table<VisualApartmentLocationPhoto>().FirstOrDefault(t => t.Id == item.Id);
+            if (pic == null)
+                res.TotalCount = _connection.Insert(item);
+            else
+                res.TotalCount = _connection.Update(item);
+            res.ID = item.Id;
             res.Data = item;
         }
 
@@ -247,6 +299,23 @@ namespace Mobile.Code.Services
                 res.Status = ApiResult.Fail;
             }
             
+        }
+        private void DeleteMultiPhoto(MultiImage oldITRaktem)
+        {
+            Response res = new Response();
+            try
+            {
+                _connection.Delete<MultiImage>(oldITRaktem.Id);
+
+                res.Message = "Record Deleted Successfully";
+                res.Status = ApiResult.Success;
+
+            }
+            catch (Exception)
+            {
+                res.Message = "Deletion Failed";
+                res.Status = ApiResult.Fail;
+            }
         }
     }
 }

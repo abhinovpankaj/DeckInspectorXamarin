@@ -464,10 +464,6 @@ namespace Mobile.Code.ViewModels
                         {
                             List<string> list = VisualProjectLocationPhotoItems.Select(c => c.ImageUrl).ToList();
                             response = await VisualFormProjectLocationDataStore.AddItemAsync(VisualForm, list);
-
-                            
-
-
                         }
                         else
                         {
@@ -967,13 +963,18 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-                await VisualProjectLocationPhotoDataStore.AddItemAsync(obj);
+                
                 if (App.IsAppOffline)
                 {
+                    await VisualProjectLocationPhotoDataStore.AddItemAsync(obj,true);
                     VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(VisualForm.Id,true));
                 }
                 else
+                {
+                    await VisualProjectLocationPhotoDataStore.AddItemAsync(obj);
                     VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                }
+                    
                 UnitPhotoCount = VisualProjectLocationPhotoItems.Count.ToString();
             }
         }

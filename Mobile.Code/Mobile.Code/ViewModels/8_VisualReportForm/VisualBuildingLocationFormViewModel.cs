@@ -948,13 +948,18 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-                await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
+                
                 if (App.IsAppOffline)
                 {
                     VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
+                    await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj, true);
                 }
                 else
+                {
                     VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                    await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
+                }
+                   
                 UnitPhotoCount = VisualBuildingLocationPhotoItems.Count.ToString();
             }
         }

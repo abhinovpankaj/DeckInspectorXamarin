@@ -150,7 +150,7 @@ namespace Mobile.Code.ViewModels
         {
             await Shell.Current.GoToAsync($"newProject?Id={Id}");
         }
-
+        public bool IsPickerVisible { get; set; }
         public SingleLevelProjectDetailViewModel()
         {
             if (App.ReportType == ReportType.Visual)
@@ -169,9 +169,15 @@ namespace Mobile.Code.ViewModels
             EditCommand = new Command(async () => await Edit());
             SaveCommand = new Command(async () => await Save());
             DeleteCommand = new Command(async () => await Delete());
+            ShowPickerCommand = new Command(() => OpenOfflineProjectList());
 
-
-    }
+        }
+        public Command ShowPickerCommand { get; set; }
+        private void OpenOfflineProjectList()
+        {
+            IsPickerVisible = true;
+            OnPropertyChanged("IsPickerVisible");
+        }
         public Command CreateInvasiveCommand { get; set; }
         async Task CreateInvasive()
         {
@@ -622,7 +628,8 @@ namespace Mobile.Code.ViewModels
 
                 }
                 VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
-
+                var allOffProjs = await ProjectSQLiteDataStore.GetItemsAsync(true);
+                OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
             }
 
             return await Task.FromResult(true);
@@ -649,6 +656,112 @@ namespace Mobile.Code.ViewModels
             set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
         }
 
+        private Project _selectedOfflineProject;
+        public Project SelectedOfflineProject
+        {
+            get { return _selectedOfflineProject; }
+            set { _selectedOfflineProject = value; OnPropertyChanged("SelectedOfflineProject"); }
+        }
+        public Command SyncProjectCommand { get; set; }
+        private ObservableCollection<Project> _offlineProjects;
+        public ObservableCollection<Project> OfflineProjects
+        {
+            get { return _offlineProjects; }
+            set { _offlineProjects = value; OnPropertyChanged("OfflineProjects"); }
+        }
+
+        public async Task PushProjectToServer()
+        {
+
+            bool syncedSuccessfully = true;
+            IsBusyProgress = true;
+
+            var res = await Task.Run(async () =>
+            {
+                Response response = new Response();
+                //var localProject = await ProjectSQLiteDataStore.GetItemAsync(SelectedOfflineProject.Id);
+
+                //insert in db
+
+                
+                var VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>
+                            (await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(SelectedOfflineProject.Id));
+
+
+                _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id);
+                foreach (var formLocationItem in VisualFormProjectLocationItems)
+                {
+                    //add lowest level  location data
+                    string localFormId = formLocationItem.Id;
+                    var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
+                        .GetItemsAsyncByLoacationIDSqLite(formLocationItem.Id, false));
+
+                    List<string> imageList = images.Select(c => c.ImageUrl).ToList();
+
+                    if (formLocationItem.OnlineId == null)
+                    {
+                        formLocationItem.Id = null;
+                    }
+                    else
+                    {
+                        var existingformLocation = await VisualFormProjectLocationDataStore.GetItemAsync(formLocationItem.OnlineId);
+                        if (existingformLocation == null)
+                        {
+                            formLocationItem.Id = null;
+                        }
+                        else
+                        {
+                            formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
+                        }
+                    }
+                    formLocationItem.ProjectLocationId =Project.Id;
+                    Response locationResult;
+                    if (formLocationItem.Id == null)
+                    {
+
+                        locationResult = await VisualFormProjectLocationDataStore.AddItemAsync(formLocationItem, imageList);
+                        List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                            (localFormId, false));
+
+                        formLocationItem.OnlineId = locationResult.ID;
+                        formLocationItem.Id = localFormId;
+                        formLocationItem.ProjectLocationId = SelectedOfflineProject.Id;
+                        //_ = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(locationResult.ID, true, true);
+                        //App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
+                        //var onlineImages= 
+                        await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, null);
+                    }
+                    else
+                    {
+
+                        List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                            (localFormId, false));
+                        List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                            (formLocationItem.Id, false));
+                        ImagesList.AddRange(OnlineImagesList);
+                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList);
+
+                    }
+                    if (locationResult.Status == ApiResult.Success)
+                    {
+                        response.Message = response.Message + "\n" + formLocationItem.Name + "added successully.";
+
+                    }
+                    else
+                    {
+                        syncedSuccessfully = false;
+                        response.Message = response.Message + "\n" + formLocationItem.Name + "failed to added.";
+                    }
+
+                }
+   
+                Project.IsSynced = syncedSuccessfully;
+                await ProjectSQLiteDataStore.UpdateItemAsync(Project);
+                return response;
+            });
+
+            IsBusyProgress = false;
+        }
     }
 
 }
