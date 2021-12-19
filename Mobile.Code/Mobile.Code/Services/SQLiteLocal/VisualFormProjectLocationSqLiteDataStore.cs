@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var visualApt = new ProjectLocation_Visual
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id??Guid.NewGuid().ToString(),
                     Name = item.Name,
                     ProjectLocationId = item.ProjectLocationId,
                     AdditionalConsideration = item.AdditionalConsideration,

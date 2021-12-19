@@ -32,7 +32,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var project = new Project
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id ?? Guid.NewGuid().ToString(),
                     Name = item.Name,
                     Address = item.Address,
                     Description = item.Description,

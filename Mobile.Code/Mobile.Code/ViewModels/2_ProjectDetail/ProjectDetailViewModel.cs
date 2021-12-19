@@ -537,7 +537,7 @@ namespace Mobile.Code.ViewModels
                                 formLocationItem.OnlineId = locationResult.ID;
                                 formLocationItem.Id = localFormId;
                                 formLocationItem.ProjectLocationId = localId;
-                               // _=await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(locationResult.ID, true,true);
+                                //var onlineImages = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(locationResult.ID, true,true);
                                 //App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
                                 //var onlineImages= 
                                 await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, null);
@@ -547,9 +547,9 @@ namespace Mobile.Code.ViewModels
                                 
                                 List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
                                     (localFormId, false));
-                                List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
-                                    (formLocationItem.Id, false));
-                                ImagesList.AddRange(OnlineImagesList);
+                                //List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                                //    (formLocationItem.Id, false));
+                                //ImagesList.AddRange(OnlineImagesList);
                                 locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem,ImagesList );
 
                             }

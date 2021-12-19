@@ -218,6 +218,8 @@ namespace Mobile.Code.Services
             }
             else
             {
+                var allitems = _connection.Table<VisualProjectLocationPhoto>().ToList();
+
                 items = _connection.Table<VisualProjectLocationPhoto>().Where(t => t.VisualLocationId == locationVisualID).ToList();
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
                 foreach (var item in items)
