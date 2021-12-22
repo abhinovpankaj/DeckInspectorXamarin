@@ -413,8 +413,14 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-
-                var photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                IEnumerable<VisualProjectLocationPhoto> photos;
+                if (App.IsAppOffline)
+                {
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                }
+                else
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                
                 vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
@@ -675,7 +681,13 @@ namespace Mobile.Code.ViewModels
                 }
                 VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
                 var allOffProjs = await ProjectSQLiteDataStore.GetItemsAsync(true);
-                OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
+                
+                if (App.IsInvasive)
+                {
+                    OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category && x.ProjectType == "Invasive"));
+                }
+                else
+                    OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
             }
 
             return await Task.FromResult(true);
@@ -785,8 +797,9 @@ namespace Mobile.Code.ViewModels
                         //List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
                         //    (formLocationItem.Id, false));
                         //ImagesList.AddRange(OnlineImagesList);
-                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList);
-
+                        
+                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "TRUE").ToList());
+                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "CONCLUSIVE").ToList(), "CONCLUSIVE");
                     }
                     if (locationResult.Status == ApiResult.Success)
                     {

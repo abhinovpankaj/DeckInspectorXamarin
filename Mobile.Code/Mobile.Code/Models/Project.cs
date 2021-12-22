@@ -68,8 +68,13 @@ namespace Mobile.Code.Models
             get { return _IsAccess; }
             set { _IsAccess = value; OnPropertyChanged("IsAccess"); }
         }
-
-        public string Category { get; set; }
+        private string _Category;
+        public string Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+       
 
         private bool _isSynced;
 

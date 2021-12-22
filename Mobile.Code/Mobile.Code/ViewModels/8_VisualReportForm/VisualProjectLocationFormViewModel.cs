@@ -951,9 +951,20 @@ namespace Mobile.Code.ViewModels
         {
             if (App.IsInvasive == true)
             {
+                IEnumerable<VisualProjectLocationPhoto> photos;
                 //updated for Conclusive
-                await InvasiveVisualProjectLocationPhotoDataStore.AddItemAsync(obj);
-                var photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                if (App.IsAppOffline)
+                {
+                    await InvasiveVisualProjectLocationPhotoDataStore.AddItemAsync(obj, true);
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(VisualForm.Id, true);
+                }
+                else
+                {
+                    await InvasiveVisualProjectLocationPhotoDataStore.AddItemAsync(obj);
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                }
+                //await InvasiveVisualProjectLocationPhotoDataStore.AddItemAsync(obj);
+                //var photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
                 InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualProjectLocationPhotoItems.Count.ToString();
 
