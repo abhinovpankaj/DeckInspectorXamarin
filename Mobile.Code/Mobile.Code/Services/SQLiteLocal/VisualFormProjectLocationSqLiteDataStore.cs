@@ -18,6 +18,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             items = new List<ProjectLocation_Visual>();
             _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
             _connection.CreateTable<ProjectLocation_Visual>();
+            _connection.CreateTable<MultiImage>();
         }
         public async Task<Response> AddItemAsync(ProjectLocation_Visual item, IEnumerable<string> ImageList = null)
         {
@@ -67,6 +68,12 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 _connection.Delete<ProjectLocation_Visual>(item.Id);
 
+                //delete images
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                documentsPath = System.IO.Path.Combine(documentsPath, "DeckInspectors", "offline_" + item.Id);
+                if (System.IO.File.Exists(documentsPath))
+                    System.IO.File.Delete(documentsPath);
+                
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -82,7 +89,9 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public async Task<ProjectLocation_Visual> GetItemAsync(string id)
         {
-            return await Task.FromResult(_connection.Table<ProjectLocation_Visual>().FirstOrDefault(t => t.Id == id));
+            var projVisLoc = await Task.Run(() => _connection.Table<ProjectLocation_Visual>().FirstOrDefault(t => t.Id == id));
+            
+            return projVisLoc;
         }
 
         public async Task<IEnumerable<ProjectLocation_Visual>> GetItemsAsync(bool forceRefresh = false)
@@ -106,6 +115,10 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Data = item;
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
+                foreach (var img in finelList)
+                {
+                   var updateRes= _connection.Update(img);
+                }
             }
             catch (Exception)
             {
@@ -114,18 +127,6 @@ namespace Mobile.Code.Services.SQLiteLocal
             }
 
 
-            if (App.IsInvasive == true)
-            {
-
-
-                //TODO
-            }
-            else
-            {
-
-
-
-            }
 
             return await Task.FromResult(res);
         }

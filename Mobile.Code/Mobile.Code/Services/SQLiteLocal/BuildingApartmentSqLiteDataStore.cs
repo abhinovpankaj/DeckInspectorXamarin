@@ -28,7 +28,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var buildingApartment = new BuildingApartment
                 {
-                    Id =  Guid.NewGuid().ToString(),
+                    Id =  item.Id??Guid.NewGuid().ToString(),
                     BuildingId = item.BuildingId,
                     Name = item.Name,
 
@@ -62,13 +62,20 @@ namespace Mobile.Code.Services.SQLiteLocal
            
         }
 
-        public Task<Response> DeleteItemAsync(BuildingApartment item)
+        public async Task<Response> DeleteItemAsync(BuildingApartment item)
         {
             Response res = new Response();
             try
             {
                 _connection.Delete<BuildingApartment>(item.Id);
                 
+                foreach (var location in _connection.Table<Apartment_Visual>().Where(x => x.BuildingApartmentId == item.Id))
+                {
+                    VisualFormApartmentSqLiteDataStore dq = new VisualFormApartmentSqLiteDataStore();
+                    await dq.DeleteItemAsync(location);
+                    //_connection.Delete<Apartment_Visual>(location.Id);
+
+                }
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -79,7 +86,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Status = ApiResult.Fail;
             }
 
-            return Task.FromResult(res);
+            return res;
         }
 
         public Task<BuildingApartment> GetItemAsync(string id)

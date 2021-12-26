@@ -48,7 +48,13 @@ namespace Mobile.Code.Services.SQLiteLocal
             try
             {
                 _connection.Delete<ProjectBuilding>(item.Id);
-
+                foreach (var buildingLoc in _connection.Table<BuildingLocation>().Where(x => x.BuildingId == item.Id))
+                {
+                    BuildingLocationSqLiteDataStore dq = new BuildingLocationSqLiteDataStore();
+                    await dq.DeleteItemAsync(buildingLoc);
+                    //_connection.Delete<ProjectBuilding>(buildingLoc.Id);
+                }
+               
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -69,7 +75,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var projectLocation = new ProjectBuilding
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id??Guid.NewGuid().ToString(),
                     Name = item.Name,
                     Description = item.Description,
                     ProjectId = item.ProjectId,

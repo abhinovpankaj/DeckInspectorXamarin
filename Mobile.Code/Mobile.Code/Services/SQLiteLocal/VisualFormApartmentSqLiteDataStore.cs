@@ -27,7 +27,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var visualApt = new Apartment_Visual
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id??Guid.NewGuid().ToString(),
                     Name = item.Name,
                     BuildingApartmentId = item.BuildingApartmentId,
                     AdditionalConsideration = item.AdditionalConsideration,
@@ -57,7 +57,6 @@ namespace Mobile.Code.Services.SQLiteLocal
             }
 
 
-
             return await Task.FromResult(res);
         }
 
@@ -67,30 +66,6 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             try
             {
-                //var visualApt = new Apartment_Visual
-                //{
-                //    Id = Guid.NewGuid().ToString(),
-                //    Name = item.Name,
-                //    BuildingApartmentId = item.BuildingApartmentId,
-                //    AdditionalConsideration = item.AdditionalConsideration,
-                //    ExteriorElements = item.ExteriorElements,
-                //    WaterProofingElements = item.WaterProofingElements,
-                //    ConditionAssessment = item.ConditionAssessment,
-                //    VisualReview = item.VisualReview,
-                //    AnyVisualSign = item.AnyVisualSign,
-                //    FurtherInasive = item.FurtherInasive,
-                //    LifeExpectancyEEE = item.LifeExpectancyEEE,
-                //    LifeExpectancyAWE = item.LifeExpectancyAWE,
-                //    ImageDescription = item.ImageDescription,
-                //    ConclusiveComments = item.ConclusiveComments,
-                //    ConclusiveLifeExpEEE = item.ConclusiveLifeExpEEE,
-                //    ConclusiveLifeExpLBC = item.ConclusiveLifeExpLBC,
-                //    ConclusiveLifeExpAWE = item.ConclusiveLifeExpAWE,
-                //    ConclusiveAdditionalConcerns = item.ConclusiveAdditionalConcerns,
-                //    IsPostInvasiveRepairsRequired = item.IsPostInvasiveRepairsRequired,
-                //    IsInvasiveRepairApproved = item.IsInvasiveRepairApproved,
-                //    IsInvasiveRepairComplete = item.IsInvasiveRepairComplete
-                //};
                 res.TotalCount = _connection.Update(item);
                 SQLiteCommand Command = new SQLiteCommand(_connection);
 
@@ -130,6 +105,12 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 _connection.Delete<Apartment_Visual>(item.Id);
 
+                //delete images
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                documentsPath = System.IO.Path.Combine(documentsPath, "DeckInspectors", "offline_" + item.Id);
+                if (System.IO.File.Exists(documentsPath))
+                    System.IO.File.Delete(documentsPath);
+ 
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 

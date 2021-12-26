@@ -156,10 +156,10 @@
                                                 Background="Orange"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
-                                                Text="M"
                                                 HeightRequest="20"
                                                 HorizontalOptions="Start"
                                                 HorizontalTextAlignment="Center"
+                                                Text="M"
                                                 TextColor="White"
                                                 VerticalOptions="Start"
                                                 VerticalTextAlignment="Center"
@@ -172,7 +172,33 @@
                                                         Value="SingleLevel">
                                                         <Setter Property="Text" Value="S" />
                                                     </DataTrigger>
-                                                   
+
+                                                </Label.Triggers>
+
+
+                                            </Label>
+                                            <Label
+                                                Background="#2e479b"
+                                                FontAttributes="Bold"
+                                                FontSize="Large"
+                                                HeightRequest="18"
+                                                HorizontalOptions="End"
+                                                HorizontalTextAlignment="Center"
+                                                IsVisible="false"
+                                                Text="i"
+                                                TextColor="White"
+                                                VerticalOptions="End"
+                                                VerticalTextAlignment="Center"
+                                                WidthRequest="18">
+
+                                                <Label.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ProjectType}"
+                                                        TargetType="Label"
+                                                        Value="Invasive">
+                                                        <Setter Property="IsVisible" Value="True" />
+                                                    </DataTrigger>
+
                                                 </Label.Triggers>
 
 

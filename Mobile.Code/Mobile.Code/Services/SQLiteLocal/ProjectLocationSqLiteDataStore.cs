@@ -28,7 +28,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var projectLocation = new ProjectLocation
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id??Guid.NewGuid().ToString(),
                     Name = item.Name,
                     Description = item.Description,
                     ProjectId = item.ProjectId,
@@ -83,15 +83,23 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
+                
                 _connection.Delete<ProjectLocation>(item.Id);
+                foreach (var location in _connection.Table<ProjectLocation_Visual>().Where(x => x.ProjectLocationId == item.Id))
+                {
+                    VisualFormProjectLocationSqLiteDataStore dq = new VisualFormProjectLocationSqLiteDataStore();
+                    await dq.DeleteItemAsync(location);
+                   // _connection.Delete<ProjectLocation_Visual>(location.Id);
+                    
+                }
 
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res.Message = "Deletion Failed";
+                res.Message = "Deletion Failed" + ex.Message;
                 res.Status = ApiResult.Fail;
             }
 

@@ -25,5 +25,6 @@ namespace Mobile.Code.Models
 
         public string OnlineId { get; set; }
 
+        public bool IsSynced { get; set; }
     }
 }

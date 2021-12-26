@@ -71,13 +71,37 @@ namespace Mobile.Code.Services.SQLiteLocal
             return Task.FromResult(new Response());
         }
 
-        public Task<Response> DeleteItemAsync(Project item)
+        public async Task<Response> DeleteItemAsync(Project item)
         {
             Response res = new Response();
             try
             {
                 _connection.Delete<Project>(item.Id);
-
+                if (item.Category=="SingleLevel")
+                {
+                    foreach (var location in _connection.Table<ProjectLocation_Visual>().Where(x => x.ProjectLocationId == item.Id))
+                    {
+                        VisualFormProjectLocationSqLiteDataStore dq = new VisualFormProjectLocationSqLiteDataStore();
+                        await dq.DeleteItemAsync(location);
+                        //_connection.Delete<ProjectLocation_Visual>(location.Id);
+                    }
+                }
+                else
+                {
+                    foreach (var building in _connection.Table<ProjectBuilding>().Where(x => x.ProjectId == item.Id))
+                    {
+                        ProjectBuildingSqLiteDataStore sq = new ProjectBuildingSqLiteDataStore();
+                        await sq.DeleteItemAsync(building);
+                        //_connection.Delete<ProjectBuilding>(building.Id);
+                    }
+                    foreach (var projLoc in _connection.Table<ProjectLocation>().Where(x => x.ProjectId == item.Id))
+                    {
+                        ProjectLocationSqLiteDataStore locDb = new ProjectLocationSqLiteDataStore();
+                        await locDb.DeleteItemAsync(projLoc);
+                        //_connection.Delete<ProjectLocation>(projLoc.Id);
+                    }
+                }
+               
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -88,7 +112,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Status = ApiResult.Fail;
             }
 
-            return Task.FromResult(res);
+            return res;
         }
 
         public Task<Project> GetItemAsync(string id)
@@ -98,10 +122,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public Task<IEnumerable<Project>> GetItemsAsync(bool forceRefresh = false)
         {
-            return Task.FromResult(
-              from t in _connection.Table<Project>()
-              select t
-                  );
+            return Task.FromResult(from t in _connection.Table<Project>() select t );
         }
 
         public Task<Response> UpdateItemAsync(Project item)

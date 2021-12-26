@@ -105,7 +105,6 @@ namespace Mobile.Code.Services
                 {
                     oldDelete.Image = item.ImageUrl;
                     App.VisualEditTrackingForInvasive.Remove(oldDelete);
-
                     App.VisualEditTrackingForInvasive.Add(oldDelete);
 
                 }

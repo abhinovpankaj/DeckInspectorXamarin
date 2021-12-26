@@ -132,6 +132,22 @@
                         Text="Sync With"
                         TextColor="White"
                         VerticalOptions="StartAndExpand" />
+                    <Button
+                        x:Name="imgbtnDownload"
+                        Margin="210,13,50,5"
+                        Command="{Binding DownloadOfflineCommand}"
+                        CornerRadius="25"
+                        HeightRequest="38"
+                        HorizontalOptions="Center"
+                        ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                Glyph={x:Static helpers:IconFont.DownloadCircle},
+                                                Color=#2e479b,
+                                                Size=45}"
+                        IsEnabled="True"
+                        IsVisible="{Binding IsInvasive}"
+                        TextColor="White"
+                        VerticalOptions="Start"
+                        WidthRequest="38" />
                     <Image
                         x:Name="imgbtnEdit"
                         Margin="10"

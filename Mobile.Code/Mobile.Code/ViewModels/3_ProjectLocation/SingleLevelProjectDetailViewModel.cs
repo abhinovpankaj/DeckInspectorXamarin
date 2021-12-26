@@ -198,7 +198,7 @@ namespace Mobile.Code.ViewModels
                     img.ImageUrl = localPath;
                     await VisualProjectLocationPhotoDataStore.AddItemAsync(img, true);
                 }
-
+                projLocForm.OnlineId = projLocForm.Id;
                 _ = await VisualFormProjectLocationSqLiteDataStore.AddItemAsync(projLocForm);
             }
             
@@ -756,50 +756,80 @@ namespace Mobile.Code.ViewModels
 
                     List<string> imageList = images.Select(c => c.ImageUrl).ToList();
 
-                    if (formLocationItem.OnlineId == null)
+                    if (!App.IsInvasive)
                     {
-                        formLocationItem.Id = null;
-                    }
-                    else
-                    {
-                        var existingformLocation = await VisualFormProjectLocationDataStore.GetItemAsync(formLocationItem.OnlineId);
-                        if (existingformLocation == null)
+                        if (formLocationItem.OnlineId == null)
                         {
                             formLocationItem.Id = null;
                         }
                         else
                         {
-                            formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
+                            var existingformLocation = await VisualFormProjectLocationDataStore.GetItemAsync(formLocationItem.OnlineId);
+                            if (existingformLocation == null)
+                            {
+                                formLocationItem.Id = null;
+                            }
+                            else
+                            {
+                                formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
+                            }
                         }
+                        formLocationItem.ProjectLocationId = Project.Id;
                     }
-                    formLocationItem.ProjectLocationId =Project.Id;
+                    
                     Response locationResult;
                     if (formLocationItem.Id == null)
                     {
 
                         locationResult = await VisualFormProjectLocationDataStore.AddItemAsync(formLocationItem, imageList);
-                        List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
-                            (localFormId, false));
+                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                        if (locationResult.Status == ApiResult.Success)
+                        {
+                            List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                                (localFormId, false));
+                            
+                            foreach (var item in ImagesList)
+                            {
+                                if (imageList.Contains(item.Image))
+                                {
+                                    item.IsSynced = true;
+                                    FilteredImages.Add(item);
+                                }
+                            }
+                        }
+                        
 
                         formLocationItem.OnlineId = locationResult.ID;
                         formLocationItem.Id = localFormId;
                         formLocationItem.ProjectLocationId = SelectedOfflineProject.Id;
-                        var onlineImage = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(locationResult.ID, true, true);
-                        //App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                        //var onlineImages= 
-                        await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, null);
+                        
+                        await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, FilteredImages);
                     }
                     else
                     {
 
                         List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
                             (localFormId, false));
-                        //List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
-                        //    (formLocationItem.Id, false));
-                        //ImagesList.AddRange(OnlineImagesList);
                         
-                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "TRUE").ToList());
-                        locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "CONCLUSIVE").ToList(), "CONCLUSIVE");
+                        ImagesList = ImagesList.Where(x => x.IsSynced == false).ToList();
+                       
+                        if (App.IsInvasive)
+                        {
+                            locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "TRUE").ToList());
+                            locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList.Where(x => x.ImageType == "CONCLUSIVE").ToList(), "CONCLUSIVE");
+                        }
+                        else
+                            locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList);
+                        
+                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                        foreach (var item in ImagesList)
+                        {
+                            
+                            item.IsSynced = true;
+                            FilteredImages.Add(item);
+                            
+                        }
+                        await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, FilteredImages);
                     }
                     if (locationResult.Status == ApiResult.Success)
                     {

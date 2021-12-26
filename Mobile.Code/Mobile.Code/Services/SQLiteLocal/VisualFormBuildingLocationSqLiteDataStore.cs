@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var visualApt = new BuildingLocation_Visual
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = item.Id??Guid.NewGuid().ToString(),
                     Name = item.Name,
                     BuildingLocationId = item.BuildingLocationId,
                     AdditionalConsideration = item.AdditionalConsideration,
@@ -64,6 +64,11 @@ namespace Mobile.Code.Services.SQLiteLocal
             try
             {
                 _connection.Delete<BuildingLocation_Visual>(item.Id);
+                //delete images
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                documentsPath = System.IO.Path.Combine(documentsPath, "DeckInspectors", "offline_" + item.Id);
+                if (System.IO.File.Exists(documentsPath))
+                    System.IO.File.Delete(documentsPath);
 
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
@@ -101,8 +106,6 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 
                 res.TotalCount = _connection.Update(item);
-                
-
                 res.Data = item;
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
