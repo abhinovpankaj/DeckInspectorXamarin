@@ -465,8 +465,15 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-                //todo
-                var photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                IEnumerable<VisualApartmentLocationPhoto> photos;
+                if (App.IsAppOffline)
+                {
+                    photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                }
+                else
+                    photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+
+                
                 vm.InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualApartmentLocationPhotoItems);
 
