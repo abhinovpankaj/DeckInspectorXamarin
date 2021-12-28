@@ -39,7 +39,8 @@ namespace Mobile.Code.Services.SQLiteLocal
                     LifeExpectancyEEE = item.LifeExpectancyEEE,
                     LifeExpectancyAWE = item.LifeExpectancyAWE,
                     LifeExpectancyLBC = item.LifeExpectancyLBC,
-                    ImageDescription = item.ImageDescription
+                    ImageDescription = item.ImageDescription,
+                    OnlineId =item.OnlineId
                 };
                 res.TotalCount = _connection.Insert(visualApt);
                

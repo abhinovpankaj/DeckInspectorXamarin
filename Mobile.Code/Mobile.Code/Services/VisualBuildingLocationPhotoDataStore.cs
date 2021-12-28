@@ -215,7 +215,9 @@ namespace Mobile.Code.Services
             else
             {
                 items = _connection.Table<VisualBuildingLocationPhoto>().Where(t => t.VisualBuildingId == buildingId).ToList();
+
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+
                 foreach (var item in items)
                 {
                     App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualBuildingId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });

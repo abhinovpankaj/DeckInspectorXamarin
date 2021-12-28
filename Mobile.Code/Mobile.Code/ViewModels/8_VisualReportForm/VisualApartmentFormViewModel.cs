@@ -718,7 +718,7 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualApartmentLocationPhoto> VisualApartmentLocationPhotoItems
         {
-            get { return _visualApartmentLocationPhotoItems; }
+            get { return _visualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(_visualApartmentLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
             set { _visualApartmentLocationPhotoItems = value; OnPropertyChanged("VisualApartmentLocationPhotoItems"); }
         }
         private string _unitPhotCount;
@@ -934,10 +934,20 @@ namespace Mobile.Code.ViewModels
         {
             if (App.IsInvasive == true)
             {
-                // InvasiveVisualProjectLocationPhotoItems.Add(obj);
-                await InvasiveVisualApartmentLocationPhotoDataStore.AddItemAsync(obj);
+                IEnumerable<VisualApartmentLocationPhoto> photos;
+                //updated for Conclusive
+                if (App.IsAppOffline)
+                {
+                    await InvasiveVisualApartmentLocationPhotoDataStore.AddItemAsync(obj, true);
+                    photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(VisualForm.Id, true);
+                }
+                else
+                {
+                    await InvasiveVisualApartmentLocationPhotoDataStore.AddItemAsync(obj);
+                    photos = await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                }
 
-                var photos = new ObservableCollection<VisualApartmentLocationPhoto>((await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
+                
                 InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
 

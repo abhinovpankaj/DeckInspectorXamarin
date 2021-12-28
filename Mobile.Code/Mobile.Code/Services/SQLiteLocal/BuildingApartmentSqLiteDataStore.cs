@@ -31,7 +31,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                     Id =  item.Id??Guid.NewGuid().ToString(),
                     BuildingId = item.BuildingId,
                     Name = item.Name,
-
+                    OnlineId = item.OnlineId,
                     Description = item.Description,
 
                     UserId = App.LogUser.Id.ToString(),

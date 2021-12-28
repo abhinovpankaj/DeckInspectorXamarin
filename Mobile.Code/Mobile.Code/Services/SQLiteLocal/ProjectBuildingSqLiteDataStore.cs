@@ -82,7 +82,8 @@ namespace Mobile.Code.Services.SQLiteLocal
                     UserId = App.LogUser.Id.ToString(),
                     ImageDescription = item.ImageDescription,
                     ImageName = item.ImageName,
-                    ImageUrl = item.ImageUrl
+                    ImageUrl = item.ImageUrl,
+                    OnlineId =item.OnlineId
                 };
 
                 res.TotalCount = _connection.Insert(projectLocation);

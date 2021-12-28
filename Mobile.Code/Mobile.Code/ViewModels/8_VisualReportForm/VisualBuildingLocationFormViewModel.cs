@@ -565,7 +565,7 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualBuildingLocationPhoto> InvasiveVisualBuildingLocationPhotoItems
         {
-            // get { return _InvvisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            //get { return _InvvisualProjectLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(_InvvisualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
             get { return _InvvisualProjectLocationPhotoItems; }
             set { _InvvisualProjectLocationPhotoItems = value; OnPropertyChanged("InvasiveVisualBuildingLocationPhotoItems"); }
         }
@@ -689,7 +689,8 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualBuildingLocationPhoto> VisualBuildingLocationPhotoItems
         {
-            get { return _visualbuildingLocationPhotoItems; }
+            get { return _visualbuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(_visualbuildingLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            //get { return _visualbuildingLocationPhotoItems; }
             set { _visualbuildingLocationPhotoItems = value; OnPropertyChanged("VisualBuildingLocationPhotoItems"); }
         }
         private string _unitPhotCount;
@@ -936,14 +937,24 @@ namespace Mobile.Code.ViewModels
         {
             if (App.IsInvasive == true)
             {
-                // InvasiveVisualProjectLocationPhotoItems.Add(obj);
-                await InvasiveVisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
-                var photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                IEnumerable<VisualBuildingLocationPhoto> photos;
+                //updated for Conclusive
+                if (App.IsAppOffline)
+                {
+                    await InvasiveVisualBuildingLocationPhotoDataStore.AddItemAsync(obj, true);
+                    photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(VisualForm.Id, true);
+                }
+                else
+                {
+                    await InvasiveVisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
+                    photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false);
+                }
+                
                 InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 InvasiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
 
                 ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                ConclusiveUnitPhotoCount = InvasiveVisualBuildingLocationPhotoItems.Count.ToString();
+                ConclusiveUnitPhotoCount = ConclusiveVisualBuildingLocationPhotoItems.Count.ToString();
 
             }
             else
@@ -951,13 +962,15 @@ namespace Mobile.Code.ViewModels
                 
                 if (App.IsAppOffline)
                 {
-                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
+                    
                     await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj, true);
+                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
                 }
                 else
                 {
-                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
+                    
                     await VisualBuildingLocationPhotoDataStore.AddItemAsync(obj);
+                    VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
                 }
                    
                 UnitPhotoCount = VisualBuildingLocationPhotoItems.Count.ToString();

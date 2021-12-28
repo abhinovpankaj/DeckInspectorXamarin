@@ -206,7 +206,7 @@ namespace Mobile.Code.ViewModels
         {
             IsBusyProgress = true;
             //create an offline Project
-            Response res = await ProjectSQLiteDataStore.AddItemAsync(Project);
+            Response res1 = await ProjectSQLiteDataStore.AddItemAsync(Project);
            
             //get project common loc and Building details
             var ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore
@@ -218,10 +218,14 @@ namespace Mobile.Code.ViewModels
 
                 //insert projectlocations
                 item.OnlineId = item.Id;
-                var resultProjLocation = await ProjectLocationSqLiteDataStore.AddItemAsync(item);
-
-                //if (resultProjLocation.Status == ApiResult.Success)
-                //{
+                Response resultProjLocation;
+                var existinprojLoc = await ProjectLocationSqLiteDataStore.GetItemAsync(item.Id);
+                if (existinprojLoc==null)
+                {
+                    resultProjLocation = await ProjectLocationSqLiteDataStore.AddItemAsync(item);
+                }
+                 else
+                    _  = await ProjectLocationSqLiteDataStore.UpdateItemAsync(item);
 
                 response.Message = response.Message + "\n" + item.Name + ": " + item.Id + " added successully, locations will be added now.";
                 var VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>
@@ -239,21 +243,17 @@ namespace Mobile.Code.ViewModels
                     }
                     projLocForm.OnlineId = projLocForm.Id;
                     var existinLoc= await VisualFormProjectLocationSqLiteDataStore.GetItemAsync(projLocForm.Id);
+                    Response res = new Response();
                     if (existinLoc==null)
                     {
-                        _ = await VisualFormProjectLocationSqLiteDataStore.AddItemAsync(projLocForm);
+                        res  = await VisualFormProjectLocationSqLiteDataStore.AddItemAsync(projLocForm);
                     }
                     else
-                        _ = await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(projLocForm,null);
+                        res = await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(projLocForm,null);
                     
                     DependencyService.Get<IToast>().Show(item.Name + " Location is available offline now.");
                 }
-                //}
-                //else
-                //{
-
-                //    response.Message = response.Message + "\n" + item.Name + "failed to download, skipping the children";
-                //}
+              
             }
 
             var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore
@@ -261,6 +261,14 @@ namespace Mobile.Code.ViewModels
             foreach (var item in ProjectBuildingItems)
             {
                 item.OnlineId = item.Id;
+                Response resultBuild;
+                var existinbuild = await ProjectBuildingSqLiteDataStore.GetItemAsync(item.Id);
+                if (existinbuild == null)
+                {
+                    resultBuild = await ProjectBuildingSqLiteDataStore.AddItemAsync(item);
+                }
+                else
+                    _ = await ProjectBuildingSqLiteDataStore.UpdateItemAsync(item);
                 var resultBuilding = await ProjectBuildingSqLiteDataStore.AddItemAsync(item);
                 
 
@@ -270,7 +278,17 @@ namespace Mobile.Code.ViewModels
                 foreach (var buildingLoc in BuildingLocations)
                 {
                     buildingLoc.OnlineId = buildingLoc.Id;
-                    var resultBuildLoc = await BuildingLocationSqLiteDataStore.AddItemAsync(buildingLoc);
+
+                    Response resultBuildLoc;
+                    var existinbuildLoc = await BuildingLocationSqLiteDataStore.GetItemAsync(buildingLoc.Id);
+                    if (existinbuildLoc == null)
+                    {
+                        resultBuildLoc = await BuildingLocationSqLiteDataStore.AddItemAsync(buildingLoc);
+                    }
+                    else
+                        _ = await BuildingLocationSqLiteDataStore.UpdateItemAsync(buildingLoc);
+
+                    
                     //if (resultBuildLoc.Status == ApiResult.Success)
                     //{
                     response.Message = response.Message + "\n" + buildingLoc.Name + "added successully. Locations will be added";
@@ -310,9 +328,16 @@ namespace Mobile.Code.ViewModels
                 foreach (var apartment in BuildingApartments)
                 {
                     apartment.OnlineId = apartment.Id;
-                    var aptResult = await BuildingApartmentSqLiteDataStore.AddItemAsync(apartment);
-                    //if (aptResult.Status == ApiResult.Success)
-                    //{
+                    Response resultApt;
+                    var existinApt = await BuildingApartmentSqLiteDataStore.GetItemAsync(apartment.Id);
+                    if (existinApt == null)
+                    {
+                        resultApt = await BuildingApartmentSqLiteDataStore.AddItemAsync(apartment);
+                    }
+                    else
+                        _ = await BuildingApartmentSqLiteDataStore.UpdateItemAsync(apartment);
+
+                    
                     response.Message = response.Message + "\n" + apartment.Name + "added successully. Locations will be added";
 
                     var VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>
@@ -563,6 +588,10 @@ namespace Mobile.Code.ViewModels
 
             var allOffProjs = await ProjectSQLiteDataStore.GetItemsAsync(true);
             OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
+            if (App.IsInvasive)
+            {
+                OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Id == Project.Id));
+            }
             return await Task.FromResult(true);
 
 
@@ -595,6 +624,7 @@ namespace Mobile.Code.ViewModels
             var res = await Task.Run(async () =>
             {
                 Response response = new Response();
+                
                 var localProject = await ProjectSQLiteDataStore.GetItemAsync(SelectedOfflineProject.Id);
 
                 //insert in db
@@ -676,21 +706,34 @@ namespace Mobile.Code.ViewModels
                             {
                                
                                 locationResult  = await VisualFormProjectLocationDataStore.AddItemAsync(formLocationItem, imageList);
+                                List<MultiImage> FilteredImages = new List<MultiImage>();
+                                if (locationResult.Status == ApiResult.Success)
+                                {
+                                    List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
+                                        (localFormId, false));
 
-                               
+                                    foreach (var syncImage in ImagesList)
+                                    {
+                                        if (imageList.Contains(syncImage.Image))
+                                        {
+                                            syncImage.IsSynced = true;
+                                            FilteredImages.Add(syncImage);
+                                        }
+                                    }
+                                }
+
                                 formLocationItem.OnlineId = locationResult.ID;
                                 formLocationItem.Id = localFormId;
                                 formLocationItem.ProjectLocationId = localId;
-                                //var onlineImages = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(locationResult.ID, true,true);
-                                //App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                                //var onlineImages= 
-                                await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, null);
+                               
+                                await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, FilteredImages);
                             }
                             else
                             {
                                 
                                 List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
                                     (localFormId, false));
+                                ImagesList = ImagesList.Where(x => x.IsSynced == false).ToList();
                                 
                                 if (App.IsInvasive)
                                 {
@@ -699,6 +742,16 @@ namespace Mobile.Code.ViewModels
                                 }
                                 else
                                     locationResult = await VisualFormProjectLocationDataStore.UpdateItemAsync(formLocationItem, ImagesList);
+
+                                List<MultiImage> FilteredImages = new List<MultiImage>();
+                                foreach (var syncImg in ImagesList)
+                                {
+
+                                    syncImg.IsSynced = true;
+                                    FilteredImages.Add(syncImg);
+
+                                }
+                                await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(formLocationItem, FilteredImages);
                             }
                             if (locationResult.Status == ApiResult.Success)
                             {
@@ -835,17 +888,29 @@ namespace Mobile.Code.ViewModels
                                     {
 
                                         BuildlocationResult = await VisualFormBuildingLocationDataStore.AddItemAsync(buildLocForm, imageList);
+                                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                                        if (BuildlocationResult.Status == ApiResult.Success)
+                                        {
+                                            List<MultiImage> ImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
+                                                (localBuildFormId, false));
+
+                                            foreach (var syncImage in ImagesList)
+                                            {
+                                                if (imageList.Contains(syncImage.Image))
+                                                {
+                                                    syncImage.IsSynced = true;
+                                                    FilteredImages.Add(syncImage);
+                                                }
+                                            }
+                                        }
                                         buildLocForm.OnlineId = BuildlocationResult.ID;
                                         buildLocForm.Id = localBuildFormId;
                                         buildLocForm.BuildingLocationId = localBuildId;
-                                        await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, null);
+                                        await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, FilteredImages);
                                     }
                                     else
                                     {
-                                        //CREATE MULTIIMAGE LIST
-                                        //var onLineImages = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore
-                                        //.GetItemsAsyncByProjectVisualID(buildLocForm.Id,false));
-
+                                        
                                         List<MultiImage> ImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
                                     (localBuildFormId, false));
                                         List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
@@ -860,7 +925,16 @@ namespace Mobile.Code.ViewModels
                                         }
                                         else
                                             BuildlocationResult = await VisualFormBuildingLocationDataStore.UpdateItemAsync(buildLocForm, ImagesList);
-                                       
+                                        
+                                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                                        foreach (var syncImg in ImagesList)
+                                        {
+
+                                            syncImg.IsSynced = true;
+                                            FilteredImages.Add(syncImg);
+
+                                        }
+                                        _=await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, FilteredImages);
                                     }
 
 
@@ -953,10 +1027,25 @@ namespace Mobile.Code.ViewModels
                                     {
 
                                         aptlocationResult = await VisualFormApartmentDataStore.AddItemAsync(aptLoc, imageList);
+                                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                                        if (aptlocationResult.Status == ApiResult.Success)
+                                        {
+                                            List<MultiImage> ImagesList = new List<MultiImage>(await VisualApartmentLocationPhotoDataStore.GetMultiImagesAsyncByLocationIDSqLite
+                                                (localAptLocFormId, false));
+                                           
+                                            foreach (var syncImage in ImagesList)
+                                            {
+                                                if (imageList.Contains(syncImage.Image))
+                                                {
+                                                    syncImage.IsSynced = true;
+                                                    FilteredImages.Add(syncImage);
+                                                }
+                                            }
+                                        }
                                         aptLoc.OnlineId = aptlocationResult.ID;
                                         aptLoc.Id = localAptLocFormId;
                                         aptLoc.BuildingApartmentId = localaptId;
-                                        await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(aptLoc, null);
+                                        await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(aptLoc, FilteredImages);
                                     }
                                     else
                                     {
@@ -979,6 +1068,16 @@ namespace Mobile.Code.ViewModels
                                         else
                                             aptlocationResult = await VisualFormApartmentDataStore.UpdateItemAsync(aptLoc, ImagesList);
 
+
+                                        List<MultiImage> FilteredImages = new List<MultiImage>();
+                                        foreach (var syncImg in ImagesList)
+                                        {
+
+                                            syncImg.IsSynced = true;
+                                            FilteredImages.Add(syncImg);
+
+                                        }
+                                        await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(aptLoc, FilteredImages);
                                     }
 
 

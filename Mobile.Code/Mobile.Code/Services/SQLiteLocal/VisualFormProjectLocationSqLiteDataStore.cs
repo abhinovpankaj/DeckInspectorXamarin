@@ -40,7 +40,8 @@ namespace Mobile.Code.Services.SQLiteLocal
                     LifeExpectancyEEE = item.LifeExpectancyEEE,
                     LifeExpectancyAWE = item.LifeExpectancyAWE,
                     LifeExpectancyLBC = item.LifeExpectancyLBC,
-                    ImageDescription = item.ImageDescription
+                    ImageDescription = item.ImageDescription,
+                    OnlineId=item.OnlineId
                 };
                 res.TotalCount = _connection.Insert(visualApt);
 
@@ -115,10 +116,14 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Data = item;
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
-                foreach (var img in finelList)
+                if (finelList!=null)
                 {
-                   var updateRes= _connection.Update(img);
+                    foreach (var img in finelList)
+                    {
+                        var updateRes = _connection.Update(img);
+                    }
                 }
+                
             }
             catch (Exception)
             {

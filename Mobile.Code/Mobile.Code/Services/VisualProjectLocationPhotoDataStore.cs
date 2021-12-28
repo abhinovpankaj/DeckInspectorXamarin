@@ -221,7 +221,9 @@ namespace Mobile.Code.Services
                 var allitems = _connection.Table<VisualProjectLocationPhoto>().ToList();
 
                 items = _connection.Table<VisualProjectLocationPhoto>().Where(t => t.VisualLocationId == locationVisualID).ToList();
+                
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+                
                 foreach (var item in items)
                 {
                     var multiimg = new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
