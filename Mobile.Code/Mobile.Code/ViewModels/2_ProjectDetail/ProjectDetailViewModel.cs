@@ -913,10 +913,10 @@ namespace Mobile.Code.ViewModels
                                         
                                         List<MultiImage> ImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
                                     (localBuildFormId, false));
-                                        List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
-                                            (buildLocForm.Id, false));
+                                        //List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualBuildingLocationPhotoDataStore.GetMultiImagesAsyncByProjectIDSqLite
+                                        //    (buildLocForm.Id, false));
                                        
-                                        ImagesList.AddRange(OnlineImagesList);
+                                        //ImagesList.AddRange(OnlineImagesList);
 
                                         if (App.IsInvasive)
                                         {
@@ -1056,9 +1056,9 @@ namespace Mobile.Code.ViewModels
 
                                         List<MultiImage> ImagesList = new List<MultiImage>(await VisualApartmentLocationPhotoDataStore.GetMultiImagesAsyncByLocationIDSqLite
                                     (localAptLocFormId, false));
-                                        List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualApartmentLocationPhotoDataStore.GetMultiImagesAsyncByLocationIDSqLite
-                                            (aptLoc.Id, false));
-                                        ImagesList.AddRange(OnlineImagesList);
+                                        //List<MultiImage> OnlineImagesList = new List<MultiImage>(await VisualApartmentLocationPhotoDataStore.GetMultiImagesAsyncByLocationIDSqLite
+                                        //    (aptLoc.Id, false));
+                                        //ImagesList.AddRange(OnlineImagesList);
 
                                         if (App.IsInvasive)
                                         {
