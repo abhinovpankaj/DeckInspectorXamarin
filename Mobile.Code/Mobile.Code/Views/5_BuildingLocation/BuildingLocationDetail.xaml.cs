@@ -14,22 +14,7 @@ namespace Mobile.Code.Views
         public BuildingLocationDetail()
         {
             InitializeComponent();
-            // this.BindingContext = vm= new BuildingLocationDetailViewModel();
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b1.jpg" });
-
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b3.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b4.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b5.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b6.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b7.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b8.jpg" });
-            //WorkImage.Add(new WorkImage { ImageUrl = "http://umesh83-001-site1.btempurl.com/b9.jpg" });
-
-            //if (App.IsInvasive == true)
-            //{
-            //    btnNewVisual.IsVisible = btnNewVisualLabel.IsVisible= false;
-            //}
-            //    this.BindingContext = this;
+          
 
         }
         protected async override void OnAppearing()
@@ -39,11 +24,7 @@ namespace Mobile.Code.Views
             await ((BuildingLocationDetailViewModel)this.BindingContext).LoadData();
             //vm.LoadData();
         }
-        //private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    WorkArea p = e.CurrentSelection.FirstOrDefault() as WorkArea;
-        //    await Navigation.PushModalAsync(new Xamarin.Forms.NavigationPage(new WorkAreasPage() { BindingContext = new WorkAreasViewModel(p) }));
-        //}
+        
 
         private async void TapGestureRecognizer_TappedLN(object sender, EventArgs e)
         {

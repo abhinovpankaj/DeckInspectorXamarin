@@ -26,6 +26,45 @@ namespace Mobile.Code.ViewModels
             set { _password = value; OnPropertyChanged("Password"); }
         }
         public ICommand LoginCommand => new Command(async () => await Login());
+
+        public ICommand WorkOfflineCommand => new Command(async () => await WorkOffline());
+
+        private async Task WorkOffline()
+        {
+            if (await CheakAppPermission() == false)
+            {
+                await Shell.Current.DisplayAlert("Permission", "Camera and storage permission required", "OK");
+                return;
+            }
+            string errorMessage = string.Empty;
+            if (string.IsNullOrEmpty(Username))
+            {
+                errorMessage += "\nUsername is required\n";
+            }
+           
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                await Shell.Current.DisplayAlert("Validation Error", errorMessage, "OK");
+                return;
+
+            }
+            //set user
+            User user = new User();
+            user.UserName = Username;
+            user.RoleName = "Admin";
+
+            App.LogUser = user;
+
+            IsBusyProgress = true;
+           
+            Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+            Shell.Current.BindingContext = new AppShell() { LogUserName = Username };
+            App.IsAppOffline = true;
+            IsBusyProgress = false;
+            await Shell.Current.GoToAsync("//main");
+
+        }
+
         private async Task Login()
         {
             if (await CheakAppPermission() == false)
@@ -48,6 +87,7 @@ namespace Mobile.Code.ViewModels
                 return;
 
             }
+            
             IsBusyProgress = true;
             var response = await Task.Run(() =>
                Running()
@@ -58,7 +98,7 @@ namespace Mobile.Code.ViewModels
                 Shell.Current.BindingContext = new AppShell() { LogUserName = App.LogUser.FullName };
                 IsBusyProgress = false;
                 await Shell.Current.GoToAsync("//main");
-
+                App.IsAppOffline = false;
                 //  await Shell.Current.Navigation.PopAsync();
             }
             else

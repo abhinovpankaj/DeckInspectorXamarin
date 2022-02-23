@@ -4,6 +4,7 @@ using Android.Widget;
 using Mobile.Code.Droid;
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -104,8 +105,48 @@ namespace Mobile.Code.Droid
 
         public string SavePicture(string name, Stream data, string location = "temp")
         {
-            return "";
-            //throw new NotImplementedException();
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            documentsPath = System.IO.Path.Combine(documentsPath, "DeckInspectors", location);
+            Directory.CreateDirectory(documentsPath);
+
+            string filePath = System.IO.Path.Combine(documentsPath, name);
+
+            byte[] bArray = new byte[data.Length];
+            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            {
+                using (data)
+                {
+                    data.Read(bArray, 0, (int)data.Length);
+                }
+                int length = bArray.Length;
+                fs.Write(bArray, 0, length);
+            }
+            return filePath;
+        }
+
+        public string DownloadImage(string URL, string loc)
+        {
+            var webClient = new WebClient();
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            documentsPath = System.IO.Path.Combine(documentsPath, "DeckInspectors", "offline_" + loc);
+            Directory.CreateDirectory(documentsPath);
+            var partedURL = URL.Split('/');
+            string localFilename = partedURL[partedURL.Length - 1];
+
+
+            string localPath = System.IO.Path.Combine(documentsPath, localFilename);
+            
+            webClient.DownloadDataCompleted += (s, e) =>
+            {
+                byte[] bytes = new byte[e.Result.Length];
+                bytes = e.Result; // get the downloaded data
+                
+                File.WriteAllBytes(localPath, bytes); // writes to local storage
+               
+            };
+            var url = new Uri(URL);
+            webClient.DownloadDataAsync(url);
+            return localPath;
         }
     }
 }

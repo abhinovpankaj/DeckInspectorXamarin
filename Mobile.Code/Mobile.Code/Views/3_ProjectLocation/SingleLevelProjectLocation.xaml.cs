@@ -29,5 +29,20 @@ namespace Mobile.Code.Views._3_ProjectLocation
 
 
         }
+
+        private async void offlineProjectPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (offlineProjectPicker.SelectedIndex > -1)
+            {
+                //Project prj = offlineProjectPicker.Items[offlineProjectPicker.SelectedIndex];
+
+                SingleLevelProjectDetailViewModel vm = (SingleLevelProjectDetailViewModel)BindingContext;
+                await vm.PushProjectToServer();
+                vm.IsPickerVisible = false;
+            }
+
+            //offlineProjectPicker.IsEnabled = false;
+            //offlineProjectPicker.IsVisible = false;
+        }
     }
 }

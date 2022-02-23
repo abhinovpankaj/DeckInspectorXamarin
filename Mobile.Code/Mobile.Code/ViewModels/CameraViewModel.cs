@@ -220,12 +220,7 @@ namespace Mobile.Code.ViewModels
             App.ListCamera2Api.Remove(parm);
             CountPhoto = ImageList.Count + " Photo(s)";
             await Task.FromResult(true);
-            // int count=Shell.Current.Navigation.NavigationStack.Count;
-            //for (var count = 1; count <= 3; count++)
-            //{
-            //    Navigation.RemovePage(this.Navigation.NavigationStack[6 - count]);
-            //}
-            //Navigation.PopAsync();
+            
 
         }
 

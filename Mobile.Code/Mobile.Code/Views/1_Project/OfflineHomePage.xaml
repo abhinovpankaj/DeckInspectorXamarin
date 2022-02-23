@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Mobile.Code.Views.HomePage"
+    x:Class="Mobile.Code.Views.OfflineHomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:cardView="clr-namespace:CardViewNetStandard;assembly=CardViewNetStandard"
@@ -79,35 +79,13 @@
                         FontFamily="{StaticResource Montserrat-Regular}"
                         FontSize="25"
                         Style="{StaticResource LabelStyle}"
-                        Text="Projects"
+                        Text="Offline Projects"
                         TextColor="Black"
                         VerticalOptions="CenterAndExpand"
                         VerticalTextAlignment="Center" />
-                    <Label
-                        Grid.Column="1"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="|"
-                        TextColor="{DynamicResource Gray-200}"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />
-                    <Label
-                        Grid.Column="2"
-                        BackgroundColor="White"
-                        FontFamily="{StaticResource MaterialFontFamily}"
-                        FontSize="40"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{x:Static helpers:IconFont.PlusCircle}"
-                        TextColor="#2e479b"
-                        VerticalOptions="CenterAndExpand" />
-                    <!--<ImageButton Command="{Binding AddNewCommand}"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2" BackgroundColor="White"
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PlusCircle},Color=#2e479b,Size=38}"></ImageButton>-->
 
                 </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding AddNewCommand}" />
-                </Frame.GestureRecognizers>
+
             </Frame>
             <StackLayout
                 Grid.Row="2"
@@ -119,7 +97,7 @@
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BindableLayout.ItemsSource="{Binding AllProjects}"
+                        BindableLayout.ItemsSource="{Binding OfflineProjects}"
                         Direction="Row"
                         JustifyContent="Start"
                         Wrap="Wrap">
@@ -128,7 +106,6 @@
                                 <Frame
                                     x:Name="FrameTypes"
                                     Margin="2"
-                                    Padding="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
                                                                Tablet='50%'}">
@@ -142,7 +119,6 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-
                                         <Grid Grid.Column="0" WidthRequest="100">
                                             <yummy:PancakeView Grid.Column="0" CornerRadius="5">
                                                 <ffimageloading:CachedImage
@@ -152,59 +128,7 @@
                                                     LoadingPlaceholder="loading.png"
                                                     Source="{Binding ImageUrl}" />
                                             </yummy:PancakeView>
-                                            <Label
-                                                Background="Orange"
-                                                FontAttributes="Bold"
-                                                FontSize="Large"
-                                                HeightRequest="20"
-                                                HorizontalOptions="Start"
-                                                HorizontalTextAlignment="Center"
-                                                Text="M"
-                                                TextColor="White"
-                                                VerticalOptions="Start"
-                                                VerticalTextAlignment="Center"
-                                                WidthRequest="20">
-
-                                                <Label.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding Category}"
-                                                        TargetType="Label"
-                                                        Value="SingleLevel">
-                                                        <Setter Property="Text" Value="S" />
-                                                    </DataTrigger>
-
-                                                </Label.Triggers>
-
-
-                                            </Label>
-                                            <Label
-                                                Background="#2e479b"
-                                                FontAttributes="Bold"
-                                                FontSize="Large"
-                                                HeightRequest="18"
-                                                HorizontalOptions="End"
-                                                HorizontalTextAlignment="Center"
-                                                IsVisible="false"
-                                                Text="i"
-                                                TextColor="White"
-                                                VerticalOptions="End"
-                                                VerticalTextAlignment="Center"
-                                                WidthRequest="18">
-
-                                                <Label.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding ProjectType}"
-                                                        TargetType="Label"
-                                                        Value="Invasive">
-                                                        <Setter Property="IsVisible" Value="True" />
-                                                    </DataTrigger>
-
-                                                </Label.Triggers>
-
-
-                                            </Label>
                                         </Grid>
-
                                         <Grid Grid.Column="1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
@@ -222,65 +146,45 @@
                                                 TextColor="{DynamicResource mainLabel}"
                                                 VerticalOptions="StartAndExpand"
                                                 VerticalTextAlignment="Start" />
-
+                                            <Label
+                                                BackgroundColor="White"
+                                                FontFamily="{StaticResource MaterialFontFamily}"
+                                                FontSize="40"
+                                                HorizontalOptions="EndAndExpand"
+                                                IsVisible="{Binding IsSynced}"
+                                                Text="{x:Static helpers:IconFont.CheckBold}"
+                                                TextColor="Green" />
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Label
-                                                    Grid.Row="0"
-                                                    Margin="0,3,0,0"
-                                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                                    FontSize="10"
-                                                    HorizontalOptions="StartAndExpand"
-                                                    LineBreakMode="TailTruncation"
-                                                    MaxLines="2"
-                                                    Style="{StaticResource LabelStyle}"
-                                                    Text="{Binding CreatedOn}"
-                                                    TextColor="{DynamicResource mainLabel}"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    VerticalTextAlignment="Start" />
+
                                                 <Button
                                                     Grid.Column="1"
                                                     Margin="1,5,2,5"
                                                     BackgroundColor="#2e479b"
                                                     BorderWidth="1"
-                                                    Command="{Binding BindingContext.InvasiveDetailCommand, Source={x:Reference FlexTypes}}"
+                                                    Command="{Binding BindingContext.SyncProjectCommand, Source={x:Reference FlexTypes}}"
                                                     CommandParameter="{Binding}"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     HeightRequest="35"
                                                     HorizontalOptions="EndAndExpand"
                                                     ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                                            Glyph={x:Static helpers:IconFont.FormatListBulletedSquare},
+                                                                            Glyph={x:Static helpers:IconFont.Sync},
                                                                             Color=White,
                                                                             Size=20}"
-                                                    IsVisible="{Binding IsInvasive}"
-                                                    Text="Invasive"
+                                                    IsVisible="{Binding IsSynced, Converter={StaticResource InverseBoolConverter}}"
+                                                    Text="Sync"
                                                     TextColor="White"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="160" />
+                                                    VerticalOptions="StartAndExpand"
+                                                    WidthRequest="100" />
 
                                             </Grid>
 
                                         </Grid>
 
-                                        <!--<Label  VerticalTextAlignment="Center" Margin="4" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="14"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="{Binding ProjectType}"
-                                    TextColor="Black" />-->
-
-
-                                        <Grid.GestureRecognizers>
-
-                                            <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
-
-                                        </Grid.GestureRecognizers>
-
                                     </Grid>
-
                                 </Frame>
 
                             </DataTemplate>
@@ -291,14 +195,7 @@
 
             </StackLayout>
         </Grid>
-        <!--<BoxView Color="Olive"  AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />-->
-        <!--<BoxView Color="Red" AbsoluteLayout.LayoutBounds="0,.5,25,100"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />
-        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,100,25"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />
-        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,1,25"
-        AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" />-->
+
     </AbsoluteLayout>
 
 

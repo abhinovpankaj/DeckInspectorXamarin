@@ -15,13 +15,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoHome()
         {
             await Shell.Current.Navigation.PopAsync();
-            // int count=Shell.Current.Navigation.NavigationStack.Count;
-            //for (var count = 1; count <= 3; count++)
-            //{
-            //    Navigation.RemovePage(this.Navigation.NavigationStack[6 - count]);
-            //}
-            //Navigation.PopAsync();
-
+         
         }
 
         private ProjectBuilding _projectbuilding;
@@ -97,17 +91,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             await Shell.Current.Navigation.PopAsync();
-            //await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-            //var result = await Shell.Current.DisplayAlert(
-            //    "Alert",
-            //    "Are you sure you want to go back?",
-            //    "Yes", "No");
-
-            //if (result)
-            //{
-            //    await Shell.Current.GoToAsync("//main");
-            //    // await Shell.Current.Navigation.Cle ;
-            //}
+            
         }
         private async Task Save()
         {
@@ -160,12 +144,6 @@ namespace Mobile.Code.ViewModels
         async Task ExecuteLocationDetailCommand(ProjectLocation parm)
         {
 
-            // ShellNavigationState state = Shell.Current.CurrentState;
-            //  await App.Current.MainPage.Navigation.PushModalAsync(new ShowImage() { BindingContext = new ShowImageViewModel(image.ImageUrl) });
-            //await App.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ProjectDetail() ));
-
-            //  await Application.Current.MainPage.DisplayAlert("Selected Peron", project.ProjectName, "Ok", "cancel");
-            // await Shell.Current.GoToAsync("ProjectLocationDetail");
             await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail()
             { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = parm } });
         }
@@ -194,24 +172,26 @@ namespace Mobile.Code.ViewModels
                 "Alert",
                 "Are you sure you want to remove?",
                 "Yes", "No");
-
+            Response response = new Response();
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                  ProjectBuildingDataStore.DeleteItemAsync(ProjectBuilding)
-                );
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                  ProjectBuildingSqLiteDataStore.DeleteItemAsync(ProjectBuilding));
+                }
+                else
+                    response = await Task.Run(() =>
+                  ProjectBuildingDataStore.DeleteItemAsync(ProjectBuilding));
+               
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
                 }
 
-                //     await ProjectBuildingDataStore.DeleteItemAsync(ProjectBuilding.Id);
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-                //    await Shell.Current.Navigation.PopAsync();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+               
             }
         }
 
@@ -233,24 +213,44 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
 
-
-            ProjectBuilding = await ProjectBuildingDataStore.GetItemAsync(ProjectBuilding.Id);
-
-            if (App.LogUser.RoleName == "Admin")
+            if (App.IsAppOffline)
             {
+                if (ProjectBuilding!=null)
+                {
+                    ProjectBuilding = await ProjectBuildingSqLiteDataStore.GetItemAsync(ProjectBuilding.Id);
+                   
+                    BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                }
                 IsEditDeleteAccess = true;
             }
-            else if (ProjectBuilding.UserId == App.LogUser.Id.ToString())
+            else
             {
-                IsEditDeleteAccess = true;
+                
+
+                if (App.LogUser.RoleName == "Admin")
+                {
+                    IsEditDeleteAccess = true;
+                }
+                else if (ProjectBuilding.UserId == App.LogUser.Id.ToString())
+                {
+                    IsEditDeleteAccess = true;
+                }
+                if (ProjectBuilding!=null)
+                {
+                    ProjectBuilding = await ProjectBuildingDataStore.GetItemAsync(ProjectBuilding.Id);
+                    BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                }
+                
             }
+
             if (App.IsInvasive)
             {
                 IsInvasiveControlDisable = true;
                 IsEditDeleteAccess = false;
             }
-            BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
-            BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+
             //var items = await BuildingApartmentDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id);
             //if(items.Count()!=0)
             //{

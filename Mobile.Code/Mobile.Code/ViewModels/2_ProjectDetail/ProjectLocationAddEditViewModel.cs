@@ -1,5 +1,6 @@
 ﻿using ImageEditor.ViewModels;
 using Mobile.Code.Models;
+using Mobile.Code.Services.SQLiteLocal;
 using Mobile.Code.Views;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -76,15 +77,18 @@ namespace Mobile.Code.ViewModels
                 return;
             }
             IsBusyProgress = true;
-
+            ProjectLocation location;
             Response result = await Task.Run(Running);
             if (result.Status == ApiResult.Success)
             {
                 IsBusyProgress = false;
-                //  await Shell.Current.Navigation.PopAsync().ConfigureAwait(false);
-                ProjectLocation location = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
-                // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                if (App.IsAppOffline)
+                {
+                    location = (ProjectLocation)result.Data;
+                }
+                else
+                    location = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
+                
                 await Shell.Current.Navigation.PopAsync();
 
 
@@ -101,23 +105,16 @@ namespace Mobile.Code.ViewModels
             Response result = new Response();
             if (string.IsNullOrEmpty(ProjectLocation.Id))
             {
-
                 ProjectLocation.ProjectId = Project.Id;
-                result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
+            }
 
-
-                //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
-
-                //return await Task.FromResult(true);
+            if (App.IsAppOffline)
+            {
+                result = await ProjectLocationSqLiteDataStore.AddItemAsync(ProjectLocation);
             }
             else
-            {
                 result = await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-                //ProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(result.Data.ToString());
-
-                ////await ProjectLocationDataStore.AddItemAsync(ProjectLocation);
-                //return await Task.FromResult(true);
-            }
+            
             return await Task.FromResult(result);
 
         }
@@ -136,18 +133,12 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
 
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
             ImgData = new ImageData();
         }
         public ICommand DeleteCommand => new Command(async () => await Delete());
         private async Task Delete()
         {
+            Response response;
             var result = await Shell.Current.DisplayAlert(
                 "Alert",
                 "Are you sure you want to remove?",
@@ -156,18 +147,21 @@ namespace Mobile.Code.ViewModels
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                     ProjectLocationDataStore.DeleteItemAsync(ProjectLocation)
-                );
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                     ProjectLocationSqLiteDataStore.DeleteItemAsync(ProjectLocation));
+                }
+                else
+                     response = await Task.Run(() =>
+                     ProjectLocationDataStore.DeleteItemAsync(ProjectLocation));
+                
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopToRootAsync();
                 }
-                //  await ProjectLocationDataStore.DeleteItemAsync(ProjectLocation);
-                // await Shell.Current.Navigation.PopToRootAsync();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
-
+                
             }
         }
         public void Load()
@@ -271,23 +265,11 @@ namespace Mobile.Code.ViewModels
                 string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
                 //  ImgData.mediaFile = arr;
                 return filepath;
-                //   byte[] arr = null;
-                //  using (MemoryStream ms = new MemoryStream())
-                // {
-                //     file.GetStream().CopyTo(ms);
-                //     file.Dispose();
-                //     arr = ms.ToArray();
-                //  }
-                // string filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), arr);
-                //ImgData.mediaFile = file;
-                // return filepath;
+               
             }
             else
             {
-
-
                 return file.Path;
-
             }
 
 

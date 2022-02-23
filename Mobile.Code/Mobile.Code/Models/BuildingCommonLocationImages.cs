@@ -4,7 +4,7 @@ namespace Mobile.Code.Models
 {
     public class BuildingCommonLocationImages : BindingModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string BuildingLocationId { get; set; }
 

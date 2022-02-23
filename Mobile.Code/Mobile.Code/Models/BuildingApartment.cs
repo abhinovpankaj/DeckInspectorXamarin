@@ -14,12 +14,12 @@ namespace Mobile.Code.Models
         }
 
 
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string BuildingId { get; set; }
 
 
-
+        public string OnlineId { get; set; }
 
 
         public string Name { get; set; }

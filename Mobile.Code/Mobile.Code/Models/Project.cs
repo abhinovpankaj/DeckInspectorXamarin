@@ -15,7 +15,7 @@ namespace Mobile.Code.Models
             set { _pimage = value; OnPropertyChanged("ImageUrl"); }
         }
         public string ProjectType { get; set; }
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -68,9 +68,22 @@ namespace Mobile.Code.Models
             get { return _IsAccess; }
             set { _IsAccess = value; OnPropertyChanged("IsAccess"); }
         }
+        private string _Category;
+        public string Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+       
 
-        public string Category { get; set; }
+        private bool _isSynced;
 
+        public bool IsSynced
+        {
+            get { return _isSynced; }
+            set { _isSynced = value; OnPropertyChanged("IsSynced"); }
+        }
+        
     }
 
     public enum ProjectCategory

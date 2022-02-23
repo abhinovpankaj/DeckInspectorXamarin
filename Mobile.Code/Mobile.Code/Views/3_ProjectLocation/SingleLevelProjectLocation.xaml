@@ -40,7 +40,7 @@
                     Aspect="AspectFill"
                     HeightRequest="260"
                     Source="{Binding Project.ImageUrl}" />
-                
+
 
                 <Label
                     Margin="5,20,0,0"
@@ -64,6 +64,31 @@
                     VerticalTextAlignment="Center" />
 
                 <uc:HomeBackView />
+                <Picker
+                    x:Name="offlineProjectPicker"
+                    Margin="0,15,0,0"
+                    Background="Transparent"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsOnline}"
+                    ItemDisplayBinding="{Binding Name}"
+                    ItemsSource="{Binding OfflineProjects}"
+                    Opacity="0.5"
+                    SelectedIndexChanged="offlineProjectPicker_SelectedIndexChanged"
+                    SelectedItem="{Binding SelectedOfflineProject}"
+                    VerticalOptions="StartAndExpand"
+                    WidthRequest="100" />
+                <Label
+                    Margin="0,20,0,0"
+                    BackgroundColor="Transparent"
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="15"
+                    HorizontalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsOnline}"
+                    Text="Sync With"
+                    TextColor="#2e479b"
+                    VerticalOptions="StartAndExpand" />
                 <Label
                     FontAttributes="None"
                     FontFamily="{StaticResource Montserrat-Regular}"
@@ -73,6 +98,22 @@
                     Text=""
                     TextColor="Black"
                     VerticalOptions="CenterAndExpand" />
+                <Button
+                    x:Name="imgbtnDownload"
+                    Margin="210,13,50,5"
+                    Command="{Binding DownloadOfflineCommand}"
+                    CornerRadius="25"
+                    HeightRequest="38"
+                    HorizontalOptions="Center"
+                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                            Glyph={x:Static helpers:IconFont.DownloadCircle},
+                                            Color=#2e479b,
+                                            Size=45}"
+                    IsEnabled="True"
+                    IsVisible="{Binding IsInvasive}"
+                    TextColor="White"
+                    VerticalOptions="Start"
+                    WidthRequest="38" />
                 <Image
                     x:Name="imgbtnEdit"
                     Margin="10"
@@ -110,7 +151,8 @@
                     ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                             Glyph={x:Static helpers:IconFont.Refresh},
                                             Color=White,
-                                            Size=20}" IsEnabled="True"
+                                            Size=20}"
+                    IsEnabled="True"
                     IsVisible="{Binding CanInvasiveCreate}"
                     Text="{Binding BtnInvasiveText}"
                     TextColor="White"

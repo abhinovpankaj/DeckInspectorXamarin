@@ -21,7 +21,8 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <AbsoluteLayout>
-            <controles:Loading x:Name="loadingcontrol"
+            <controles:Loading
+                x:Name="loadingcontrol"
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress}" />
@@ -106,7 +107,7 @@
                                 <pages:InvasiveVisualProjectLocationForm IsVisible="{Binding IsVisualProjectLocatoion}" />
                                 <pages:InvasiveVisualBuildingLocationForm IsVisible="{Binding IsVisualBuilding}" />
                                 <pages:InvasiveVisualApartmentLocationForm  IsVisible="{Binding IsVisualApartment}" />
-                                
+
                             </Grid>
                         </tabview:TabItem>-->
 

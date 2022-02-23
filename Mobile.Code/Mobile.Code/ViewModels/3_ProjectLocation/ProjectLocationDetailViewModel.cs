@@ -111,7 +111,11 @@ namespace Mobile.Code.ViewModels
         private async void GetImageProjectCommonLocationImages(ImageData ImgData)
         {
             ProjectCommonLocationImages.ImageUrl = ImgData.Path;
-            await ProjectCommonLocationImagesDataStore.UpdateItemAsync(ProjectCommonLocationImages);
+
+            if (App.IsAppOffline) { } //todo
+               // await ProjectCommonLocationImagesSqLiteDataStore.UpdateItemAsync(ProjectCommonLocationImages);
+            else
+                await ProjectCommonLocationImagesDataStore.UpdateItemAsync(ProjectCommonLocationImages);
         }
         public ProjectLocationDetailViewModel()
         {
@@ -151,13 +155,13 @@ namespace Mobile.Code.ViewModels
             visualForm = new ProjectLocation_Visual();
             //visualForm.Id = Guid.NewGuid().ToString();
             visualForm.ProjectLocationId = ProjectLocation.Id;
-            // vm.VisualProjectLocationPhotoItems.Clear();
+            
 
             VisualProjectLocationPhotoDataStore.Clear();
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-            VisualProjectLocationPhotoDataStore.Clear();
+            
             InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
 
@@ -326,13 +330,19 @@ namespace Mobile.Code.ViewModels
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-            //  vm.VisualProjectLocationPhotoItems.Clear();
+            
             VisualProjectLocationPhotoDataStore.Clear();
             InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
 
             vm.VisualForm = parm;
-            vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+            if (App.IsAppOffline)
+            {
+                vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
+            }
+            else
+
+                vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
             vm.ProjectLocation = ProjectLocation;
             ProjectLocationViewModel = vm;
@@ -348,8 +358,15 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
+                IEnumerable<VisualProjectLocationPhoto> photos;
+                if (App.IsAppOffline)
+                {
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                }
+                else
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
 
-                var photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                
                 vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
@@ -371,13 +388,19 @@ namespace Mobile.Code.ViewModels
                   "Alert",
                   "Are you sure you want to remove?",
                   "Yes", "No");
-
+            Response response = new Response();
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
-                      VisualFormProjectLocationDataStore.DeleteItemAsync(obj)
-                );
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                     VisualFormProjectLocationSqLiteDataStore.DeleteItemAsync(obj));
+                }
+                else
+                    response = await Task.Run(() =>
+                      VisualFormProjectLocationDataStore.DeleteItemAsync(obj));
+                
                 if (response.Status == ApiResult.Success)
                 {
                     IsBusyProgress = false;
@@ -387,7 +410,7 @@ namespace Mobile.Code.ViewModels
             }
         }
         public ICommand DeleteImagCommand => new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages obj) => await DeleteImagCommandExecute(obj));
-        private async Task DeleteImagCommandExecute(ProjectCommonLocationImages obj)
+        private async Task DeleteImagCommandExecute(ProjectCommonLocationImages obj) //not being used perhaps.
         {
             var result = await Shell.Current.DisplayAlert(
                   "Alert",
@@ -423,11 +446,17 @@ namespace Mobile.Code.ViewModels
                 "Alert",
                 "Are you sure you want to remove?",
                 "Yes", "No");
-
+            Response response = new Response();
             if (result)
             {
                 IsBusyProgress = true;
-                var response = await Task.Run(() =>
+                if (App.IsAppOffline)
+                {
+                    response = await Task.Run(() =>
+                     ProjectLocationSqLiteDataStore.DeleteItemAsync(ProjectLocation));
+                }
+                else
+                    response = await Task.Run(() =>
                      ProjectLocationDataStore.DeleteItemAsync(ProjectLocation)
                 );
                 if (response.Status == ApiResult.Success)
@@ -435,10 +464,6 @@ namespace Mobile.Code.ViewModels
                     IsBusyProgress = false;
                     await Shell.Current.Navigation.PopAsync();
                 }
-
-                // Shell.Current.Navigation.RemovePage(new BuildingLocationDetail());
-                // await Shell.Current.Navigation.PopAsync();
-                // await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = project } });
 
             }
         }
@@ -553,28 +578,40 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
 
-               
-                
-            if (App.LogUser.RoleName == "Admin")
+            if (App.IsAppOffline)
             {
                 IsEditDeleteAccess = true;
+                if (ProjectLocation != null)
+                {
+                    ProjectLocation = await ProjectLocationSqLiteDataStore.GetItemAsync(ProjectLocation.Id);
+                    VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                }
             }
-            else if (ProjectLocation.UserId == App.LogUser.Id.ToString())
+            else
             {
-                IsEditDeleteAccess = true;
+                if (App.LogUser.RoleName == "Admin")
+                {
+                    IsEditDeleteAccess = true;
+                }
+                else if (ProjectLocation.UserId == App.LogUser.Id.ToString())
+                {
+                    IsEditDeleteAccess = true;
+                }
+
+                if (ProjectLocation != null)
+                {
+                    ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
+                    VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+
+                }
             }
+            
+
             if (App.IsInvasive)
             {
                 IsInvasiveControlDisable = true;
                 IsEditDeleteAccess = false;
             }
-            if (ProjectLocation!=null)
-            {
-                ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
-                VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
-
-            }
-
             return await Task.FromResult(true);
 
         }

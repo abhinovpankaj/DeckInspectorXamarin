@@ -28,9 +28,10 @@ namespace Mobile.Code.Services.SQLiteLocal
             {
                 var buildingApartment = new BuildingApartment
                 {
+                    Id =  item.Id??Guid.NewGuid().ToString(),
                     BuildingId = item.BuildingId,
                     Name = item.Name,
-
+                    OnlineId = item.OnlineId,
                     Description = item.Description,
 
                     UserId = App.LogUser.Id.ToString(),
@@ -40,14 +41,14 @@ namespace Mobile.Code.Services.SQLiteLocal
                 };
 
                 res.TotalCount = _connection.Insert(buildingApartment);
-                SQLiteCommand Command= new SQLiteCommand(_connection);
+                //SQLiteCommand Command= new SQLiteCommand(_connection);
                 
-                Command.CommandText = "select last_insert_rowid()";
+                //Command.CommandText = "select last_insert_rowid()";
 
-                Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
+                //Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
 
-                res.ID = LastRowID64.ToString();
-
+                res.ID = buildingApartment.Id;
+                res.Data = buildingApartment;
                 res.Message = "Record Inserted Successfully";
                 res.Status = ApiResult.Success;
                 
@@ -61,13 +62,20 @@ namespace Mobile.Code.Services.SQLiteLocal
            
         }
 
-        public Task<Response> DeleteItemAsync(BuildingApartment item)
+        public async Task<Response> DeleteItemAsync(BuildingApartment item)
         {
             Response res = new Response();
             try
             {
                 _connection.Delete<BuildingApartment>(item.Id);
                 
+                foreach (var location in _connection.Table<Apartment_Visual>().Where(x => x.BuildingApartmentId == item.Id))
+                {
+                    VisualFormApartmentSqLiteDataStore dq = new VisualFormApartmentSqLiteDataStore();
+                    await dq.DeleteItemAsync(location);
+                    //_connection.Delete<Apartment_Visual>(location.Id);
+
+                }
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -78,7 +86,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Status = ApiResult.Fail;
             }
 
-            return Task.FromResult(res);
+            return res;
         }
 
         public Task<BuildingApartment> GetItemAsync(string id)

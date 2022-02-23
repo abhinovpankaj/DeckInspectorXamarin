@@ -71,30 +71,7 @@ namespace Mobile.Code.ViewModels
             get { return _Isbusyprog; }
             set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
         }
-        //private async Task Save()
-        //{
-        //    if (string.IsNullOrEmpty(buildingLocation.Name))
-        //    {
-        //        await Shell.Current.DisplayAlert("Alert", "Building location name is required", "OK");
-        //        return;
-        //    }
-        //    if (string.IsNullOrEmpty(buildingLocation.Id))
-        //    {
-        //        buildingLocation.Id = Guid.NewGuid().ToString();
-        //        buildingLocation.BuildingId = ProjectBuilding.Id;
-
-        //        buildingLocation.CreatedOn = DateTime.Now.ToString("MMM dd,yyyy");
-        //        await BuildingLocationDataStore.AddItemAsync(buildingLocation);
-
-        //        await Shell.Current.Navigation.PopAsync();
-        //        await Shell.Current.Navigation.PushAsync(new BuildingLocationDetail() { BindingContext = new BuildingLocationDetailViewModel() { BuildingLocation = buildingLocation } });
-        //    }
-        //    else
-        //    {
-        //        await BuildingLocationDataStore.UpdateItemAsync(buildingLocation);
-        //        await Shell.Current.Navigation.PopAsync();
-        //    }
-        //}
+        
 
         private async Task Save()
         {
@@ -109,9 +86,17 @@ namespace Mobile.Code.ViewModels
             if (result.Status == ApiResult.Success)
             {
                 IsBusyProgress = false;
-                if (!string.IsNullOrEmpty(result.ID))
+                if (App.IsAppOffline)
                 {
-                    buildingLocation.Id = result.ID.ToString();
+                    buildingLocation = (BuildingLocation)result.Data;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(result.ID))
+                    {
+                        buildingLocation.Id = result.ID.ToString();
+                    }
+
                 }
 
                 await Shell.Current.Navigation.PopAsync();
@@ -119,8 +104,6 @@ namespace Mobile.Code.ViewModels
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(BuildingLocationDetail))
                     await Shell.Current.Navigation.PushAsync(new BuildingLocationDetail() { BindingContext = new BuildingLocationDetailViewModel() { BuildingLocation = buildingLocation } });
-
-
             }
 
 
@@ -133,16 +116,16 @@ namespace Mobile.Code.ViewModels
             {
 
                 BuildingLocation.BuildingId = ProjectBuilding.Id;
-                result = await BuildingLocationDataStore.AddItemAsync(BuildingLocation);
-
-
-
+                
+            }
+   
+            if (App.IsAppOffline)
+            {
+                result = await BuildingLocationSqLiteDataStore.AddItemAsync(BuildingLocation);
             }
             else
-            {
                 result = await BuildingLocationDataStore.AddItemAsync(BuildingLocation);
-
-            }
+            
             return await Task.FromResult(result);
 
         }
@@ -160,13 +143,7 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
 
-            //MessagingCenter.Subscribe<ImageEditor.Pages.ImageEditorPage, string>(this, "AddItem", async (obj, item) =>
-            //{
-            //    var newItem = item as string;
-            //    await App.Current.MainPage.DisplayAlert(newItem,newItem,"ok","cancel");
-            //});
-            //LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            //Load();
+            
             ImgData = new ImageData();
         }
         public void Load()

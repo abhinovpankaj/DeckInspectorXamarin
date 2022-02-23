@@ -1,5 +1,6 @@
 ﻿using Mobile.Code.Models;
 using Mobile.Code.Services;
+using Mobile.Code.Services.SQLiteLocal;
 using System;
 using System.Collections.Generic;
 using Xamarin.Essentials;
@@ -29,17 +30,17 @@ namespace Mobile.Code
         public static string ImageFormString { get; set; }
         public static bool IsNewForm { get; set; }
         public static string InvaiveImages { get; set; }
+
+        public static bool IsAppOffline { get; set; }
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDE4MTUzQDMxMzgyZTM0MmUzMG02MXh1Z0Y2TXRzK3pmKzJkeW5xcjdvVWxrbndLeVlpSFU1YUJFam5DcDg9");
             InitializeComponent();
             IsInvasive = false;
+            IsAppOffline = false;
             VisualEditTracking = new List<MultiImage>();
             CompressionQuality = 100;
-            //if (UseMockDataStore)
-            //    //DependencyService.Register<MockDataStore>();
-            //else
-            //    DependencyService.Register<AzureDataStore>();
+           
             DependencyService.Register<ProjectDataStore>();
             DependencyService.Register<ProjectBuildingDataStore>();
             DependencyService.Register<ProjectLocationDataStore>();
@@ -56,18 +57,37 @@ namespace Mobile.Code
             DependencyService.Register<InvasiveVisualApartmentLocationPhotoDataStore>();
             DependencyService.Register<VisualFormBuildingLocationDataStore>();
             DependencyService.Register<VisualBuildingLocationPhotoDataStore>();
-
-
             DependencyService.Register<VisualFormApartmentDataStore>();
             DependencyService.Register<VisualApartmentLocationPhotoDataStore>();
+
+            //SQLite Dependency
+
+            DependencyService.Register<SqlLiteConnector>();
+            DependencyService.Register<ProjectSqLiteDataStore>();
+            DependencyService.Register<ProjectBuildingSqLiteDataStore>();
+            DependencyService.Register<ProjectLocationSqLiteDataStore>();
+            DependencyService.Register<BuildingLocationSqLiteDataStore>();
+            DependencyService.Register<BuildingApartmentSqLiteDataStore>();
+            //DependencyService.Register<ProjectCommonLocationImagesSqLiteDataStore>();
+            DependencyService.Register<BuildingCommonLocationImagesSqLiteDataStore>();
+            DependencyService.Register<BuildingApartmentImagesSqLiteDataStore>();
+            DependencyService.Register<VisualFormProjectLocationSqLiteDataStore>();
+           // DependencyService.Register<VisualProjectLocationPhotoSqLiteDataStore>();
+            
+            //DependencyService.Register<InvasiveVisualProjectLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<InvasiveVisualBuildingLocationPhotoSqLiteDataStore>();
+            //DependencyService.Register<InvasiveVisualApartmentLocationPhotoSqLiteDataStore>();
+            DependencyService.Register<VisualFormBuildingLocationSqLiteDataStore>();
+            //DependencyService.Register<VisualBuildingLocationPhotoSqLiteDataStore>();
+            DependencyService.Register<VisualFormApartmentSqLiteDataStore>();
+            //DependencyService.Register<VisualApartmentLocationPhotoSqLiteDataStore>();
+
+
+
             MainPage = new AppShell();
         }
         protected override void OnStart()
         {
-            //AppCenter.Start("ios=5da4b8f5-4212-42ca-81df-3e2eb6d39000;" ,
-
-
-            //         typeof(Analytics), typeof(Crashes));
             base.OnStart();
         }
 

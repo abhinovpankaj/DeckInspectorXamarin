@@ -4,7 +4,7 @@ namespace Mobile.Code.Models
 {
     public class ProjectBuilding : BindingModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string ProjectId { get; set; }
 
@@ -16,6 +16,7 @@ namespace Mobile.Code.Models
 
         public string Description { get; set; }
 
+        public string OnlineId { get; set; }
 
 
 

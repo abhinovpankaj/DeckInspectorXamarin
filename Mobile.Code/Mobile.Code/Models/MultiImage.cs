@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace Mobile.Code.Models
 {
     public class MultiImage
     {
+        [PrimaryKey]
         public string Id { get; set; }
         public MultiImage()
         {
@@ -21,5 +23,8 @@ namespace Mobile.Code.Models
         public bool IsServerData { get; set; }
         public bool IsDelete { get; set; }
 
+        public string OnlineId { get; set; }
+
+        public bool IsSynced { get; set; }
     }
 }

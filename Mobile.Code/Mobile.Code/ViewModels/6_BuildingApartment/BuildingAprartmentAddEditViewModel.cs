@@ -76,10 +76,19 @@ namespace Mobile.Code.ViewModels
             if (result.Status == ApiResult.Success)
             {
                 IsBusyProgress = false;
-                if (!string.IsNullOrEmpty(result.ID))
+                if (App.IsAppOffline)
                 {
-                    BuildingApartment.Id = result.ID.ToString();
+
+                    BuildingApartment = (BuildingApartment)result.Data;
                 }
+                else
+                {
+                    if (!string.IsNullOrEmpty(result.ID))
+                    {
+                        BuildingApartment.Id = result.ID.ToString();
+                    }
+                }
+              
 
                 await Shell.Current.Navigation.PopAsync();
 
@@ -103,18 +112,16 @@ namespace Mobile.Code.ViewModels
             Response result;
             if (string.IsNullOrEmpty(BuildingApartment.Id))
             {
-
                 BuildingApartment.BuildingId = ProjectBuilding.Id;
-                result = await BuildingApartmentDataStore.AddItemAsync(BuildingApartment);
-
-
-
+                
+            }
+          
+            if (App.IsAppOffline)
+            {
+                result = await BuildingApartmentSqLiteDataStore.AddItemAsync(BuildingApartment);
             }
             else
-            {
                 result = await BuildingApartmentDataStore.AddItemAsync(BuildingApartment);
-
-            }
             return await Task.FromResult(result);
 
         }

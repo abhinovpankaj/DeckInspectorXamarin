@@ -4,7 +4,7 @@ namespace Mobile.Code.Models
 {
     public class ProjectLocation_Visual : BindingModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public string Id { get; set; }
         public string ProjectLocationId { get; set; }
         public string Name { get; set; }
@@ -49,5 +49,7 @@ namespace Mobile.Code.Models
         public string ConclusiveLifeExpLBC { get; set; }
         public string ConclusiveLifeExpAWE { get; set; }
         public string ConclusiveAdditionalConcerns { get; set; }
+
+        public string OnlineId { get; set; }
     }
 }
