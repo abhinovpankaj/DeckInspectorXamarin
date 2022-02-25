@@ -627,7 +627,7 @@ namespace Mobile.Code.ViewModels
                 
                 var localProject = await ProjectSQLiteDataStore.GetItemAsync(SelectedOfflineProject.Id);
 
-                //insert in db
+                //insert in online db
                 
                 //get project common loc and Building details
                 var ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationSqLiteDataStore
@@ -647,13 +647,22 @@ namespace Mobile.Code.ViewModels
                     }
                     else
                     {
-                        var existingProjLoc = await ProjectLocationDataStore.GetItemAsync(item.OnlineId);
-                        if (existingProjLoc.Id == null)
+                        //change for image replication/migration of locations.
+                        if (item.ProjectId!=Project.Id)
                         {
                             item.Id = null;
                         }
                         else
-                            item.Id = item.IsDelete ? null : item.OnlineId;
+                        {
+                            var existingProjLoc = await ProjectLocationDataStore.GetItemAsync(item.OnlineId);
+                            if (existingProjLoc.Id == null)
+                            {
+                                item.Id = null;
+                            }
+                            else
+                                item.Id = item.IsDelete ? null : item.OnlineId;
+                        }
+                        
                     }
 
                     item.ProjectId = Project.Id; 
@@ -675,6 +684,7 @@ namespace Mobile.Code.ViewModels
                             (await VisualFormProjectLocationSqLiteDataStore
                             .GetItemsAsyncByProjectLocationId(localId));
                         _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(uploadedProjectLocation.Id);
+                        
                         foreach (var formLocationItem in VisualFormProjectLocationItems)
                         {
                             //add lowest level  location data
@@ -690,15 +700,23 @@ namespace Mobile.Code.ViewModels
                             }
                             else
                             {
-                                var existingformLocation = await VisualFormProjectLocationDataStore.GetItemAsync(formLocationItem.OnlineId);
-                                if (existingformLocation == null)
+                                if (formLocationItem.ProjectLocationId!= uploadedProjectLocation.Id)
                                 {
                                     formLocationItem.Id = null;
                                 }
                                 else
                                 {
-                                    formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
+                                    var existingformLocation = await VisualFormProjectLocationDataStore.GetItemAsync(formLocationItem.OnlineId);
+                                    if (existingformLocation == null)
+                                    {
+                                        formLocationItem.Id = null;
+                                    }
+                                    else
+                                    {
+                                        formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
+                                    }
                                 }
+                                
                             }
                             formLocationItem.ProjectLocationId = uploadedProjectLocation.Id;
                             Response locationResult;
@@ -775,25 +793,37 @@ namespace Mobile.Code.ViewModels
 
                 var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore
                     .GetItemsAsyncByProjectID(SelectedOfflineProject.Id));
+
                 foreach (var item in ProjectBuildingItems)
                 {
                     //insert buildinglocations
                     item.ProjectId = Project.Id;
                     string localId = item.Id;
+                    
                     if (item.OnlineId == null)
                     {
                         item.Id = null;
                     }
                     else
                     {
-                        var existingBuild = await ProjectBuildingDataStore.GetItemAsync(item.OnlineId);
-                        if (existingBuild.Id == null)
+                        if (item.ProjectId!=Project.Id)
                         {
                             item.Id = null;
                         }
                         else
-                            item.Id = item.IsDelete ? null : item.OnlineId;
+                        {
+                            var existingBuild = await ProjectBuildingDataStore.GetItemAsync(item.OnlineId);
+                            if (existingBuild.Id == null)
+                            {
+                                item.Id = null;
+                            }
+                            else
+                                item.Id = item.IsDelete ? null : item.OnlineId;
+                        }
+                        
                     }
+                    
+                    
                    
                    
                     var resultBuilding = await ProjectBuildingDataStore.AddItemAsync(item);
@@ -827,13 +857,21 @@ namespace Mobile.Code.ViewModels
                             }
                             else
                             {
-                                var existingBuildLoc = await BuildingLocationDataStore.GetItemAsync(buildingLoc.OnlineId);
-                                if (existingBuildLoc.Id == null)
+                                if (buildingLoc.BuildingId!=resultBuilding.ID)
                                 {
                                     buildingLoc.Id = null;
                                 }
                                 else
-                                    buildingLoc.Id = buildingLoc.IsDelete ? null : buildingLoc.OnlineId;
+                                {
+                                    var existingBuildLoc = await BuildingLocationDataStore.GetItemAsync(buildingLoc.OnlineId);
+                                    if (existingBuildLoc.Id == null)
+                                    {
+                                        buildingLoc.Id = null;
+                                    }
+                                    else
+                                        buildingLoc.Id = buildingLoc.IsDelete ? null : buildingLoc.OnlineId;
+                                }
+                                
                             }
 
                             buildingLoc.BuildingId = resultBuilding.ID==null?item.OnlineId:resultBuilding.ID;
@@ -869,17 +907,25 @@ namespace Mobile.Code.ViewModels
                                     }
                                     else
                                     {
-                                        var existngBuildLocForm = await VisualFormBuildingLocationDataStore.GetItemAsync(buildLocForm.OnlineId);
-                                        if (existngBuildLocForm == null)
+
+                                        if (buildLocForm.BuildingLocationId!=resultBuildLoc.ID)
                                         {
                                             buildLocForm.Id = null;
                                         }
                                         else
                                         {
-                                            buildLocForm.Id = buildLocForm.IsDelete ? null : buildLocForm.OnlineId;
+                                            var existngBuildLocForm = await VisualFormBuildingLocationDataStore.GetItemAsync(buildLocForm.OnlineId);
+                                            if (existngBuildLocForm == null)
+                                            {
+                                                buildLocForm.Id = null;
+                                            }
+                                            else
+                                            {
+                                                buildLocForm.Id = buildLocForm.IsDelete ? null : buildLocForm.OnlineId;
+                                            }
                                         }
+                                        
                                     }
-
 
                                    
                                     buildLocForm.BuildingLocationId = resultBuildLoc.ID;
@@ -968,13 +1014,21 @@ namespace Mobile.Code.ViewModels
                             }
                             else
                             {
-                                var existingApt = await BuildingApartmentDataStore.GetItemAsync(apartment.OnlineId);
-                                if (existingApt.Id == null)
+                                if (apartment.BuildingId!=resultBuilding.ID)
                                 {
-                                    existingApt.Id = null;
+                                    apartment.Id = null;
                                 }
                                 else
-                                    existingApt.Id = existingApt.IsDelete ? null : existingApt.OnlineId;
+                                {
+                                    var existingApt = await BuildingApartmentDataStore.GetItemAsync(apartment.OnlineId);
+                                    if (existingApt.Id == null)
+                                    {
+                                        apartment.Id = null;
+                                    }
+                                    else
+                                        apartment.Id = apartment.IsDelete ? null : apartment.OnlineId;
+                                }
+                               
                             }
 
                             apartment.BuildingId = resultBuilding.ID == null ? item.OnlineId : resultBuilding.ID;
@@ -1008,15 +1062,23 @@ namespace Mobile.Code.ViewModels
                                     }
                                     else
                                     {
-                                        var existingaptLoc = await VisualFormApartmentDataStore.GetItemAsync(aptLoc.OnlineId);
-                                        if (existingaptLoc == null)
+                                        if (aptLoc.BuildingApartmentId!=aptResult.ID)
                                         {
                                             aptLoc.Id = null;
                                         }
                                         else
                                         {
-                                            aptLoc.Id = aptLoc.IsDelete ? null : aptLoc.OnlineId;
+                                            var existingaptLoc = await VisualFormApartmentDataStore.GetItemAsync(aptLoc.OnlineId);
+                                            if (existingaptLoc == null)
+                                            {
+                                                aptLoc.Id = null;
+                                            }
+                                            else
+                                            {
+                                                aptLoc.Id = aptLoc.IsDelete ? null : aptLoc.OnlineId;
+                                            }
                                         }
+                                        
                                     }
 
                                     
