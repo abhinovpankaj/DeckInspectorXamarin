@@ -253,7 +253,7 @@ namespace Mobile.Code.iOS
 
                 default:
                     throw new Exception("Invalid image orientation");
-                    break;
+                    //break;
             }
 
             UIGraphics.BeginImageContext(bounds.Size);

@@ -25,10 +25,39 @@
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Title"
                 HorizontalOptions="StartAndExpand"
-                Text="Projects"
+                Text="Home"
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
-            <!--<SearchBar Placeholder="Search.." HorizontalOptions="StartAndExpand"></SearchBar>-->
+            <ImageButton  Margin="10,0,0,0"
+                    
+                    BackgroundColor="Transparent"
+                    Command="{Binding SwitchModeCommand}"
+                    HorizontalOptions="Start"
+                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                            Glyph={x:Static helpers:IconFont.WifiOff},
+                                                                            Color=White,
+                                                                            Size=30}"
+                    
+                    VerticalOptions="Center" >
+                <ImageButton.Triggers>
+                    <DataTrigger TargetType="ImageButton"
+                            Binding="{Binding IsOnline}"
+                            Value="true">
+                        <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                            Glyph={x:Static helpers:IconFont.Wifi},
+                                                                            Color=White,
+                                                                            Size=30}" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="ImageButton"
+                            Binding="{Binding IsOnline}"
+                            Value="false">
+                        <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                            Glyph={x:Static helpers:IconFont.WifiOff},
+                                                                            Color=White,
+                                                                            Size=30}" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
             <yummy:PancakeView
                 CornerRadius="0"
                 HeightRequest="40"
@@ -73,7 +102,8 @@
                         <ColumnDefinition Width="8" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Label
+                    <StackLayout Orientation="Horizontal">
+                        <Label
                         Grid.Column="0"
                         Padding="0"
                         FontFamily="{StaticResource Montserrat-Regular}"
@@ -83,6 +113,9 @@
                         TextColor="Black"
                         VerticalOptions="CenterAndExpand"
                         VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
                     <Label
                         Grid.Column="1"
                         FontFamily="{StaticResource Montserrat-Regular}"

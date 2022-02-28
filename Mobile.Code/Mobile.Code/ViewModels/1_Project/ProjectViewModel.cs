@@ -16,7 +16,7 @@ namespace Mobile.Code.ViewModels
     {
 
         public Command ProjectDetailCommand { get; set; }
-        
+        public Command SwitchModeCommand { get; set; }
         public Command AddNewCommand { get; set; }
 
         public ObservableCollection<Project> Items { get; set; }
@@ -112,10 +112,52 @@ namespace Mobile.Code.ViewModels
             CreateInvasiveCommand = new Command<Project>(async (Project project) => await CreateInvasive(project));
             AddNewCommand = new Command(async () => await ExecuteAddNewCommand());
             InvasiveDetailCommand = new Command<Project>(async (Project project) => await ExecuteInvasiveDetailCommand(project));
-           
+            SwitchModeCommand = new Command(async () => await ExecuteAppModeSwitch());
             //LoadData();
         }
 
+        private bool _isOnline;
+        public bool IsOnline
+        {
+            get { return _isOnline; }
+            set { _isOnline = value; OnPropertyChanged("IsOnline"); }
+        }
+        private async Task ExecuteAppModeSwitch()
+        {
+            App.IsAppOffline = !App.IsAppOffline;
+
+            if (!IsOnline)
+            {
+                if (App.LogUser != null)
+                {
+                    if (App.LogUser.Id == Guid.Empty)
+                    {
+                        App.AutoLogin = true;
+                        App.Current.MainPage = new AppShell();
+                        await Task.FromResult(true);
+                    }
+                    else
+                    {
+                        IsOnline = !IsOnline;
+                        await LoadData();
+                    }
+
+
+                }
+                else
+                {
+                    App.Current.MainPage = new AppShell();
+                    await Task.FromResult(true);
+                }
+
+            }
+            else
+            {
+                IsOnline = !IsOnline;
+                await LoadData();
+            }
+
+        }
         async Task ExecuteAddNewCommand()
         {
             string ProjectType = string.Empty;
@@ -144,6 +186,7 @@ namespace Mobile.Code.ViewModels
         private async Task<bool> Running()
         {
             Debug.WriteLine("On Project list page");
+            IsOnline = !App.IsAppOffline;
             IsBusyProgress = true;
             if (App.IsAppOffline)
             {

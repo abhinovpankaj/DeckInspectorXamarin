@@ -30,7 +30,7 @@ namespace Mobile.Code
         public static string ImageFormString { get; set; }
         public static bool IsNewForm { get; set; }
         public static string InvaiveImages { get; set; }
-
+        public static bool AutoLogin { get; set; }
         public static bool IsAppOffline { get; set; }
         public App()
         {

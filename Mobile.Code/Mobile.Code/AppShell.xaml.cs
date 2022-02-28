@@ -39,7 +39,13 @@ namespace Mobile.Code
             BindingContext = this;
 
         }
+        //public AppShell(bool automaticLogin)
+        //{
+        //    InitializeComponent();
+        //    RegisterRoutes();
+        //    BindingContext = this;
 
+        //}
         protected override bool OnBackButtonPressed()
         {//page.GetType() == typeof(EditBuildingApartmentImage)|| page.GetType() == typeof(EditBuildingLocationImage) || page.GetType() == typeof(EditProjectLocationImage)||
             var page = (Shell.Current?.CurrentItem?.CurrentItem as IShellSectionController)?.PresentedPage;
