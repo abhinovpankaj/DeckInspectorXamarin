@@ -16,7 +16,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         public VisualFormProjectLocationSqLiteDataStore()
         {
             items = new List<ProjectLocation_Visual>();
-            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<ProjectLocation_Visual>();
             _connection.CreateTable<MultiImage>();
         }

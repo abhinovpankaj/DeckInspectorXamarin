@@ -16,7 +16,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         public VisualFormApartmentSqLiteDataStore()
         {
             items = new List<Apartment_Visual>();
-            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<Apartment_Visual>();
         }
         public async Task<Response> AddItemAsync(Apartment_Visual item, IEnumerable<string> ImageList)

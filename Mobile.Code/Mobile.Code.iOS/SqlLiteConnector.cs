@@ -1,10 +1,12 @@
-﻿using SQLite;
+﻿using Mobile.Code.iOS;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Mobile.Code
+[assembly: Xamarin.Forms.Dependency(typeof(SqlLiteConnector))]
+namespace Mobile.Code.iOS
 {
     public class SqlLiteConnector : ISQLite
     {

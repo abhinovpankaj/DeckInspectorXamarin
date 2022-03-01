@@ -62,7 +62,8 @@ namespace Mobile.Code
 
             //SQLite Dependency
 
-            DependencyService.Register<SqlLiteConnector>();
+            //DependencyService.Register<>();
+
             DependencyService.Register<ProjectSqLiteDataStore>();
             DependencyService.Register<ProjectBuildingSqLiteDataStore>();
             DependencyService.Register<ProjectLocationSqLiteDataStore>();

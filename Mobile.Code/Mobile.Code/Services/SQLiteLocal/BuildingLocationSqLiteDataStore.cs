@@ -17,7 +17,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         {
 
             items = new List<BuildingLocation>();
-            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<BuildingLocation>();
 
         }

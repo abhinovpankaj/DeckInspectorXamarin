@@ -848,7 +848,7 @@ namespace Mobile.Code.ViewModels
                 await ProjectSQLiteDataStore.UpdateItemAsync(Project);
                 return response;
             });
-
+            await LoadData();
             IsBusyProgress = false;
         }
     }

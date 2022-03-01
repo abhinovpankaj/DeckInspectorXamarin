@@ -39,7 +39,7 @@ namespace Mobile.Code.Services
         }
         private void createConnection()
         {
-            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<VisualBuildingLocationPhoto>();
             _connection.CreateTable<MultiImage>();
         }

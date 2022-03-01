@@ -158,6 +158,7 @@
     <BundleResource Include="Resources\House1.png" />
     <BundleResource Include="Resources\delete.png" />
     <BundleResource Include="Resources\home.png" />
+    <Compile Include="SqlLiteConnector.cs" />
     <Compile Include="ToastNotification.cs" />
     <Compile Include="View\NativeCameraPreview.cs" />
   </ItemGroup>

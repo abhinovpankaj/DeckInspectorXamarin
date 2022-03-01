@@ -34,7 +34,7 @@ namespace Mobile.Code.Services
             multiImages = new List<MultiImage>();
             //if (App.IsAppOffline)
             //{
-            _connection = DependencyService.Get<SqlLiteConnector>().GetConnection();
+            _connection = DependencyService.Get<ISQLite>().GetConnection();
                 _connection.CreateTable<VisualBuildingLocationPhoto>();
             _connection.CreateTable<MultiImage>();
             //}
