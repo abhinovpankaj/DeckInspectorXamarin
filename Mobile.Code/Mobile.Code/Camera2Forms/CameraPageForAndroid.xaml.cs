@@ -86,23 +86,13 @@ namespace Mobile.Code.Camera2Forms
 
         private async void OnPictureFinished()
         {
-            //if (Device.RuntimePlatform == Device.Android)
-            //{
-
-            //}
-            // ImageSource temp = CameraPreview.ImageSource;
             CameraViewModel vm = (CameraViewModel)this.BindingContext;
 
-            // await DisplayAlert("Confirm", "Picture Taken", "", "Ok");
             if (Device.RuntimePlatform == Device.iOS)
             {
 
-
-
-
-
                 string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
-                // img1.Source = filepath;
+                
                 App.ListCamera2Api.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
 
                 vm.ImageList.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
@@ -112,48 +102,16 @@ namespace Mobile.Code.Camera2Forms
             if (Device.RuntimePlatform == Device.Android)
             {
                 string filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
-                // img1.Source = filepath;
+                
                 App.ListCamera2Api.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
                 vm.ImageList.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
                 vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
                 vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
 
-                //if (App.IsInvasive == true)
-                //{
-                //    if (vm.IsVisualProjectLocatoion)
-                //    {
-                //        VisualProjectLocationPhoto obj = new VisualProjectLocationPhoto() { ImageUrl = filepath, Id = Guid.NewGuid().ToString(), VisualLocationId = vm.ProjectLocation_Visual.Id };
-                //        await vm.AddNewPhoto(obj);
-                //    }
-                //}
+               
             }
 
-            //if (vm.IsVisualBuilding)
-            //{
-            //    VisualBuildingLocationPhoto obj = new VisualBuildingLocationPhoto() { Image = filepath, Id = Guid.NewGuid().ToString(), VisualID = vm.BuildingLocation_Visual.Id };
-            //    await vm.AddNewPhoto(obj);
-            //}
-            //if (vm.IsVisualApartment)
-            //{
-            //    VisualApartmentLocationPhoto obj = new VisualApartmentLocationPhoto() { Image = filepath, Id = Guid.NewGuid().ToString(), VisualID = vm.Apartment_Visual.Id };
-            //    await vm.AddNewPhoto(obj);
-            //}
-            //if (vm.IsProjectLocation)
-            //{
-            //    ProjectCommonLocationImages obj = new ProjectCommonLocationImages() { ImageUrl = filepath, Id = Guid.NewGuid().ToString(), ProjectLocationId = vm.ProjectLocation.Id };
-            //    await vm.AddNewPhoto(obj);
-            //}
-            //if (vm.IsBuildingLocation)
-            //{
-            //    BuildingCommonLocationImages obj = new BuildingCommonLocationImages() { Image = filepath, Id = Guid.NewGuid().ToString(), BuildingId = vm.BuildingLocation.Id };
-            //    await vm.AddNewPhoto(obj);
-            //}
-            //if (vm.IsApartment)
-            //{
-            //    BuildingApartmentImages obj = new BuildingApartmentImages() { Image = filepath, Id = Guid.NewGuid().ToString(), ApartmentID = vm.BuildingApartment.Id };
-            //    await vm.AddNewPhoto(obj);
-            //}
-            //  countSelect.Text = vm.ImageList.Count + " Photo(s)";
+            
         }
         public static event EventHandler<ImageSource> PhotoCapturedEvent;
 
@@ -163,20 +121,13 @@ namespace Mobile.Code.Camera2Forms
         }
         protected override void OnDisappearing()
         {
-            //CameraViewModel vm = (CameraViewModel)this.BindingContext;
-            //vm.IsBusyProgress = true;
-
-
-
-            //MessagingCenter.Send(this, "ImageList", vm.ImageList);
-
+            
 
             CameraPreview.PictureFinished -= OnPictureFinished;
 
             //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
             base.OnDisappearing();
-            // vm.ImageList.Clear();
-            // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
+            
         }
         protected override void OnAppearing()
         {
@@ -187,21 +138,7 @@ namespace Mobile.Code.Camera2Forms
         {
 
             await Shell.Current.Navigation.PopModalAsync();
-            // CameraViewModel vm = (CameraViewModel)this.BindingContext;
-
-            //vm.IsBusyProgress = true;
-
-            //bool complete = await Task.Run(Running);
-            //if (complete == true)
-            //{
-            //    vm.IsBusyProgress = false;
-
-            //    //  if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectLocationDetail))
-
-            //    await Shell.Current.Navigation.PopModalAsync();
-            //    // DependencyService.Get<ILodingPageService>().HideLoadingPage();
-
-            //}
+            
         }
         private async Task<bool> Running()
         {

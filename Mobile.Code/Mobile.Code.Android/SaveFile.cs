@@ -125,56 +125,7 @@ namespace Mobile.Code.Droid
             }
         }
 
-        //public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes)
-        //{
-
-
-        //    //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        //    //var filePath = System.IO.Path.Combine(documentsPath, filename);
-        //    //File.WriteAllBytes(filePath, bytes);
-        //    //  Bitmap newFile = loadAndResizeBitmap(filePath);
-        //    int angle = GetImageRotation("");
-
-        //    Bitmap originalImage = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
-        //    Matrix matrix = new Matrix();
-        //    int width = originalImage.Width;
-        //    int height = originalImage.Height;
-        //    matrix.PostRotate(angle);
-        //    //if (originalImage.Width > originalImage.Height)
-        //    //{
-        //    //    matrix.PostRotate(-90);
-        //    //}
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-        //        newresizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
-        //        bytes = ms.ToArray();
-        //    }
-        //    var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        //    var filePath = System.IO.Path.Combine(documentsPath, filename);
-        //    File.WriteAllBytes(filePath, bytes);
-        //    //  OpenFile(filePath, filename);
-        //    return filePath;
-
-        //    //Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, originalImage.Width, originalImage.Height, matrix, true);
-
-        //    //var filePathMain = System.IO.Path.Combine(documentsPath, filename);
-
-        //    ////using (MemoryStream ms = new MemoryStream())
-        //    ////{
-        //    ////    newFile.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
-        //    ////    bytes = ms.ToArray();
-        //    ////}
-        //    ////File.WriteAllBytes(filePathMain, bytes);
-        //    //////OpenFile(filePath, filename);
-        //    //return await Task.FromResult(filePath);
-
-        //    //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        //    //var filePath = System.IO.Path.Combine(documentsPath, filename);
-        //    //File.WriteAllBytes(filePath, bytes);
-        //    //OpenFile(filePath, filename);
-        //    //return filePath;
-
-        //}
+        
         public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes)
         {
 
@@ -198,19 +149,9 @@ namespace Mobile.Code.Droid
             }
             int width = originalImage.Width;
             int height = originalImage.Height;
-            //if (originalImage.Width > originalImage.Height)
-            //{
-            //    matrix.PostRotate(-90);
-            //}
-
+           
             matrix.PostRotate(GetImageRotation());
             Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, originalImage.Width, originalImage.Height, matrix, true);
-
-            //int imageWidth = originalImage.Width;
-            //int imageHeight = originalImage.Height;
-            //int newHeight = (imageHeight * 2000) / imageWidth;
-            //Bitmap newresizedImage = Bitmap.CreateScaledBitmap(resizedImage, 2000, newHeight, false);
-
 
 
             using (MemoryStream ms = new MemoryStream())
@@ -218,49 +159,22 @@ namespace Mobile.Code.Droid
                 resizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
                 bytes = ms.ToArray();
             }
-            var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            var filePath = System.IO.Path.Combine(documentsPath, filename);
+            // var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+
+            var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath; //Android.OS.Environment.StorageDirectory.AbsolutePath;
+            //var filePath = System.IO.Path.Combine(documentsPath,"DeckInspectors");
+           // Directory.CreateDirectory(filePath);
+            var filePath= System.IO.Path.Combine(documentsPath,filename) + ".png";
             File.WriteAllBytes(filePath, bytes);
-            //  OpenFile(filePath, filename);
+            
             return await Task.FromResult(filePath);
-
-
         }
-        //public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes)
-        //{
-        //    Bitmap originalImage = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
-        //    Matrix matrix = new Matrix();
-        //    if (originalImage.Width < originalImage.Height)
-        //    {
-        //        matrix.PostRotate(-90);
-        //    }
 
-
-        //    Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, originalImage.Width, originalImage.Height, matrix, true);
-
-        //    int imageWidth = originalImage.Width;
-        //    int imageHeight = originalImage.Height;
-        //    int newHeight = (imageHeight * 2000) / imageWidth;
-        //    Bitmap newresizedImage = Bitmap.CreateScaledBitmap(resizedImage, 2000, newHeight, false);
-
-
-
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-        //        newresizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
-        //        bytes = ms.ToArray();
-        //    }
-        //    var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-        //    var filePath = System.IO.Path.Combine(documentsPath, filename);
-        //    File.WriteAllBytes(filePath, bytes);
-        //    OpenFile(filePath, filename);
-        //    return filePath;
-
-        //}
         public async Task<string> SaveFiles(string filename, byte[] bytes)
         {
 
-            var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath;
             var filePath = System.IO.Path.Combine(documentsPath, filename);
             File.WriteAllBytes(filePath, bytes);
             OpenFile(filePath, filename);
