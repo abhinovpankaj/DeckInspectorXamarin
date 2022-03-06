@@ -50,10 +50,10 @@
 	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>DECK INSPECTOR</string>
-	<key>CustomProperty1</key>
-	<string></string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>CFBundleVersion</key>
-	<string>1.4</string>
+	<string>1.7</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application uses device microphone to record.</string>
 	<key>NSCameraUsageDescription</key>

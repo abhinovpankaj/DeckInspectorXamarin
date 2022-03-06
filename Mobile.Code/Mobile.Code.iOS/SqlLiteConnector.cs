@@ -14,9 +14,10 @@ namespace Mobile.Code.iOS
         public SQLiteConnection GetConnection()
         {
             var dbase = "DeckInspectorsLocalDB.db";
-
-            var dbpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(dbpath, dbase);
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var library = Path.Combine(documents, "..", "Library");
+            //var dbpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(library, dbase);
             var connection = new SQLiteConnection(path);
             return connection;
         }

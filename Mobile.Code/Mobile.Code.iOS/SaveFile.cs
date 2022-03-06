@@ -150,18 +150,12 @@ namespace Mobile.Code.iOS
                     // NSData retrunObj2 = ScaleAndRotateImage(temp1, image.Orientation).AsJPEG();
                     // return retrunObj2;
             }
+            
 
-
-            //  UIImage originalImage = ImageFromByteArray(bytes);
-            // UIDevice device = UIDevice.CurrentDevice;
-            // UIDeviceOrientation orientation = device.Orientation;
-
-
-            // var 
-            // var photo=originalImage;
             var bytesImagen = photo.AsJPEG().ToArray();
             var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            var filePath = Path.Combine(documentsPath, filename);
+            
+            var filePath = Path.Combine(documentsPath, filename) + ".png"; 
             File.WriteAllBytes(filePath, bytesImagen);
             // OpenPDF(filePath);
             return await Task.FromResult(filePath);

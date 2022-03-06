@@ -45,7 +45,7 @@
                             Value="true">
                         <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                             Glyph={x:Static helpers:IconFont.Wifi},
-                                                                            Color=White,
+                                                                            
                                                                             Size=30}" />
                     </DataTrigger>
                     <DataTrigger TargetType="ImageButton"
@@ -53,7 +53,7 @@
                             Value="false">
                         <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                             Glyph={x:Static helpers:IconFont.WifiOff},
-                                                                            Color=White,
+                                                                            
                                                                             Size=30}" />
                     </DataTrigger>
                 </ImageButton.Triggers>
