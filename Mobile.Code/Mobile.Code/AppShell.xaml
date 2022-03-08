@@ -15,7 +15,7 @@
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="White" />
-            <Setter Property="Shell.ForegroundColor" Value="White" />
+            
             <Setter Property="Shell.TitleColor" Value="White" />
             <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
             <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
@@ -113,6 +113,7 @@
                                     Size=24}"
         Text="Logout" />
     
-    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V2.5" />
+    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+        Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V3.0" />
    
 </Shell>
