@@ -37,29 +37,7 @@ namespace Mobile.Code.Droid
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
         {
             base.OnConfigurationChanged(newConfig);
-            //switch (newConfig.Orientation)
-            //{
-            //    case Android.Content.Res.Orientation.Landscape:
-            //        RequestedOrientation = ScreenOrientation.Portrait;
-            //        break;
-            //    case Android.Content.Res.Orientation.Portrait:
-            //        RequestedOrientation = ScreenOrientation.Portrait;
-            //        break;
-            //    default:
-            //        RequestedOrientation = ScreenOrientation.Portrait;
-            //        break;
-
-            //}
-            //if (newConfig.Orientation == Configuration)
-            //{
-            //    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            //}
-            //else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
-            //{
-            //    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            //}
-            //RequestedOrientation = ScreenOrientation.Portrait;
-            // Add code here to rotate the views that need rotating
+           
         }
         public static event EventHandler CameraPermissionGranted;
 
@@ -84,20 +62,8 @@ namespace Mobile.Code.Droid
             //mSensorManager.RegisterListener
             base.OnCreate(savedInstanceState);
 
-            //Window.AddFlags(WindowManagerFlags.ForceNotFullscreen);
-            //Window.ClearFlags(WindowManagerFlags.Fullscreen);
-
-            //this.Window.AddFlags(WindowManagerFlags.Fullscreen | WindowManagerFlags.TurnScreenOn);
-            //if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            //{
-            //    var stBarHeight = typeof(Xamarin.Forms.Platform.Android.FormsAppCompatActivity).GetField("statusBarHeight", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            //    if (stBarHeight == null)
-            //    {
-            //        stBarHeight = typeof(Xamarin.Forms.Platform.Android.FormsAppCompatActivity).GetField("_statusBarHeight", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            //    }
-            //    stBarHeight?.SetValue(this, 0);
-            //}
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
             DependencyService.Register<IResizeImageCommand, AndroidResizeImageCommand>();
             Xamarin.Forms.Forms.SetFlags(new string[] { "CollectionView_Experimental", "Expander_Experimental", "RadioButton_Experimental" });
             

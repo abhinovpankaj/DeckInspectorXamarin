@@ -7,6 +7,7 @@
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Shell.NavBarIsVisible="False"
+    Visual="Default"
     mc:Ignorable="d">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
