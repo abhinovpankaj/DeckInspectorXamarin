@@ -197,8 +197,6 @@ namespace Mobile.Code.ViewModels
 
             
             return await Task.FromResult(true);
-
-
         }
         public async Task LoadData()
         {

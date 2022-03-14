@@ -5,38 +5,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Visual="Material">
 
 
-    <Grid
-        Margin="0,0,0,0"
+    <Grid BackgroundColor="{DynamicResource  ColorBackground}"
+        Margin="0,10,0,10" RowDefinitions="*,Auto"
         HeightRequest="140"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Image
-            Grid.Row="0"
-            Margin="0,20,0,0"
-            Aspect="Fill"
-            Source="icon.png"
-            VerticalOptions="End" />
-
+        
+        <yummy:PancakeView Grid.RowSpan="2"                          
+                    CornerRadius="5"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+            <Image               
+                Aspect="AspectFit"
+                Source="icon.png"/>
+        </yummy:PancakeView>
 
         <Label
             x:Name="txtUserName"
-            Grid.Row="0"
-            Margin="0,0,0,10"
+            Grid.Row="1" Margin="20,10,10,0"             
             FontAttributes="Bold"
             FontSize="Large"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="End"
+            HorizontalOptions="End"
+            VerticalOptions="StartAndExpand"
             Text="{Binding LogUserName}"
-            TextColor="Orange"
-            VerticalOptions="StartAndExpand" />
+            TextColor="{DynamicResource Orange-900}"
+             />
     </Grid>
 
 </ContentView>

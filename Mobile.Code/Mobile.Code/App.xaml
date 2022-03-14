@@ -99,7 +99,6 @@
             <Color x:Key="ColorBackgroundAltShade">#E0E0E0</Color>
             <Color x:Key="primaryColor">#E65100</Color>
             <Color x:Key="Orange-900">#E65100</Color>
-
             <Color x:Key="Orange-700">#FF6D00</Color>
             <Color x:Key="Orange-200">#FFAB40</Color>
             <Color x:Key="Orange-400">#FF9100</Color>

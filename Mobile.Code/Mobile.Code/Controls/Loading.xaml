@@ -9,8 +9,8 @@
     <ContentView.Content>
         <StackLayout
             x:Name="aiLayout"
-            BackgroundColor="Gray"
-            Opacity="0.5">
+            BackgroundColor="{DynamicResource Orange-100}"
+            Opacity="0.9">
             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                 <Label
                     FontFamily="{StaticResource Montserrat-Regular}"
@@ -18,14 +18,14 @@
                     HorizontalOptions="CenterAndExpand"
                     Style="{StaticResource LabelStyle}"
                     Text="Please wait..."
-                    TextColor="{DynamicResource mainLabel}"
+                    TextColor="{DynamicResource ColorForegroundText}"
                     VerticalOptions="CenterAndExpand"
                     VerticalTextAlignment="Start" />
                 <ActivityIndicator
                     HorizontalOptions="CenterAndExpand"
                     IsRunning="{Binding IsBusyProgress}"
                     VerticalOptions="CenterAndExpand"
-                    Color="#2e479b" />
+                    Color="{DynamicResource Orange-700}" />
             </StackLayout>
 
         </StackLayout>

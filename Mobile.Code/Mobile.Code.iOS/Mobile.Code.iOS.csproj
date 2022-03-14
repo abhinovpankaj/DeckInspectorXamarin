@@ -180,15 +180,6 @@
     <BundleResource Include="Resources\tab_feed%403x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Resources\xamarin_logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Resources\xamarin_logo%402x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Resources\xamarin_logo%403x.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40%401x-1.png">
       <Visible>false</Visible>
@@ -414,5 +405,6 @@
     <Content Include="Resources\DeckInspectorsLocalDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <BundleResource Include="Resources\heroimage.png" />
   </ItemGroup>
 </Project>

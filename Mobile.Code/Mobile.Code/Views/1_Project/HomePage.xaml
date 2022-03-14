@@ -13,11 +13,9 @@
     xmlns:vm="clr-namespace:Mobile.Code.ViewModels"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Title="Home"
+    Visual="Material"
     mc:Ignorable="d">
-    <!--<Shell.SearchHandler>
-
-        <controls:CustomSearchHandler  ></controls:CustomSearchHandler>
-    </Shell.SearchHandler>-->
+  
     <Shell.TitleView>
         <StackLayout Padding="10,2" Orientation="Horizontal">
             <Label
@@ -25,19 +23,18 @@
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Title"
                 HorizontalOptions="StartAndExpand"
-                Text="Home"
+                Text="Projects"
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
-            <ImageButton  Margin="10,0,0,0"
+            <ImageButton  Margin="10,0,10,0"
                     
                     BackgroundColor="Transparent"
                     Command="{Binding SwitchModeCommand}"
                     HorizontalOptions="Start"
                     Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                                            Glyph={x:Static helpers:IconFont.WifiOff},
+                                                                            Glyph={x:Static helpers:IconFont.Wifi},
                                                                             Color=White,
                                                                             Size=30}"
-                    
                     VerticalOptions="Center" >
                 <ImageButton.Triggers>
                     <DataTrigger TargetType="ImageButton"
@@ -58,13 +55,13 @@
                     </DataTrigger>
                 </ImageButton.Triggers>
             </ImageButton>
-            <yummy:PancakeView
+            <!--<yummy:PancakeView
                 CornerRadius="0"
                 HeightRequest="40"
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="120">
                 <Image Aspect="AspectFill" Source="icon.png" />
-            </yummy:PancakeView>
+            </yummy:PancakeView>-->
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Padding>
@@ -77,74 +74,18 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid
+        <Grid BackgroundColor="{DynamicResource Orange-400}"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
-            <Grid.RowDefinitions>
-
-                <RowDefinition Height="Auto" />
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
 
                 <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-
-
-            <Grid
-                AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                BackgroundColor="#2e479b" />
-            <Frame Grid.Row="1" Margin="10,10,10,0">
-                <Grid BackgroundColor="White" VerticalOptions="FillAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Orientation="Horizontal">
-                        <Label
-                        Grid.Column="0"
-                        Padding="0"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Projects"
-                        TextColor="Black"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />
-
-                    </StackLayout>
-
-                    <Label
-                        Grid.Column="1"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="|"
-                        TextColor="{DynamicResource Gray-200}"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />
-                    <Label
-                        Grid.Column="2"
-                        BackgroundColor="White"
-                        FontFamily="{StaticResource MaterialFontFamily}"
-                        FontSize="40"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="{x:Static helpers:IconFont.PlusCircle}"
-                        TextColor="#2e479b"
-                        VerticalOptions="CenterAndExpand" />
-                    <!--<ImageButton Command="{Binding AddNewCommand}"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="2" BackgroundColor="White"
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.PlusCircle},Color=#2e479b,Size=38}"></ImageButton>-->
-
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding AddNewCommand}" />
-                </Frame.GestureRecognizers>
-            </Frame>
+            </Grid.RowDefinitions>-->
             <StackLayout
-                Grid.Row="2"
-                Margin="10,10,10,0"
+                Grid.Row="0"
+                Margin="5,10,5,0"
                 Padding="0">
                 <ScrollView>
                     <FlexLayout
@@ -158,10 +99,11 @@
                         Wrap="Wrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Frame
+                                <Frame BackgroundColor="{DynamicResource Orange-100}"
                                     x:Name="FrameTypes"
-                                    Margin="2"
-                                    Padding="10"
+                                    Margin="4"
+                                    HasShadow="True"
+                                    Padding="10" CornerRadius="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
                                                                Tablet='50%'}">
@@ -177,7 +119,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Grid Grid.Column="0" WidthRequest="100">
-                                            <yummy:PancakeView Grid.Column="0" CornerRadius="5">
+                                            <yummy:PancakeView Grid.Column="0" CornerRadius="5"                                       >
                                                 <ffimageloading:CachedImage
                                                     Aspect="AspectFill"
                                                     DownsampleToViewSize="True"
@@ -185,18 +127,17 @@
                                                     LoadingPlaceholder="loading.png"
                                                     Source="{Binding ImageUrl}" />
                                             </yummy:PancakeView>
-                                            <Label
-                                                Background="Orange"
+                                            <Label WidthRequest="25" HeightRequest="25"
+                                                Background="#E65100"
                                                 FontAttributes="Bold"
-                                                FontSize="Large"
-                                                HeightRequest="20"
+                                                FontSize="Subtitle"
+                                                Padding="2" Margin="-10,-10,0,0"
                                                 HorizontalOptions="Start"
                                                 HorizontalTextAlignment="Center"
                                                 Text="M"
                                                 TextColor="White"
                                                 VerticalOptions="Start"
-                                                VerticalTextAlignment="Center"
-                                                WidthRequest="20">
+                                                VerticalTextAlignment="Center">
 
                                                 <Label.Triggers>
                                                     <DataTrigger
@@ -211,7 +152,7 @@
 
                                             </Label>
                                             <Label
-                                                Background="#2e479b"
+                                                Background="{DynamicResource Orange-400}"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
                                                 HeightRequest="18"
@@ -247,12 +188,12 @@
                                                 Grid.Row="0"
                                                 Margin="0,3,0,0"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="14"
+                                                FontSize="Body" 
                                                 LineBreakMode="TailTruncation"
                                                 MaxLines="2"
                                                 Style="{StaticResource LabelStyle}"
                                                 Text="{Binding Name}"
-                                                TextColor="{DynamicResource mainLabel}"
+                                                TextColor="{DynamicResource  ColorForegroundText}"
                                                 VerticalOptions="StartAndExpand"
                                                 VerticalTextAlignment="Start" />
 
@@ -265,20 +206,20 @@
                                                     Grid.Row="0"
                                                     Margin="0,3,0,0"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
-                                                    FontSize="10"
+                                                    FontSize="Caption"
                                                     HorizontalOptions="StartAndExpand"
                                                     LineBreakMode="TailTruncation"
                                                     MaxLines="2"
                                                     Style="{StaticResource LabelStyle}"
                                                     Text="{Binding CreatedOn}"
-                                                    TextColor="{DynamicResource mainLabel}"
+                                                    TextColor="{DynamicResource  ColorForegroundText}"
                                                     VerticalOptions="CenterAndExpand"
                                                     VerticalTextAlignment="Start" />
                                                 <Button
                                                     Grid.Column="1"
                                                     Margin="1,5,2,5"
-                                                    BackgroundColor="#2e479b"
-                                                    BorderWidth="1"
+                                                    BackgroundColor="{DynamicResource Orange-900}"
+                                                    BorderWidth="1" BorderColor="{DynamicResource Orange-100}"
                                                     Command="{Binding BindingContext.InvasiveDetailCommand, Source={x:Reference FlexTypes}}"
                                                     CommandParameter="{Binding}"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
@@ -297,15 +238,6 @@
                                             </Grid>
 
                                         </Grid>
-
-                                        <!--<Label  VerticalTextAlignment="Center" Margin="4" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="14"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="{Binding ProjectType}"
-                                    TextColor="Black" />-->
-
-
                                         <Grid.GestureRecognizers>
 
                                             <TapGestureRecognizer Command="{Binding BindingContext.ProjectDetailCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
@@ -323,15 +255,58 @@
 
 
             </StackLayout>
+            <Frame Margin="10,10,20,30" CornerRadius="40" Padding="0"
+                   VerticalOptions="EndAndExpand" Opacity=".9"
+                   HorizontalOptions="End" IsClippedToBounds="True"
+                   HasShadow="True" 
+                   BorderColor="{DynamicResource  ColorBackground}"
+                   HeightRequest="80" WidthRequest="80"
+                   BackgroundColor="{DynamicResource Orange-900}">
+                <!--<Grid VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                        Grid.Column="0"
+                        Padding="0"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="25"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Projects"
+                        TextColor="{DynamicResource ColorBackground}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />
+
+                    </StackLayout>
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="25"
+                        Style="{StaticResource LabelStyle}"
+                        Text="|"
+                        TextColor="{DynamicResource Gray-200}"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalTextAlignment="Center" />-->
+                    <Label  Padding="0"                   
+                        
+                        FontSize="50"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="+"
+                        TextColor="{ DynamicResource ColorBackground}"
+                        VerticalOptions="CenterAndExpand" />
+                    
+                <!--</Grid>-->
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddNewCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            
         </Grid>
-        <!--<BoxView Color="Olive"  AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />-->
-        <!--<BoxView Color="Red" AbsoluteLayout.LayoutBounds="0,.5,25,100"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />
-        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,100,25"
-        AbsoluteLayout.LayoutFlags="PositionProportional" />
-        <BoxView Color="Blue" AbsoluteLayout.LayoutBounds=".5,0,1,25"
-        AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" />-->
+        
     </AbsoluteLayout>
 
 
