@@ -55,13 +55,7 @@
                     </DataTrigger>
                 </ImageButton.Triggers>
             </ImageButton>
-            <!--<yummy:PancakeView
-                CornerRadius="0"
-                HeightRequest="40"
-                VerticalOptions="CenterAndExpand"
-                WidthRequest="120">
-                <Image Aspect="AspectFill" Source="icon.png" />
-            </yummy:PancakeView>-->
+            
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Padding>
@@ -262,35 +256,7 @@
                    BorderColor="{DynamicResource  ColorBackground}"
                    HeightRequest="80" WidthRequest="80"
                    BackgroundColor="{DynamicResource Orange-900}">
-                <!--<Grid VerticalOptions="FillAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Orientation="Horizontal">
-                        <Label
-                        Grid.Column="0"
-                        Padding="0"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Projects"
-                        TextColor="{DynamicResource ColorBackground}"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />
-
-                    </StackLayout>
-
-                    <Label
-                        Grid.Column="1"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="|"
-                        TextColor="{DynamicResource Gray-200}"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />-->
+               
                     <Label  Padding="0"                   
                         
                         FontSize="50"

@@ -3,298 +3,222 @@
     x:Class="Mobile.Code.Views.AddProjectBuilding"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:con="clr-namespace:Mobile.Code.Convertors"
     xmlns:controles="clr-namespace:Mobile.Code.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Shell.NavBarIsVisible="False"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    x:Name="MyPage"
+    Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
+    <Shell.TitleView>
+        <StackLayout Padding="2,2" Orientation="Horizontal">
+            <Label
+                FontAttributes="None"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Title"
+                HorizontalOptions="CenterAndExpand"
+                Text="Add New Building"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+    </Shell.TitleView>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
-            <On Platform="iOS" Value="0,45,0,0" />
+            <On Platform="iOS" Value="0,40,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
+
     <ContentPage.Content>
+
         <AbsoluteLayout>
-            <controles:Loading AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" />
+            <controles:Loading AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                               AbsoluteLayout.LayoutFlags="All" />
+
             <ScrollView
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
 
-                <Frame>
-                    <Frame.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="5,40,5,0" />
-                            <On Platform="Android, WinPhone, Windows" Value="5,10,5,0" />
-                        </OnPlatform>
-                    </Frame.Margin>
-                    <Grid
-                        Margin="5"
+                <Frame BackgroundColor="{DynamicResource Orange-400}">
+                    <Grid>
+                        <Grid 
+                        Margin="5,0"
                         Padding="0"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1"
+                        AbsoluteLayout.LayoutFlags="All"
                         ColumnSpacing="0"
                         RowSpacing="0">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-
-
-                        </Grid.RowDefinitions>
-                        <Label
-                            Grid.Row="0"
-                            FontFamily="{StaticResource Montserrat-Regular}"
-                            FontSize="20"
-                            Style="{StaticResource LabelStyle}"
-                            TextColor="{DynamicResource mainLabel}"
-                            VerticalOptions="Start"
-                            VerticalTextAlignment="Start" />
-
-                        <Grid Grid.Row="2">
                             <Grid.RowDefinitions>
+
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout
-                                Margin="0,5,0,5"
+
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
                                 HorizontalOptions="FillAndExpand"
                                 Orientation="Horizontal">
-                                <Label
+                                    <Label
                                     FontFamily="{StaticResource Montserrat-Regular}"
                                     HorizontalTextAlignment="Start"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Project Building"
-                                    TextColor="{DynamicResource mainLabel}" />
-                                <Label
+                                    FontSize="Medium"
+                                    Text="Building Name"
+                                    TextColor="{DynamicResource ColorForegroundText}" />
+                                    <Label
                                     FontFamily="{StaticResource Montserrat-Regular}"
                                     HorizontalTextAlignment="Center"
-                                    Style="{StaticResource LabelStyle}"
+                                    FontSize="Large"
                                     Text="*"
                                     TextColor="Red"
                                     VerticalTextAlignment="Center" />
-                            </StackLayout>
+                                </StackLayout>
 
-                            <ImageButton
-                                x:Name="recordName"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                BorderColor="{DynamicResource Gray-300}"
-                                BorderWidth="1"
-                                ClassId="recordName"
-                                Clicked="recordClick"
-                                HeightRequest="28"
-                                HorizontalOptions="End"
-                                IsVisible="False"
-                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                   Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
-                                                   Size=20}"
-                                VerticalOptions="Center" />
-                            <controles:BorderlessEntry
+                                <controles:BorderlessEntry
                                 x:Name="txtName"
                                 Grid.Row="1"
-                                Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                                Margin="0,-8,0,0"
+                                Grid.ColumnSpan="2"                                
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="15"
+                                FontSize="Medium"
                                 HeightRequest="40"
                                 TabIndex="0"
                                 Text="{Binding ProjectBuilding.Name}"
                                 TextColor="Black"
-                                VerticalOptions="FillAndExpand" />
-                        </Grid>
+                                VerticalOptions="StartAndExpand" />
+                                <BoxView Margin="0,-8,0,0"
+                                CornerRadius="5"
+                                Grid.Row="2" 
+                                VerticalOptions="Start"
+                                HeightRequest="1"
+                                HorizontalOptions="Fill" Color="{DynamicResource Orange-100}" />
 
-                        <Grid Grid.Row="3" Margin="0,20,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label
+                            </Grid>
+
+
+                            <Grid Grid.Row="1" Margin="0,5,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
                                 Margin="0,5,0,5"
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                Style="{StaticResource LabelStyle}"
+                                FontSize="Medium"
                                 Text="Building Description"
-                                TextColor="{DynamicResource mainLabel}" />
-                            <ImageButton
+                                TextColor="{DynamicResource ColorForegroundText}" />
+                                <ImageButton HeightRequest="40" WidthRequest="50"
+                                         CornerRadius="20"
                                 x:Name="recordDes"
                                 Grid.Column="1"
-                                BackgroundColor="White"
-                                BorderColor="{DynamicResource Gray-300}"
-                                ClassId="recordDes"
-                                Clicked="recordClick"
-                                HeightRequest="28"
+                                BackgroundColor="{DynamicResource    Orange-900}"
+                                BorderWidth="1" BorderColor="{DynamicResource Orange-100}"
+                                ClassId="recordDes" Padding="5" 
+                                Clicked="recordClick"                                
                                 HorizontalOptions="End"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
-                                                   Size=20}"
+                                                   Color=White,
+                                                   Size=25}"
                                 VerticalOptions="Center" />
-                            <controles:XEditor
+                                <controles:XEditor
                                 x:Name="txtDes"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                                
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="15"
-                                HeightRequest="200"
-                                TabIndex="1"
+                                FontSize="Body"
+                                HeightRequest="140"
+                                TabIndex="2"
                                 Text="{Binding ProjectBuilding.Description}"
                                 TextColor="Black" />
-                        </Grid>
-                        <Grid Grid.Row="4" Margin="0,20,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                                <BoxView Margin="0,-8,0,0"
+                                CornerRadius="5"
+                                Grid.Row="2" Grid.ColumnSpan="2"
+                                VerticalOptions="StartAndExpand"
+                                HeightRequest="1"
+                                HorizontalOptions="Fill" Color="{DynamicResource Orange-100}" />
 
-                            <Label
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="0,10,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label
                                 Grid.Column="0"
-                                Margin="0,5,0,5"
+                                FontSize="Small"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 Style="{StaticResource LabelStyle}"
                                 Text="{Binding LogUserName, StringFormat='Created by : {0}'}"
-                                TextColor="{DynamicResource mainLabel}" />
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="0,5,0,5"
-                                FontFamily="{StaticResource Montserrat-Regular}"
-                                Style="{StaticResource LabelStyle}"
-                                Text="Date : Jun 6,2020"
-                                TextColor="{DynamicResource mainLabel}" />
-                            <ImageButton
-                                Grid.Row="1"
-                                Grid.RowSpan="1"
+                                TextColor="{DynamicResource  ColorForegroundText}" />
+
+                                <ImageButton
+                                Grid.Row="0"
                                 Grid.Column="1"
-                                BackgroundColor="White"
-                                BorderColor="{DynamicResource Gray-300}"
-                                BorderWidth="0"
+                                BackgroundColor="{DynamicResource Orange-900}"
+                                BorderWidth="1" BorderColor="{DynamicResource Orange-100}"
                                 Command="{Binding ChoosePhotoCommand}"
-                                CornerRadius="20"
-                                HeightRequest="40"
-                                HorizontalOptions="End"
+                                HeightRequest="40" WidthRequest="50"
+                                         CornerRadius="20"  Padding="5"                           
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Camera},
-                                                   Color=#2e479b,
-                                                   Size=28}"
-                                VerticalOptions="EndAndExpand"
-                                WidthRequest="40" />
+                                                   Color=White,
+                                                   Size=15}"/>
 
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <ffimageloading:CachedImage
-                                Aspect="AspectFill"
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <ffimageloading:CachedImage
+                                Aspect="AspectFit" Opacity=".7"
                                 HeightRequest="150"
-                                Source="{Binding ProjectBuilding.ImageUrl}" />
-                        </Grid>
-                        <BoxView
-                            Grid.Row="1"
-                            Margin="0,14,0,14"
-                            HeightRequest="1"
-                            HorizontalOptions="FillAndExpand"
-                            Style="{StaticResource BoxViewStyle}"
-                            VerticalOptions="FillAndExpand"
-                            Color="#2e479b" />
-                    </Grid>
+                                Source="{Binding ProjectBuilding.ImageUrl}">
+                                </ffimageloading:CachedImage>
+                            </Grid>
 
+
+                        </Grid>
+                        <ImageButton  Margin="0" 
+                                      HeightRequest="60" CornerRadius="30"
+                                    HorizontalOptions="EndAndExpand"
+                                          BackgroundColor="{DynamicResource Orange-900}"
+                                BorderWidth="2" BorderColor="{DynamicResource Orange-100}"
+                                    Command="{Binding SaveCommand}" Padding="10"
+                                    IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
+                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                       Glyph={x:Static helpers:IconFont.Floppy},
+                                                       Color=White,
+                                                       Size=30}"
+                                    VerticalOptions="EndAndExpand"
+                                    WidthRequest="60">
+                        </ImageButton>
+                    </Grid>
                 </Frame>
             </ScrollView>
 
-            <Grid
-                x:Name="gridtoolbar"
-                AbsoluteLayout.LayoutBounds="0,0,1,.09"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="White">
-                <Grid.Margin>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,0,0,0" />
-                        <On Platform="Android, WinPhone, Windows" Value="0" />
-                    </OnPlatform>
-                </Grid.Margin>
-                <Grid.Padding>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,0,0,5" />
-                        <On Platform="Android, WinPhone, Windows" Value="0,5,0,5" />
-                    </OnPlatform>
-                </Grid.Padding>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-
-                </Grid.ColumnDefinitions>
-                <Image
-                    Grid.Column="0"
-                    HeightRequest="{x:OnPlatform Android=30,
-                                                 iOS=30,
-                                                 UWP=30}"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.ArrowLeft},
-                                       Color=#2e479b,
-                                       Size={x:OnPlatform Android=30,
-                                                          iOS=30,
-                                                          UWP=30}}"
-                    VerticalOptions="Center"
-                    WidthRequest="{x:OnPlatform Android=30,
-                                                iOS=30,
-                                                UWP=30}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Column="1"
-                    FontAttributes="None"
-                    FontFamily="{StaticResource Montserrat-SemiBold}"
-                    FontSize="15"
-                    HorizontalOptions="CenterAndExpand"
-                    Style="{StaticResource LabelStyle}"
-                    Text="{Binding Title}"
-                    TextColor="Black"
-                    VerticalOptions="CenterAndExpand" />
-                <Image
-                    Grid.Column="2"
-                    HeightRequest="{x:OnPlatform Android=30,
-                                                 iOS=30,
-                                                 UWP=30}"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.Floppy},
-                                       Color=#2e479b,
-                                       Size={x:OnPlatform Android=30,
-                                                          iOS=30,
-                                                          UWP=30}}"
-                    VerticalOptions="Center"
-                    WidthRequest="{x:OnPlatform Android=30,
-                                                iOS=30,
-                                                UWP=30}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-
-
-            </Grid>
-
         </AbsoluteLayout>
     </ContentPage.Content>
-
 </ContentPage>
