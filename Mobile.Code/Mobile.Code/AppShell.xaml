@@ -114,6 +114,6 @@
         Text="Logout" />
     
     <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-        Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V3.0" />
+        Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V3.1" />
    
 </Shell>

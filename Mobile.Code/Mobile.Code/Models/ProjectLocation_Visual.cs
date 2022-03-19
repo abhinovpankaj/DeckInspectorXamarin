@@ -1,4 +1,6 @@
 ﻿using SQLite;
+using System;
+
 
 namespace Mobile.Code.Models
 {
@@ -12,11 +14,25 @@ namespace Mobile.Code.Models
 
         public string ImageDescription { get; set; }
 
-
-        public string AdditionalConsideration { get; set; }
+        public string _additionalConsideration;
+        public string AdditionalConsideration
+        {
+            get
+            {
+                return _additionalConsideration;
+            }
+            set
+            {
+                if (_additionalConsideration!=value)
+                {
+                    _additionalConsideration = RichTextStripper.StripRichTextFormat(value);
+                    OnPropertyChanged("AdditionalConsideration");
+                }
+                
+            }
+        }
 
         public string ExteriorElements { get; set; }
-
 
         public string WaterProofingElements { get; set; }
         public string ConditionAssessment { get; set; }
