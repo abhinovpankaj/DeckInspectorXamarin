@@ -123,7 +123,5 @@
                                     Color=#E65100,
                                     Size=24}"
         Text="Logout" />
-    
-   
-   
+  
 </Shell>
