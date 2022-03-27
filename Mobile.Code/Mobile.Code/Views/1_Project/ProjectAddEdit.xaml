@@ -14,12 +14,12 @@
     Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
     <Shell.TitleView>
-        <StackLayout Padding="2,2" Orientation="Horizontal">
+        <StackLayout Padding="2,2" Orientation="Horizontal" HorizontalOptions="Center">
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Title"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="Add New Project"
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
@@ -30,7 +30,14 @@
             <On Platform="iOS" Value="0,40,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.ContentSave},
+                     Color=Red,Size=45}"
+                     Command="{Binding SaveCommand}" Order="Primary"
+                     Priority="0" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
 
         <AbsoluteLayout>
@@ -241,8 +248,8 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <ffimageloading:CachedImage
-                                Aspect="AspectFit" Opacity=".7"
-                                HeightRequest="150"
+                                Aspect="AspectFill" Opacity=".7"
+                                HeightRequest="180"
                                 Source="{Binding Project.ImageUrl}">
                             </ffimageloading:CachedImage>
 

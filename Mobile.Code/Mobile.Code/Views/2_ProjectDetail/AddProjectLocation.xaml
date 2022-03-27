@@ -14,7 +14,7 @@
     Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
     <Shell.TitleView>
-        <StackLayout Padding="2,2" Orientation="Horizontal">
+        <StackLayout Padding="2,2" Orientation="Horizontal" HorizontalOptions="Center">
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"

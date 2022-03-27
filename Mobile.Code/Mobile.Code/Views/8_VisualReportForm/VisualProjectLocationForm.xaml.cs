@@ -30,13 +30,9 @@ namespace Mobile.Code.Views
             MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
             {
                 ImageButton btn = sender as ImageButton;
-                if (btn.ClassId == "recordName")
-                {
-                    recordName.IsEnabled = true;
+                
 
-                }
-
-                else if (btn.ClassId == "recordDes")
+                if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
 
@@ -91,7 +87,7 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                recordName.IsEnabled = false;
+                
 
                 recordDes.IsEnabled = false;
             }
@@ -109,64 +105,6 @@ namespace Mobile.Code.Views
             VisualProjectLocationFormViewModel vm = (VisualProjectLocationFormViewModel)this.BindingContext;
             vm.CheckAnyRadioButtonChecked = true;
         }
-        //protected override bool OnBackButtonPressed() => false;
-        //protected  override bool OnBackButtonPressed()
-        //{
-        //    //var result = await this.DisplayAlert("Alert!", "Do you really want to exit?", "Yes", "No");
-        //    //Device.BeginInvokeOnMainThread(async () => {
-
-        //    //    if (result) {
-
-        //    //        await Shell.Current.Navigation.PopAsync();
-
-        //    //    } // or anything else
-        //    //});
-
-        //    return true;
-
-        //    //  return true; // prevent Xamarin.Forms from processing back button
-        //    // var result = await Shell.Current.DisplayAlert(
-        //    //          "Alert",
-        //    //          "Are you sure you want to go back?",
-        //    //          "Yes", "No");
-        //    // if (result)
-        //    // {
-        //    //      Shell.Current.Navigation.PopAsync();
-        //    //     return await Task.FromResult<bool>(true);
-        //    // }
-        //    // // By returning TRUE and not calling base we cancel the hardware back button :)
-        //    // //base.OnBackButtonPressed();
-        //    // // Task.FromResult(true);
-        //    //return await Task.FromResult<bool>(true);
-        //}
-        //protected override bool OnBackButtonPressed()
-        //{
-
-        //    Device.BeginInvokeOnMainThread(async () =>
-        //    {
-        //        if (await DisplayAlert("Exit?", "Are you sure you want to exit from this page?", "Yes", "No"))
-        //        {
-        //            base.OnBackButtonPressed();
-        //            await App.Current.MainPage.Navigation.PopAsync();
-        //        }
-        //    });
-
-        //    return true;
-        //}
-        //protected  override void OnNavigating(object sender, ShellNavigatingEventArgs e)
-        //{
-        //    // Cancel back navigation if data is unsaved
-        //    if (e.Source == ShellNavigationSource.Pop)
-        //    {
-        //        if (await DisplayAlert("Exit?", "Are you sure you want to exit from this page?", "Yes", "No"))
-        //        {
-        //            base.OnBackButtonPressed();
-        //            await App.Current.MainPage.Navigation.PopAsync();
-        //        }
-        //        e.Cancel();
-        //    }
-        //}
-
-
+       
     }
 }

@@ -19,13 +19,7 @@
     </ContentPage.Padding>
     <Shell.TitleView>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label
-                FontAttributes="None"
+           <Label                
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Title"
                 HorizontalOptions="CenterAndExpand"
@@ -99,9 +93,6 @@
                         TextColor="{DynamicResource Orange-900}"
                         VerticalOptions="StartAndExpand"
                         VerticalTextAlignment="Center" />
-
-
-
                 </Grid>
 
                 <Grid Grid.Row="1" RowDefinitions="auto,*" x:Name="FlexTypesVisualForm">
@@ -116,10 +107,10 @@
                                 Text="{Binding ProjectLocation.Description}"
                                 TextColor="{DynamicResource  ColorForegroundText}" />
                         </StackLayout>
-                        
+                    <ScrollView Grid.Row="1" >
                         <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-400}"
                         EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
-                        Grid.Row="1" 
+                        
                         ItemsSource="{Binding VisualFormProjectLocationItems}"
                         IsVisible="{Binding IsViusalReport}">
                             <CollectionView.ItemsLayout>
@@ -135,22 +126,22 @@
                                                 BorderColor="{DynamicResource Orange-100}"
                                                 HasShadow="True">
                                         <SwipeView >
-                                            
-                                        <SwipeView.RightItems>
-                                            <SwipeItems>
-                                                <SwipeItem Text="Delete"
+
+                                            <SwipeView.RightItems>
+                                                <SwipeItems>
+                                                    <SwipeItem Text="Delete"
                                                            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.Delete},
                                                                Color=#e65100,
                                                                Size=26}"
-                                                           BackgroundColor="{DynamicResource Orange-900}"
+                                                           BackgroundColor="{DynamicResource Orange-900}" IsVisible="{Binding IsEditDeleteAccess}"
                                                            Command="{Binding BindingContext.DeleteVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
                                                 }" CommandParameter="{Binding .}" />
-                                            </SwipeItems>
-                                        </SwipeView.RightItems>
-                                        <SwipeView.LeftItems Mode="Execute">
-                                            <SwipeItems>
-                                                <SwipeItem Text="Edit"
+                                                </SwipeItems>
+                                            </SwipeView.RightItems>
+                                            <SwipeView.LeftItems Mode="Execute">
+                                                <SwipeItems>
+                                                    <SwipeItem Text="Edit"
                                                            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.BriefcaseEdit},
                                                                Color=Blue,
@@ -158,11 +149,11 @@
                                                            BackgroundColor="{DynamicResource Orange-400}"
                                                            Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
                                                 }" CommandParameter="{Binding .}" />
-                                                       
-                                            </SwipeItems>
-                                        </SwipeView.LeftItems>
 
-                                        <Grid RowDefinitions="Auto,Auto"  BackgroundColor="{DynamicResource Orange-100}"
+                                                </SwipeItems>
+                                            </SwipeView.LeftItems>
+
+                                            <Grid RowDefinitions="Auto,Auto"  BackgroundColor="{DynamicResource Orange-100}"
                                               ColumnDefinitions="*,Auto"
                                                 x:Name="FrameTypes" 
                                                 ColumnSpacing="0"
@@ -199,21 +190,7 @@
                                                 
                                                 Text="Further Invasive Required"
                                                 TextColor="{DynamicResource ColorForegroundText}" />
-                                                <!--<Switch IsEnabled="False" HeightRequest="20" OnColor="#FFB74D"
-                                                        ThumbColor="Green"
-                                                Grid.Row="1" Margin="5"
-                                                Grid.Column="1"                                                                                               
-                                                HorizontalOptions="CenterAndExpand">
-                                                    <Switch.Style >
-                                                        <Style TargetType="{x:Type Switch}">
-                                                            <Style.Triggers>
-                                                                <DataTrigger TargetType="Switch" Binding="{Binding FurtherInasive}" Value="Yes">
-                                                                    <Setter Property="IsToggled" Value="True"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Switch.Style>
-                                                </Switch>-->
+                                                
                                                 <Label Grid.Row="1"
                                                 Grid.Column="1"                                                                                               
                                                 HorizontalOptions="CenterAndExpand" FontFamily="{StaticResource Montserrat-Regular}"
@@ -227,23 +204,25 @@
 
                                             </Grid>
 
-                                        <SwipeView.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}}"
+                                            <SwipeView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}}"
                                                               CommandParameter="{Binding . }" />
-                                        </SwipeView.GestureRecognizers>
-                                    </SwipeView>
-                                   
-                                </Frame>
+                                            </SwipeView.GestureRecognizers>
+                                        </SwipeView>
+
+                                    </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+                    </ScrollView>
+                        
                     </Grid>
 
             </Grid>
             <Frame Margin="10,10,20,30" CornerRadius="40" Padding="0" 
                VerticalOptions="EndAndExpand" Opacity=".9"
                    HorizontalOptions="End" IsClippedToBounds="True"
-                   HasShadow="True" 
+                   HasShadow="True"  IsVisible="{Binding IsInvasiveControlDisable, Converter={StaticResource InverseBoolConverter}}"
                    BorderColor="{DynamicResource  ColorBackground}"
                    HeightRequest="70" WidthRequest="70"
                    BackgroundColor="{DynamicResource Orange-900}">

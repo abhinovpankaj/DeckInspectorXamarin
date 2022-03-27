@@ -8,80 +8,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     BackgroundColor="White"
     Visual="Material"
+    Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS" Value="0,45,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
+    <Shell.TitleView>
+        <StackLayout Padding="2,2" Orientation="Horizontal">
+            <Label
+                FontAttributes="None"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Title"
+                HorizontalOptions="CenterAndExpand"
+                Text="Waterproofing Elements"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+    </Shell.TitleView>
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+           
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid
-            x:Name="gridtoolbar"
-            Padding="0"
-            BackgroundColor="White">
-            <Grid.Margin>
-                <OnPlatform x:TypeArguments="Thickness">
-                    <On Platform="iOS" Value="0,25,0,0" />
-                    <On Platform="Android, WinPhone, Windows" Value="5,20,5,5" />
-                </OnPlatform>
-            </Grid.Margin>
-
-            <Image
-                Grid.Column="0"
-                HeightRequest="30"
-                HorizontalOptions="Start"
-                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                   Glyph={x:Static helpers:IconFont.ArrowLeft},
-                                   Color=#2e479b,
-                                   Size=30}"
-                VerticalOptions="Start"
-                WidthRequest="30">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Label
-                Margin="0,5,0,0"
-                FontAttributes="None"
-                FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="16"
-                HorizontalOptions="CenterAndExpand"
-                Style="{StaticResource LabelStyle}"
-                Text="Waterproofing Elements"
-                TextColor="Black"
-                VerticalOptions="StartAndExpand" />
-
-            <!--<Image Margin="5"
-
-
-                    HorizontalOptions="End"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=#2e479b,Size=30}"
-                    VerticalOptions="Start"
-                 >
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                </Image.GestureRecognizers>
-            </Image>-->
-
-        </Grid>
-        <Grid
+        
+        <Grid BackgroundColor="{DynamicResource Orange-300}"
             x:Name="SelectAllGrid"
-            Grid.Row="1"
+           
             Margin="10,5,0,5">
-
-
-
-
-
-
-
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -103,7 +60,7 @@
                 HorizontalOptions="StartAndExpand"
                 IsChecked="{Binding IsAllSelect}"
                 WidthRequest="30"
-                Color="#2e479b" />
+                Color="{DynamicResource Orange-900}" />
 
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding AllSelectedCommand}" />
@@ -111,7 +68,7 @@
             </Grid.GestureRecognizers>
 
         </Grid>
-        <ScrollView Grid.Row="2">
+        <ScrollView Grid.Row="1">
             <StackLayout
                 x:Name="FlexTypes"
                 BindableLayout.ItemsSource="{Binding Items}"
@@ -120,15 +77,8 @@
                     <DataTemplate>
 
                         <Frame HasShadow="False">
-                            <Grid x:Name="FrameTypes" FlexLayout.AlignSelf="Start">
-
-
-
-
-
-
-
-
+                            <Grid x:Name="FrameTypes" FlexLayout.AlignSelf="Start"
+                                  BackgroundColor="{DynamicResource Orange-300}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -149,7 +99,7 @@
                                     HorizontalOptions="CenterAndExpand"
                                     IsChecked="{Binding IsSelected}"
                                     WidthRequest="30"
-                                    Color="#2e479b" />
+                                    Color="{DynamicResource Orange-900}" />
 
 
 
@@ -167,18 +117,19 @@
         </ScrollView>
         <Button
             x:Name="btnDone"
-            Grid.Row="3"
+            Grid.Row="2"
             Margin="5"
-            BackgroundColor="#2e479b"
+            BackgroundColor="{DynamicResource Orange-900 }"
+            BorderColor="{DynamicResource Orange-100 }"
             BorderWidth="1"
             Clicked="btnDone_Clicked"
             FontSize="Small"
             HeightRequest="35"
             HorizontalOptions="Center"
             Text="Done"
-            TextColor="White"
+            TextColor="{DynamicResource ColorBackground}"
             VerticalOptions="End"
-            WidthRequest="100" />
+            WidthRequest="100" ></Button>
     </Grid>
 
 

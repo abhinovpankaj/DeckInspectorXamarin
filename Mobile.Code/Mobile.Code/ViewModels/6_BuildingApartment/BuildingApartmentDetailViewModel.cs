@@ -23,8 +23,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 2]);
-            await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopToRootAsync();
 
         }
         private BuildingApartment _app;
