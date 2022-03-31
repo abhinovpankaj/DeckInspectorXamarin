@@ -51,12 +51,12 @@
                  Order="Secondary" Command="{Binding ShowImagesCommand}"
                  Priority="1" />
        
-        <ToolbarItem Text="Home"
+        <!--<ToolbarItem Text="Home"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
                  Color=#FFD180,Size=45}"
                  Order="Secondary" Command="{Binding GoHomeCommand}"
-                 Priority="1" />
+                 Priority="1" />-->
     </ContentPage.ToolbarItems>
     <AbsoluteLayout>
         <controles:Loading
@@ -72,71 +72,7 @@
                 <RowDefinition Height="*" />
 
             </Grid.RowDefinitions>
-            <!--<Grid
-                x:Name="gridtoolbar"
-                Padding="0"
-                BackgroundColor="White">
-                <Grid.Margin>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,25,0,0" />
-                        <On Platform="Android, WinPhone, Windows" Value="5,20,5,10" />
-                    </OnPlatform>
-                </Grid.Margin>
-
-                <Image
-                    Grid.Column="0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.ArrowLeft},
-                                       Color=#2e479b,
-                                       Size=30}"
-                    VerticalOptions="Start"
-                    WidthRequest="30">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Margin="55,5,0,0"
-                    FontAttributes="None"
-                    FontFamily="{StaticResource Montserrat-Regular}"
-                    FontSize="15"
-                    HorizontalOptions="StartAndExpand"
-                    Style="{StaticResource LabelStyle}"
-                    Text="{Binding VisualForm.Name}"
-                    TextColor="Black"
-                    VerticalOptions="StartAndExpand" />
-
-
-                <Button
-                    x:Name="btnInvasive"
-                    BackgroundColor="#2e479b"
-                    BorderWidth="1"
-                    Command="{Binding SaveCommand}"
-                    FontFamily="{StaticResource Montserrat-Regular}"
-                    FontSize="Caption"
-                    HeightRequest="35"
-                    HorizontalOptions="End"
-                    ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                            Glyph={x:Static helpers:IconFont.Floppy},
-                                            Color=White,
-                                            Size=20}"
-                    IsVisible="{Binding CanInvasiveCreate}"
-                    Text="Save"
-                    TextColor="White"
-                    VerticalOptions="End"
-                    WidthRequest="80">
-                    <Button.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,0,15,0" />
-                            <On Platform="Android, WinPhone, Windows" Value="0,0,15,0" />
-                        </OnPlatform>
-                    </Button.Margin>
-                </Button>
-
-
-            </Grid>-->
+           
             <ScrollView Grid.Row="1" VerticalOptions="StartAndExpand">
                 <Grid>
 
@@ -206,7 +142,7 @@
                            
                         </Grid>
                     
-                    <Grid RowDefinitions=" auto,*" Grid.Row="1" Margin="0" Padding="0"
+                    <Grid RowDefinitions="auto,*" Grid.Row="1" Margin="0" Padding="0"
                            BackgroundColor="{DynamicResource Orange-300}">
                         <StackLayout Orientation="Horizontal"  VerticalOptions="Start"
                                         HorizontalOptions="CenterAndExpand">
@@ -227,7 +163,7 @@
                         </StackLayout>
                         <StackLayout Grid.Row="1" Padding="0" Margin="5,2">
                             <CarouselView x:Name="carouselView" IndicatorView="indicatorView" HeightRequest="280"                                     
-                                        ItemsSource="{Binding VisualProjectLocationPhotoItems}" EmptyView="No Images to Display" HorizontalOptions="Center">
+                                        ItemsSource="{Binding VisualProjectLocationPhotoItems}" EmptyView="No Images to Display." HorizontalOptions="Center">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
@@ -745,9 +681,6 @@
                                                 GroupName="{Binding GroupName}"
                                                 HeightRequest="40"
                                                 IsChecked="{Binding IsSelected}" />
-
-
-
                                         </Grid>
 
                                     </DataTemplate>

@@ -98,7 +98,7 @@
                     SelectedItem="{Binding SelectedOfflineProject}"
                     VerticalOptions="StartAndExpand"
                      />
-                <Grid x:Name="gridtoolbar" Grid.Row="1">
+                <Grid x:Name="gridTopPart" Grid.Row="1">
                     <yummy:PancakeView CornerRadius="10" Margin="8,4" >
                         <ffimageloading:CachedImage 
                         Aspect="AspectFill" Opacity="0.8"
@@ -127,14 +127,9 @@
                         TextColor="{DynamicResource Orange-900}"
                         VerticalOptions="StartAndExpand"
                         VerticalTextAlignment="Center" />
-
-
-
                 </Grid>
 
                 <Grid Grid.Row="2" RowDefinitions="auto,*" x:Name="FlexTypesVisualForm">
-
-
                     <StackLayout Grid.Row="0" Margin="5,0,0,0">
                         <Label
                                 Margin="5,0,0,0"
@@ -145,7 +140,7 @@
                                 TextColor="{DynamicResource  ColorForegroundText}" />
                     </StackLayout>
                     <ScrollView Grid.Row="1" >
-                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-400}" 
+                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-400}" VerticalOptions="Center"
                                     EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
                         
                         ItemsSource="{Binding VisualFormProjectLocationItems}"

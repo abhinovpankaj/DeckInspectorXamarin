@@ -45,16 +45,12 @@ namespace Mobile.Code.Views
                 SpeechToTextFinalResultRecieved(args);
             });
 
-            //this.BindingContext =vm= new ProjectAddEditViewModel();
+            
         }
 
         private void SpeechToTextFinalResultRecieved(string args)
         {
-            if (txtName.IsFocused)
-            {
-                txtName.Text += args;
-            }
-
+            
             if (txtDes.IsFocused)
             {
                 txtDes.Text += args;

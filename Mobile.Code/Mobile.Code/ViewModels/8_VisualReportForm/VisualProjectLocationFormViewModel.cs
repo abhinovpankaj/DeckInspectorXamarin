@@ -664,8 +664,6 @@ namespace Mobile.Code.ViewModels
            {
                ExteriorElements = item as ObservableCollection<string>;
                CountExteriorElements = ExteriorElements.Count.ToString();
-
-
            });
             MessagingCenter.Subscribe<PopUpCheakListBoxWaterProofing, ObservableCollection<string>>(this, "SelectedItem", (obj, item) =>
            {

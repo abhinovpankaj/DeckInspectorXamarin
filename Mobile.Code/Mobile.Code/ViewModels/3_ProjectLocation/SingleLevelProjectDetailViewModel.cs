@@ -271,9 +271,8 @@ namespace Mobile.Code.ViewModels
         private async Task NewViusalReportCommandExecue()
         {
             ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
-            
+
             visualForm.ProjectLocationId = Project.Id;
-            
 
             VisualProjectLocationPhotoDataStore.Clear();
 
@@ -287,8 +286,11 @@ namespace Mobile.Code.ViewModels
             {
                 App.FormString = JsonConvert.SerializeObject(visualForm);
                 App.IsNewForm = true;
-                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() 
-                { ProjectLocation = ProjectLocation, VisualForm = visualForm, ProjectID= Project.Id } });
+                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm()
+                {
+                    BindingContext = new VisualProjectLocationFormViewModel()
+                    { ProjectLocation = ProjectLocation, VisualForm = visualForm, ProjectID = Project.Id }
+                });
 
             }
             else
