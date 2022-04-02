@@ -596,11 +596,11 @@
                                                    Color=#2e479b,
                                                    Size=20}"
                                 VerticalOptions="Center" />
-                            <Editor IsSpellCheckEnabled="True"
+                            <controles:XEditor IsSpellCheckEnabled="True"
                                     IsTextPredictionEnabled="True" AutoSize="TextChanges"
-                                x:Name="txtDes"
-                                Grid.Row="1"
-                                Grid.ColumnSpan="2"
+                                    x:Name="txtDes" Keyboard="Chat"
+                                    Grid.Row="1" 
+                                    Grid.ColumnSpan="2"
                                 BackgroundColor="#ececec"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"

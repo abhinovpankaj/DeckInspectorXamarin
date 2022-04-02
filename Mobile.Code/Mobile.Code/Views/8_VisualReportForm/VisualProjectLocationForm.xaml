@@ -587,7 +587,7 @@
                                                    Color=#2e479b,
                                                    Size=20}"
                                 VerticalOptions="Center" />
-                            <Editor IsSpellCheckEnabled="True"
+                            <uc:XEditor IsSpellCheckEnabled="True"
                                     IsTextPredictionEnabled="True" AutoSize="TextChanges"
                                 x:Name="txtDes"
                                 Grid.Row="1"

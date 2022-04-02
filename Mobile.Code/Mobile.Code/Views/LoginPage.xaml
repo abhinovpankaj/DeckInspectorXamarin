@@ -135,9 +135,9 @@
                             Style="{StaticResource LabelStyle}"
                             Text="Save login credentials"
                             TextColor="Black" />
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SavecredentialCommand, Source={x:Reference GridRemember}}" />
-                        </Grid.GestureRecognizers>
+                        <!--<Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SavecredentialCommand}" />
+                        </Grid.GestureRecognizers>-->
                     </Grid>
                     <StackLayout
                         Grid.Row="7"
