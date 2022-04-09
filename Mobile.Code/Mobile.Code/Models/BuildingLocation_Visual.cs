@@ -24,7 +24,13 @@ namespace Mobile.Code.Models
             {
                 if (_additionalConsideration != value)
                 {
-                    _additionalConsideration = RichTextStripper.StripRichTextFormat(value);
+                    if ((value.Trim().StartsWith("{\\rtf")))
+                    {
+                        _additionalConsideration = RichTextStripper.StripRichTextFormat(value);
+                    }
+                    else
+                        _additionalConsideration = value;
+                   
                     OnPropertyChanged("AdditionalConsideration");
                 }
 

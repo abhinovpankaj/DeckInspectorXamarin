@@ -509,14 +509,14 @@
                                                    Color=#E65100,
                                                    Size=35}"
                                 VerticalOptions="Center" />
-                            <controles:XEditor
+                            <uc:XEditor IsSpellCheckEnabled="True"
+                                    IsTextPredictionEnabled="True" AutoSize="TextChanges"
                                 x:Name="txtDes"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
-                                HeightRequest="100"
                                 Text="{Binding VisualForm.AdditionalConsideration}"
                                 TextColor="{DynamicResource ColorBackground}"
                                 VerticalOptions="FillAndExpand" />
