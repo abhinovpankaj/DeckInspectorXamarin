@@ -35,25 +35,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             await Shell.Current.Navigation.PopAsync();
-            //var result = await Shell.Current.DisplayAlert(
-            //      "Alert",
-            //      "Are you sure you want to go back?",
-            //      "Yes", "No");
-
-
-
-            //if (result)
-            //{
-            //    //if (!string.IsNullOrEmpty(Project.Id))
-            //    //{
-            //    //    await Shell.Current.Navigation.PopAsync();
-            //    //}
-            //    //else
-            //    //{
-            //    //    await Shell.Current.GoToAsync("//main");
-            //    //}
-            //    // await Shell.Current.Navigation.Cle ;
-            //}
+            
         }
         private CheakBoxListReturntModel _exteriorElements;
 
@@ -120,8 +102,8 @@ namespace Mobile.Code.ViewModels
             ImgData = new ImageData();
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
-            
         }
+    
         private string _unitPhotCount;
 
         public string UnitPhotoCount
@@ -382,29 +364,7 @@ namespace Mobile.Code.ViewModels
 
         private async void GetImage(ImageData ImgData)
         {
-            //if (IsVisualProjectLocatoion)
-            //{
-            //   // VisualProjectLocationPhoto obj = parm as VisualProjectLocationPhoto;
-            //    // VisualProjectLocationPhoto = parm;
-            //    VisualProjectLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualProjectLocationPhotoDataStore.UpdateItemAsync(VisualProjectLocationPhoto,IsEdit);
-
-
-
-            //}
-            //if (IsVisualBuilding)
-            //{
-            //    VisualBuildingLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualBuildingLocationPhotoDataStore.UpdateItemAsync(VisualBuildingLocationPhoto);
-
-            //}
-            //if (IsVisualApartment)
-            //{
-            //    VisualApartmentLocationPhoto.ImageUrl = ImgData.Path;
-            //    await VisualApartmentLocationPhotoDataStore.UpdateItemAsync(VisualApartmentLocationPhoto);
-
-            //}
-
+            
             await LoadAsync();
         }
     }

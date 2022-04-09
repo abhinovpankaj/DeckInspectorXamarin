@@ -27,7 +27,7 @@
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title" 
+                FontSize="Subtitle" 
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding Project.Name}"
                 TextColor="White"
@@ -75,7 +75,7 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid BackgroundColor="{DynamicResource Orange-400}" 
+        <Grid BackgroundColor="{DynamicResource Orange-300}" 
               AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All">
             <Grid  VerticalOptions="Fill"           
@@ -88,7 +88,7 @@
                 <Picker
                     x:Name="offlineProjectPicker"
                     Margin="0,10,0,0" TextColor="White"
-                    BackgroundColor="{DynamicResource Orange-400}"                   
+                    BackgroundColor="{DynamicResource Orange-300}"                   
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="{Binding IsOnline}"
                     ItemDisplayBinding="{Binding Name}"
@@ -140,7 +140,7 @@
                                 TextColor="{DynamicResource  ColorForegroundText}" />
                     </StackLayout>
                     <ScrollView Grid.Row="1" >
-                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-400}" VerticalOptions="Center"
+                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-300}" VerticalOptions="Center"
                                     EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
                         
                         ItemsSource="{Binding VisualFormProjectLocationItems}"
@@ -151,12 +151,24 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate >
                                 <DataTemplate>
-                                    <Frame CornerRadius="8" BackgroundColor="{DynamicResource Orange-100}"
+                                    <Frame CornerRadius="8"
                                                 IsClippedToBounds="True"
                                                 Margin="4" 
                                                 Padding="4" 
                                                 BorderColor="{DynamicResource Orange-100}"
                                                 HasShadow="True">
+                                        <Frame.Background>
+
+                                            <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+                                                <GradientStop Color="{DynamicResource Orange-100}"
+                            Offset="0.1" />
+                                                <GradientStop Color="{DynamicResource Orange-400}"
+                            Offset="0.6" />
+                                                <GradientStop Color="{DynamicResource Orange-700}"
+                            Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Frame.Background>
                                         <SwipeView >
 
                                             <SwipeView.RightItems>

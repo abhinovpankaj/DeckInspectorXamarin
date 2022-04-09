@@ -21,7 +21,7 @@
         <Grid>
            <Label                
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
+                FontSize="Subtitle"
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding ProjectLocation.Name}"
                 TextColor="White"
@@ -55,7 +55,7 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid BackgroundColor="{DynamicResource Orange-400}" 
+        <Grid BackgroundColor="{DynamicResource Orange-300}" 
               AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All">
             <Grid  VerticalOptions="Fill"           
@@ -108,7 +108,7 @@
                                 TextColor="{DynamicResource  ColorForegroundText}" />
                         </StackLayout>
                     <ScrollView Grid.Row="1" >
-                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-400}"
+                        <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-300}"
                         EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
                         
                         ItemsSource="{Binding VisualFormProjectLocationItems}"
@@ -119,12 +119,13 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate >
                                 <DataTemplate>
-                                    <Frame CornerRadius="8" BackgroundColor="{DynamicResource Orange-100}"
+                                    <Frame CornerRadius="6"
                                                 IsClippedToBounds="True"
                                                 Margin="4" 
-                                                Padding="4" 
+                                                Padding="0" 
                                                 BorderColor="{DynamicResource Orange-100}"
                                                 HasShadow="True">
+                                        
                                         <SwipeView >
 
                                             <SwipeView.RightItems>
@@ -153,20 +154,31 @@
                                                 </SwipeItems>
                                             </SwipeView.LeftItems>
 
-                                            <Grid RowDefinitions="Auto,Auto"  BackgroundColor="{DynamicResource Orange-100}"
+                                            <Grid RowDefinitions="Auto,Auto" 
                                               ColumnDefinitions="*,Auto"
                                                 x:Name="FrameTypes" 
                                                 ColumnSpacing="0"
                                                 RowSpacing="0" IsClippedToBounds="True">
+                                                <Grid.Background>
 
-                                                <Label Margin="2"
-                                                Grid.Column="0"
-                                                FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Body"
-                                                HorizontalOptions="StartAndExpand"
-                                                HorizontalTextAlignment="Start"
-                                                Text="{Binding Name}"
-                                                TextColor="{DynamicResource ColorForegroundText}" />
+                                                    <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+                                                        <GradientStop Color="{DynamicResource Orange-700}"
+                            Offset="0.1" />
+                                                        <GradientStop Color="{DynamicResource Orange-400}"
+                            Offset="0.6" />
+                                                        <GradientStop Color="{DynamicResource Orange-300}"
+                            Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                                <Label Margin="4,2"
+                                                        Grid.Column="0"
+                                                        FontFamily="{StaticResource Montserrat-Regular}"
+                                                        FontSize="Body"
+                                                        HorizontalOptions="StartAndExpand"
+                                                        HorizontalTextAlignment="Start"
+                                                        Text="{Binding Name}"
+                                                        TextColor="{DynamicResource ColorForegroundText}" />
 
                                                 <Label Padding="0"
                                                 Grid.Row="1" Margin="2,5,0,0"

@@ -798,11 +798,8 @@ namespace Mobile.Code.ViewModels
                     }
 
                 }
-
                 UnitPhotoCount = VisualBuildingLocationPhotoItems.Count.ToString();
-
             }
-
             return await Task.FromResult(true);
         }
         private bool _isprojectLoc;
@@ -828,21 +825,13 @@ namespace Mobile.Code.ViewModels
         }
         public async Task<bool> Load()
         {
-
-
             IsBusyProgress = true;
             bool complete = await Task.Run(Running).ConfigureAwait(false);
             if (complete == true)
             {
-
-
-
                 IsBusyProgress = false;
-
-
             }
             return await Task.FromResult(true);
-
         }
 
         private string _title;

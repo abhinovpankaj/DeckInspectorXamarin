@@ -10,7 +10,7 @@ namespace Mobile.Code.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UnitPhtoForm : ContentPage
     {
-        private ISpeechToText _speechRecongnitionInstance;
+        
         //ProjectAddEditViewModel vm;
         public VisualFormType VisualFormType { get; set; }
         public UnitPhtoForm()
@@ -19,9 +19,6 @@ namespace Mobile.Code.Views
             
         }
 
-        
-
-      
         protected async override void OnAppearing()
         {
             UnitPhotoViewModel vm = ((UnitPhotoViewModel)this.BindingContext);

@@ -18,7 +18,7 @@
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
+                FontSize="Subtitle"
                 HorizontalOptions="CenterAndExpand"
                 Text="Add New Location"
                 TextColor="White"

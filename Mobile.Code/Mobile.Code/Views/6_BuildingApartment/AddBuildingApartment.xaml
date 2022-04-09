@@ -19,7 +19,7 @@
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
+                FontSize="Subtitle"
                 HorizontalOptions="CenterAndExpand"
                 Text="Add New Apartment"
                 TextColor="White"
@@ -43,7 +43,7 @@
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
 
-                <Frame BackgroundColor="{DynamicResource Orange-400}">
+                <Frame BackgroundColor="{DynamicResource Orange-300}">
                     <Grid>
                         <Grid 
                         Margin="5,0"

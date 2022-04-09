@@ -11,8 +11,12 @@
     xmlns:uc="clr-namespace:Mobile.Code.Controls"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="ProjectLocationForm"
+    
     Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}"/>
+    </Shell.BackButtonBehavior>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS" Value="0,45,0,0" />
@@ -28,7 +32,7 @@
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
+                FontSize="Subtitle"
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding VisualForm.Name}"
                 TextColor="White"
@@ -37,19 +41,26 @@
         </Grid>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Photo"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.CameraPlus},
+                     Color=Red,Size=45}" 
+                     Command="{Binding ChoosePhotoFromCameraCommand}" 
+                     Order="Primary"
+                     Priority="0" />
         <ToolbarItem Text="Save"                     
                      IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                      Glyph={x:Static helpers:IconFont.ContentSave},
                      Color=Red,Size=45}" 
-                     Command="{Binding SaveCommand}" IsDestructive="True"
+                     Command="{Binding SaveCommand}" IsDestructive="False"
                      Order="Primary"
-                     Priority="0" />
+                     Priority="1" />
         <ToolbarItem Text="Show All Images"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
                  Color=#FFD180,Size=45}"
                  Order="Secondary" Command="{Binding ShowImagesCommand}"
-                 Priority="1" />
+                 Priority="2" />
        
     </ContentPage.ToolbarItems>
     <AbsoluteLayout>

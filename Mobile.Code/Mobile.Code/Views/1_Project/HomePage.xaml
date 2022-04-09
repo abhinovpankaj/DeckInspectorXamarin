@@ -68,7 +68,7 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid BackgroundColor="{DynamicResource Orange-400}"
+        <Grid BackgroundColor="{DynamicResource Orange-300}"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
@@ -93,14 +93,27 @@
                         Wrap="Wrap">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <Frame BackgroundColor="{DynamicResource Orange-100}"
+                                <Frame                                    
+
                                     x:Name="FrameTypes"
-                                    Margin="4"
+                                    Margin="4" BorderColor="{DynamicResource  Orange-100}"
                                     HasShadow="True"
                                     Padding="10" CornerRadius="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
                                                                Tablet='50%'}">
+                                    <Frame.Background>
+                                        
+                                        <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+                                            <GradientStop Color="{DynamicResource Orange-100}"
+                            Offset="0.1" />
+                                            <GradientStop Color="{DynamicResource Orange-400}"
+                            Offset="0.6" />
+                                            <GradientStop Color="{DynamicResource Orange-700}"
+                            Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100" />

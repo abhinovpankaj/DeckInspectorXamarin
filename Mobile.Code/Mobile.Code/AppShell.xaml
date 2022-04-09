@@ -9,10 +9,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Mobile.Code.Views"
     Title="Mobile.Code"
-    FlyoutBackgroundColor="{StaticResource Orange-200}"
+    
     FlyoutBehavior="Disabled"
     mc:Ignorable="d">
-
+    <Shell.FlyoutBackground>
+        <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+            <GradientStop Color="{DynamicResource Orange-200}"
+                            Offset="0.1" />
+            <GradientStop Color="{DynamicResource Orange-300}"
+                            Offset="0.6" />
+            <GradientStop Color="{DynamicResource Orange-400}"
+                            Offset="1.0" />
+        </LinearGradientBrush>
+    </Shell.FlyoutBackground>
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="#FF9100" />
@@ -59,13 +69,14 @@
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
-        <StackLayout Margin="10">
+        <StackLayout  Margin="10"
+                     HorizontalOptions="CenterAndExpand">
             <Label Text="Deck Inspectors"
-               TextColor="GhostWhite"
+               TextColor="White"
                FontAttributes="Bold"
                HorizontalOptions="Center" />
-            <Label Text="V3.01"
-               TextColor="GhostWhite"
+            <Label Text="V4.0" Margin="4"
+               TextColor="White"
                HorizontalOptions="Center" />
         </StackLayout>
     </Shell.FlyoutFooter>
@@ -81,7 +92,17 @@
         IsTabStop="False"
         Route="main" 
         Shell.TabBarIsVisible="False">
-
+        <Shell.FlyoutBackdrop>
+            <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+                <GradientStop Color="#8A2387"
+                            Offset="0.1" />
+                <GradientStop Color="#E94057"
+                            Offset="0.6" />
+                <GradientStop Color="#F27121"
+                            Offset="1.0" />
+            </LinearGradientBrush>
+        </Shell.FlyoutBackdrop>
         <ShellContent
             Title="Project(s)"
             ContentTemplate="{DataTemplate views:HomePage}"

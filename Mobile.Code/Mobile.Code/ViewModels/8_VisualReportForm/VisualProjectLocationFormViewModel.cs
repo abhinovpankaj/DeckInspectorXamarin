@@ -48,7 +48,7 @@ namespace Mobile.Code.ViewModels
             OnPropertyChanged("RadioList_OwnerAgreedToRepair");
             OnPropertyChanged("IsSelected");
         }
-        private async Task GoBack()
+        public async Task GoBack()
         {
             if (App.IsInvasive == true)
             {

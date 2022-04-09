@@ -19,19 +19,28 @@
         </OnPlatform>
     </ContentPage.Padding>
     <Shell.TitleView>
-        <Grid HorizontalOptions="Center">
+        <Grid HorizontalOptions="Center" Margin="0">
             
-            <Label
+            <Label 
                 FontAttributes="None" HorizontalTextAlignment="Center"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
-                HorizontalOptions="CenterAndExpand"
+                FontSize="Subtitle"
+                HorizontalOptions="Start"
                 Text="Location Photos"
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
 
         </Grid>
     </Shell.TitleView>
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Photo"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.CameraPlus},
+                     Color=Red,Size=45}" 
+                     Command="{Binding ChoosePhotoFromCameraCommand}" 
+                     Order="Primary"
+                     Priority="0" />
+    </ContentPage.ToolbarItems>-->
     <AbsoluteLayout>
         <controles:Loading
             AbsoluteLayout.LayoutBounds="0,0,1,1"

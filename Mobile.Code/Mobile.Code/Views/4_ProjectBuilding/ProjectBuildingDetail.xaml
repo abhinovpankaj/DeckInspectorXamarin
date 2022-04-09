@@ -23,7 +23,7 @@
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Large" 
+                FontSize="Subtitle" 
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding ProjectBuilding.Name}"
                 TextColor="White"
