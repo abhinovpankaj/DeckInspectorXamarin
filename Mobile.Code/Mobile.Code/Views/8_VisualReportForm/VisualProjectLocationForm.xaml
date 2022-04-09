@@ -51,12 +51,6 @@
                  Order="Secondary" Command="{Binding ShowImagesCommand}"
                  Priority="1" />
        
-        <!--<ToolbarItem Text="Home"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.Home},
-                 Color=#FFD180,Size=45}"
-                 Order="Secondary" Command="{Binding GoHomeCommand}"
-                 Priority="1" />-->
     </ContentPage.ToolbarItems>
     <AbsoluteLayout>
         <controles:Loading

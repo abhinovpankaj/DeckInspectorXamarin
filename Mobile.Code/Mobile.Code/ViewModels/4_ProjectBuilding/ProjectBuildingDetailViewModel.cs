@@ -14,7 +14,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopToRootAsync();
          
         }
 
