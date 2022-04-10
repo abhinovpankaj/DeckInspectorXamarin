@@ -233,7 +233,7 @@
                                                     HeightRequest="35"
                                                     HorizontalOptions="EndAndExpand"
                                                     ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                                            Glyph={x:Static helpers:IconFont.FormatListBulletedSquare},
+                                                                            Glyph={x:Static helpers:IconFont.ShieldRefresh},
                                                                             Color=White,
                                                                             Size=20}"
                                                     IsVisible="{Binding IsInvasive}"

@@ -44,7 +44,7 @@
                      Command="{Binding DeleteCommand}" IsDestructive="True"
                      Order="Secondary"
                      Priority="2" />
-        <ToolbarItem Text="Invasive"
+        <ToolbarItem Text="{Binding BtnInvasiveText}" 
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.ShieldRefresh},
                  Color=#FFD180,Size=45}" IsEnabled="{Binding CanInvasiveCreate}"
@@ -81,10 +81,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 
-                    <Picker TitleColor="Black"
+                <Picker TitleColor="Black"
                     x:Name="offlineProjectPicker"
                     Margin="0,0,0,0" TextColor="Black"
                     BackgroundColor="{DynamicResource Orange-300}"                   
@@ -127,9 +128,14 @@
                         VerticalOptions="StartAndExpand"
                         VerticalTextAlignment="Center" />
                 </Grid>
-                
+                <Label Grid.Row="2" Margin="8,0"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        FontSize="Body"
+                        LineHeight="1.5"
+                        Text="{Binding Project.Description}"
+                        TextColor="{DynamicResource ColorBackground}" />
                 <ScrollView
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Margin="0"
                     VerticalOptions="FillAndExpand">
 

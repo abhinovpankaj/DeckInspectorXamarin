@@ -92,7 +92,7 @@ namespace Mobile.Code.ViewModels
         public ICommand ChoosePhotoCommand { get; set; }
 
         public Command GoBackCommand { get; set; }
-        public Command SaveCommand { get; set; }
+       
         public Command EditCommand { get; set; }
         public Command DeleteCommand { get; set; }
 
@@ -118,12 +118,7 @@ namespace Mobile.Code.ViewModels
             await Shell.Current.Navigation.PopToRootAsync();
 
         }
-        private async Task Save()
-        {
-            //await App.Current.MainPage.Navigation.PushAsync(new SingleLevelProjectLocation());
-            await Task.FromResult(true);
-
-        }
+        
         public ObservableCollection<ProjectCommonLocationImages> _projectCommonLocationImagesItems { get; set; }
 
         public ObservableCollection<ProjectCommonLocationImages> ProjectCommonLocationImagesItems
@@ -165,16 +160,56 @@ namespace Mobile.Code.ViewModels
                 IsViusalReport = false;
                 IsFinelOrInvasiveReport = true;
             }
-            CreateInvasiveCommand = new Command(async () => await CreateInvasive());
+            CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
             GoBackCommand = new Command(async () => await GoBack());
             
-            EditCommand = new Command(async () => await Edit());
-            SaveCommand = new Command(async () => await Save());
-            DeleteCommand = new Command(async () => await Delete());
+            EditCommand = new Command(Edit, canEdit);
+            
+            DeleteCommand = new Command( Delete, canDelete);
             ShowPickerCommand = new Command(() => OpenOfflineProjectList());
 
-            DownloadOfflineCommand = new Command(async () => await DownloadOffline());
+            DownloadOfflineCommand = new Command(DownloadOffline, canDownloadOffline);
 
+        }
+
+        private bool canDownloadOffline(object arg)
+        {
+            return IsInvasive;
+        }
+
+        private async void DownloadOffline(object obj)
+        {
+            await DownloadOffline();
+        }
+
+        private bool canDelete(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Delete(object obj)
+        {
+            await Delete();
+        }
+
+        private bool canEdit(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Edit(object obj)
+        {
+            await Edit();
+        }
+
+        private bool canCreateInvasive(object arg)
+        {
+            return CanInvasiveCreate;
+        }
+
+        private async void CreateInvasive(object obj)
+        {
+            await CreateInvasive();
         }
 
         private async Task DownloadOffline()

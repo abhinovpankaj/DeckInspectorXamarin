@@ -79,8 +79,7 @@ namespace Mobile.Code.ViewModels
         public Command LocationDetailCommand { get; set; }
         public Command BuildingDetailCommand { get; set; }
         public Command GoBackCommand { get; set; }
-        public Command SaveCommand { get; set; }
-
+        
         public Command EditCommand { get; set; }
         public Command DownloadOfflineCommand { get; set; }
         private async Task GoBack()
@@ -96,12 +95,7 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.Cle ;
             //}
         }
-        private async Task Save()
-        {
-            await Task.FromResult(true);
-            // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-        }
-
+       
         private bool _Isbusyprog;
 
         public bool IsBusyProgress
@@ -135,7 +129,18 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.PushAsync(new AddProjectBuilding() { BindingContext = new ProjectBuildingAddEditViewModel() { Title = "Edit Project Building" } });
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
-        public ICommand DeleteCommand => new Command(async () => await Delete());
+        public ICommand DeleteCommand => new Command(Delete, canDelete);
+
+        private bool canDelete(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Delete(object obj)
+        {
+            await Delete();
+        }
+
         private async Task Delete()
         {
             Response response;
@@ -178,11 +183,11 @@ namespace Mobile.Code.ViewModels
         
         public ProjectDetailViewModel()
         {
-            CreateInvasiveCommand = new Command(async () => await CreateInvasive());
+            CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
             GoBackCommand = new Command(async () => await GoBack());
-            //  SaveCommand = new Command(async () => await Save());
-            EditCommand = new Command(async () => await Edit());
-            SaveCommand = new Command(async () => await Save());
+            
+            EditCommand = new Command(Edit, canEdit);
+            
             
             NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
             NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
@@ -192,14 +197,53 @@ namespace Mobile.Code.ViewModels
 
             ShowPickerCommand = new Command( () =>  OpenOfflineProjectList());
             
-            DownloadOfflineCommand = new Command(async () => await DownloadOffline());
+            DownloadOfflineCommand = new Command(DownloadOffline,canDownLoadOffline);
         }
-       
+
+        private bool canEdit(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Edit(object obj)
+        {
+            await Edit();
+        }
+
+        private bool canCreateInvasive(object arg)
+        {
+            return CanInvasiveCreate;
+        }
+
+        private async void CreateInvasive(object obj)
+        {
+            await CreateInvasive();
+        }
+
+        private async void DownloadOffline(object obj)
+        {
+            await DownloadOffline();
+        }
+
+        private bool canDownLoadOffline(object arg)
+        {
+            return IsInvasive;
+        }
+
         private bool _isInvasive;
         public bool IsInvasive
         {
             get { return _isInvasive; }
-            set { _isInvasive = value; OnPropertyChanged("IsInvasive"); }
+            set 
+            {
+                if (_isInvasive != value)
+                {
+                    _isInvasive = value;
+                    DownloadOfflineCommand.ChangeCanExecute();
+                    OnPropertyChanged("IsInvasive");
+                }
+                
+            }
         }
 
         private async Task DownloadOffline()
@@ -426,9 +470,7 @@ namespace Mobile.Code.ViewModels
             }
         }
         async Task ExecuteLocationDetailCommand(ProjectLocation parm)
-        {
-
-           
+        {           
             if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectLocationDetail))
                 await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail()
                 { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = parm } }).ConfigureAwait(false);
@@ -446,7 +488,6 @@ namespace Mobile.Code.ViewModels
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
-
                 IsBusyProgress = false;
             }
         }
@@ -493,6 +534,7 @@ namespace Mobile.Code.ViewModels
             IsInvasive = (IsOnline && App.IsInvasive) ? true : false;
             if (App.IsInvasive)
             {
+                CanInvasiveCreate = false;
                 IsInvasiveControlDisable = true;
             }
             if (App.IsAppOffline)
