@@ -167,11 +167,11 @@
                                 VerticalTextAlignment="Center" />
                         </StackLayout>
                         <StackLayout Grid.Row="1" Padding="0" Margin="5,2">
-                            <CarouselView x:Name="carouselView" IndicatorView="indicatorView" HeightRequest="280"                                     
+                            <CarouselView x:Name="carouselView" IndicatorView="indicatorView" HeightRequest="280"                                      
                                         ItemsSource="{Binding VisualProjectLocationPhotoItems}" EmptyView="No Images to Display." HorizontalOptions="Center">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackLayout>
+                                       
                                             <Frame HasShadow="True" Padding="2"                                                   
                                                 CornerRadius="10" BackgroundColor="{DynamicResource Orange-400}"                                                
                                                 HorizontalOptions="Center"
@@ -187,11 +187,11 @@
                                                 </StackLayout>
                                                
                                             </Frame>
-                                        </StackLayout>
+                                        
                                     </DataTemplate>
                                 </CarouselView.ItemTemplate>
                                 <CarouselView.ItemsLayout>
-                                    <LinearItemsLayout Orientation="Horizontal"
+                                    <LinearItemsLayout Orientation="Horizontal" 
                                             ItemSpacing="10" SnapPointsType="MandatorySingle" />
                                 </CarouselView.ItemsLayout>
                             </CarouselView>
@@ -208,9 +208,9 @@
 
                         <Grid  ColumnDefinitions="*,auto,auto">
                             <Label
-                                Margin="0,0,8,8"
+                                Margin="0,0,8,0"
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="14"
+                                FontSize="14" VerticalOptions="CenterAndExpand"
                                 HorizontalOptions="StartAndExpand"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Exterior Elements "
@@ -249,12 +249,13 @@
                             </Grid.ColumnDefinitions>
 
                             <Label
-                                Margin="0,0,8,8"
+                                Margin="0,0,8,0"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="14"
                                 HorizontalOptions="StartAndExpand"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Waterproofing Elements "
+                                VerticalOptions="CenterAndExpand"
                                TextColor="{DynamicResource ColorForegroundText}"/>
                             <Label
                                 Grid.Column="1"
@@ -262,7 +263,7 @@
                                 FontFamily="{DynamicResource FontAwesomeSolid}"
                                 FontSize="20"
                                 Text="{Binding CountWaterProofingElements}"
-                               TextColor="{DynamicResource ColorForegroundText}"
+                                TextColor="{DynamicResource ColorForegroundText}"
                                 VerticalOptions="CenterAndExpand" />
                             <Label
                                 Grid.Column="2" Margin="0,0,10,0"
@@ -290,10 +291,9 @@
                             <Label
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="14"
-                                HorizontalTextAlignment="Start"
-                                Style="{StaticResource LabelStyle}"
+                                HorizontalTextAlignment="Start"                                
                                 Text="Visual Review"
-                                TextColor="{DynamicResource mainLabel}" />
+                                 />
                             <FlexLayout
                                 x:Name="VisualReviewFrm"
                                 Grid.Row="1"
@@ -531,9 +531,7 @@
                                 VerticalOptions="Start"
                                 HeightRequest="1"
                                 HorizontalOptions="Fill" Color="{DynamicResource Orange-100}" />
-                        </Grid>
-
-                    
+                        </Grid>                  
 
                     <Frame
                         Grid.Row="9"

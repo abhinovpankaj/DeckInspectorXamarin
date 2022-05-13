@@ -13,7 +13,7 @@ namespace Mobile.Code
     {
         public static string AzureBackendUrl =
         //DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
-        DeviceInfo.Platform == DevicePlatform.Android ? "https://api.deckinspectors.com/v3/" : "https://api.deckinspectors.com/v3/";
+        DeviceInfo.Platform == DevicePlatform.Android ? "http://api.deckinspectors.com/v3/" : "https://api.deckinspectors.com/v3/";
         public static bool UseMockDataStore = true;
         public static readonly Guid UserID = new Guid("B339656A-C220-4ED5-88CF-A7EC500BD71A");
         public static int CompressionQuality { get; set; } = 100;

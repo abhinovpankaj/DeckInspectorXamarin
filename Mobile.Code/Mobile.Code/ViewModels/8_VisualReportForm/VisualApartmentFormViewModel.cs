@@ -718,7 +718,16 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualApartmentLocationPhoto> VisualApartmentLocationPhotoItems
         {
-            get { return _visualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(_visualApartmentLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            get 
+            {
+                if (_visualApartmentLocationPhotoItems!=null)
+                {
+                    _visualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(_visualApartmentLocationPhotoItems.Where(c => c.InvasiveImage == false));
+                    
+                }
+                return _visualApartmentLocationPhotoItems;
+                
+            }
             set { _visualApartmentLocationPhotoItems = value; OnPropertyChanged("VisualApartmentLocationPhotoItems"); }
         }
         private string _unitPhotCount;

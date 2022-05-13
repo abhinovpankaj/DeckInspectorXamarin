@@ -6,28 +6,16 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    BackgroundColor="White"
     Visual="Material"
-    Shell.NavBarIsVisible="True"
+    Shell.NavBarIsVisible="False"
     mc:Ignorable="d">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS" Value="0,45,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
-    <Shell.TitleView>
-        <StackLayout Padding="2,2" Orientation="Horizontal">
-            <Label
-                FontAttributes="None"
-                FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Title"
-                HorizontalOptions="CenterAndExpand"
-                Text="Waterproofing Elements"
-                TextColor="White"
-                VerticalOptions="CenterAndExpand" />
-        </StackLayout>
-    </Shell.TitleView>
-    <Grid RowSpacing="0">
+    
+    <Grid RowSpacing="0" BackgroundColor="{DynamicResource Orange-100}">
         <Grid.RowDefinitions>
            
             <RowDefinition Height="Auto" />
@@ -38,7 +26,7 @@
         <Grid BackgroundColor="{DynamicResource Orange-300}"
             x:Name="SelectAllGrid"
            
-            Margin="10,5,0,5">
+            Margin="0,5,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -47,15 +35,14 @@
             <Label
                 Grid.Column="1"
                 Margin="10,1,0,0"
+                VerticalOptions="CenterAndExpand"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="14"
-                HorizontalOptions="StartAndExpand"
-                Style="{StaticResource LabelStyle}"
-                Text="Select All"
-                TextColor="{DynamicResource mainLabel}"
-                VerticalTextAlignment="Start" />
+                FontSize="Subtitle"
+                HorizontalOptions="StartAndExpand"                
+                Text="Select All"               
+                VerticalTextAlignment="Center" />
 
-            <CheckBox
+            <CheckBox Margin="10,0,0,0"
                 Grid.Column="0"
                 HorizontalOptions="StartAndExpand"
                 IsChecked="{Binding IsAllSelect}"
@@ -76,32 +63,31 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
 
-                        <Frame HasShadow="False">
-                            <Grid x:Name="FrameTypes" FlexLayout.AlignSelf="Start"
+                        <Frame HasShadow="True" BackgroundColor="{DynamicResource Orange-300 }"
+                               Margin="10,0"
+                               Padding="2" 
+                               CornerRadius="5">
+                            <Grid x:Name="FrameTypes" Margin="5,0"
+                                FlexLayout.AlignSelf="Center"
                                   BackgroundColor="{DynamicResource Orange-300}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label
-                                    Margin="0,1,0,0"
+                                <Label Margin="0,1,0,0"
+                                    VerticalTextAlignment="Center"
                                     FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="14"
-                                    HorizontalOptions="StartAndExpand"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="{Binding Name}"
-                                    TextColor="{DynamicResource mainLabel}"
-                                    VerticalTextAlignment="Start" />
+                                    FontSize="Body" Padding="0"
+                                    HorizontalOptions="StartAndExpand"                                    
+                                    Text="{Binding Name}"                                    
+                                    VerticalOptions="CenterAndExpand" />
 
                                 <CheckBox
-                                    Grid.Column="2"
+                                    Grid.Column="1"
                                     HorizontalOptions="CenterAndExpand"
-                                    IsChecked="{Binding IsSelected}"
-                                    WidthRequest="30"
+                                    IsChecked="{Binding IsSelected}"                                    
                                     Color="{DynamicResource Orange-900}" />
-
-
 
                             </Grid>
                             <Frame.GestureRecognizers>

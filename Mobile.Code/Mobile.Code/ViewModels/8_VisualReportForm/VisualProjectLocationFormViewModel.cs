@@ -694,11 +694,19 @@ namespace Mobile.Code.ViewModels
             set { _countWaterProofingElements = value; OnPropertyChanged("CountWaterProofingElements"); }
         }
 
-        private ObservableCollection<VisualProjectLocationPhoto> _visualProjectLocationPhotoItems;
+        private ObservableCollection<VisualProjectLocationPhoto> _visualProjectLocationPhotoItems;// = new ObservableCollection<VisualProjectLocationPhoto>();
 
         public ObservableCollection<VisualProjectLocationPhoto> VisualProjectLocationPhotoItems
         {
-            get { return _visualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            get {
+                if (_visualProjectLocationPhotoItems!=null)
+                {
+                     _visualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(_visualProjectLocationPhotoItems.Where(c => c.InvasiveImage == false));
+                    
+                }
+                return _visualProjectLocationPhotoItems;
+            }
+                
             
             set { _visualProjectLocationPhotoItems = value; OnPropertyChanged("VisualProjectLocationPhotoItems"); }
         }

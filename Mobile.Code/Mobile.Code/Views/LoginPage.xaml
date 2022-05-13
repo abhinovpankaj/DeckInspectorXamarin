@@ -36,13 +36,13 @@
 
 
             <Frame Opacity="0.9" BorderColor="{DynamicResource Orange-100}"
-                   HasShadow="True"
+                   HasShadow="True" 
                     Grid.Row="1"
-                    Margin="15,-15"
-                       CornerRadius="10"
+                    Margin="15,-25"
+                    CornerRadius="10"
                     BackgroundColor="{DynamicResource Orange-900}"
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="CenterAndExpand">
+                    VerticalOptions="Center">
                 <Grid
                     Padding="0"
                     ColumnSpacing="0"
@@ -127,7 +127,7 @@
                         </Grid.ColumnDefinitions>
 
                         <CheckBox IsChecked="{Binding Savecredentials}" Margin="0"
-                                  HorizontalOptions="Start"
+                                  HorizontalOptions="StartAndExpand"
                                   Color="{DynamicResource Orange-100}" />
                         <Label
                             Grid.Column="1"

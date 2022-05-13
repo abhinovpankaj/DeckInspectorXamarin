@@ -26,26 +26,35 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                var buildingLocation = new BuildingLocation
+                if (item.Id==null)
                 {
-                    Id = item.Id??Guid.NewGuid().ToString(),
-                    Name = item.Name,
-                    Description = item.Description,
-                    BuildingId = item.BuildingId,
-                    UserId = App.LogUser.Id.ToString(),
-                    ImageDescription = item.ImageDescription,
-                    ImageName = item.ImageName,
-                    ImageUrl = item.ImageUrl,
-                    OnlineId =item.OnlineId
-                };
+                    var buildingLocation = new BuildingLocation
+                    {
+                        Id = item.Id ?? Guid.NewGuid().ToString(),
+                        Name = item.Name,
+                        Description = item.Description,
+                        BuildingId = item.BuildingId,
+                        UserId = App.LogUser.Id.ToString(),
+                        ImageDescription = item.ImageDescription,
+                        ImageName = item.ImageName,
+                        ImageUrl = item.ImageUrl,
+                        OnlineId = item.OnlineId
+                    };
 
-                res.TotalCount = _connection.Insert(buildingLocation);
-               
+                    res.TotalCount = _connection.Insert(buildingLocation);
 
-                res.ID = buildingLocation.Id;
-                res.Data = buildingLocation;
-                res.Message = "Record Inserted Successfully";
-                res.Status = ApiResult.Success;
+
+                    res.ID = buildingLocation.Id;
+                    res.Data = buildingLocation;
+                    res.Message = "Record Inserted Successfully";
+                    res.Status = ApiResult.Success;
+                }
+                else
+                {
+                    _connection.Update(item);
+                    res.Message = "Record Updated Successfully";
+                    res.Status = ApiResult.Success;
+                }
 
 
             }
@@ -56,8 +65,6 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             }
             return await Task.FromResult(res);
-
-
         }
 
 
