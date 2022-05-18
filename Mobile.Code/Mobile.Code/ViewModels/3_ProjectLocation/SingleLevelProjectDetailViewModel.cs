@@ -471,7 +471,6 @@ namespace Mobile.Code.ViewModels
 
         }
 
-
         public ICommand DeleteVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual obj) => await DeleteVisualFormCommandExecute(obj));
         private async Task DeleteVisualFormCommandExecute(ProjectLocation_Visual obj)
         {
