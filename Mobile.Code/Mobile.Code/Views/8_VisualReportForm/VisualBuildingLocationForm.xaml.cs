@@ -126,7 +126,7 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                recordName.IsEnabled = false;
+                //recordName.IsEnabled = false;
 
                 recordDes.IsEnabled = false;
             }

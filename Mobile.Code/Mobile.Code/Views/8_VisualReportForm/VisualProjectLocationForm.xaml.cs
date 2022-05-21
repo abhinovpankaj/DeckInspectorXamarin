@@ -32,7 +32,7 @@ namespace Mobile.Code.Views
                 ImageButton btn = sender as ImageButton;
                 if (btn.ClassId == "recordName")
                 {
-                    recordName.IsEnabled = true;
+                    //recordName.IsEnabled = true;
 
                 }
 
@@ -91,7 +91,7 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                recordName.IsEnabled = false;
+                //recordName.IsEnabled = false;
 
                 recordDes.IsEnabled = false;
             }
