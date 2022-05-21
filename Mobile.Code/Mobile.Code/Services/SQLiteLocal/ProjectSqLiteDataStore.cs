@@ -30,30 +30,39 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                var project = new Project
+                if (item.Id==null)
                 {
-                    Id = item.Id ?? Guid.NewGuid().ToString(),
-                    Name = item.Name,
-                    Address = item.Address,
-                    Description = item.Description,
-                    ProjectType = item.ProjectType,
-                    UserId = App.LogUser.Id.ToString(),
-                    ImageDescription = item.ImageDescription,
-                    ImageName = item.ImageName,
-                    ImageUrl = item.ImageUrl,
-                    Category = item.Category
-               
-                };
+                    var project = new Project
+                    {
+                        Id = item.Id ?? Guid.NewGuid().ToString(),
+                        Name = item.Name,
+                        Address = item.Address,
+                        Description = item.Description,
+                        ProjectType = item.ProjectType,
+                        UserId = App.LogUser.Id.ToString(),
+                        ImageDescription = item.ImageDescription,
+                        ImageName = item.ImageName,
+                        ImageUrl = item.ImageUrl,
+                        Category = item.Category
 
-                res.TotalCount = _connection.Insert(project);
-               
+                    };
 
-                res.ID =project.Id;
-                res.Data = project;
-                res.Message = "Record Inserted Successfully";
-                res.Status = ApiResult.Success;
-                
+                    res.TotalCount = _connection.Insert(project);
 
+
+                    res.ID = project.Id;
+                    res.Data = project;
+                    res.Message = "Record Inserted Successfully";
+                    res.Status = ApiResult.Success;
+                }
+                else
+                {
+                    _connection.Update(item);
+                    res.ID = item.Id;
+                    res.Data = item;
+                    res.Message = "Record Updated Successfully";
+                    res.Status = ApiResult.Success;
+                }                             
             }
             catch (Exception ex)
             {

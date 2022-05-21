@@ -26,31 +26,39 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                var buildingApartment = new BuildingApartment
+                if (item.Id==null)
                 {
-                    Id =  item.Id??Guid.NewGuid().ToString(),
-                    BuildingId = item.BuildingId,
-                    Name = item.Name,
-                    OnlineId = item.OnlineId,
-                    Description = item.Description,
+                    var buildingApartment = new BuildingApartment
+                    {
+                        Id = item.Id ?? Guid.NewGuid().ToString(),
+                        BuildingId = item.BuildingId,
+                        Name = item.Name,
+                        OnlineId = item.OnlineId,
+                        Description = item.Description,
 
-                    UserId = App.LogUser.Id.ToString(),
-                    ImageName = item.ImageName,
-                    ImageUrl = item.ImageUrl,
-                    ImageDescription = item.ImageDescription
-                };
+                        UserId = App.LogUser.Id.ToString(),
+                        ImageName = item.ImageName,
+                        ImageUrl = item.ImageUrl,
+                        ImageDescription = item.ImageDescription
+                    };
 
-                res.TotalCount = _connection.Insert(buildingApartment);
-                //SQLiteCommand Command= new SQLiteCommand(_connection);
+                    res.TotalCount = _connection.Insert(buildingApartment);
+
+
+                    res.ID = buildingApartment.Id;
+                    res.Data = buildingApartment;
+                    res.Message = "Record Inserted Successfully";
+                    res.Status = ApiResult.Success;
+                }
+                else
+                {
+                    _connection.Update(item);
+                    res.ID = item.Id;
+                    res.Data = item;
+                    res.Message = "Record Updated Successfully";
+                    res.Status = ApiResult.Success;
+                }
                 
-                //Command.CommandText = "select last_insert_rowid()";
-
-                //Int64 LastRowID64 = Command.ExecuteScalar<Int64>();
-
-                res.ID = buildingApartment.Id;
-                res.Data = buildingApartment;
-                res.Message = "Record Inserted Successfully";
-                res.Status = ApiResult.Success;
                 
             }
             catch (Exception ex)
