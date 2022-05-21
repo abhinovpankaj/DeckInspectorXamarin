@@ -26,6 +26,14 @@
                 VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                 Glyph={x:Static helpers:IconFont.Floppy},
+                 Color=#FFD180,Size=45}"
+                 Order="Primary" Command="{Binding SaveCommand}"
+                 Priority="1" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS" Value="0,40,0,0" />
@@ -58,7 +66,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
 
                             </Grid.RowDefinitions>
 
@@ -194,28 +202,15 @@
                             </Grid>
                             <Grid Grid.Row="3">
                                 <ffimageloading:CachedImage
-                                Aspect="AspectFill" Opacity=".7"
-                                HeightRequest="150"
+                                Aspect="AspectFill" 
+                                HeightRequest="250"
                                 Source="{Binding BuildingApartment.ImageUrl}">
                                 </ffimageloading:CachedImage>
                             </Grid>
 
 
                         </Grid>
-                        <ImageButton  Margin="0" 
-                                      HeightRequest="60" CornerRadius="30"
-                                    HorizontalOptions="EndAndExpand"
-                                          BackgroundColor="{DynamicResource Orange-900}"
-                                BorderWidth="2" BorderColor="{DynamicResource Orange-100}"
-                                    Command="{Binding SaveCommand}" Padding="10"
-                                    IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
-                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                       Glyph={x:Static helpers:IconFont.Floppy},
-                                                       Color=White,
-                                                       Size=30}"
-                                    VerticalOptions="EndAndExpand"
-                                    WidthRequest="60">
-                        </ImageButton>
+                        
                     </Grid>
                 </Frame>
             </ScrollView>

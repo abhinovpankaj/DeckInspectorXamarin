@@ -193,7 +193,7 @@
                             <local:XEditor  TabIndex="1" TextColor="Black" Grid.Row="1" FontSize="15" FontFamily="{StaticResource Montserrat-Regular}" x:Name="txtDes"  HeightRequest="70" BackgroundColor="#ececec" Grid.ColumnSpan="2"></local:XEditor>
                         </Grid>
 
-                        <Button Grid.Row="3"   Text="Save"  TextColor="White" BackgroundColor="#2e479b"   Margin="1"
+                        <Button Grid.Row="3"   Text="Save"  TextColor="White" BackgroundColor="{StaticResource primaryColor}"   Margin="1"
                                     BorderWidth="1"
                                     HeightRequest="35" WidthRequest="100"
                                     ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.Floppy},Color=White,Size=20}"

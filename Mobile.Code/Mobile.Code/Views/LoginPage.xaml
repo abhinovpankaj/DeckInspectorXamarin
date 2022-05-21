@@ -126,7 +126,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox IsChecked="{Binding Savecredentials}" Margin="0"
+                        <CheckBox IsChecked="{Binding Savecredentials }" Margin="0"
                                   HorizontalOptions="StartAndExpand"
                                   Color="{DynamicResource Orange-100}" />
                         <Label

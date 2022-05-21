@@ -56,16 +56,18 @@
                 
             </Grid.RowDefinitions>
             <StackLayout Margin="0,10,0,0" Padding="0" IsVisible="{Binding IsVisualProjectLocatoion}">
-                <CarouselView x:Name="carouselView" IndicatorView="indicatorView"  PeekAreaInsets="20"                                       
-                                            ItemsSource="{Binding VisualProjectLocationPhotoItems}" EmptyView="No Images to Display" HorizontalOptions="Center">
+                <CarouselView x:Name="carouselView" IndicatorView="indicatorView"  PeekAreaInsets="20"                               
+                                            ItemsSource="{Binding VisualProjectLocationPhotoItems}"
+                              EmptyView="No Images to Display" HorizontalOptions="Center"
+                              Margin="10">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
-                                <Frame HasShadow="True" Padding="2"                                                   
-                                                   CornerRadius="5" BackgroundColor="{DynamicResource Orange-700}"                                                
+                            
+                            <Frame HasShadow="True" Padding="0"                                                  
+                                                   CornerRadius="10" BackgroundColor="{DynamicResource Orange-700}"                                                
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="CenterAndExpand">
-                                    <SwipeView>
+                                <SwipeView BackgroundColor="{DynamicResource Orange-400}">
                                                         <SwipeView.TopItems>
                                             <SwipeItems Mode="Execute">
                                                             <SwipeItem Text="Edit" 
@@ -84,13 +86,12 @@
                                                                 CommandParameter="{Binding}" />
                                             </SwipeItems>
                                         </SwipeView.BottomItems>
-                                    <StackLayout>
-                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill" VerticalOptions="CenterAndExpand"                                                                
-                                                                HorizontalOptions="Center" />
-                                    </StackLayout>
+                                    
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit" VerticalOptions="Fill"                                                                
+                                                                HorizontalOptions="Fill" />                                    
                                     </SwipeView>
                                 </Frame>
-                            </StackLayout>
+                            
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                     <CarouselView.ItemsLayout>
@@ -98,7 +99,7 @@
                                                 ItemSpacing="10" />
                     </CarouselView.ItemsLayout>
                 </CarouselView>
-                <IndicatorView x:Name="indicatorView"
+                <IndicatorView x:Name="indicatorView" Margin="5"
                                            IndicatorColor="{DynamicResource Orange-100}"
                                            SelectedIndicatorColor="{DynamicResource Orange-900}"
                                            HorizontalOptions="Center" />

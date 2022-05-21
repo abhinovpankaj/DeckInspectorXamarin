@@ -42,10 +42,10 @@
                      Glyph={x:Static helpers:IconFont.Delete},
                      Color=Red,Size=45}" IsEnabled="{Binding IsEditDeleteAccess}"
                      Command="{Binding DeleteCommand}" IsDestructive="True"
-                     Order="Primary"
+                     Order="Secondary"
                      Priority="2" />
         
-        <ToolbarItem Text="Home"
+        <ToolbarItem Text="Projects"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
                  Color=#FFD180,Size=45}"

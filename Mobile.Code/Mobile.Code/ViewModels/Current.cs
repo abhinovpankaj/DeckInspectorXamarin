@@ -187,24 +187,7 @@ namespace ImageEditor.ViewModels
 
         }
 
-        private async void SaveImageCommandExecute1(object obj)
-        {
-            var editorPage = obj as ImageEditorPageForIOS;
-            var txtName = editorPage.Content.FindByName("txtName") as BorderlessEntry;
-
-            var detailGrid = editorPage.Content.FindByName("detailGrid") as Grid;
-            detailGrid.IsVisible = false;
-
-
-            var txtDescription = editorPage.Content.FindByName("txtDes") as XEditor;
-
-
-            imageData.Name = txtName.Text;
-            imageData.Description = txtDescription.Text;
-
-            Callback?.Invoke(imageData);
-            await Shell.Current.Navigation.PopAsync();
-        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -223,13 +206,13 @@ namespace ImageEditor.ViewModels
             {
                 var imgpage = new ImageEditorPage(string.Empty, data.Name, data.Description);
                 imgpage.BindingContext = imgviewmodel;
-                await App.Current.MainPage.Navigation.PushAsync(imgpage, true);
+                await Shell.Current.Navigation.PushAsync(imgpage, true);
             }
             if (Device.RuntimePlatform == Device.iOS)
             {
                 var imgpage = new ImageEditorPageForIOS(string.Empty, data.Name, data.Description);
                 imgpage.BindingContext = imgviewmodel;
-                await App.Current.MainPage.Navigation.PushAsync(imgpage, true);
+                await Shell.Current.Navigation.PushAsync(imgpage, true);
             }
             //    var imgpage = new ImageEditorPage(string.Empty,data.Name,data.Description);
             //imgpage.BindingContext = imgviewmodel;

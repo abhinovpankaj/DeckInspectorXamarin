@@ -54,6 +54,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                     _connection.Update(item);
                     res.ID = item.Id;
                     res.Data = item;
+                    res.Status = ApiResult.Success;
                     res.Message = "Record Updated Successfully";
                 }
             }

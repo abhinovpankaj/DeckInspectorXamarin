@@ -468,7 +468,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Edit()
         {
-            await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } });
+            await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } },true);
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
         public string SelectedImage { get; set; }

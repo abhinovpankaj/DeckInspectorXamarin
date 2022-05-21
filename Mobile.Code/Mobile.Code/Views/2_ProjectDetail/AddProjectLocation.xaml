@@ -10,7 +10,7 @@
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    x:Name="MyPage"
+    x:Name="AddEditProjLocationPage"
     Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
     <Shell.TitleView>
@@ -25,6 +25,15 @@
                 VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.Floppy},
+                     Color=Red,Size=45}"
+                     Command="{Binding SaveCommand}" IsDestructive="False"
+                     Order="Primary"
+                     Priority="1" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS" Value="0,40,0,0" />
@@ -57,7 +66,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
 
                             </Grid.RowDefinitions>
 
@@ -173,7 +182,7 @@
                                 Grid.Column="0"
                                 FontSize="Small"
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                Style="{StaticResource LabelStyle}"
+                                
                                 Text="{Binding LogUserName, StringFormat='Created by : {0}'}"
                                 TextColor="{DynamicResource  ColorForegroundText}" />
 
@@ -193,15 +202,15 @@
                             </Grid>
                             <Grid Grid.Row="3">
                                 <ffimageloading:CachedImage
-                                Aspect="AspectFit" Opacity=".7"
-                                HeightRequest="150"
+                                Aspect="AspectFill" 
+                                HeightRequest="250"
                                 Source="{Binding ProjectLocation.ImageUrl}">
                                 </ffimageloading:CachedImage>
                             </Grid>
 
 
                         </Grid>
-                        <ImageButton  Margin="0" 
+                        <!--<ImageButton  Margin="0" 
                                       HeightRequest="60" CornerRadius="30"
                                     HorizontalOptions="EndAndExpand"
                                           BackgroundColor="{DynamicResource Orange-900}"
@@ -214,7 +223,7 @@
                                                        Size=30}"
                                     VerticalOptions="EndAndExpand"
                                     WidthRequest="60">
-                        </ImageButton>
+                        </ImageButton>-->
                     </Grid>
                 </Frame>
             </ScrollView>
