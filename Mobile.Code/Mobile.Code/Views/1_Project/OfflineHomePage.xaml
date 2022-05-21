@@ -29,13 +29,13 @@
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
             <!--<SearchBar Placeholder="Search.." HorizontalOptions="StartAndExpand"></SearchBar>-->
-            <yummy:PancakeView
+            <!--<yummy:PancakeView
                 CornerRadius="0"
                 HeightRequest="40"
                 VerticalOptions="CenterAndExpand"
                 WidthRequest="120">
                 <Image Aspect="AspectFill" Source="icon.png" />
-            </yummy:PancakeView>
+            </yummy:PancakeView>-->
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Padding>
@@ -48,7 +48,7 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid BackgroundColor="{DynamicResource Orange-400}"
+        <Grid BackgroundColor="{DynamicResource Orange-300}"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
@@ -63,28 +63,8 @@
             <Grid
                 AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                BackgroundColor="{DynamicResource Orange-400}" />
-            <!--<Frame Grid.Row="1" Margin="10,10,10,0">
-                <Grid BackgroundColor="White" VerticalOptions="FillAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="8" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label
-                        Grid.Column="0"
-                        Padding="0"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="25"
-                        Style="{StaticResource LabelStyle}"
-                        Text="Offline Projects"
-                        TextColor="Black"
-                        VerticalOptions="CenterAndExpand"
-                        VerticalTextAlignment="Center" />
-
-                </Grid>
-
-            </Frame>-->
+                BackgroundColor="{DynamicResource Orange-300}" />
+            
             <StackLayout
                 Grid.Row="0"
                 Margin="10,10,10,0"
@@ -102,11 +82,25 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Frame
-                                    x:Name="FrameTypes"
-                                    Margin="2"
+                                     x:Name="FrameTypes"
+                                    Margin="4" BorderColor="{DynamicResource  Orange-100}"
+                                    HasShadow="True"
+                                    Padding="10" CornerRadius="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
                                                                Tablet='50%'}">
+                                    <Frame.Background>
+
+                                        <LinearGradientBrush StartPoint="0,0"
+                               EndPoint="1,1">
+                                            <GradientStop Color="{DynamicResource Orange-100}"
+                            Offset="0.1" />
+                                            <GradientStop Color="{DynamicResource Orange-400}"
+                            Offset="0.6" />
+                                            <GradientStop Color="{DynamicResource Orange-700}"
+                            Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100" />
@@ -159,9 +153,9 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <Button
-                                                    Grid.Column="1"
+                                                    Grid.Column="1" CornerRadius="5"
                                                     Margin="1,5,2,5"
-                                                    BackgroundColor="#2e479b"
+                                                    BackgroundColor="{StaticResource primaryColor}"
                                                     BorderWidth="1"
                                                     Command="{Binding BindingContext.SyncProjectCommand, Source={x:Reference FlexTypes}}"
                                                     CommandParameter="{Binding}"

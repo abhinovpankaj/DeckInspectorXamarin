@@ -224,6 +224,7 @@ namespace Mobile.Code.ViewModels
 
             foreach (var projLocForm in projLocForms)
             {
+                DependencyService.Get<IToast>().Show($"Downloading {projLocForm.Name}");
                 //insert projLoc offline db.
                 //download image.
                 var images = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(projLocForm.Id, true);
@@ -785,6 +786,7 @@ namespace Mobile.Code.ViewModels
                 _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id);
                 foreach (var formLocationItem in VisualFormProjectLocationItems)
                 {
+                    DependencyService.Get<IToast>().Show($"Syncing Location {formLocationItem.Name}");
                     //add lowest level  location data
                     string localFormId = formLocationItem.Id;
                     var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
@@ -870,17 +872,25 @@ namespace Mobile.Code.ViewModels
                     if (locationResult.Status == ApiResult.Success)
                     {
                         response.Message = response.Message + "\n" + formLocationItem.Name + "added successully.";
-
+                        
                     }
                     else
                     {
                         syncedSuccessfully = false;
                         response.Message = response.Message + "\n" + formLocationItem.Name + "failed to added.";
+
                     }
 
                 }
    
                 Project.IsSynced = syncedSuccessfully;
+                if (syncedSuccessfully)
+                {
+                    DependencyService.Get<IToast>().Show("Project sync complete.");
+                }
+                else
+                    DependencyService.Get<IToast>().Show($"Project sync failed,{response.Message}.");
+
                 await ProjectSQLiteDataStore.UpdateItemAsync(Project);
                 return response;
             });
