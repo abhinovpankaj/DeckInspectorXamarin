@@ -41,8 +41,9 @@ namespace Mobile.Code.Services.SQLiteLocal
                     LifeExpectancyAWE = item.LifeExpectancyAWE,
                     LifeExpectancyLBC = item.LifeExpectancyLBC,
                     ImageDescription = item.ImageDescription,
-                    OnlineId=item.OnlineId
-                };
+                    OnlineId=item.OnlineId,
+                    CreatedOn = DateTime.Now.ToString("dd-MMM-yyy hh:mm")
+            };
                 res.TotalCount = _connection.Insert(visualApt);
 
 

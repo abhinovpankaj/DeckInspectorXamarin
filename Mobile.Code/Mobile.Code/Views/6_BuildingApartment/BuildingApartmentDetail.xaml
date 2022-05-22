@@ -161,9 +161,8 @@
 
                                                 </SwipeItems>
                                             </SwipeView.LeftItems>
-
-                                            <Grid RowDefinitions="Auto,Auto" 
-                                              ColumnDefinitions="*,Auto"
+                                            <Grid RowDefinitions="Auto,Auto,auto" 
+                                              ColumnDefinitions="auto,auto,*"
                                                 x:Name="FrameTypes" 
                                                 ColumnSpacing="0"
                                                 RowSpacing="0" IsClippedToBounds="True">
@@ -171,57 +170,102 @@
 
                                                     <LinearGradientBrush StartPoint="0,0"
                                EndPoint="1,1">
-                                                        <GradientStop Color="{DynamicResource Orange-700}"
+                                                        <GradientStop Color="{DynamicResource Orange-100}"
                             Offset="0.1" />
                                                         <GradientStop Color="{DynamicResource Orange-400}"
                             Offset="0.6" />
-                                                        <GradientStop Color="{DynamicResource Orange-300}"
+                                                        <GradientStop Color="{DynamicResource Orange-700}"
                             Offset="1.0" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <Label Margin="4,2"
-                                                Grid.Column="0"
+
+                                                <Label Margin="8,2"
+                                                Grid.Column="0" Grid.ColumnSpan="2"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Body"
                                                 HorizontalOptions="StartAndExpand"
-                                                HorizontalTextAlignment="Start"
+                                                HorizontalTextAlignment="End"
                                                 Text="{Binding Name}"
                                                 TextColor="{DynamicResource ColorForegroundText}" />
+                                                <Frame Grid.Column="2" HorizontalOptions="End" Margin="2,2,10,2" IsVisible="{Binding IsPostInvasiveRepairsRequired}" 
+                                                       CornerRadius="15" Padding="0" HeightRequest="30" HasShadow="True">
+                                                    <Image  HorizontalOptions="End"  
+                                                       IsAnimationPlaying="True" 
+                                                       Source="conclusive_new.gif" HeightRequest="30"/>
+                                                </Frame>
 
                                                 <Label Padding="0"
-                                                Grid.Row="1" Margin="2,5,0,0"
+                                                Grid.Row="1" Margin="8,5,0,0"
                                                 Grid.Column="0"
-                                                VerticalOptions="End"
+                                                VerticalOptions="CenterAndExpand"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Micro"
-                                                HorizontalOptions="Start"
-                                                HorizontalTextAlignment="Center"                                                
-                                                Text="{Binding CreatedOn}"
-                                                       
-                                                TextColor="{DynamicResource ColorForegroundMuted}" />
-                                                <Label
-                                                Grid.RowSpan="1"
-                                                Grid.Column="1"
-                                                Margin="5,2"
-                                                FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Micro"
+                                                FontSize="Small"
                                                 HorizontalOptions="StartAndExpand"
+                                                HorizontalTextAlignment="Center"   
+                                                
+                                                TextColor="{DynamicResource ColorForegroundText}" >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Visual Review: " />
+                                                            <Span Text="{Binding VisualReview}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+
+                                                </Label>
+                                                <Label Margin="5,5,10,0"
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                
+                                                FontFamily="{StaticResource Montserrat-Regular}"
+                                                FontSize="Small"
+                                                HorizontalOptions="End"
                                                 HorizontalTextAlignment="Start"
                                                 
-                                                Text="Further Invasive Required"
-                                                TextColor="{DynamicResource ColorForegroundText}" />
-                                             
-                                                <Label Grid.Row="1"
-                                                Grid.Column="1"                                                                                               
-                                                HorizontalOptions="CenterAndExpand" FontFamily="{StaticResource Montserrat-Regular}"
+                                                TextColor="{DynamicResource ColorForegroundText}">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Further Invasive Required: "/>
+                                                            <Span Text="{Binding FurtherInasive}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+
+                                                <Label Grid.Row="2"
+                                                Grid.Column="0"   Margin="8,5,0,0"                                                                                            
+                                                HorizontalOptions="StartAndExpand" 
+                                                       FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Small"
-                                                VerticalOptions="EndAndExpand"
+                                                VerticalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Start"
                                                 
                                                 Text="{Binding FurtherInasive}"
                                                 TextColor="{DynamicResource  ColorForegroundText}"
-                                                />
-
+                                                >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Condition Assesment: "/>
+                                                            <Span Text="{Binding ConditionAssessment}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label Grid.Row="2" Margin="5,5,10,0"
+                                                Grid.Column="2"                                                                                               
+                                                HorizontalOptions="End" 
+                                                       FontFamily="{StaticResource Montserrat-Regular}"
+                                                FontSize="Small"
+                                                VerticalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Start"
+                                                
+                                                Text="{Binding FurtherInasive}"
+                                                TextColor="{DynamicResource  ColorForegroundText}"
+                                                >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Visual Signs of Leak : "/>
+                                                            <Span Text="{Binding AnyVisualSign}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
                                             </Grid>
 
                                             <SwipeView.GestureRecognizers>

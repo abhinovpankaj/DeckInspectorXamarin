@@ -23,7 +23,7 @@ using Mobile.Code.Services.SQLiteLocal;
 
 namespace Mobile.Code.ViewModels
 {
-    [QueryProperty("Id", "Id")]
+    //[QueryProperty("Id", "Id")]
     //[QueryProperty("Title", "Id")]
     public class SingleLevelProjectDetailViewModel : BaseViewModel
     {

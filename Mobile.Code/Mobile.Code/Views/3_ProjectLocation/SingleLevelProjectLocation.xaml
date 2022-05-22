@@ -181,32 +181,6 @@
                                         </Frame.Background>
                                         <SwipeView >
 
-                                            <SwipeView.RightItems>
-                                                <SwipeItems>
-                                                    <SwipeItem Text="Delete" IsDestructive="True"
-                                                           IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                               Glyph={x:Static helpers:IconFont.Delete},
-                                                               Color=#e65100,
-                                                               Size=26}" IsEnabled="{Binding Id, Converter={StaticResource ImageButtonInvasive}}"
-                                                           BackgroundColor="{DynamicResource Orange-900}"
-                                                           Command="{Binding BindingContext.DeleteVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
-                                                }" CommandParameter="{Binding .}" />
-                                                </SwipeItems>
-                                            </SwipeView.RightItems>
-                                            <SwipeView.LeftItems Mode="Execute">
-                                                <SwipeItems>
-                                                    <SwipeItem Text="Edit"
-                                                           IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                               Glyph={x:Static helpers:IconFont.BriefcaseEdit},
-                                                               Color=Blue,
-                                                               Size=26}"
-                                                           BackgroundColor="{DynamicResource Orange-400}"
-                                                           Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
-                                                }" CommandParameter="{Binding .}" />
-
-                                                </SwipeItems>
-                                            </SwipeView.LeftItems>
-
                                             <Grid RowDefinitions="Auto,Auto,auto" 
                                               ColumnDefinitions="auto,auto,*"
                                                 x:Name="FrameTypes" 
@@ -224,7 +198,7 @@
                             Offset="1.0" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                
+
                                                 <Label Margin="8,2"
                                                 Grid.Column="0" Grid.ColumnSpan="2"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
@@ -239,7 +213,7 @@
                                                        IsAnimationPlaying="True" 
                                                        Source="conclusive_new.gif" HeightRequest="30"/>
                                                 </Frame>
-                                                
+
                                                 <Label Padding="0"
                                                 Grid.Row="1" Margin="8,5,0,0"
                                                 Grid.Column="0"
@@ -256,15 +230,15 @@
                                                             <Span Text="{Binding VisualReview}" FontAttributes="Bold"/>
                                                         </FormattedString>
                                                     </Label.FormattedText>
-                                                    
+
                                                 </Label>
-                                                <Label Margin="5,5,0,0"
+                                                <Label Margin="5,5,10,0"
                                                 Grid.Row="1"
                                                 Grid.Column="2"
                                                 
                                                 FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Small"
-                                                HorizontalOptions="Start"
+                                                HorizontalOptions="End"
                                                 HorizontalTextAlignment="Start"
                                                 
                                                 TextColor="{DynamicResource ColorForegroundText}">
@@ -294,9 +268,9 @@
                                                         </FormattedString>
                                                     </Label.FormattedText>
                                                 </Label>
-                                                <Label Grid.Row="2" Margin="5,5,0,0"
+                                                <Label Grid.Row="2" Margin="5,5,10,0"
                                                 Grid.Column="2"                                                                                               
-                                                HorizontalOptions="StartAndExpand" 
+                                                HorizontalOptions="End" 
                                                        FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Small"
                                                 VerticalOptions="CenterAndExpand"
@@ -313,6 +287,32 @@
                                                     </Label.FormattedText>
                                                 </Label>
                                             </Grid>
+
+                                            <SwipeView.RightItems>
+                                                <SwipeItems>
+                                                    <SwipeItem Text="Delete" IsDestructive="True"
+                                                           IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                               Glyph={x:Static helpers:IconFont.Delete},
+                                                               Color=#e65100,
+                                                               Size=26}"
+                                                           BackgroundColor="{DynamicResource Orange-900}"
+                                                           Command="{Binding BindingContext.DeleteVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
+                                                }" CommandParameter="{Binding .}" />
+                                                </SwipeItems>
+                                            </SwipeView.RightItems>
+                                            <SwipeView.LeftItems Mode="Execute">
+                                                <SwipeItems>
+                                                    <SwipeItem Text="Edit"
+                                                           IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                               Glyph={x:Static helpers:IconFont.BriefcaseEdit},
+                                                               Color=Blue,
+                                                               Size=26}"
+                                                           BackgroundColor="{DynamicResource Orange-400}"
+                                                           Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}
+                                                }" CommandParameter="{Binding .}" />
+
+                                                </SwipeItems>
+                                            </SwipeView.LeftItems>
 
                                             <SwipeView.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding BindingContext.GoToVisualFormCommand,Source={x:Reference FlexTypesVisualForm}}"
