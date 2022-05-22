@@ -108,7 +108,7 @@ namespace Mobile.Code.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            Shell.Current.Navigation.RemovePage(this);
+            //Shell.Current.Navigation.RemovePage(this);
         }
     }
 }

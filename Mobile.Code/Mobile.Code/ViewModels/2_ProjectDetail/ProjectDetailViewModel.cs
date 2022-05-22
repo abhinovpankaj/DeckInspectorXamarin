@@ -503,7 +503,11 @@ namespace Mobile.Code.ViewModels
         public bool CanInvasiveCreate
         {
             get { return _canInvasiveCreate; }
-            set { _canInvasiveCreate = value; OnPropertyChanged("CanInvasiveCreate"); }
+            set { 
+                _canInvasiveCreate = value;
+                CreateInvasiveCommand.ChangeCanExecute();
+                OnPropertyChanged("CanInvasiveCreate"); 
+            }
         }
         private bool _isCreateOrRefreshInvasive;
 
@@ -637,9 +641,7 @@ namespace Mobile.Code.ViewModels
             return await Task.FromResult(true);
 
 
-        }
-
-        
+        }        
 
         private Project _selectedOfflineProject;
         public Project SelectedOfflineProject

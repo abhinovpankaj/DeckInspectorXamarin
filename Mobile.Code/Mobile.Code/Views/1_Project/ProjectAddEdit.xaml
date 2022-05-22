@@ -70,8 +70,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            
                             <RowDefinition Height="*" />
 
 
@@ -248,25 +247,12 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <ffimageloading:CachedImage
-                                Aspect="AspectFill" Opacity=".7"
-                                HeightRequest="180"
+                                Aspect="AspectFill" 
+                                HeightRequest="250"
                                 Source="{Binding Project.ImageUrl}">
                             </ffimageloading:CachedImage>
 
-                            <ImageButton  Margin="0"
-                                    HeightRequest="60" CornerRadius="30"
-                                    HorizontalOptions="EndAndExpand"
-                                          BackgroundColor="{DynamicResource Orange-900}"
-                                BorderWidth="2" BorderColor="{DynamicResource Orange-100}"
-                                    Command="{Binding SaveCommand}" Padding="10"
-                                    IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
-                                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                       Glyph={x:Static helpers:IconFont.Floppy},
-                                                       Color=White,
-                                                       Size=30}"
-                                    VerticalOptions="EndAndExpand"
-                                    WidthRequest="60">
-                            </ImageButton>
+                            
                         </Grid>
                         
 

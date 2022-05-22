@@ -78,20 +78,21 @@ namespace Mobile.Code.ViewModels
                 return;
             }
             IsBusyProgress = true;
-            //   DependencyService.Get<ILodingPageService>().InitLoadingPage(new LoadingIndicatorPage1());
-            // DependencyService.Get<ILodingPageService>().ShowLoadingPage();
+            
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
                 IsBusyProgress = false;
-                if (Project.Category== "SingleLevel")
-                {
-                    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
-                    { BindingContext = new SingleLevelProjectDetailViewModel() { Project = Project } }).ConfigureAwait(false);
-                }
-                else
-                    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                //if (Project.Category == "SingleLevel")
+                //{
+                //    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                //    { BindingContext = new SingleLevelProjectDetailViewModel() { Project = Project } }).ConfigureAwait(false);
+                //}
+                //else
+                //    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+
             }
+            await Shell.Current.Navigation.PopAsync(true);
 
         }
         private async Task<bool> Running()
@@ -99,7 +100,6 @@ namespace Mobile.Code.ViewModels
             Response result;
             if (string.IsNullOrEmpty(Project.Id))
             {
-
                 
                 Project.ProjectType = ProjectType;
 
@@ -127,10 +127,10 @@ namespace Mobile.Code.ViewModels
                 Project.Category = ProjectCategory;
                 if (App.IsAppOffline)
                 {
-                    await ProjectSQLiteDataStore.UpdateItemAsync(project);
+                    await ProjectSQLiteDataStore.UpdateItemAsync(Project);
                 }
                 else
-                    await ProjectDataStore.AddItemAsync(project);
+                    await ProjectDataStore.AddItemAsync(Project);
                 
                 return await Task.FromResult(true);
             }

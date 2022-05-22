@@ -34,7 +34,7 @@
         <ToolbarItem Text="Edit"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                 Color=#FFD180,Size=45}"
+                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsEditDeleteAccess}"
                  Order="Secondary" Command="{Binding EditCommand}"
                  Priority="1" />
         <ToolbarItem Text="Delete"                     

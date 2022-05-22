@@ -67,7 +67,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                _connection.Delete<ProjectLocation_Visual>(item.Id);
+                int result= _connection.Delete<ProjectLocation_Visual>(item.Id);
 
                 //delete images
                 var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);

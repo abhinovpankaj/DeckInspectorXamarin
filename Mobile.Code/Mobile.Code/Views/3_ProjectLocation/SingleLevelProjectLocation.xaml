@@ -36,10 +36,23 @@
         </Grid>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Invasive"
+                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                 Glyph={x:Static helpers:IconFont.ShieldRefresh},
+                 Color=#FFD180,Size=45}" IsEnabled="{Binding CanInvasiveCreate}"
+                 Order="Primary" Command="{Binding CreateInvasiveCommand}"
+                 Priority="1" />
+        <ToolbarItem Text="Download"
+                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                 Glyph={x:Static helpers:IconFont.CloudDownload},
+                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsInvasive}" 
+                 Order="Primary" Command="{Binding DownloadOfflineCommand}"
+                 Priority="1" />
+
         <ToolbarItem Text="Edit"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                 Color=#FFD180,Size=45}"
+                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsEditDeleteAccess}"
                  Order="Secondary" Command="{Binding EditCommand}"
                  Priority="1" />
         <ToolbarItem Text="Delete"                     
@@ -49,19 +62,8 @@
                      Command="{Binding DeleteCommand}" IsDestructive="True"
                      Order="Secondary"
                      Priority="2" />
-        <ToolbarItem Text="Invasive"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.ShieldRefresh},
-                 Color=#FFD180,Size=45}" IsEnabled="{Binding CanInvasiveCreate}"
-                 Order="Primary" Command="{Binding CreateInvasiveCommand}"
-                 Priority="1" />
         
-        <ToolbarItem Text="Download"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.CloudDownload},
-                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsInvasive}" 
-                 Order="Primary" Command="{Binding DownloadOfflineCommand}"
-                 Priority="1" />
+        
         <ToolbarItem Text="Home"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
@@ -154,9 +156,17 @@
                                     <Frame CornerRadius="8"
                                                 IsClippedToBounds="True"
                                                 Margin="4" 
-                                                Padding="4" 
+                                                Padding="0" 
                                                 BorderColor="{DynamicResource Orange-100}"
                                                 HasShadow="True">
+                                        <!--<Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding FurtherInasive}" Value="True">
+                                                <Setter Property="TranslationX" Value="5" />
+                                                
+                                            </DataTrigger>
+                                        </Frame.Triggers>-->
+                                       
                                         <Frame.Background>
 
                                             <LinearGradientBrush StartPoint="0,0"
@@ -197,8 +207,8 @@
                                                 </SwipeItems>
                                             </SwipeView.LeftItems>
 
-                                            <Grid RowDefinitions="Auto,Auto" 
-                                              ColumnDefinitions="*,Auto,auto"
+                                            <Grid RowDefinitions="Auto,Auto,auto" 
+                                              ColumnDefinitions="auto,auto,*"
                                                 x:Name="FrameTypes" 
                                                 ColumnSpacing="0"
                                                 RowSpacing="0" IsClippedToBounds="True">
@@ -214,57 +224,94 @@
                             Offset="1.0" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <Label Margin="2"
-                                                Grid.Column="2"
+                                                
+                                                <Label Margin="8,2"
+                                                Grid.Column="0" Grid.ColumnSpan="2"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Body"
                                                 HorizontalOptions="StartAndExpand"
-                                                HorizontalTextAlignment="Start"
-                                                Text="{Binding Id}"
-                                                TextColor="{DynamicResource ColorForegroundText}" />
-                                                <Label Margin="2"
-                                                Grid.Column="0"
-                                                FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Body"
-                                                HorizontalOptions="StartAndExpand"
-                                                HorizontalTextAlignment="Start"
+                                                HorizontalTextAlignment="End"
                                                 Text="{Binding Name}"
                                                 TextColor="{DynamicResource ColorForegroundText}" />
-
+                                                <Frame Grid.Column="2" HorizontalOptions="End" Margin="2,2,10,2" IsVisible="{Binding IsPostInvasiveRepairsRequired}" 
+                                                       CornerRadius="15" Padding="0" HeightRequest="30" HasShadow="True">
+                                                    <Image  HorizontalOptions="End"  
+                                                       IsAnimationPlaying="True" 
+                                                       Source="conclusive_new.gif" HeightRequest="30"/>
+                                                </Frame>
+                                                
                                                 <Label Padding="0"
-                                                Grid.Row="1" Margin="2,5,0,0"
+                                                Grid.Row="1" Margin="8,5,0,0"
                                                 Grid.Column="0"
-                                                VerticalOptions="End"
+                                                VerticalOptions="CenterAndExpand"
                                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Micro"
-                                                HorizontalOptions="Start"
-                                                HorizontalTextAlignment="Center"                                                
-                                                Text="{Binding CreatedOn}"
-                                                       
-                                                TextColor="{DynamicResource ColorForegroundMuted}" />
-                                                <Label
-                                                Grid.RowSpan="1"
-                                                Grid.Column="1"
-                                                Margin="5,2"
-                                                FontFamily="{StaticResource Montserrat-Regular}"
-                                                FontSize="Micro"
+                                                FontSize="Small"
                                                 HorizontalOptions="StartAndExpand"
+                                                HorizontalTextAlignment="Center"   
+                                                
+                                                TextColor="{DynamicResource ColorForegroundText}" >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Visual Review: " />
+                                                            <Span Text="{Binding VisualReview}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                    
+                                                </Label>
+                                                <Label Margin="5,5,0,0"
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                
+                                                FontFamily="{StaticResource Montserrat-Regular}"
+                                                FontSize="Small"
+                                                HorizontalOptions="Start"
                                                 HorizontalTextAlignment="Start"
                                                 
-                                                Text="Further Invasive Required"
-                                                TextColor="{DynamicResource ColorForegroundText}" />
+                                                TextColor="{DynamicResource ColorForegroundText}">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Further Invasive Required: "/>
+                                                            <Span Text="{Binding FurtherInasive}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
 
-                                                <Label Grid.Row="1"
-                                                Grid.Column="1"                                                                                               
-                                                HorizontalOptions="CenterAndExpand" FontFamily="{StaticResource Montserrat-Regular}"
+                                                <Label Grid.Row="2"
+                                                Grid.Column="0"   Margin="8,5,0,0"                                                                                            
+                                                HorizontalOptions="StartAndExpand" 
+                                                       FontFamily="{StaticResource Montserrat-Regular}"
                                                 FontSize="Small"
-                                                VerticalOptions="EndAndExpand"
+                                                VerticalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Start"
                                                 
                                                 Text="{Binding FurtherInasive}"
                                                 TextColor="{DynamicResource  ColorForegroundText}"
-                                                />
-
+                                                >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Condition Assesment: "/>
+                                                            <Span Text="{Binding ConditionAssessment}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label Grid.Row="2" Margin="5,5,0,0"
+                                                Grid.Column="2"                                                                                               
+                                                HorizontalOptions="StartAndExpand" 
+                                                       FontFamily="{StaticResource Montserrat-Regular}"
+                                                FontSize="Small"
+                                                VerticalOptions="CenterAndExpand"
+                                                HorizontalTextAlignment="Start"
+                                                
+                                                Text="{Binding FurtherInasive}"
+                                                TextColor="{DynamicResource  ColorForegroundText}"
+                                                >
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Visual Signs of Leak : "/>
+                                                            <Span Text="{Binding AnyVisualSign}" FontAttributes="Bold"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
                                             </Grid>
 
                                             <SwipeView.GestureRecognizers>
