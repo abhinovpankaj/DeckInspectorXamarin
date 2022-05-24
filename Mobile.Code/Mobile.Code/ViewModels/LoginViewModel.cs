@@ -67,11 +67,26 @@ namespace Mobile.Code.ViewModels
 
         private async Task Login()
         {
+            IsBusyProgress = true;
+            bool saveLogin = Savecredentials;
+            if (Savecredentials == true)
+            {
+                await SecureStorage.SetAsync("Username", Username);
+                await SecureStorage.SetAsync("Password", Password);
+                await SecureStorage.SetAsync("Savecredential", "True");
+            }
+            else
+            {
+                await SecureStorage.SetAsync("Username", string.Empty);
+                await SecureStorage.SetAsync("Password", string.Empty);
+                await SecureStorage.SetAsync("Savecredential", "False");
+            }
             if (await CheakAppPermission() == false)
             {
                 await Shell.Current.DisplayAlert("Permission", "Camera and storage permission required", "OK");
                 return;
             }
+            
             string errorMessage = string.Empty;
             if (string.IsNullOrEmpty(Username))
             {
@@ -88,7 +103,7 @@ namespace Mobile.Code.ViewModels
 
             }
             
-            IsBusyProgress = true;
+            
             var response = await Task.Run(() =>
                Running()
             );
@@ -220,6 +235,7 @@ namespace Mobile.Code.ViewModels
         public async Task<bool> CheakAppPermission()
         {
             bool statusRequirment = false;
+            bool saveState = Savecredentials;
             PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.Camera>();
             if (status == PermissionStatus.Denied)
             {
@@ -255,14 +271,14 @@ namespace Mobile.Code.ViewModels
                     //return;
                 }
             }
-
+            Savecredentials = saveState;
+            OnPropertyChanged("Savecredentials");
             statusRequirment = true;
             return statusRequirment;
 
         }
         public async Task Load()
         {
-
 
             var Savecredential = await SecureStorage.GetAsync("Savecredential");
             if (Savecredential == "True")
