@@ -26,7 +26,7 @@ namespace Mobile.Code.Services
                     {
                         Index++;
                         var extension = Path.GetExtension(img.Image);
-                        string ServerFileName = FileName.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
+                        string ServerFileName = RemoveSpecialChars(FileName) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(img.Image)), Index.ToString(), ServerFileName);
                     }
                     var response = client.PostAsync(endpointUrl, formData).Result;
@@ -63,7 +63,7 @@ namespace Mobile.Code.Services
                     {
                         Index++;
                         var extension = Path.GetExtension(img);
-                        string ServerFileName = FileName.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + extension;
+                        string ServerFileName = RemoveSpecialChars(FileName) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + extension;
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(img)), Index.ToString(), ServerFileName);
                     }
                     var response = client.PostAsync(endpointUrl, formData).Result;
@@ -104,7 +104,7 @@ namespace Mobile.Code.Services
                     //    var extension = Path.GetExtension(img.Image);
 
                     //}
-                    string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".Jpeg";
+                    string ServerFileName = RemoveSpecialChars(Name) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".Jpeg";
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {
                         Regex UrlMatch = new Regex(@"^(http|https)://", RegexOptions.Singleline);
@@ -144,7 +144,7 @@ namespace Mobile.Code.Services
                 using (var formData = new MultipartFormDataContent())
                 {
 
-                    string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
+                    string ServerFileName = RemoveSpecialChars(Name) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
@@ -188,7 +188,7 @@ namespace Mobile.Code.Services
                     {
                         Index++;
                         // var extension = Path.GetExtension(img);
-                        string ServerFileName = Name.Replace(" ", "_") + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
+                        string ServerFileName = RemoveSpecialChars(Name) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + "_" + Index + ".png";
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(img)), Index.ToString(), ServerFileName);
                     }
                     formData.Add(DictionaryItems, "Model");
@@ -222,6 +222,21 @@ namespace Mobile.Code.Services
                 // parameters.Add("IsFileExist", "False");
             }
             return await Task.FromResult(returnImage);
+        }
+
+        private static string RemoveSpecialChars(string str)
+        {
+            // Create  a string array and add the special characters you want to remove
+            string[] chars = new string[] { ",", ".", "/", "!", "@", "#", "$", "%", "^", "&", "*", "'", "\"", ";", "_", "(", ")", ":", "|", "[", "]" };
+            //Iterate the number of times based on the String array length.
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (str.Contains(chars[i]))
+                {
+                    str = str.Replace(chars[i], "");
+                }
+            }
+            return str;
         }
 
     }

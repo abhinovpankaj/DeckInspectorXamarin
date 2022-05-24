@@ -176,10 +176,15 @@ namespace Mobile.Code.Droid
 
             //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
             var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath;
-            var filePath = System.IO.Path.Combine(documentsPath, filename);
+            documentsPath = documentsPath.Replace("Android/data/com.deckinspectors.mobile/files", "");
+            var filePath = System.IO.Path.Combine(documentsPath, "DeckInspectors");
+            //var filePath = System.IO.Path.Combine(documentsPath, filename);
+            Directory.CreateDirectory(filePath);
+            filePath = System.IO.Path.Combine(filePath, filename) + ".png";
             File.WriteAllBytes(filePath, bytes);
             OpenFile(filePath, filename);
-            return filePath;
+
+            return await Task.FromResult(filePath);
 
         }
         public void OpenFile(string filePath, string filename)

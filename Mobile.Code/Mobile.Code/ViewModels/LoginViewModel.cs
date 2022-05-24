@@ -67,6 +67,18 @@ namespace Mobile.Code.ViewModels
 
         private async Task Login()
         {
+            if (Savecredentials == true)
+            {
+                await SecureStorage.SetAsync("Username", Username);
+                await SecureStorage.SetAsync("Password", Password);
+                await SecureStorage.SetAsync("Savecredential", "True");
+            }
+            else
+            {
+                await SecureStorage.SetAsync("Username", string.Empty);
+                await SecureStorage.SetAsync("Password", string.Empty);
+                await SecureStorage.SetAsync("Savecredential", "False");
+            }
             if (await CheakAppPermission() == false)
             {
                 await Shell.Current.DisplayAlert("Permission", "Camera and storage permission required", "OK");
