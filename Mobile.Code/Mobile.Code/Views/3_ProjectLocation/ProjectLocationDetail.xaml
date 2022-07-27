@@ -43,6 +43,12 @@
                  Color=#FFD180,Size=45}"
                  Order="Primary" Command="{Binding EditCommand}"
                  Priority="1" />
+        <ToolbarItem Text="View All Locations"
+                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                 Glyph={x:Static helpers:IconFont.LocationEnter},
+                 Color=#FFD180,Size=45}"
+                 Order="Secondary" Command="{Binding GoToVisualSwipeViewCommand}"
+                 Priority="1" />
         <ToolbarItem Text="Projects"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
@@ -109,8 +115,7 @@
                         </StackLayout>
                     <ScrollView Grid.Row="1" >
                         <CollectionView  Margin="10,5" BackgroundColor="{DynamicResource Orange-300}"
-                        EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
-                        
+                        EmptyView="No locations to display, use &quot;+&quot; button to add new locations."                        
                         ItemsSource="{Binding VisualFormProjectLocationItems}"
                         IsVisible="{Binding IsViusalReport}">
                             <CollectionView.ItemsLayout>

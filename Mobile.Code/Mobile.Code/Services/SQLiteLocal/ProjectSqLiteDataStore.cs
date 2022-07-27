@@ -56,9 +56,47 @@ namespace Mobile.Code.Services.SQLiteLocal
                 }
                 else
                 {
-                    _connection.Update(item);
-                    res.Message = "Record Updated Successfully";
-                    res.Status = ApiResult.Success;
+                    var proj = _connection.Table<Project>   ().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj!=null)
+                    {
+                        int updateStatus = _connection.Update(item);
+                        if (updateStatus==0)
+                        {
+                            res.Message = "Record Updation failed";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Fail;
+                        }
+                        else
+                        {
+                            res.Message = "Record Updated Successfully";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Success;
+                        }                        
+                    }
+                    else
+                    {
+                        var project = new Project
+                        {
+                            Id = item.Id ?? Guid.NewGuid().ToString(),
+                            Name = item.Name,
+                            Address = item.Address,
+                            Description = item.Description,
+                            ProjectType = item.ProjectType,
+                            UserId = App.LogUser.Id.ToString(),
+                            ImageDescription = item.ImageDescription,
+                            ImageName = item.ImageName,
+                            ImageUrl = item.ImageUrl,
+                            Category = item.Category
+
+                        };
+
+                        res.TotalCount = _connection.Insert(project);
+                        res.ID = project.Id;
+                        res.Data = project;
+                        res.Message = "Record Inserted Successfully";
+                        res.Status = ApiResult.Success;
+                    }
+                    
                 }
             }
             catch (Exception ex)

@@ -32,20 +32,15 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <!--<Label x:Name="countSelect"  VerticalTextAlignment="Center" Margin="3" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    FontSize="15"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="0 Photo Taken"
-                                    TextColor="White" />-->
-                <cameraView:CameraPreview
+
+                <!--<cameraView:CameraPreview
                     x:Name="CameraPreview"
                     Grid.Row="1"
                     Margin="0,0,0,0"
                     BackgroundColor="Black"
                     Camera="Rear"
                     HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand" />
+                    VerticalOptions="FillAndExpand" />-->
                 <Grid
                     Grid.Row="2"
                     Margin="0"

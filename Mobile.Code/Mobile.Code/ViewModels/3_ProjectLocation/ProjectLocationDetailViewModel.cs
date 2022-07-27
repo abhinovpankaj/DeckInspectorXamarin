@@ -2,6 +2,7 @@
 using Mobile.Code.Media;
 using Mobile.Code.Models;
 using Mobile.Code.Services;
+
 using Mobile.Code.Views;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -280,6 +281,16 @@ namespace Mobile.Code.ViewModels
             ProjectCommonLocationImagesItems = new ObservableCollection<ProjectCommonLocationImages>(await ProjectCommonLocationImagesDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
             // UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
         }
+
+        public ICommand GoToVisualSwipeViewCommand => new Command(async () => await GotoVisualSwipeView());
+
+        private async Task GotoVisualSwipeView()
+        {
+            VisualProjectLocationSwipeViewModel vm = new VisualProjectLocationSwipeViewModel();
+            vm.VisualFormProjectLocationItems = this.VisualFormProjectLocationItems;
+            await Shell.Current.Navigation.PushAsync(new VisualProjectLocationsSwipeView() { BindingContext = vm });
+        }
+
         public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) => await GoToVisualForm(parm));
         private async Task GoToVisualForm(ProjectLocation_Visual parm)
         {
