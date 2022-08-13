@@ -13,80 +13,60 @@ namespace Mobile.Code.Views
         //ProjectAddEditViewModel vm;
         public VisualProjectLocationForm()
         {
-            InitializeComponent();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
-            _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
-
-            MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
-            {
-
-                SpeechToTextFinalResultRecieved(args);
-            });
-
-            MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
-            {
-                ImageButton btn = sender as ImageButton;
-                
-
-                if (btn.ClassId == "recordDes")
-                {
-                    recordDes.IsEnabled = true;
-
-                }
-
-            });
-
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });            
-        }
-
-        private void SpeechToTextFinalResultRecieved(string args)
-        {
-            
-            if (txtDes.IsFocused)
-            {
-                txtDes.Text += args;
-            }
-        }
-
-        private void recordClick(object sender, EventArgs e)
-        {
-            ImageButton btn = sender as ImageButton;
             try
             {
-                if (btn.ClassId == "recordName")
-                {
-                    txtName.Focus();
-
-                }
-
-                else if (btn.ClassId == "recordDes")
-                {
-                    txtDes.Focus();
-
-                }
-                _speechRecongnitionInstance.StartSpeechToText();
+                InitializeComponent();
             }
             catch (Exception ex)
             {
 
-                txtName.Text = ex.Message;
+                throw ex;
             }
-
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                
-
-                recordDes.IsEnabled = false;
-            }
-
+                                  
+            
         }
+
+        //private void SpeechToTextFinalResultRecieved(string args)
+        //{
+
+        //    if (txtDes.IsFocused)
+        //    {
+        //        txtDes.Text += args;
+        //    }
+        //}
+
+        //private void recordClick(object sender, EventArgs e)
+        //{
+        //    ImageButton btn = sender as ImageButton;
+        //    try
+        //    {
+        //        if (btn.ClassId == "recordName")
+        //        {
+        //            txtName.Focus();
+
+        //        }
+
+        //        else if (btn.ClassId == "recordDes")
+        //        {
+        //            txtDes.Focus();
+
+        //        }
+        //        _speechRecongnitionInstance.StartSpeechToText();
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        txtName.Text = ex.Message;
+        //    }
+
+        //    if (Device.RuntimePlatform == Device.iOS)
+        //    {
+
+
+        //        recordDes.IsEnabled = false;
+        //    }
+
+        //}
         protected async override void OnAppearing()
         {
             base.OnAppearing();
@@ -94,7 +74,7 @@ namespace Mobile.Code.Views
             //vm.Load();
         }
 
-      
+
         private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             VisualProjectLocationFormViewModel vm = (VisualProjectLocationFormViewModel)this.BindingContext;

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -18,9 +19,117 @@ namespace Mobile.Code.ViewModels
 {
     public class VisualProjectLocationFormViewModel : BaseViewModel
     {
+        //speech
+
+        public bool IsDescriptionMicroPhoneEnabled { get; set; }
+        public bool IsDescriptionMicroPhoneVisible { get; set; }
+
+        public ObservableCollection<ProjectLocation_Visual> ProjectVisualLocations { get; set; }
+
+        private ProjectLocation_Visual _selectedLocation;
+        public ProjectLocation_Visual SelectedLocation 
+        {
+            get { return _selectedLocation; }
+            set
+            {
+                if (_selectedLocation!=value)
+                {
+                    _selectedLocation = value;
+                    OnPropertyChanged("SelectedLocation");
+                    //UpdateCurrentVmStatusAsync(_selectedLocation);
+                }               
+                
+            } 
+        }
+
+        //private async void UpdateCurrentVmStatus(ProjectLocation_Visual parm)
+        //{
+        //    await UpdateCurrentVmStatusAsync(parm);
+        //}
+        private async void UpdateCurrentVmStatusAsync(ProjectLocation_Visual parm)  
+        {
+            App.IsNewForm = false;
+            IsBusyProgress = true;
+            ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
+            WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
+            CountExteriorElements = ExteriorElements.Count.ToString();
+            CountWaterProofingElements = WaterProofingElements.Count.ToString();
+            RadioList_VisualReviewItems.Where(c => c.Name == parm.VisualReview).Single().IsSelected = true;
+            RadioList_AnyVisualSignItems.Where(c => c.Name == parm.AnyVisualSign).Single().IsSelected = true;
+            RadioList_FurtherInasiveItems.Where(c => c.Name == parm.FurtherInasive).Single().IsSelected = true;
+            RadioList_ConditionAssessment.Where(c => c.Name == parm.ConditionAssessment).Single().IsSelected = true;
+            RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsSelected = true;
+            RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsSelected = true;
+            RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsSelected = true;
+
+            if (App.IsInvasive)
+            {
+                //For Conclusive 
+                if (parm.IsPostInvasiveRepairsRequired)
+                {
+                    if (parm.IsInvasiveRepairApproved)
+                    {
+                        if (parm.IsInvasiveRepairComplete)
+                        {
+                            if (parm.ConclusiveLifeExpEEE.Length > 0)
+                            {
+                                RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
+                                RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
+                                RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
+                            }
+
+                        }
+                        string isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+                        RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
+
+                    }
+
+                    string isChked1 = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+                    RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked1).IsSelected = true;
+                }
+            }
+
+            App.VisualEditTracking = new List<MultiImage>();
+            App.VisualEditTrackingForInvasive = new List<MultiImage>();
+
+            VisualProjectLocationPhotoDataStore.Clear();
+            InvasiveVisualProjectLocationPhotoDataStore.Clear();
+            
+            VisualForm = parm;
+            if (App.IsAppOffline)
+            {
+                VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
+            }
+            else
+
+                VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+
+            
+            App.FormString = JsonConvert.SerializeObject(VisualForm);
+
+            if (App.IsInvasive == true)
+            {                                
+                IEnumerable<VisualProjectLocationPhoto> photos;
+                if (App.IsAppOffline)
+                {
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                }
+                else
+                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+
+
+                InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
+                ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                App.InvaiveImages = JsonConvert.SerializeObject(InvasiveVisualProjectLocationPhotoItems);                
+            }
+            IsBusyProgress = false;
+        }
 
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
+        public Command RecordVoiceCommand { get; set; }
+        
+        public Command SwippedCommand { get; set; }
         public Command SaveCommand { get; set; }
         public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
@@ -651,7 +760,8 @@ namespace Mobile.Code.ViewModels
 
             //conclusive
             PopulateConclusiveRadios();
-
+            SwippedCommand = new Command<string>((directionSwipe) => Swipped(directionSwipe));
+            RecordVoiceCommand = new Command(() =>  RecordVoice());
 
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
@@ -674,10 +784,44 @@ namespace Mobile.Code.ViewModels
            });
             App.ListCamera2Api = new List<MultiImage>();
 
+            //subscribe speech
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+
+                IsDescriptionMicroPhoneEnabled = false;
+                IsDescriptionMicroPhoneVisible = true;
+            }
+            _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
+
+            MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
+            
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
 
         }
 
+        private void Swipped(string direction)
+        {
+            IsBusyProgress = true;
+            MessagingCenter.Send<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", direction);
+        }
+    
+        private void RecordVoice()
+        {
+            _speechRecongnitionInstance.StartSpeechToText();
+        }
 
+        private void SpeechToTextFinalResultRecieved(string args)
+        {
+            VisualForm.AdditionalConsideration += args;
+        }
+
+        private ISpeechToText _speechRecongnitionInstance;
         private string _countExteriorElements;
 
         public string CountExteriorElements
@@ -785,8 +929,17 @@ namespace Mobile.Code.ViewModels
         {
             throw new NotImplementedException();
         }
-        private async Task<bool> Running()
+        static readonly CancellationTokenSource s_cts = new CancellationTokenSource();
+        private async Task<bool> Running(CancellationToken token)
         {
+
+            if (token.IsCancellationRequested)
+            {
+                return await Task.FromResult(true); 
+            }
+            IsBusyProgress = true;
+            VisualProjectLocationPhotoDataStore.CancelToken = token;
+
             if (App.ListCamera2Api != null)
             {
 
@@ -795,7 +948,10 @@ namespace Mobile.Code.ViewModels
                     VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id };
                     newObj.ImageDescription = photo.ImageType;
                     _ = AddNewPhoto(newObj).ConfigureAwait(false);
-
+                    if (token.IsCancellationRequested)
+                    {
+                        return await Task.FromResult(true);
+                    }
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -803,7 +959,7 @@ namespace Mobile.Code.ViewModels
             UnitPhotos = new ObservableCollection<VisualProjectLocationPhoto>();
             if (VisualForm != null)
             {
-                if (string.IsNullOrEmpty(visualForm.Id))
+                if (string.IsNullOrEmpty(VisualForm.Id))
                 {
                     if (App.IsAppOffline)
                     {
@@ -838,14 +994,25 @@ namespace Mobile.Code.ViewModels
                 UnitPhotoCount = VisualProjectLocationPhotoItems.Count.ToString();
 
             }
+            IsBusyProgress = false;
             return await Task.FromResult(true);
         }
         public async Task<bool> Load()
         {
+            try
+            {
+                IsBusyProgress = true;
+                bool complete = await Task.Run(() => Running(s_cts.Token), s_cts.Token);
+                if (complete == true)
+                {
+                    IsBusyProgress = false;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
 
-            IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
-            if (complete == true)
+            }
+            finally
             {
                 IsBusyProgress = false;
             }

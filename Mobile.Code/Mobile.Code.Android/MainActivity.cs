@@ -61,7 +61,7 @@ namespace Mobile.Code.Droid
             mSensorManager.RegisterListener(this, sensor, Android.Hardware.SensorDelay.Normal);
             //mSensorManager.RegisterListener
             base.OnCreate(savedInstanceState);
-
+            
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             DependencyService.Register<IResizeImageCommand, AndroidResizeImageCommand>();

@@ -7,6 +7,7 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.NavBarIsVisible="True"
@@ -18,11 +19,11 @@
         </OnPlatform>
     </ContentPage.Padding>
     <Shell.TitleView>
-        <Grid>            
+        <Grid>
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
-                FontSize="Subtitle" 
+                FontSize="Subtitle"
                 HorizontalOptions="CenterAndExpand"
                 Text="{Binding Project.Name}"
                 TextColor="White"
@@ -31,38 +32,57 @@
         </Grid>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsEditDeleteAccess}"
-                 Order="Secondary" Command="{Binding EditCommand}"
-                 Priority="1" />
-        <ToolbarItem Text="Delete"                     
-                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                     Glyph={x:Static helpers:IconFont.Delete},
-                     Color=Red,Size=45}" IsEnabled="{Binding IsEditDeleteAccess}"
-                     Command="{Binding DeleteCommand}" IsDestructive="True"
-                     Order="Secondary"
-                     Priority="2" />
-        <ToolbarItem Text="{Binding BtnInvasiveText}" 
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.ShieldRefresh},
-                 Color=#FFD180,Size=45}" IsEnabled="{Binding CanInvasiveCreate}"
-                 Order="Primary" Command="{Binding CreateInvasiveCommand}"
-                 Priority="1" />
+        <ToolbarItem
+            Command="{Binding EditCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.FileDocumentEdit},
+                                        Color=#FFD180,
+                                        Size=45}"
+            IsEnabled="{Binding IsEditDeleteAccess}"
+            Order="Secondary"
+            Priority="1"
+            Text="Edit" />
+        <ToolbarItem
+            Command="{Binding DeleteCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.Delete},
+                                        Color=Red,
+                                        Size=45}"
+            IsDestructive="True"
+            IsEnabled="{Binding IsEditDeleteAccess}"
+            Order="Secondary"
+            Priority="2"
+            Text="Delete" />
+        <ToolbarItem
+            Command="{Binding CreateInvasiveCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.ShieldRefresh},
+                                        Color=#FFD180,
+                                        Size=45}"
+            IsEnabled="{Binding CanInvasiveCreate}"
+            Order="Primary"
+            Priority="1"
+            Text="{Binding BtnInvasiveText}" />
 
-        <ToolbarItem Text="Download"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.CloudDownload},
-                 Color=#FFD180,Size=45}" IsEnabled="{Binding IsInvasive}"
-                 Order="Primary" Command="{Binding DownloadOfflineCommand}"
-                 Priority="1" />
-        <ToolbarItem Text="Home"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.Home},
-                 Color=#FFD180,Size=45}"
-                 Order="Secondary" Command="{Binding GoBackCommand}"
-                 Priority="1" />
+        <ToolbarItem
+            Command="{Binding DownloadOfflineCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.CloudDownload},
+                                        Color=#FFD180,
+                                        Size=45}"
+            IsEnabled="{Binding IsInvasive}"
+            Order="Primary"
+            Priority="1"
+            Text="Download" />
+        <ToolbarItem
+            Command="{Binding GoBackCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.Home},
+                                        Color=#FFD180,
+                                        Size=45}"
+            Order="Secondary"
+            Priority="1"
+            Text="Home" />
 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -74,9 +94,10 @@
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress}" />
 
-            <Grid BackgroundColor="{DynamicResource Orange-300}" 
+            <Grid
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="{DynamicResource Orange-300}"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -84,56 +105,65 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                
-                <Picker TitleColor="Black"
+
+                <Picker
                     x:Name="offlineProjectPicker"
-                    Margin="0,0,0,0" TextColor="Black"
-                    BackgroundColor="{DynamicResource Orange-300}"                   
+                    Title="Select Project to Sync with"
+                    Margin="0,0,0,0"
+                    ios:Picker.UpdateMode="WhenFinished"
+                    BackgroundColor="{DynamicResource Orange-300}"
                     HorizontalOptions="CenterAndExpand"
                     IsVisible="{Binding IsOnline}"
                     ItemDisplayBinding="{Binding Name}"
                     ItemsSource="{Binding OfflineProjects}"
-                    Title="Select Project to Sync with"
                     SelectedIndexChanged="offlineProjectPicker_SelectedIndexChanged"
                     SelectedItem="{Binding SelectedOfflineProject}"
-                    VerticalOptions="StartAndExpand"/>
-                 
+                    TextColor="Black"
+                    TitleColor="Black"
+                    VerticalOptions="StartAndExpand" />
+
                 <Grid x:Name="gridTopPart" Grid.Row="1">
-                    <yummy:PancakeView CornerRadius="10" Margin="8,0" >
-                        <ffimageloading:CachedImage 
-                        Aspect="AspectFill" Opacity="0.8"
-                        DownsampleToViewSize="True"
-                        ErrorPlaceholder="blank.png"
-                        HeightRequest="220"
-                        LoadingPlaceholder="loading.png"
-                        Source="{Binding Project.ImageUrl}" />
+                    <yummy:PancakeView Margin="8,0" CornerRadius="10">
+                        <ffimageloading:CachedImage
+                            Aspect="AspectFill"
+                            DownsampleToViewSize="True"
+                            ErrorPlaceholder="blank.png"
+                            HeightRequest="220"
+                            LoadingPlaceholder="loading.png"
+                            Opacity="0.8"
+                            Source="{Binding Project.ImageUrl}" />
                     </yummy:PancakeView>
 
                     <Label
-                    Margin="15,10"
-                    FontFamily="{StaticResource Montserrat-Bold}"
-                    FontSize="Caption"
-                    HorizontalOptions="Start"                    
-                    Text="{Binding Project.CreatedOn}"
-                    VerticalOptions="End"
-                    VerticalTextAlignment="Center" />
+                        Margin="15,10"
+                        FontFamily="{StaticResource Montserrat-Bold}"
+                        FontSize="Caption"
+                        HorizontalOptions="Start"
+                        Text="{Binding Project.CreatedOn}"
+                        VerticalOptions="End"
+                        VerticalTextAlignment="Center" />
 
-                    <Label x:Name="lblInvasive" Padding="2"
-                        Margin="15,10" BackgroundColor="{DynamicResource Orange-100}"
+                    <Label
+                        x:Name="lblInvasive"
+                        Margin="15,10"
+                        Padding="2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         FontFamily="{StaticResource Montserrat-Bold}"
                         FontSize="Body"
-                        HorizontalOptions="EndAndExpand"                            
+                        HorizontalOptions="EndAndExpand"
                         Text="Invasive Report"
                         TextColor="{DynamicResource Orange-900}"
                         VerticalOptions="StartAndExpand"
                         VerticalTextAlignment="Center" />
                 </Grid>
-                <Label Grid.Row="2" Margin="8,0"
-                        FontFamily="{StaticResource Montserrat-Regular}"
-                        FontSize="Body"
-                        LineHeight="1.5"
-                        Text="{Binding Project.Description}"
-                        TextColor="{DynamicResource ColorBackground}" />
+                <Label
+                    Grid.Row="2"
+                    Margin="8,0"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    FontSize="Body"
+                    LineHeight="1.5"
+                    Text="{Binding Project.Description}"
+                    TextColor="{DynamicResource ColorBackground}" />
                 <ScrollView
                     Grid.Row="3"
                     Margin="0"
@@ -148,36 +178,48 @@
                             <RowDefinition Height="Auto" />
 
                         </Grid.RowDefinitions>
-                        <Label  Margin="10,0,0,0"
-                                FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="Medium" FontAttributes="Bold"
-                                HorizontalOptions="StartAndExpand" 
-                                VerticalOptions="Center"
-                                Text="Project Common Location(s)"
-                                TextColor="Black" />
-                        <Frame Margin="0,0,20,0" CornerRadius="30" Padding="0" 
-                               VerticalOptions="EndAndExpand" Opacity=".9"
-                               HorizontalOptions="End" IsClippedToBounds="True"
-                               HasShadow="True" IsVisible="{Binding IsInvasiveControlDisable, 
-                                        Converter={StaticResource InverseBoolConverter}}"
-                               BorderColor="{DynamicResource  ColorBackground}"
-                               HeightRequest="60" WidthRequest="60"
-                               BackgroundColor="{DynamicResource Orange-900}">
-                               <Label  Padding="0"                   
-                                    FontSize="45"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="+" HorizontalTextAlignment="Center"
-                                    TextColor="{ DynamicResource ColorBackground}"
-                                    VerticalOptions="CenterAndExpand" />    
+                        <Label
+                            Margin="10,0,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="Medium"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Project Common Location(s)"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Frame
+                            Margin="0,0,20,0"
+                            Padding="0"
+                            BackgroundColor="{DynamicResource Orange-900}"
+                            BorderColor="{DynamicResource ColorBackground}"
+                            CornerRadius="30"
+                            HasShadow="True"
+                            HeightRequest="60"
+                            HorizontalOptions="End"
+                            IsClippedToBounds="True"
+                            IsVisible="{Binding IsInvasiveControlDisable, Converter={StaticResource InverseBoolConverter}}"
+                            Opacity=".9"
+                            VerticalOptions="EndAndExpand"
+                            WidthRequest="60">
+                            <Label
+                                Padding="0"
+                                FontSize="45"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="+"
+                                TextColor="{DynamicResource ColorBackground}"
+                                VerticalOptions="CenterAndExpand" />
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NewProjectCommonLocationCommand}" />
                             </Frame.GestureRecognizers>
                         </Frame>
-                        <ScrollView Grid.Row="1" x:Name="FlexTypes"
+                        <ScrollView
+                            x:Name="FlexTypes"
+                            Grid.Row="1"
                             Margin="5"
                             Padding="5"
                             Orientation="Both">
-                            <FlexLayout  BindableLayout.ItemsSource="{Binding ProjectLocationItems}">
+                            <FlexLayout BindableLayout.ItemsSource="{Binding ProjectLocationItems}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Grid
@@ -197,17 +239,16 @@
                                                     HeightRequest="120"
                                                     LoadingPlaceholder="loading.png"
                                                     Source="{Binding ImageUrl}"
-                                                    WidthRequest="200">
-                                                </ffimageloading:CachedImage>
+                                                    WidthRequest="200" />
                                             </yummy:PancakeView>
 
                                             <Label
                                                 Margin="10"
                                                 FontFamily="{StaticResource Montserrat-SemiBold}"
+                                                FontSize="Subtitle"
                                                 HorizontalOptions="StartAndExpand"
                                                 LineBreakMode="TailTruncation"
                                                 MaxLines="2"
-                                                FontSize="Subtitle"
                                                 Text="{Binding Name}"
                                                 TextColor="{DynamicResource ColorBackground}"
                                                 VerticalOptions="StartAndExpand"
@@ -219,59 +260,70 @@
                                                 HorizontalTextAlignment="Start"
                                                 LineBreakMode="TailTruncation"
                                                 MaxLines="2"
-                                                
                                                 Text="{Binding Description}"
                                                 TextColor="{DynamicResource ColorBackground}"
                                                 WidthRequest="200" />
                                             <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LocationDetailCommand}" 
-                                                    CommandParameter="{Binding}" />
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LocationDetailCommand}" CommandParameter="{Binding}" />
                                             </Grid.GestureRecognizers>
 
                                         </Grid>
-                                        
+
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </FlexLayout>
                         </ScrollView>
-                        <Label Grid.Row="2" Margin="10,0,0,0"
-                                FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="Medium" FontAttributes="Bold"
-                               VerticalOptions="Center"
-                                HorizontalOptions="StartAndExpand"                                
-                                Text="Building(s)"
-                                TextColor="Black" />
-                        <Frame Grid.Row="2" Margin="0,0,20,0" CornerRadius="30" Padding="0" 
-                               VerticalOptions="EndAndExpand" Opacity=".9"
-                               HorizontalOptions="End" IsClippedToBounds="True"
-                               HasShadow="True" IsVisible="{Binding IsInvasiveControlDisable, 
-                                        Converter={StaticResource InverseBoolConverter}}"
-                               BorderColor="{DynamicResource  ColorBackground}"
-                               HeightRequest="60" WidthRequest="60"
-                               BackgroundColor="{DynamicResource Orange-900}">
-                            <Label  Padding="0"                   
-                                    FontSize="45"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="+" HorizontalTextAlignment="Center"
-                                    TextColor="{ DynamicResource ColorBackground}"
-                                    VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Grid.Row="2"
+                            Margin="10,0,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="Medium"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Building(s)"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Frame
+                            Grid.Row="2"
+                            Margin="0,0,20,0"
+                            Padding="0"
+                            BackgroundColor="{DynamicResource Orange-900}"
+                            BorderColor="{DynamicResource ColorBackground}"
+                            CornerRadius="30"
+                            HasShadow="True"
+                            HeightRequest="60"
+                            HorizontalOptions="End"
+                            IsClippedToBounds="True"
+                            IsVisible="{Binding IsInvasiveControlDisable, Converter={StaticResource InverseBoolConverter}}"
+                            Opacity=".9"
+                            VerticalOptions="EndAndExpand"
+                            WidthRequest="60">
+                            <Label
+                                Padding="0"
+                                FontSize="45"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="+"
+                                TextColor="{DynamicResource ColorBackground}"
+                                VerticalOptions="CenterAndExpand" />
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NewProjectBuildingCommand}" />
                             </Frame.GestureRecognizers>
                         </Frame>
 
-                        <ScrollView Grid.Row="3" x:Name="FlexTypes2" 
-                                Margin="5"
-                                Padding="5"
-                                Orientation="Both">
-                            <FlexLayout 
-                                            BindableLayout.ItemsSource="{Binding ProjectBuildingItems}">
+                        <ScrollView
+                            x:Name="FlexTypes2"
+                            Grid.Row="3"
+                            Margin="5"
+                            Padding="5"
+                            Orientation="Both">
+                            <FlexLayout BindableLayout.ItemsSource="{Binding ProjectBuildingItems}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Grid
-                                                Margin="5,0,5,0"
-                                                ColumnSpacing="0"
-                                                RowSpacing="0">
+                                            Margin="5,0,5,0"
+                                            ColumnSpacing="0"
+                                            RowSpacing="0">
 
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -279,40 +331,39 @@
                                             </Grid.RowDefinitions>
                                             <yummy:PancakeView CornerRadius="5">
                                                 <ffimageloading:CachedImage
-                                                        Aspect="AspectFill"
-                                                        BackgroundColor="{DynamicResource Gray-200}"
-                                                        DownsampleToViewSize="True"
-                                                        ErrorPlaceholder="blank.png"
-                                                        HeightRequest="120"
-                                                        LoadingPlaceholder="loading.png"
-                                                        Source="{Binding ImageUrl}"
-                                                        WidthRequest="200" />
+                                                    Aspect="AspectFill"
+                                                    BackgroundColor="{DynamicResource Gray-200}"
+                                                    DownsampleToViewSize="True"
+                                                    ErrorPlaceholder="blank.png"
+                                                    HeightRequest="120"
+                                                    LoadingPlaceholder="loading.png"
+                                                    Source="{Binding ImageUrl}"
+                                                    WidthRequest="200" />
                                             </yummy:PancakeView>
 
                                             <Label
-                                                    Margin="10"
-                                                    FontFamily="{StaticResource Montserrat-SemiBold}"
-                                                    HorizontalOptions="StartAndExpand"
-                                                    LineBreakMode="TailTruncation"
-                                                    MaxLines="2"
-                                                    FontSize="Subtitle"
-                                                    Text="{Binding Name}"
-                                                    TextColor="{DynamicResource ColorBackground}"
-                                                    VerticalOptions="StartAndExpand"
-                                                    VerticalTextAlignment="Center"
-                                                    WidthRequest="200" />
+                                                Margin="10"
+                                                FontFamily="{StaticResource Montserrat-SemiBold}"
+                                                FontSize="Subtitle"
+                                                HorizontalOptions="StartAndExpand"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Text="{Binding Name}"
+                                                TextColor="{DynamicResource ColorBackground}"
+                                                VerticalOptions="StartAndExpand"
+                                                VerticalTextAlignment="Center"
+                                                WidthRequest="200" />
                                             <Label
-                                                    Grid.Row="1"
-                                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                                    HorizontalTextAlignment="Start"
-                                                    LineBreakMode="TailTruncation"
-                                                    MaxLines="2"                                                    
-                                                    Text="{Binding Description}"
-                                                    TextColor="{DynamicResource ColorBackground}"
-                                                    WidthRequest="200" />
+                                                Grid.Row="1"
+                                                FontFamily="{StaticResource Montserrat-Regular}"
+                                                HorizontalTextAlignment="Start"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Text="{Binding Description}"
+                                                TextColor="{DynamicResource ColorBackground}"
+                                                WidthRequest="200" />
                                             <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                                    Path=BindingContext.BuildingDetailCommand}" CommandParameter="{Binding}" />
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.BuildingDetailCommand}" CommandParameter="{Binding}" />
                                             </Grid.GestureRecognizers>
 
                                         </Grid>

@@ -63,6 +63,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\priya\AppData\Local\Xamarin\Mono for Android\Keystore\DeckInspector\DeckInspector.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>Deck@21</AndroidSigningStorePass>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -122,6 +123,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v4">
       <Version>28.0.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.CommunityToolkit">
+      <Version>[2.0.4]</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms">
       <Version>3.0.0</Version>

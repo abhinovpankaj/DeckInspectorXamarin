@@ -42,7 +42,7 @@
                 <On Platform="Android" Value="Roboto-Light.ttf#Roboto Light" />
                 <On Platform="iOS" Value="Roboto-Light" />
             </OnPlatform>
-            
+
             <ControlTemplate x:Key="GeneralTemplate">
                 <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
@@ -153,7 +153,7 @@
                 <On Platform="Android" Value="Montserrat-SemiBold.ttf#Light" />
                 <On Platform="iOS" Value="Montserrat-SemiBold" />
             </OnPlatform>
-            
+
             <Style x:Key="BoxViewStyle" TargetType="BoxView">
                 <Setter Property="Color" Value="{DynamicResource Gray-900}" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -203,7 +203,7 @@
             <Style x:Key="listOptionLayoutTextStyle" TargetType="Label">
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                <Setter Property="TextColor" Value="{StaticResource  ColorForegroundText}" />
+                <Setter Property="TextColor" Value="{StaticResource ColorForegroundText}" />
             </Style>
 
         </ResourceDictionary>
