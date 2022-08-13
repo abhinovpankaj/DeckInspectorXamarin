@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var buildingApartment = new BuildingApartment
                     {
@@ -44,7 +44,6 @@ namespace Mobile.Code.Services.SQLiteLocal
 
                     res.TotalCount = _connection.Insert(buildingApartment);
 
-
                     res.ID = buildingApartment.Id;
                     res.Data = buildingApartment;
                     res.Message = "Record Inserted Successfully";
@@ -52,22 +51,55 @@ namespace Mobile.Code.Services.SQLiteLocal
                 }
                 else
                 {
-                    _connection.Update(item);
-                    res.ID = item.Id;
-                    res.Data = item;
-                    res.Message = "Record Updated Successfully";
-                    res.Status = ApiResult.Success;
+                    var proj = _connection.Table<BuildingApartment>().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj != null)
+                    {
+                        int updateStatus = _connection.Update(item);
+                        if (updateStatus == 0)
+                        {
+                            res.Message = "Record Updation failed";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Fail;
+                        }
+                        else
+                        {
+                            res.Message = "Record Updated Successfully";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Success;
+                        }
+                    }
+                    else
+                    {
+                        var buildingApartment = new BuildingApartment
+                        {
+                            Id = item.Id ?? Guid.NewGuid().ToString(),
+                            BuildingId = item.BuildingId,
+                            Name = item.Name,
+                            OnlineId = item.OnlineId,
+                            Description = item.Description,
+
+                            UserId = App.LogUser.Id.ToString(),
+                            ImageName = item.ImageName,
+                            ImageUrl = item.ImageUrl,
+                            ImageDescription = item.ImageDescription
+                        };
+
+                        res.TotalCount = _connection.Insert(buildingApartment);
+
+                        res.ID = buildingApartment.Id;
+                        res.Data = buildingApartment;
+                        res.Message = "Record Inserted Successfully";
+                        res.Status = ApiResult.Success;
+                    }
                 }
-                
-                
             }
             catch (Exception ex)
             {
-                res.Message = "Insertion failed."+ ex.Message;
+                res.Message = "Insertion failed." + ex.Message;
                 res.Status = ApiResult.Fail;
             }
             return Task.FromResult(res);
-           
+
         }
 
         public async Task<Response> DeleteItemAsync(BuildingApartment item)

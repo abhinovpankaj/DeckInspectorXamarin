@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var projectLocation = new ProjectLocation
                     {
@@ -51,15 +51,46 @@ namespace Mobile.Code.Services.SQLiteLocal
                 }
                 else
                 {
-                    _connection.Update(item);
-                    res.ID = item.Id;
-                    res.Data = item;
-                    res.Message = "Record Updated Successfully";
-                    res.Status = ApiResult.Success;
+                    var proj = _connection.Table<ProjectLocation>().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj != null)
+                    {
+                        int updateStatus = _connection.Update(item);
+                        if (updateStatus == 0)
+                        {
+                            res.Message = "Record Updation failed";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Fail;
+                        }
+                        else
+                        {
+                            res.Message = "Record Updated Successfully";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Success;
+                        }
+                    }
+                    else
+                    {
+                        var projectLocation = new ProjectLocation
+                        {
+                            Id = item.Id ?? Guid.NewGuid().ToString(),
+                            Name = item.Name,
+                            Description = item.Description,
+                            ProjectId = item.ProjectId,
+                            UserId = App.LogUser.Id.ToString(),
+                            ImageDescription = item.ImageDescription,
+                            ImageName = item.ImageName,
+                            ImageUrl = item.ImageUrl,
+                            OnlineId = item.OnlineId
+                        };
+
+                        res.TotalCount = _connection.Insert(projectLocation);
+
+                        res.ID = projectLocation.Id;
+                        res.Data = projectLocation;
+                        res.Message = "Record Inserted Successfully";
+                        res.Status = ApiResult.Success;
+                    }
                 }
-                
-
-
             }
             catch (Exception ex)
             {
@@ -68,7 +99,6 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             }
             return await Task.FromResult(res);
-
         }
 
         public async Task<bool> UpdateItemAsync(ProjectLocation item)
@@ -76,10 +106,10 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                var reult= _connection.Update(item);
+                var reult = _connection.Update(item);
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
-                
+
             }
             catch (Exception)
             {
@@ -95,14 +125,14 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                
+
                 _connection.Delete<ProjectLocation>(item.Id);
                 foreach (var location in _connection.Table<ProjectLocation_Visual>().Where(x => x.ProjectLocationId == item.Id))
                 {
                     VisualFormProjectLocationSqLiteDataStore dq = new VisualFormProjectLocationSqLiteDataStore();
                     await dq.DeleteItemAsync(location);
-                   // _connection.Delete<ProjectLocation_Visual>(location.Id);
-                    
+                    // _connection.Delete<ProjectLocation_Visual>(location.Id);
+
                 }
 
                 res.Message = "Record Deleted Successfully";
@@ -125,7 +155,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public async Task<IEnumerable<ProjectLocation>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.FromResult(from t in _connection.Table<ProjectLocation>() select t );
+            return await Task.FromResult(from t in _connection.Table<ProjectLocation>() select t);
         }
 
 

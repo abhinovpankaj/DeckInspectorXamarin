@@ -606,18 +606,20 @@
                                                    Color=#2e479b,
                                                    Size=20}"
                                 VerticalOptions="Center" />
-                            <Editor IsSpellCheckEnabled="True"
-                                    IsTextPredictionEnabled="True" AutoSize="TextChanges"
+                            <Editor
                                 x:Name="txtDes"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
+                                AutoSize="TextChanges"
                                 BackgroundColor="#ececec"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
+                                IsSpellCheckEnabled="True"
+                                IsTextPredictionEnabled="True"
                                 Text="{Binding VisualForm.AdditionalConsideration}"
                                 TextColor="Black"
                                 VerticalOptions="FillAndExpand" />
-                           
+
                         </Grid>
 
                     </Frame>

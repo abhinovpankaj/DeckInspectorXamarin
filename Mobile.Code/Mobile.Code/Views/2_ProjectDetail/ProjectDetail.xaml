@@ -7,6 +7,7 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     Shell.NavBarIsVisible="False"
@@ -112,6 +113,7 @@
                     <Picker
                         x:Name="offlineProjectPicker"
                         Margin="0,15,0,0"
+                        ios:Picker.UpdateMode="WhenFinished"
                         Background=" #2e479b"
                         HeightRequest="35"
                         HorizontalOptions="Center"

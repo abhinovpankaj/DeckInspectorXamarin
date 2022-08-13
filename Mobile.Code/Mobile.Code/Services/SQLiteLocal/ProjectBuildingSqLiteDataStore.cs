@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Mobile.Code.Services.SQLiteLocal
 {
-    public class ProjectBuildingSqLiteDataStore: IProjectBuilding
+    public class ProjectBuildingSqLiteDataStore : IProjectBuilding
     {
         List<ProjectBuilding> items;
         private SQLiteConnection _connection;
@@ -17,7 +17,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         {
 
             items = new List<ProjectBuilding>();
-            
+
             _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<ProjectBuilding>();
 
@@ -54,7 +54,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                     await dq.DeleteItemAsync(buildingLoc);
                     //_connection.Delete<ProjectBuilding>(buildingLoc.Id);
                 }
-               
+
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -73,9 +73,9 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
-                    var projectLocation = new ProjectBuilding
+                    var projectBuilding = new ProjectBuilding
                     {
                         Id = item.Id ?? Guid.NewGuid().ToString(),
                         Name = item.Name,
@@ -88,22 +88,55 @@ namespace Mobile.Code.Services.SQLiteLocal
                         OnlineId = item.OnlineId
                     };
 
-                    res.TotalCount = _connection.Insert(projectLocation);
+                    res.TotalCount = _connection.Insert(projectBuilding);
 
 
-                    res.ID = projectLocation.Id;
-                    res.Data = projectLocation;
+                    res.ID = projectBuilding.Id;
+                    res.Data = projectBuilding;
                     res.Message = "Record Inserted Successfully";
                     res.Status = ApiResult.Success;
                 }
                 else
                 {
-                    _connection.Update(item);
-                    res.ID = item.Id;
-                    res.Data = item;
-                    res.Message = "Record Updated Successfully";
-                    res.Status = ApiResult.Success;
-                }              
+                    var proj = _connection.Table<ProjectBuilding>().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj != null)
+                    {
+                        int updateStatus = _connection.Update(item);
+                        if (updateStatus == 0)
+                        {
+                            res.Message = "Record Updation failed";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Fail;
+                        }
+                        else
+                        {
+                            res.Message = "Record Updated Successfully";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Success;
+                        }
+                    }
+                    else
+                    {
+                        var projectBuilding = new ProjectBuilding
+                        {
+                            Id = item.Id ?? Guid.NewGuid().ToString(),
+                            Name = item.Name,
+                            Description = item.Description,
+                            ProjectId = item.ProjectId,
+                            UserId = App.LogUser.Id.ToString(),
+                            ImageDescription = item.ImageDescription,
+                            ImageName = item.ImageName,
+                            ImageUrl = item.ImageUrl,
+                            OnlineId = item.OnlineId
+                        };
+                        res.TotalCount = _connection.Insert(projectBuilding);
+                        res.ID = projectBuilding.Id;
+                        res.Data = projectBuilding;
+                        res.Message = "Record Inserted Successfully";
+                        res.Status = ApiResult.Success;
+                    }
+                }
+
 
 
             }

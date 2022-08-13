@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var buildingLocation = new BuildingLocation
                     {
@@ -51,13 +51,45 @@ namespace Mobile.Code.Services.SQLiteLocal
                 }
                 else
                 {
-                    _connection.Update(item);
-                    res.ID = item.Id;
-                    res.Data = item;
-                    res.Message = "Record Updated Successfully";
-                    res.Status = ApiResult.Success;
+                    var proj = _connection.Table<BuildingLocation>().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj != null)
+                    {
+                        int updateStatus = _connection.Update(item);
+                        if (updateStatus == 0)
+                        {
+                            res.Message = "Record Updation failed";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Fail;
+                        }
+                        else
+                        {
+                            res.Message = "Record Updated Successfully";
+                            res.Data = updateStatus;
+                            res.Status = ApiResult.Success;
+                        }
+                    }
+                    else
+                    {
+                        var buildingLocation = new BuildingLocation
+                        {
+                            Id = item.Id ?? Guid.NewGuid().ToString(),
+                            Name = item.Name,
+                            Description = item.Description,
+                            BuildingId = item.BuildingId,
+                            UserId = App.LogUser.Id.ToString(),
+                            ImageDescription = item.ImageDescription,
+                            ImageName = item.ImageName,
+                            ImageUrl = item.ImageUrl,
+                            OnlineId = item.OnlineId
+                        };
+
+                        res.TotalCount = _connection.Insert(buildingLocation);
+                        res.ID = buildingLocation.Id;
+                        res.Data = buildingLocation;
+                        res.Message = "Record Inserted Successfully";
+                        res.Status = ApiResult.Success;
+                    }
                 }
-                
 
 
             }
@@ -68,9 +100,8 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             }
             return await Task.FromResult(res);
-
-
         }
+
 
 
         public async Task<BuildingLocation> GetItemAsync(string id)

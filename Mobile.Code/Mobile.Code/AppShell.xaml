@@ -15,7 +15,7 @@
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="White" />
-            
+
             <Setter Property="Shell.TitleColor" Value="White" />
             <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
             <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
@@ -58,7 +58,7 @@
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
 
-   
+
     <ShellItem
         IsTabStop="False"
         Route="login"
@@ -112,8 +112,7 @@
                                     Color=#2e479b,
                                     Size=24}"
         Text="Logout" />
-    
-    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-        Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V3.3" />
-   
+
+    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V3.4" />
+
 </Shell>
