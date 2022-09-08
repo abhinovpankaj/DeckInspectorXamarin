@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,21 +23,24 @@ namespace Mobile.Code.Camera2Forms
         {
 
             InitializeComponent();
-
-
-            // Items = new ObservableCollection<VisualProjectLocationPhoto>();
-            CameraPreview.PictureFinished += OnPictureFinished;
-            //  list = new ObservableCollection<MultiImage>();
+            //CameraPreview.PictureFinished += OnPictureFinished;
+            // cameraView.MediaCaptured += CameraView_MediaCaptured; ;
         }
 
-        void OnCameraClicked(object sender, EventArgs e)
+        private async void CameraView_MediaCaptured(object sender, Xamarin.CommunityToolkit.UI.Views.MediaCapturedEventArgs e)
         {
 
-            CameraPreview.CameraClick.Execute(null);
-        }
+            //switch (cameraView.CaptureMode)
+            //{
+            //    default:
+            //    case CameraCaptureMode.Default:
+            //    case CameraCaptureMode.Photo:
+            //        previewImage.Rotation = e.Rotation;
+            //        previewImage.Source = e.Image;                    
+            //        break;
 
-        private async void OnPictureFinished()
-        {
+            //}
+
             CameraViewModel vm = (CameraViewModel)this.BindingContext;
             string filepath = string.Empty;
 
@@ -44,24 +48,53 @@ namespace Mobile.Code.Camera2Forms
             if (Device.RuntimePlatform == Device.iOS)
             {
 
-                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), e.ImageData);
 
             }
             if (Device.RuntimePlatform == Device.Android)
             {
-                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), e.ImageData);
 
             }
-            MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType };
+            MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = e.ImageData, ImageType = vm.ImageType };
             App.ListCamera2Api.Add(img);
 
-            // vm.ImageList.Add(new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr });
+
             vm.ImageList.Add(img);
             vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
             vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
+        }
+
+        void OnCameraClicked(object sender, EventArgs e)
+        {
+            //CameraPreview.CameraClick.Execute(null);
+            cameraView.Shutter();
+        }
+
+        private void OnPictureFinished()
+        {
+            //CameraViewModel vm = (CameraViewModel)this.BindingContext;
+            //string filepath = string.Empty;
 
 
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
 
+            //    filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+
+            //}
+            //if (Device.RuntimePlatform == Device.Android)
+            //{
+            //    filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+
+            //}
+            //MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType };
+            //App.ListCamera2Api.Add(img);
+
+
+            //vm.ImageList.Add(img);
+            //vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
+            //vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
         }
         public static event EventHandler<ImageSource> PhotoCapturedEvent;
 
@@ -71,20 +104,13 @@ namespace Mobile.Code.Camera2Forms
         }
         protected override void OnDisappearing()
         {
-            //CameraViewModel vm = (CameraViewModel)this.BindingContext;
-            //vm.IsBusyProgress = true;
 
 
+            // CameraPreview.PictureFinished -= OnPictureFinished;
 
-            //MessagingCenter.Send(this, "ImageList", vm.ImageList);
 
-
-            CameraPreview.PictureFinished -= OnPictureFinished;
-
-            //  MessagingCenter.Unsubscribe<Page1, T>(this, "Listen");
             base.OnDisappearing();
-            // vm.ImageList.Clear();
-            // MessagingCenter.Unsubscribe<Camera2Forms.CameraPage, ObservableCollection<MultiImage>>(this, "ImageList");
+
         }
         protected override void OnAppearing()
         {
@@ -130,6 +156,31 @@ namespace Mobile.Code.Camera2Forms
 
             }
             return await Task.FromResult(true);
+        }
+
+        private void ZoomSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            cameraView.Zoom = (float)zoomSlider.Value;
+            zoomLabel.Text = string.Format("Zoom: {0}", Math.Round(zoomSlider.Value));
+        }
+
+        private void CameraView_OnAvailable(object sender, bool e)
+        {
+            if (e)
+            {
+                zoomSlider.Value = cameraView.Zoom;
+                var max = cameraView.MaxZoom;
+                if (max > zoomSlider.Minimum && max > zoomSlider.Value)
+                    zoomSlider.Maximum = max;
+                else
+                    zoomSlider.Maximum = zoomSlider.Minimum + 1; // if max == min throws exception
+            }
+            zoomSlider.IsEnabled = e;
+        }
+
+        private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
+        {
+
         }
     }
 }
