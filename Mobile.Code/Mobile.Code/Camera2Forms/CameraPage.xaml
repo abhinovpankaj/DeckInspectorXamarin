@@ -32,7 +32,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!--<cameraView:CameraPreview
@@ -43,7 +42,7 @@
                     Camera="Rear"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand" />-->
-                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                <!--<StackLayout Grid.Row="2" Orientation="Horizontal">
                     <Label x:Name="zoomLabel" TextColor="White" />
                     <Slider
                         x:Name="zoomSlider"
@@ -54,21 +53,29 @@
                         Minimum="1"
                         ValueChanged="ZoomSlider_ValueChanged"
                         Value="1" />
-                </StackLayout>
+                </StackLayout>-->
                 <cameraView:PinchToZoomContainer Grid.Row="1" Margin="0,0,0,0">
-                    <cameraView:PinchToZoomContainer.Content>
-                        <Grid>
-                            <xct:CameraView
-                                x:Name="cameraView"
-                                CaptureMode="Photo"
-                                FlashMode="On"
-                                HorizontalOptions="FillAndExpand"
-                                MediaCaptured="CameraView_MediaCaptured"
-                                OnAvailable="CameraView_OnAvailable"
-                                VerticalOptions="FillAndExpand" />
-
-                        </Grid>
-                    </cameraView:PinchToZoomContainer.Content>
+                    <!--<cameraView:PinchToZoomContainer>-->
+                    <Grid>
+                        <xct:CameraView
+                            x:Name="cameraView"
+                            CaptureMode="Photo"
+                            FlashMode="On"
+                            HorizontalOptions="FillAndExpand"
+                            MediaCaptured="CameraView_MediaCaptured"                            
+                            VerticalOptions="FillAndExpand">
+                            <xct:CameraView.GestureRecognizers>
+                                <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                            </xct:CameraView.GestureRecognizers>
+                        </xct:CameraView>
+                        <Label
+                            x:Name="zoomfactor"
+                            FontSize="Small"
+                            HorizontalOptions="CenterAndExpand"
+                            TextColor="White"
+                            VerticalOptions="End" />
+                    </Grid>
+                    <!--</cameraView:PinchToZoomContainer>-->
                 </cameraView:PinchToZoomContainer>
 
                 <Image
@@ -78,7 +85,7 @@
                     BackgroundColor="LightGray"
                     IsVisible="false" />
                 <Grid
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Margin="0"
                     BackgroundColor="Black"
                     ColumnSpacing="0"
