@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Mobile.Code.Services.SQLiteLocal
 {
-    public class ProjectBuildingSqLiteDataStore: IProjectBuilding
+    public class ProjectBuildingSqLiteDataStore : IProjectBuilding
     {
         List<ProjectBuilding> items;
         private SQLiteConnection _connection;
@@ -17,7 +17,7 @@ namespace Mobile.Code.Services.SQLiteLocal
         {
 
             items = new List<ProjectBuilding>();
-            
+
             _connection = DependencyService.Get<ISQLite>().GetConnection();
             _connection.CreateTable<ProjectBuilding>();
 
@@ -54,7 +54,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                     await dq.DeleteItemAsync(buildingLoc);
                     //_connection.Delete<ProjectBuilding>(buildingLoc.Id);
                 }
-               
+
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -73,7 +73,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var projectBuilding = new ProjectBuilding
                     {
@@ -136,7 +136,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                         res.Status = ApiResult.Success;
                     }
                 }
-                
+
 
 
             }

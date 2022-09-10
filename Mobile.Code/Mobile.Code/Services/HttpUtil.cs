@@ -18,7 +18,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-                client.Timeout = TimeSpan.FromSeconds(60);
+                client.Timeout = TimeSpan.FromSeconds(600);
                 using (var formData = new MultipartFormDataContent())
                 {
                     int Index = 1000;
@@ -55,7 +55,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-                client.Timeout = TimeSpan.FromSeconds(60);
+                client.Timeout = TimeSpan.FromSeconds(600);
                 using (var formData = new MultipartFormDataContent())
                 {
                     int Index = 1000;
@@ -94,7 +94,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-                client.Timeout = TimeSpan.FromSeconds(60);
+                client.Timeout = TimeSpan.FromSeconds(600);
                 using (var formData = new MultipartFormDataContent())
                 {
                     //int Index = 1000;
@@ -130,6 +130,21 @@ namespace Mobile.Code.Services
 
             }
         }
+
+        private static string RemoveSpecialChars(string str)
+        {
+            // Create  a string array and add the special characters you want to remove
+            string[] chars = new string[] { ",", ".", "/", "!", "@", "#", "$", "%", "^", "&", "*", "'", "\"", ";", "_", "(", ")", ":", "|", "[", "]" };
+            //Iterate the number of times based on the String array length.
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (str.Contains(chars[i]))
+                {
+                    str = str.Replace(chars[i], "");
+                }
+            }
+            return str;
+        }
         public static async Task<Response> Update_Image(string Name, string ImageUrl, string endpointUrl)
         {
             string UserID = App.LogUser.Id.ToString();
@@ -140,11 +155,11 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-                client.Timeout = TimeSpan.FromSeconds(60);
+                client.Timeout = TimeSpan.FromSeconds(600);
                 using (var formData = new MultipartFormDataContent())
                 {
 
-                    string ServerFileName = RemoveSpecialChars(Name) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
+                    string ServerFileName =RemoveSpecialChars(Name) + DateTime.Now.ToString("ddMMMyyyyHHmmss.FFF") + ".png";
                     if (!string.IsNullOrEmpty(ImageUrl))
                     {
                         formData.Add(new ByteArrayContent(File.ReadAllBytes(ImageUrl)), "fileToUpload", ServerFileName);
@@ -173,7 +188,7 @@ namespace Mobile.Code.Services
             {
 
                 client.BaseAddress = new Uri(App.AzureBackendUrl);
-                client.Timeout = TimeSpan.FromSeconds(60);
+                client.Timeout = TimeSpan.FromSeconds(600);
                 using (var formData = new MultipartFormDataContent())
                 {
                     //int Index = 1000;

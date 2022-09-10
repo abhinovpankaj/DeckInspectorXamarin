@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var buildingLocation = new BuildingLocation
                     {
@@ -101,6 +101,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             }
             return await Task.FromResult(res);
         }
+
 
 
         public async Task<BuildingLocation> GetItemAsync(string id)

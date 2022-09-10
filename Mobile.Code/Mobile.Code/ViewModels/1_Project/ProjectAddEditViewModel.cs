@@ -340,10 +340,7 @@ namespace Mobile.Code.ViewModels
             }
             else
             {
-
-
                 return file.Path;
-
             }
 
 

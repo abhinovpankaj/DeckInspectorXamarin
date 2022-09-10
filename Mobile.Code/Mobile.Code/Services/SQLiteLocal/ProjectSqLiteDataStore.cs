@@ -26,9 +26,9 @@ namespace Mobile.Code.Services.SQLiteLocal
         {
 
             items.Add(item);
-           
+
             Response res = new Response(); //not being used now.
-            
+
             try
             {
                 if (item.Id == null)
@@ -56,11 +56,11 @@ namespace Mobile.Code.Services.SQLiteLocal
                 }
                 else
                 {
-                    var proj = _connection.Table<Project>   ().FirstOrDefault(t => t.Id == item.Id);
-                    if (proj!=null)
+                    var proj = _connection.Table<Project>().FirstOrDefault(t => t.Id == item.Id);
+                    if (proj != null)
                     {
                         int updateStatus = _connection.Update(item);
-                        if (updateStatus==0)
+                        if (updateStatus == 0)
                         {
                             res.Message = "Record Updation failed";
                             res.Data = updateStatus;
@@ -71,7 +71,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                             res.Message = "Record Updated Successfully";
                             res.Data = updateStatus;
                             res.Status = ApiResult.Success;
-                        }                        
+                        }
                     }
                     else
                     {
@@ -96,7 +96,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                         res.Message = "Record Inserted Successfully";
                         res.Status = ApiResult.Success;
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -106,7 +106,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
             }
             return Task.FromResult(res);
-            
+
         }
 
         public Task<Response> CreateInvasiveReport(Project item)
@@ -121,7 +121,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             try
             {
                 _connection.Delete<Project>(item.Id);
-                if (item.Category=="SingleLevel")
+                if (item.Category == "SingleLevel")
                 {
                     foreach (var location in _connection.Table<ProjectLocation_Visual>().Where(x => x.ProjectLocationId == item.Id))
                     {
@@ -145,7 +145,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                         //_connection.Delete<ProjectLocation>(projLoc.Id);
                     }
                 }
-               
+
                 res.Message = "Record Deleted Successfully";
                 res.Status = ApiResult.Success;
 
@@ -166,7 +166,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public Task<IEnumerable<Project>> GetItemsAsync(bool forceRefresh = false)
         {
-            return Task.FromResult(from t in _connection.Table<Project>() select t );
+            return Task.FromResult(from t in _connection.Table<Project>() select t);
         }
 
         public Task<Response> UpdateItemAsync(Project item)
@@ -188,5 +188,5 @@ namespace Mobile.Code.Services.SQLiteLocal
         }
     }
 
-    
+
 }

@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var buildingApartment = new BuildingApartment
                     {
@@ -95,11 +95,11 @@ namespace Mobile.Code.Services.SQLiteLocal
             }
             catch (Exception ex)
             {
-                res.Message = "Insertion failed."+ ex.Message;
+                res.Message = "Insertion failed." + ex.Message;
                 res.Status = ApiResult.Fail;
             }
             return Task.FromResult(res);
-           
+
         }
 
         public async Task<Response> DeleteItemAsync(BuildingApartment item)

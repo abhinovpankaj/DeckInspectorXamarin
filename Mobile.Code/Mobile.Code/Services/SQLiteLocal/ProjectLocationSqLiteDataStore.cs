@@ -26,7 +26,7 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response(); //not being used now.
             try
             {
-                if (item.Id==null)
+                if (item.Id == null)
                 {
                     var projectLocation = new ProjectLocation
                     {
@@ -106,10 +106,10 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                var reult= _connection.Update(item);
+                var reult = _connection.Update(item);
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
-                
+
             }
             catch (Exception)
             {
@@ -125,14 +125,14 @@ namespace Mobile.Code.Services.SQLiteLocal
             Response res = new Response();
             try
             {
-                
+
                 _connection.Delete<ProjectLocation>(item.Id);
                 foreach (var location in _connection.Table<ProjectLocation_Visual>().Where(x => x.ProjectLocationId == item.Id))
                 {
                     VisualFormProjectLocationSqLiteDataStore dq = new VisualFormProjectLocationSqLiteDataStore();
                     await dq.DeleteItemAsync(location);
-                   // _connection.Delete<ProjectLocation_Visual>(location.Id);
-                    
+                    // _connection.Delete<ProjectLocation_Visual>(location.Id);
+
                 }
 
                 res.Message = "Record Deleted Successfully";
@@ -155,7 +155,7 @@ namespace Mobile.Code.Services.SQLiteLocal
 
         public async Task<IEnumerable<ProjectLocation>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.FromResult(from t in _connection.Table<ProjectLocation>() select t );
+            return await Task.FromResult(from t in _connection.Table<ProjectLocation>() select t);
         }
 
 

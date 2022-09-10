@@ -518,6 +518,8 @@
                                 
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
+                                IsSpellCheckEnabled="True"
+                                IsTextPredictionEnabled="True"
                                 Text="{Binding VisualForm.AdditionalConsideration}"
                                 TextColor="{DynamicResource ColorBackground}"
                                 VerticalOptions="FillAndExpand" />

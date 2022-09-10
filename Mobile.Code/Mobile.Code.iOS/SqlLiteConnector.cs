@@ -15,9 +15,12 @@ namespace Mobile.Code.iOS
         {
             var dbase = "DeckInspectorsLocalDB.db";
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var directoryname = Path.Combine(documents, "com.deckinspectors.mobile");
+            directoryname = Path.Combine(documents, "db");
+            Directory.CreateDirectory(directoryname);
             var library = Path.Combine(documents, "..", "Library");
             //var dbpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            var path = Path.Combine(library, dbase);
+            var path = Path.Combine(directoryname, dbase);
             var connection = new SQLiteConnection(path);
             return connection;
         }

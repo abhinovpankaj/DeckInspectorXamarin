@@ -295,7 +295,7 @@ namespace Mobile.Code.ViewModels
                     else
                         res = await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(projLocForm,null);
                     
-                    DependencyService.Get<IToast>().Show(item.Name + " Location is available offline now.");
+                   // DependencyService.Get<IToast>().Show(item.Name + " Location is available offline now.");
                 }
               
             }
@@ -359,7 +359,7 @@ namespace Mobile.Code.ViewModels
                         else
                             _ = await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, null);
                             
-                        DependencyService.Get<IToast>().Show(buildLocForm.Name + " Location is available offline now.");
+                        //DependencyService.Get<IToast>().Show(buildLocForm.Name + " Location is available offline now.");
 
                     }
                     //}
@@ -407,13 +407,12 @@ namespace Mobile.Code.ViewModels
                         else
                             _ = await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(aptLoc, null);
                             
-                        DependencyService.Get<IToast>().Show(aptLoc.Name + " apartment is available offline now.");
+                        //DependencyService.Get<IToast>().Show(aptLoc.Name + " apartment is available offline now.");
                     }
                     //}
                 }
                
-            }
-            
+            }           
 
             IsBusyProgress = false;
         }
