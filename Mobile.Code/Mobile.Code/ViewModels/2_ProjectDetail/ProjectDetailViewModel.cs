@@ -841,7 +841,7 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var item in ProjectBuildingItems)
                 {
-                    DependencyService.Get<IToast>().Show($"Syncing Building {item.Name}");
+                    //DependencyService.Get<IToast>().Show($"Syncing Building {item.Name}");
                     //insert buildinglocations
 
                     string localId = item.Id;
@@ -1042,7 +1042,7 @@ namespace Mobile.Code.ViewModels
 
                         foreach (var apartment in BuildingApartments)
                         {
-                            DependencyService.Get<IToast>().Show($"Syncing Apartment {apartment.Name}");
+                            //DependencyService.Get<IToast>().Show($"Syncing Apartment {apartment.Name}");
                             string localaptId = apartment.Id;
 
                             //check if projectlocation exists on central repo

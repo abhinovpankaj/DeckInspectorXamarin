@@ -330,7 +330,7 @@ namespace Mobile.Code.ViewModels
             finally { IsBusyProgress = false; }
                 
         });
-    
+        
         private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped=false)
         {            
             currentLocationSeq = parm.SeqNo;
@@ -404,9 +404,10 @@ namespace Mobile.Code.ViewModels
             {
                 if (isSwipped)
                 {
-                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();                                   
-                    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     Shell.Current.Navigation.RemovePage(_lastPage);
+                    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    
                 }
                 else
                 {
