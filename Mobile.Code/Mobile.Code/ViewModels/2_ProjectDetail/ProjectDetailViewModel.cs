@@ -712,7 +712,7 @@ namespace Mobile.Code.ViewModels
                                     {
                                         formLocationItem.Id = null;
                                     }
-                                    else
+                                    else 
                                         formLocationItem.Id = formLocationItem.IsDelete ? null : formLocationItem.OnlineId;
                                 }                                
                             }
@@ -907,7 +907,7 @@ namespace Mobile.Code.ViewModels
                                         }
                                         else
                                         {
-                                            if (existngBuildLocForm.BuildingLocationId!=resultBuilding.ID)
+                                            if (existngBuildLocForm.BuildingLocationId!=resultBuildLoc.ID)
                                             {
                                                 buildLocForm.Id = null;
                                             }
@@ -1056,7 +1056,7 @@ namespace Mobile.Code.ViewModels
                                         }
                                         else
                                         {
-                                            if (existingaptLoc.BuildingApartmentId != resultBuilding.ID)
+                                            if (existingaptLoc.BuildingApartmentId != aptResult.ID)
                                             {
                                                 aptLoc.Id = null;
                                             }

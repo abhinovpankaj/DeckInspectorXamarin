@@ -9,6 +9,7 @@ using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -536,8 +537,47 @@ namespace Mobile.Code.ViewModels
             IsBusy = false;
             if (file == null)
                 return null;
+            if (Device.RuntimePlatform == Device.iOS)
+            {
 
-            return file.Path;
+                byte[] arr = null;
+                var buffer = new byte[16 * 1024];
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int read = 0;
+                    var readstream = file.GetStreamWithImageRotatedForExternalStorage();
+                    while ((read = readstream.Read(buffer, 0, buffer.Length)) > 0)
+                        ms.Write(buffer, 0, read);
+
+                    file.GetStream().CopyTo(ms);
+
+                    //  file.Dispose();
+                    readstream.Dispose();
+                    arr = ms.ToArray();
+                    readstream = null;
+                }
+                string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
+                //  ImgData.mediaFile = arr;
+                return filepath;
+                //   byte[] arr = null;
+                //  using (MemoryStream ms = new MemoryStream())
+                // {
+                //     file.GetStream().CopyTo(ms);
+                //     file.Dispose();
+                //     arr = ms.ToArray();
+                //  }
+                // string filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), arr);
+                //ImgData.mediaFile = file;
+                // return filepath;
+            }
+            else
+            {
+
+
+                return file.Path;
+
+            }
+            
         }
         private string _imgPath;
 

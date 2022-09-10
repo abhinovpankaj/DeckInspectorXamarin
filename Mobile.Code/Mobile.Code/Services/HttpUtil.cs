@@ -180,8 +180,6 @@ namespace Mobile.Code.Services
         public static async Task<Response> VisualDataAdd(string Name, string endpointUrl, Dictionary<string, string> parameters, IEnumerable<string> list)
         {
 
-
-
             Response result = new Response();
             HttpContent DictionaryItems = new FormUrlEncodedContent(parameters);
             using (var client = new HttpClient())
