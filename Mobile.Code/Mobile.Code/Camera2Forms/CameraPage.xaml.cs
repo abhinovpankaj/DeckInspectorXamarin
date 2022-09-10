@@ -199,30 +199,6 @@ namespace Mobile.Code.Camera2Forms
                 currentScale += (e.Scale - 1) * startScale;
                 currentScale = Math.Max(1, currentScale);
 
-                // The ScaleOrigin is in relative coordinates to the wrapped user interface element,
-                // so get the X pixel coordinate.
-                //double renderedX = Content.X + xOffset;
-                //double deltaX = renderedX / Width;
-                //double deltaWidth = Width / (Content.Width * startScale);
-                //double originX = (e.ScaleOrigin.X - deltaX) * deltaWidth;
-
-                //// The ScaleOrigin is in relative coordinates to the wrapped user interface element,
-                //// so get the Y pixel coordinate.
-                //double renderedY = Content.Y + yOffset;
-                //double deltaY = renderedY / Height;
-                //double deltaHeight = Height / (Content.Height * startScale);
-                //double originY = (e.ScaleOrigin.Y - deltaY) * deltaHeight;
-
-                //// Calculate the transformed element pixel coordinates.
-                //double targetX = xOffset - (originX * Content.Width) * (currentScale - startScale);
-                //double targetY = yOffset - (originY * Content.Height) * (currentScale - startScale);
-
-                //// Apply translation based on the change in origin.
-                //Content.TranslationX = targetX.Clamp(-Content.Width * (currentScale - 1), 0);
-                //Content.TranslationY = targetY.Clamp(-Content.Height * (currentScale - 1), 0);
-
-                //// Apply scale factor.
-                //Content.Scale = currentScale;
             }
             if (e.Status == GestureStatus.Completed)
             {
@@ -230,7 +206,7 @@ namespace Mobile.Code.Camera2Forms
                 //xOffset = Content.TranslationX;
                 //yOffset = Content.TranslationY;
                 cameraView.Zoom = currentScale;
-                zoomfactor.Text = currentScale.ToString() + "x";
+                zoomfactor.Text = Math.Round(currentScale,2).ToString() + "x";
             }
         }
     }
