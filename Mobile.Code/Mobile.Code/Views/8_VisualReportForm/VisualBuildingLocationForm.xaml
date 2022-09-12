@@ -164,7 +164,7 @@
                                 Clicked="recordClick"
                                 HeightRequest="28"
                                 HorizontalOptions="End"
-                                IsVisible="false"
+                                IsVisible="true"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
                                                    Color=#2e479b,
@@ -594,14 +594,17 @@
                                                    Color=#2e479b,
                                                    Size=20}"
                                 VerticalOptions="Center" />
-                            <controles:XEditor IsSpellCheckEnabled="True"
-                                    IsTextPredictionEnabled="True" AutoSize="TextChanges"
-                                    x:Name="txtDes" Keyboard="Chat"
-                                    Grid.Row="1" 
-                                    Grid.ColumnSpan="2"
+                            <controles:XEditor
+                                x:Name="txtDes"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                AutoSize="TextChanges"
                                 BackgroundColor="#ececec"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
+                                IsSpellCheckEnabled="True"
+                                IsTextPredictionEnabled="True"
+                                Keyboard="Chat"
                                 Text="{Binding VisualForm.AdditionalConsideration}"
                                 TextColor="Black"
                                 VerticalOptions="FillAndExpand" />

@@ -124,7 +124,7 @@
                                 Clicked="recordClick"
                                 HeightRequest="28"
                                 HorizontalOptions="End"
-                                IsVisible="false"
+                                IsVisible="true"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
                                                    Color=#2e479b,
@@ -181,7 +181,7 @@
                                 Clicked="recordClick"
                                 HeightRequest="28"
                                 HorizontalOptions="End"
-                                IsVisible="false"
+                                IsVisible="true"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
                                                    Color=#2e479b,

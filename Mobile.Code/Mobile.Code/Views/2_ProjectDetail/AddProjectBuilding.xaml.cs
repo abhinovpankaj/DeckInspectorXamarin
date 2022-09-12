@@ -12,11 +12,11 @@ namespace Mobile.Code.Views
         public AddProjectBuilding()
         {
             InitializeComponent();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             txtName.Completed += (s, e) => txtDes.Focus();
 
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();

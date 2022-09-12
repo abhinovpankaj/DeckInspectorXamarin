@@ -64,7 +64,7 @@ namespace Mobile.Code.Services.SQLiteLocal
                         else
                         {
                             res.Message = "Record Updated Successfully";
-                            res.Data = updateStatus;
+                            res.Data = item;                            
                             res.Status = ApiResult.Success;
                         }
                     }

@@ -12,11 +12,11 @@ namespace Mobile.Code.Views
         public AddBuildingApartment()
         {
             InitializeComponent();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             txtName.Completed += (s, e) => txtDes.Focus();
             //this.BindingContext = new BuildingAprartmentAddEditViewModel();
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();

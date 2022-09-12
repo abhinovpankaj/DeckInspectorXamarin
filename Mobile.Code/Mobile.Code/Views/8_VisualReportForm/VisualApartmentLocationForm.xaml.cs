@@ -15,11 +15,11 @@ namespace Mobile.Code.Views
         {
             InitializeComponent();
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {
 
@@ -32,13 +32,11 @@ namespace Mobile.Code.Views
                 if (btn.ClassId == "recordName")
                 {
                     recordName.IsEnabled = true;
-
                 }
 
                 else if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
-
                 }
 
             });

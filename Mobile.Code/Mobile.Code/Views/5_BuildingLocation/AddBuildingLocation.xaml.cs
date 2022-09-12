@@ -14,11 +14,11 @@ namespace Mobile.Code.Views
             InitializeComponent();
             txtName.Completed += (s, e) => txtDes.Focus();
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
 
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {

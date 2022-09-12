@@ -14,16 +14,15 @@ namespace Mobile.Code.Views
         public VisualProjectLocationForm()
         {
             InitializeComponent();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
 
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {
-
                 SpeechToTextFinalResultRecieved(args);
             });
 
@@ -32,8 +31,7 @@ namespace Mobile.Code.Views
                 ImageButton btn = sender as ImageButton;
                 if (btn.ClassId == "recordName")
                 {
-                    //recordName.IsEnabled = true;
-
+                    recordName.IsEnabled = true;
                 }
 
                 else if (btn.ClassId == "recordDes")
