@@ -83,7 +83,7 @@ namespace Mobile.Code.ViewModels
             }
             if (await CheakAppPermission() == false)
             {
-                await Shell.Current.DisplayAlert("Permission", "Camera and storage permission required", "OK");
+                await Shell.Current.DisplayAlert("Permission", "Camera/storage permission required, please allow access from Settings if denied.", "OK");
                 return;
             }
             
@@ -237,12 +237,12 @@ namespace Mobile.Code.ViewModels
             bool statusRequirment = false;
             bool saveState = Savecredentials;
             PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-            if (status == PermissionStatus.Denied)
+            if (status != PermissionStatus.Granted)
             {
                 var Camerastatus = await Permissions.RequestAsync<Permissions.Camera>();
-                if (Camerastatus == PermissionStatus.Denied)
+                if (Camerastatus != PermissionStatus.Granted)
                 {
-                    // await Shell.Current.DisplayAlert("Permission", "Camera Permission required", "OK");
+                    //await Shell.Current.DisplayAlert("Permission", "Camera Permission required, Please allow access from settings.", "OK");
                     return false;
                 }
             }

@@ -44,10 +44,10 @@ namespace Mobile.Code.Views
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
         }
         private void SpeechToTextFinalResultRecieved(string args)
         {

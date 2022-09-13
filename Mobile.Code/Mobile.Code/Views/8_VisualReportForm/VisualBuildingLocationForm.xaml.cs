@@ -43,10 +43,7 @@ namespace Mobile.Code.Views
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+           
 
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }

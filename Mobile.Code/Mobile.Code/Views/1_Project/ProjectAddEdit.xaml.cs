@@ -47,10 +47,10 @@ namespace Mobile.Code.Views
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
 
             txtName.Completed += (s, e) => txtAddress.Focus();
             txtAddress.Completed += (s, e) => txtDes.Focus();
@@ -103,7 +103,7 @@ namespace Mobile.Code.Views
             catch (Exception ex)
             {
 
-                txtName.Text = ex.Message;
+               // txtName.Text = ex.Message;
             }
 
             if (Device.RuntimePlatform == Device.iOS)

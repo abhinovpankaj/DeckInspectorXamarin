@@ -120,6 +120,7 @@ namespace Mobile.Code.iOS
                     {
                         DidFinishTalk();
                     });
+                    isFinal = result.Final;
                 }
                 if (error != null || isFinal)
                 {

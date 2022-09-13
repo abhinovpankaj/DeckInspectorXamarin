@@ -169,7 +169,7 @@
                                 x:Name="recordName"
                                 Grid.Column="1"
                                 BackgroundColor="White"
-                                BorderWidth="1"
+                                
                                 ClassId="recordName"
                                 Clicked="recordClick"
                                 HeightRequest="28"
