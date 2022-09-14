@@ -19,7 +19,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>11.0</string>
+	<string>9.0</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.deckinspectors.mobile</string>
 	<key>UILaunchStoryboardName</key>
@@ -48,8 +48,6 @@
 	<string>DECK INSPECTOR</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>CFBundleVersion</key>
-	<string>3</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application uses device microphone to record.</string>
 	<key>NSCameraUsageDescription</key>
@@ -62,7 +60,7 @@
 	<true/>
 	<key>CFBundleShortVersionString</key>
 	<string>3</string>
-	<key>Custom Property</key>
-	<string></string>
+	<key>CFBundleVersion</key>
+	<string>8</string>
 </dict>
 </plist>

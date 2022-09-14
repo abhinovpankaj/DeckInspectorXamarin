@@ -59,7 +59,8 @@ namespace Mobile.Code.iOS
 
         private void DidFinishTalk()
         {
-            //MessagingCenter.Send<ISpeechToText>(this, "Final");
+            MessagingCenter.Send<ISpeechToText>(this, "Final");
+            MessagingCenter.Send<ISpeechToText, string>(this, "STT", _recognizedString);
             if (_timer != null)
             {
                 _timer.Invalidate();
@@ -76,18 +77,20 @@ namespace Mobile.Code.iOS
 
         private void StartRecordingAndRecognizing()
         {
-            _timer = NSTimer.CreateRepeatingScheduledTimer(5, delegate
-            {
-                DidFinishTalk();
-            });
+
+            //_timer = NSTimer.CreateRepeatingScheduledTimer(5, delegate
+            //{
+            //    DidFinishTalk();
+            //});
+
 
             _recognitionTask?.Cancel();
             _recognitionTask = null;
 
             var audioSession = AVAudioSession.SharedInstance();
             NSError nsError;
-            nsError = audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord);
-            audioSession.SetMode(AVAudioSession.ModeDefault, out nsError);
+            nsError = audioSession.SetCategory(AVAudioSessionCategory.Record);
+            audioSession.SetMode(AVAudioSession.ModeMeasurement, out nsError);
             nsError = audioSession.SetActive(true, AVAudioSessionSetActiveOptions.NotifyOthersOnDeactivation);
             audioSession.OverrideOutputAudioPort(AVAudioSessionPortOverride.Speaker, out nsError);
             _recognitionRequest = new SFSpeechAudioBufferRecognitionRequest();
@@ -113,18 +116,23 @@ namespace Mobile.Code.iOS
                 if (result != null)
                 {
                     _recognizedString = result.BestTranscription.FormattedString;
-                    MessagingCenter.Send<ISpeechToText, string>(this, "STT", _recognizedString);
+
+
                     _timer.Invalidate();
                     _timer = null;
-                    _timer = NSTimer.CreateRepeatingScheduledTimer(2, delegate
+                    _timer = NSTimer.CreateRepeatingScheduledTimer(5, delegate
                     {
                         DidFinishTalk();
+
                     });
-                    isFinal = result.Final;
+                    //isFinal = result.Final;
+
+
                 }
                 if (error != null || isFinal)
                 {
                     //MessagingCenter.Send<ISpeechToText>(this, "Final");
+                    //MessagingCenter.Send<ISpeechToText, string>(this, "STT", _recognizedString);
                     StopRecordingAndRecognition(audioSession);
                 }
             });
