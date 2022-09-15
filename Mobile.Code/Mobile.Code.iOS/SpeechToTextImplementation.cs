@@ -77,7 +77,7 @@ namespace Mobile.Code.iOS
 
         private void StartRecordingAndRecognizing()
         {
-
+            _recognizedString = string.Empty;
             //_timer = NSTimer.CreateRepeatingScheduledTimer(5, delegate
             //{
             //    DidFinishTalk();
