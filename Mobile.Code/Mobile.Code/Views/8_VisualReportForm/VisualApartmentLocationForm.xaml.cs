@@ -15,11 +15,11 @@ namespace Mobile.Code.Views
         {
             InitializeComponent();
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {
 
@@ -31,16 +31,17 @@ namespace Mobile.Code.Views
                 ImageButton btn = sender as ImageButton;
                 if (btn.ClassId == "recordDes")
                 {
-                    recordDes.IsEnabled = true;
+                    recordName.IsEnabled = true;
+                }
 
+                else if (btn.ClassId == "recordDes")
+                {
+                    recordDes.IsEnabled = true;
                 }
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+           
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
         private void SpeechToTextFinalResultRecieved(string args)

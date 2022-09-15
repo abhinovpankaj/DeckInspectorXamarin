@@ -97,7 +97,23 @@
                                     VerticalTextAlignment="Center" />
                                 </StackLayout>
 
-                                <controles:BorderlessEntry
+                            <ImageButton
+                                x:Name="recordName"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="{DynamicResource Gray-300}"
+                                
+                                ClassId="recordName"
+                                Clicked="recordClick"
+                                HeightRequest="28"
+                                HorizontalOptions="End"
+                                IsVisible="true"
+                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                   Glyph={x:Static helpers:IconFont.Microphone},
+                                                   Color=#2e479b,
+                                                   Size=20}"
+                                VerticalOptions="Center" />
+                            <controles:BorderlessEntry
                                 x:Name="txtName"
                                 Grid.Row="1"
                                 Margin="0,-8,0,0"

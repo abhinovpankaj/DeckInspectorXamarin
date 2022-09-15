@@ -14,11 +14,11 @@ namespace Mobile.Code.Views
         public VisualBuildingLocationForm()
         {
             InitializeComponent();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
 
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
@@ -33,15 +33,11 @@ namespace Mobile.Code.Views
                 if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
-
                 }
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+           
 
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
@@ -120,6 +116,8 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
+                recordName.IsEnabled = false;
+
                 recordDes.IsEnabled = false;
             }
 

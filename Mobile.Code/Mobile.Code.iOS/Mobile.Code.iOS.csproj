@@ -30,8 +30,8 @@
     <MtouchDebug>true</MtouchDebug>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
-    <CodesignProvision>DeckInspectors</CodesignProvision>
+    <CodesignKey>Apple Distribution: Deck Inspectors LLC (427PBZJGC6)</CodesignKey>
+    <CodesignProvision>DeckInspector</CodesignProvision>
     <MtouchFloat32>true</MtouchFloat32>
     <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
   </PropertyGroup>
@@ -43,7 +43,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
-    <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
+    <CodesignKey>Apple Development: Abhinov Pankaj (T5L7AC88QR)</CodesignKey>
     <CodesignProvision>DeckInspectors</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
@@ -56,13 +56,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
+    <CodesignKey>Apple Distribution: Deck Inspectors LLC (427PBZJGC6)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
-    <CodesignProvision>Deck Inspectors</CodesignProvision>
+    <CodesignProvision>DeckInspector</CodesignProvision>
+    <MtouchFastDev>true</MtouchFastDev>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -70,12 +71,11 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
-    <CodesignKey>Apple Distribution: Abhinov Pankaj (6NW266CDRR)</CodesignKey>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>Deck Inspectors</CodesignProvision>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>Apple Distribution: Deck Inspectors LLC (427PBZJGC6)</CodesignKey>
     <BuildIpa>true</BuildIpa>
     <MtouchLink>SdkOnly</MtouchLink>
+    <CodesignProvision>DeckInspector</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -84,7 +84,7 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>Apple Development: Abhinov Pankaj (T5L7AC88QR)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchFastDev>true</MtouchFastDev>
@@ -100,7 +100,7 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>Apple Development: Abhinov Pankaj (9FA75ZC35U)</CodesignKey>
+    <CodesignKey>Apple Development: Abhinov Pankaj (T5L7AC88QR)</CodesignKey>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchVerbosity>
     </MtouchVerbosity>

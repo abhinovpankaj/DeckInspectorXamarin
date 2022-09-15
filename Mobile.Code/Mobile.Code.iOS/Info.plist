@@ -21,15 +21,13 @@
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.wicr.mobile</string>
+	<string>com.deckinspectors.mobile</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
-	<string>wicr app</string>
+	<string>Deck-Inspector</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>CustomProperty</key>
-	<string>Requires access to the camera</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold</string>
@@ -44,25 +42,25 @@
 	<string>Allows you create tasks</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>CFBundleShortVersionString</key>
-	<string>2</string>
 	<key>App Uses Non-Exempt Encryption	</key>
 	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>DECK INSPECTOR</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>CFBundleVersion</key>
-	<string>1.7</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application uses device microphone to record.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>this application uses camera to take pictures </string>
+	<string>This application uses camera to take pictures of Locations, Apartments which require further inspection or repairing. These images are utilized to create inspection reports which are sent to clients.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Needs Access to Photos</string>
+	<string>Needs Access to Photos to save the building, aparatment and project images in gallery, which can be later transfered to other devices if required.</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>CFBundleShortVersionString</key>
+	<string>3</string>
+	<key>CFBundleVersion</key>
+	<string>8</string>
 </dict>
 </plist>

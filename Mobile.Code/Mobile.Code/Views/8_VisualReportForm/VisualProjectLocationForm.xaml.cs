@@ -19,12 +19,22 @@ namespace Mobile.Code.Views
             }
             catch (Exception ex)
             {
+                SpeechToTextFinalResultRecieved(args);
+            });
 
-                throw ex;
-            }
-                                  
-            
-        }
+            MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
+            {
+                ImageButton btn = sender as ImageButton;
+                if (btn.ClassId == "recordName")
+                {
+                    recordName.IsEnabled = true;
+                }
+
+                else if (btn.ClassId == "recordDes")
+                {
+                    recordDes.IsEnabled = true;
+
+                }
 
         //private void SpeechToTextFinalResultRecieved(string args)
         //{

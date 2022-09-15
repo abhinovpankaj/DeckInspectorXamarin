@@ -13,11 +13,11 @@ namespace Mobile.Code.Views
         {
             InitializeComponent();
 
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                recordDes.IsVisible = true;
-                recordDes.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    recordDes.IsVisible = true;
+            //    recordDes.IsEnabled = false;
+            //}
             txtName.Completed += (s, e) => txtDes.Focus();
             _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
 
@@ -38,10 +38,10 @@ namespace Mobile.Code.Views
 
             });
 
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
 
             //this.BindingContext = new ProjectLocationAddEditViewModel();
         }

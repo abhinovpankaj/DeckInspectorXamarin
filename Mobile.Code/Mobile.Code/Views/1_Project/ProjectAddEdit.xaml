@@ -104,6 +104,21 @@
                                     VerticalTextAlignment="Center" />
                             </StackLayout>
 
+                            <ImageButton
+                                x:Name="recordName"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                
+                                ClassId="recordName"
+                                Clicked="recordClick"
+                                HeightRequest="28"
+                                HorizontalOptions="End"
+                                IsVisible="true"
+                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                   Glyph={x:Static helpers:IconFont.Microphone},
+                                                   Color=#2e479b,
+                                                   Size=20}"
+                                VerticalOptions="Center" />
                             <controles:BorderlessEntry
                                 x:Name="txtName"
                                 Grid.Row="1"
@@ -146,6 +161,23 @@
                                     TextColor="{DynamicResource ColorForegroundText}" />
                                 
                             </StackLayout>
+
+                            <ImageButton
+                                x:Name="recordAddress"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="{DynamicResource Gray-300}"
+                                
+                                ClassId="recordAddress"
+                                Clicked="recordClick"
+                                HeightRequest="28"
+                                HorizontalOptions="End"
+                                IsVisible="true"
+                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                   Glyph={x:Static helpers:IconFont.Microphone},
+                                                   Color=#2e479b,
+                                                   Size=20}"
+                                VerticalOptions="Center" />
                             <controles:BorderlessEntry
                                 x:Name="txtAddress"
                                 Grid.Row="1"
