@@ -29,7 +29,7 @@ namespace Mobile.Code.ViewModels
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
-
+        public Command SwippedCommand { get; set; }
         public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
         {
@@ -642,6 +642,7 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
             SaveAndCreateNewCommand = new Command(async () => await SaveCreateNew());
+            SwippedCommand = new Command<string>((directionSwipe) => Swipped(directionSwipe));
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
 
@@ -664,7 +665,11 @@ namespace Mobile.Code.ViewModels
             App.ListCamera2Api = new List<MultiImage>();
 
         }
-
+        private void Swipped(string direction)
+        {
+            IsBusyProgress = true;
+            MessagingCenter.Send<VisualBuildingLocationFormViewModel, string>(this, "LocationSwipped", direction);
+        }
         public VisualBuildingLocationFormViewModel(VisualBuildingLocationFormViewModel viewModel)
         {
         }

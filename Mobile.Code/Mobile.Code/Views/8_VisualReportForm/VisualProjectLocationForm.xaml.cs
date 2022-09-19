@@ -13,12 +13,12 @@ namespace Mobile.Code.Views
         //ProjectAddEditViewModel vm;
         public VisualProjectLocationForm()
         {
-            try
+            InitializeComponent();
+            _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
+
+            MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
             {
-                InitializeComponent();
-            }
-            catch (Exception ex)
-            {
+
                 SpeechToTextFinalResultRecieved(args);
             });
 
@@ -35,48 +35,49 @@ namespace Mobile.Code.Views
                     recordDes.IsEnabled = true;
 
                 }
+            });
+        }
+        private void SpeechToTextFinalResultRecieved(string args)
+        {
 
-        //private void SpeechToTextFinalResultRecieved(string args)
-        //{
+            if (txtDes.IsFocused)
+            {
+                txtDes.Text += args;
+            }
+        }
 
-        //    if (txtDes.IsFocused)
-        //    {
-        //        txtDes.Text += args;
-        //    }
-        //}
+        private void recordClick(object sender, EventArgs e)
+        {
+            ImageButton btn = sender as ImageButton;
+            try
+            {
+                if (btn.ClassId == "recordName")
+                {
+                    txtName.Focus();
 
-        //private void recordClick(object sender, EventArgs e)
-        //{
-        //    ImageButton btn = sender as ImageButton;
-        //    try
-        //    {
-        //        if (btn.ClassId == "recordName")
-        //        {
-        //            txtName.Focus();
+                }
 
-        //        }
+                else if (btn.ClassId == "recordDes")
+                {
+                    txtDes.Focus();
 
-        //        else if (btn.ClassId == "recordDes")
-        //        {
-        //            txtDes.Focus();
+                }
+                _speechRecongnitionInstance.StartSpeechToText();
+            }
+            catch (Exception ex)
+            {
 
-        //        }
-        //        _speechRecongnitionInstance.StartSpeechToText();
-        //    }
-        //    catch (Exception ex)
-        //    {
+                txtName.Text = ex.Message;
+            }
 
-        //        txtName.Text = ex.Message;
-        //    }
-
-        //    if (Device.RuntimePlatform == Device.iOS)
-        //    {
+            if (Device.RuntimePlatform == Device.iOS)
+            {
 
 
-        //        recordDes.IsEnabled = false;
-        //    }
+                recordDes.IsEnabled = false;
+            }
 
-        //}
+        }
         protected async override void OnAppearing()
         {
             base.OnAppearing();

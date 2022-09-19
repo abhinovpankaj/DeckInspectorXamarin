@@ -113,8 +113,7 @@ namespace Mobile.Code.ViewModels
             // ProjectBuildingItems = new ObservableCollection<WorkImage>();
             NewBuildingLocationCommand = new Command(async () => await ExecuteNewBuildingLocationCommand());
             NewBuildingApartmentCommand = new Command(async () => await ExecuteNewBuildingApartmentCommand());
-            ProjectEditCommand = new Command(async () => await ExecuteProjectEditCommand());
-
+            ProjectEditCommand = new Command(async () => await ExecuteProjectEditCommand());            
         }
 
         private async Task ExecuteNewBuildingLocationCommand()

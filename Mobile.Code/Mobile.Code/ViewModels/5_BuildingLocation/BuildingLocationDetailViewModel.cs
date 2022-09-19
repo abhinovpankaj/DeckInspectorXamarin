@@ -160,6 +160,7 @@ namespace Mobile.Code.ViewModels
 
             }
         }
+        private int currentLocationSeq;
         public BuildingLocationDetailViewModel()
         {
             if (App.ReportType == ReportType.Visual)
@@ -179,6 +180,41 @@ namespace Mobile.Code.ViewModels
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
 
+            MessagingCenter.Unsubscribe<VisualBuildingLocationFormViewModel, string>(this, "LocationSwipped");
+
+            MessagingCenter.Subscribe<VisualBuildingLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            {
+                BuildingLocation_Visual currentVisualLocation = null;
+
+                if (arg == "Right")
+                {
+                    if (currentLocationSeq + 1 < VisualFormBuildingLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormBuildingLocationItems[currentLocationSeq + 1];
+                    }
+
+                }
+                else
+                {
+                    if (currentLocationSeq - 1 > 0)
+                    {
+                        currentVisualLocation = VisualFormBuildingLocationItems[currentLocationSeq - 1];
+                    }
+                }
+
+                try
+                {
+                    if (currentVisualLocation != null)
+                        await GoToVisualForm(currentVisualLocation, true);
+                    else
+                        await Shell.Current.Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            });
 
         }
         public string SelectedImage { get; set; }
@@ -469,8 +505,9 @@ namespace Mobile.Code.ViewModels
             set { _visualFormBuildingLocationItems = value; OnPropertyChanged("VisualFormBuildingLocationItems"); }
         }
         public ICommand GoToVisualFormCommand => new Command<BuildingLocation_Visual>(async (BuildingLocation_Visual parm) => await GoToVisualForm(parm));
-        private async Task GoToVisualForm(BuildingLocation_Visual parm)
+        private async Task GoToVisualForm(BuildingLocation_Visual parm, bool isSwipped = false)
         {
+            IsBusyProgress = true;
             App.IsNewForm = false;
             VisualBuildingLocationFormViewModel vm = new VisualBuildingLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
@@ -528,14 +565,24 @@ namespace Mobile.Code.ViewModels
             }
             else
                 vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
+
+
             if (App.IsInvasive == false)
             {
-
-
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualBuildingLocationForm))
+                if (isSwipped)
                 {
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     await Shell.Current.Navigation.PushAsync(new VisualBuildingLocationForm() { BindingContext = vm });
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
+                else
+                {
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualBuildingLocationForm))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new VisualBuildingLocationForm() { BindingContext = vm });
+                    }
+                }
+               
             }
             else
             {
@@ -551,10 +598,11 @@ namespace Mobile.Code.ViewModels
                 vm.InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
+
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                     await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm));
             }
-
+            IsBusyProgress = false;
         }
 
         public ICommand DeleteVisualFormCommand => new Command<BuildingLocation_Visual>(async (BuildingLocation_Visual obj) => await DeleteVisualFormCommandExecute(obj));

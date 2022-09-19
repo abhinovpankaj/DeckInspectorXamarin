@@ -128,7 +128,7 @@
                                         <Grid Grid.Column="0" WidthRequest="100">
                                             <yummy:PancakeView Grid.Column="0" CornerRadius="5"                                       >
                                                 <ffimageloading:CachedImage
-                                                    Aspect="AspectFill"
+                                                    Aspect="AspectFill"  
                                                     DownsampleToViewSize="True"
                                                     ErrorPlaceholder="blank.png"
                                                     LoadingPlaceholder="loading.png"

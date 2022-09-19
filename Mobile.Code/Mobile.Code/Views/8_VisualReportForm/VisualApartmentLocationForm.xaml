@@ -102,64 +102,68 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout
-                                Margin="0,5,0,5"
-                                HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="Name"
-                                    TextColor="{DynamicResource mainLabel}" />
-                                <Label
-                                    FontFamily="{StaticResource Montserrat-Regular}"
-                                    HorizontalTextAlignment="Center"
-                                    Style="{StaticResource LabelStyle}"
-                                    Text="*"
-                                    TextColor="Red"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-
-                            <ImageButton
-                                x:Name="recordName"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                
-                                ClassId="recordName"
-                                Clicked="recordClick"
-                                HeightRequest="28"
-                                HorizontalOptions="End"
-                                IsVisible="true"
-                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                                   Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
-                                                   Size=20}"
-                                VerticalOptions="Center" />
-                            <controles:BorderlessEntry
-                                x:Name="txtName"
-                                Grid.Row="1"
-                                Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout
+                            Margin="0,5,0,5"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Horizontal">
+                            <Label
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="15"
-                                HeightRequest="40"
-                                Text="{Binding VisualForm.Name}"
-                                TextColor="Black"
-                                VerticalOptions="FillAndExpand" />
-                        </Grid>
-                    </Frame>
-                    <Frame Grid.Row="1" Margin="10,2,10,2">
-
+                                HorizontalTextAlignment="Start"
+                                Style="{StaticResource LabelStyle}"
+                                Text="Name"
+                                TextColor="{DynamicResource mainLabel}" />
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Regular}"
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource LabelStyle}"
+                                Text="*"
+                                TextColor="Red"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+                        <ImageButton
+                            x:Name="recordName"
+                            Grid.Column="1"
+                            BackgroundColor="{DynamicResource Orange-300}"
+                             ClassId="recordName"
+                            Clicked="recordClick"
+                            HeightRequest="28"
+                            HorizontalOptions="End"
+                            Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                               Glyph={x:Static helpers:IconFont.Microphone},
+                                               Color=#E65100,
+                                               Size=35}"
+                            VerticalOptions="Center" />
+                        <uc:XEditor
+                            x:Name="txtName"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            AutoSize="TextChanges"
+                            FontFamily="{StaticResource Montserrat-Regular}"
+                            FontSize="15"
+                            IsSpellCheckEnabled="True"
+                            IsTextPredictionEnabled="True"
+                            Text="{Binding VisualForm.Name}"
+                            TextColor="{DynamicResource ColorBackground}"
+                            VerticalOptions="FillAndExpand" />
+                        <BoxView
+                            Grid.Row="2"
+                            Margin="0,-8,8,0"
+                            CornerRadius="5"
+                            HeightRequest="1"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Start"
+                            Color="{DynamicResource Orange-100}" />                        
+                        
+                    </Grid>
                     <Grid
                         Grid.Row="1"
                         Margin="0"
@@ -582,7 +586,7 @@
                             VerticalOptions="FillAndExpand" />
                         <BoxView
                             Grid.Row="2"
-                            Margin="0,-8,0,0"
+                            Margin="0,-8,8,0"
                             CornerRadius="5"
                             HeightRequest="1"
                             HorizontalOptions="Fill"
@@ -756,6 +760,50 @@
 
                 </Grid>
             </ScrollView>
+            <Button
+                x:Name="btnSwipeLeft"
+                Grid.Row="1"
+                Margin="10"
+                BackgroundColor="{DynamicResource Orange-900}"
+                BorderColor="{DynamicResource Orange-100}"
+                BorderWidth="2"
+                Command="{Binding SwippedCommand}"
+                CommandParameter="Left"
+                CornerRadius="25"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Caption"
+                HeightRequest="50"
+                HorizontalOptions="Start"
+                ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.ArrowLeft},
+                                        Color=White,
+                                        Size=20}"
+                Opacity="0.65"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="50" />
+            <Button
+                x:Name="btnSwipeRight"
+                Grid.Row="1"
+                Margin="10"
+                BackgroundColor="{DynamicResource Orange-900}"
+                BorderColor="{DynamicResource Orange-100}"
+                BorderWidth="2"
+                Command="{Binding SwippedCommand}"
+                CommandParameter="Right"
+                CornerRadius="25"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Caption"
+                HeightRequest="50"
+                HorizontalOptions="End"
+                ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.ArrowRight},
+                                        Color=White,
+                                        Size=20}"
+                Opacity="0.65"
+                TextColor="White"
+                VerticalOptions="Center"
+                WidthRequest="50" />
             <Button
                 x:Name="btnSaveNNew"
                 Grid.Row="1"

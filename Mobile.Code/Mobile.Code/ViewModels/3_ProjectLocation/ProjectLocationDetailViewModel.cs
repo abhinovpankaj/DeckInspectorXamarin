@@ -137,17 +137,28 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-
+            MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
+            
             MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
             {
-                ProjectLocation_Visual currentVisualLocation;
+                ProjectLocation_Visual currentVisualLocation=null;
 
                 if (arg == "Right")
                 {
-                    currentVisualLocation = VisualFormProjectLocationItems.FirstOrDefault(x => x.SeqNo == currentLocationSeq + 1);
+                    if (currentLocationSeq+1 < VisualFormProjectLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                    }
+                    
                 }
                 else
-                    currentVisualLocation = VisualFormProjectLocationItems.FirstOrDefault(x => x.SeqNo == currentLocationSeq - 1);
+                {
+                    if (currentLocationSeq -1>0)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
+                    }
+                }
+                    
                 try
                 {
                     if (currentVisualLocation != null)
@@ -333,8 +344,9 @@ namespace Mobile.Code.ViewModels
         });
         
         private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped=false)
-        {            
-            currentLocationSeq = parm.SeqNo;
+        {
+            IsBusyProgress = true;
+            currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
             App.IsNewForm = false;
             VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
@@ -405,10 +417,9 @@ namespace Mobile.Code.ViewModels
             {
                 if (isSwipped)
                 {
-                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
-                    Shell.Current.Navigation.RemovePage(_lastPage);
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();                    
                     await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
-                    
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
                 else
                 {
@@ -442,7 +453,7 @@ namespace Mobile.Code.ViewModels
                 }
 
             }
-
+            IsBusyProgress = false;
         }
 
 
