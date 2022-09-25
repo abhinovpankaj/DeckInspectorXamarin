@@ -19,8 +19,11 @@
     </ContentView.Padding>
     <ContentView.Content>
 
-        <ScrollView IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}" VerticalOptions="FillAndExpand">
-            <StackLayout VerticalOptions="FillAndExpand">
+        <ScrollView
+            BackgroundColor="{DynamicResource Orange-300}"
+            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
+            VerticalOptions="FillAndExpand">
+            <StackLayout BackgroundColor="{DynamicResource Orange-300}" VerticalOptions="FillAndExpand">
                 <Grid BackgroundColor="{DynamicResource Orange-300}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -171,6 +174,7 @@
 
                                 <Grid
                                     Margin="4"
+                                    BackgroundColor="{DynamicResource Orange-300}"
                                     ColumnSpacing="0"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='50%',
@@ -236,6 +240,7 @@
 
                                 <Grid
                                     Margin="4"
+                                    BackgroundColor="{DynamicResource Orange-300}"
                                     ColumnSpacing="0"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='50%',
@@ -320,7 +325,7 @@
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 HorizontalTextAlignment="Center"
                                 Style="{StaticResource LabelStyle}"
-                                Text=""
+                                Text="*"
                                 TextColor="Red"
                                 VerticalTextAlignment="Center" />
                         </StackLayout>

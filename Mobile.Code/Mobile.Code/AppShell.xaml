@@ -9,18 +9,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Mobile.Code.Views"
     Title="Mobile.Code"
-    
     FlyoutBehavior="Disabled"
     mc:Ignorable="d">
     <Shell.FlyoutBackground>
-        <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="1,1">
-            <GradientStop Color="{DynamicResource Orange-200}"
-                            Offset="0.1" />
-            <GradientStop Color="{DynamicResource Orange-300}"
-                            Offset="0.6" />
-            <GradientStop Color="{DynamicResource Orange-400}"
-                            Offset="1.0" />
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0.1" Color="{DynamicResource Orange-200}" />
+            <GradientStop Offset="0.6" Color="{DynamicResource Orange-300}" />
+            <GradientStop Offset="1.0" Color="{DynamicResource Orange-400}" />
         </LinearGradientBrush>
     </Shell.FlyoutBackground>
     <Shell.Resources>
@@ -69,38 +64,36 @@
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
-        <StackLayout  Margin="10"
-                     HorizontalOptions="CenterAndExpand">
-            <Label Text="Deck Inspectors"
-               TextColor="White"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
-            <Label Text="V4.0" Margin="4"
-               TextColor="White"
-               HorizontalOptions="Center" />
+        <StackLayout Margin="10" HorizontalOptions="CenterAndExpand">
+            <Label
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Deck Inspectors"
+                TextColor="White" />
+            <Label
+                Margin="4"
+                HorizontalOptions="Center"
+                Text="V5.0"
+                TextColor="White" />
         </StackLayout>
     </Shell.FlyoutFooter>
-   
+
     <ShellItem
         IsTabStop="False"
         Route="login"
         Style="{StaticResource HomeShell}">
         <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
     </ShellItem>
-    <FlyoutItem  
+    <FlyoutItem
         FlyoutDisplayOptions="AsMultipleItems"
         IsTabStop="False"
-        Route="main" 
+        Route="main"
         Shell.TabBarIsVisible="False">
         <Shell.FlyoutBackdrop>
-            <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="1,1">
-                <GradientStop Color="#8A2387"
-                            Offset="0.1" />
-                <GradientStop Color="#E94057"
-                            Offset="0.6" />
-                <GradientStop Color="#F27121"
-                            Offset="1.0" />
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.1" Color="#8A2387" />
+                <GradientStop Offset="0.6" Color="#E94057" />
+                <GradientStop Offset="1.0" Color="#F27121" />
             </LinearGradientBrush>
         </Shell.FlyoutBackdrop>
         <ShellContent
@@ -115,7 +108,7 @@
             Style="{StaticResource HomeShell}" />
 
     </FlyoutItem>
-    <MenuItem 
+    <MenuItem
         Command="{Binding GoOfflineProjectCommand}"
         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                     Glyph={x:Static helpers:IconFont.WifiOff},
@@ -144,5 +137,5 @@
                                     Color=#E65100,
                                     Size=24}"
         Text="Logout" />
-  
+
 </Shell>

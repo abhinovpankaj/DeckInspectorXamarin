@@ -37,6 +37,7 @@
                 Grid.Row="0"
                 Margin="10"
                 BackgroundColor="{DynamicResource Orange-100}"
+                CornerRadius="10"
                 IsEnabled="true">
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -59,7 +60,7 @@
                         FontSize="40"
                         HorizontalOptions="EndAndExpand"
                         Text="{x:Static helpers:IconFont.ImageArea}"
-                        TextColor="#2e479b" />
+                        TextColor="{DynamicResource Orange-900}" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
                     </StackLayout.GestureRecognizers>
@@ -87,6 +88,7 @@
                     <Frame
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HasShadow="True">
 
                         <Grid>
@@ -136,7 +138,6 @@
                                 x:Name="txtName"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
                                 HeightRequest="40"
@@ -150,6 +151,7 @@
                         Grid.Row="2"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HasShadow="True">
 
                         <Grid>
@@ -197,7 +199,8 @@
                     <Frame
                         Grid.Row="3"
                         Margin="10,2,10,2"
-                        BackgroundColor="{DynamicResource Orange-100}">
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10">
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -245,6 +248,7 @@
                         Grid.Row="4"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -298,6 +302,7 @@
                         Grid.Row="5"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -352,6 +357,7 @@
                         Grid.Row="6"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -406,6 +412,7 @@
                         Grid.Row="7"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -459,7 +466,8 @@
                     <Frame
                         Grid.Row="8"
                         Margin="10,2,10,2"
-                        BackgroundColor="{DynamicResource Orange-100}">
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10">
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -491,27 +499,37 @@
                             <ImageButton
                                 x:Name="recordDes"
                                 Grid.Column="1"
-                                BackgroundColor="White"
+                                BackgroundColor="{DynamicResource Orange-300}"
                                 ClassId="recordDes"
                                 Clicked="recordClick"
                                 HeightRequest="28"
                                 HorizontalOptions="End"
+                                IsVisible="false"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
-                                                   Size=20}"
+                                                   Color=#E65100,
+                                                   Size=35}"
                                 VerticalOptions="Center" />
-                            <controles:XEditor
+                            <uc:XEditor
                                 x:Name="txtDes"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                                AutoSize="TextChanges"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
-                                HeightRequest="100"
+                                IsSpellCheckEnabled="True"
+                                IsTextPredictionEnabled="True"
                                 Text="{Binding VisualForm.AdditionalConsideration}"
-                                TextColor="Black"
+                                TextColor="{DynamicResource ColorBackground}"
                                 VerticalOptions="FillAndExpand" />
+                            <BoxView
+                                Grid.Row="2"
+                                Margin="0,-8,8,0"
+                                CornerRadius="5"
+                                HeightRequest="1"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Start"
+                                Color="{DynamicResource Orange-100}" />
                         </Grid>
 
                     </Frame>
@@ -520,6 +538,7 @@
                         Grid.Row="9"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -574,6 +593,7 @@
                         Grid.Row="10"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -628,6 +648,7 @@
                         Grid.Row="11"
                         Margin="10,2,10,2"
                         BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>

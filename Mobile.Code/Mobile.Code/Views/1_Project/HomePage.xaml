@@ -156,10 +156,11 @@
 
                                             </Label>
                                             <Label
-                                                Background="{DynamicResource Orange-400}"
+                                                Padding="0"
+                                                Background="#FF9100"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
-                                                HeightRequest="18"
+                                                HeightRequest="28"
                                                 HorizontalOptions="End"
                                                 HorizontalTextAlignment="Center"
                                                 IsVisible="false"
@@ -167,7 +168,7 @@
                                                 TextColor="White"
                                                 VerticalOptions="End"
                                                 VerticalTextAlignment="Center"
-                                                WidthRequest="18">
+                                                WidthRequest="28">
 
                                                 <Label.Triggers>
                                                     <DataTrigger

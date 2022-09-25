@@ -743,7 +743,7 @@ namespace Mobile.Code.ViewModels
 
                     if (resultProjLocation.Status == ApiResult.Success)
                     {
-                        DependencyService.Get<IToast>().Show(item.Name + "Project Location synced.");
+                        //DependencyService.Get<IToast>().Show(item.Name + "Project Location synced.");
 
                         var uploadedProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(resultProjLocation.Data.ToString());
                         //update local projectlocation
@@ -762,7 +762,7 @@ namespace Mobile.Code.ViewModels
                         
                         foreach (var formLocationItem in VisualFormProjectLocationItems)
                         {
-                            DependencyService.Get<IToast>().Show($"Syncing {formLocationItem.Name}");
+                            //DependencyService.Get<IToast>().Show($"Syncing {formLocationItem.Name}");
                             //add lowest level  location data
                             string localFormId = formLocationItem.Id;
                             var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
@@ -919,7 +919,7 @@ namespace Mobile.Code.ViewModels
                         foreach (var buildingLoc in BuildingLocations)
                         {
 
-                            DependencyService.Get<IToast>().Show($"Syncing Building location {buildingLoc.Name}");
+                           // DependencyService.Get<IToast>().Show($"Syncing Building location {buildingLoc.Name}");
                             string localBuildId = buildingLoc.Id;
 
                             //check if projectlocation exists on central repo
@@ -1117,7 +1117,7 @@ namespace Mobile.Code.ViewModels
                                 
                                 foreach (var aptLoc in VisualFormApartmentLocationItems)
                                 {
-                                    DependencyService.Get<IToast>().Show($"Syncing apartment location {aptLoc.Name}");
+                                   // DependencyService.Get<IToast>().Show($"Syncing apartment location {aptLoc.Name}");
                                     string localAptLocFormId = aptLoc.Id;
                                     var images = new ObservableCollection<VisualApartmentLocationPhoto>
                                         (await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(aptLoc.Id, false));

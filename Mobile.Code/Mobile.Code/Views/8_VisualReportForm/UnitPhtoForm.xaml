@@ -86,6 +86,12 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="CenterAndExpand">
                                 <Grid>
+
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding ImageUrl}"
+                                        VerticalOptions="CenterAndExpand" />
                                     <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
                                         <ImageButton
                                             BackgroundColor="Transparent"
@@ -97,14 +103,9 @@
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
                                                                Color=#E65100,
-                                                               Size=26}"
+                                                               Size=36}"
                                             VerticalOptions="Start" />
                                     </StackLayout>
-                                    <Image
-                                        Aspect="AspectFill"
-                                        HorizontalOptions="Center"
-                                        Source="{Binding ImageUrl}"
-                                        VerticalOptions="CenterAndExpand" />
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
                                     </Grid.GestureRecognizers>
@@ -240,6 +241,12 @@
                                     VerticalOptions="CenterAndExpand">
 
                                     <Grid>
+
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding ImageUrl}"
+                                            VerticalOptions="CenterAndExpand" />
                                         <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
                                             <ImageButton
                                                 BackgroundColor="Transparent"
@@ -251,14 +258,9 @@
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
                                                                    Color=#E65100,
-                                                                   Size=26}"
+                                                                   Size=36}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
-                                        <Image
-                                            Aspect="AspectFill"
-                                            HorizontalOptions="Center"
-                                            Source="{Binding ImageUrl}"
-                                            VerticalOptions="CenterAndExpand" />
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
                                         </Grid.GestureRecognizers>
@@ -399,6 +401,12 @@
                                         </StackLayout>
                                     </SwipeView>-->
                                     <Grid>
+
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding ImageUrl}"
+                                            VerticalOptions="CenterAndExpand" />
                                         <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
                                             <ImageButton
                                                 BackgroundColor="Transparent"
@@ -410,14 +418,9 @@
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
                                                                    Color=#E65100,
-                                                                   Size=26}"
+                                                                   Size=36}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
-                                        <Image
-                                            Aspect="AspectFill"
-                                            HorizontalOptions="Center"
-                                            Source="{Binding ImageUrl}"
-                                            VerticalOptions="CenterAndExpand" />
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
                                         </Grid.GestureRecognizers>
