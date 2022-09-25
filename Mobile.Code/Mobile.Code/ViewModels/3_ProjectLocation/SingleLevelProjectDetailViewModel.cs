@@ -303,8 +303,44 @@ namespace Mobile.Code.ViewModels
             DeleteCommand = new Command(Delete, canDelete);
             DownloadOfflineCommand = new Command(DownloadOffline, canDownloadOffline);
 
-    }        
+            MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
 
+            MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            {
+                ProjectLocation_Visual currentVisualLocation = null;
+
+                if (arg == "Right")
+                {
+                    if (currentLocationSeq + 1 < VisualFormProjectLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                    }
+
+                }
+                else
+                {
+                    if (currentLocationSeq - 1 >= 0)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
+                    }
+                }
+
+                try
+                {
+                    if (currentVisualLocation != null)
+                        await GoToVisualForm(currentVisualLocation, true);
+                    else
+                        await Shell.Current.Navigation.PopToRootAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            });
+
+        }
+        private int currentLocationSeq;
         private async Task DownloadOffline()
         {
             IsBusyProgress = true;
@@ -469,9 +505,10 @@ namespace Mobile.Code.ViewModels
             // UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
         }
         
-        private async Task GoToVisualForm(ProjectLocation_Visual parm)
+        private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped = false)
         {
             App.IsNewForm = false;
+            currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
             VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
@@ -538,10 +575,23 @@ namespace Mobile.Code.ViewModels
             if (App.IsInvasive == false)
             {
 
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                if (isSwipped)
                 {
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
+                else
+                {
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    }
+                }
+                //if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                //{
+                //    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                //}
             }
             else
             {
@@ -675,6 +725,9 @@ namespace Mobile.Code.ViewModels
 
         private async Task<bool> Running()
         {
+            bool isEditdeleteAccess = false;
+            bool canInvasiveCreate = false;
+            string btnInvasiveText = "Invasive";
             IsOnline = !App.IsAppOffline;
             IsInvasive = (IsOnline && App.IsInvasive)?true:false;
             if (App.IsInvasive)
@@ -683,7 +736,7 @@ namespace Mobile.Code.ViewModels
             }
             if (App.IsAppOffline)
             {
-                CanInvasiveCreate = false;
+                canInvasiveCreate = false;
                 Project = await ProjectSQLiteDataStore.GetItemAsync(Project.Id);
                 if (Project.ProjectType != "Invasive")
                 {
@@ -695,7 +748,7 @@ namespace Mobile.Code.ViewModels
                     App.IsInvasive = true;
                 }
 
-                IsEditDeleteAccess = true;
+                isEditdeleteAccess = true;
                 VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
             }
             //online
@@ -709,17 +762,17 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
                     }
                     else
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        canInvasiveCreate = true;
+                        btnInvasiveText = "Refresh";
                     }
 
-                    IsEditDeleteAccess = true;
+                    isEditdeleteAccess = true;
                     
                 }
                 else if (Project.UserId == App.LogUser.Id.ToString())
@@ -728,16 +781,16 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
                     }
                     else
                     {
                         if (Project.IsAccess == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Refresh";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Refresh";
                         }
                         else
                         {
@@ -745,7 +798,7 @@ namespace Mobile.Code.ViewModels
                         }
                     }
 
-                    IsEditDeleteAccess = true;
+                    isEditdeleteAccess = true;
                 }
                 else
                 {
@@ -753,15 +806,15 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
 
                     }
                     if (Project.ProjectType == "Invasive" && Project.IsAccess)
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        canInvasiveCreate = true;
+                        btnInvasiveText = "Refresh";
                     }
 
                 }
@@ -775,8 +828,12 @@ namespace Mobile.Code.ViewModels
                 else
                     OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
             }
-            //requery Commands
-            
+            Device.BeginInvokeOnMainThread(() => {
+                IsEditDeleteAccess = isEditdeleteAccess;
+                CanInvasiveCreate = canInvasiveCreate;
+                BtnInvasiveText = btnInvasiveText;
+            });
+
             return await Task.FromResult(true);
 
         }

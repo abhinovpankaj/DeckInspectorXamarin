@@ -127,7 +127,7 @@ namespace Mobile.Code.ViewModels
 
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
-        public Command RecordVoiceCommand { get; set; }
+        //public Command RecordVoiceCommand { get; set; }
         
         public Command SwippedCommand { get; set; }
         public Command SaveCommand { get; set; }
@@ -761,7 +761,7 @@ namespace Mobile.Code.ViewModels
             //conclusive
             PopulateConclusiveRadios();
             SwippedCommand = new Command<string>((directionSwipe) => Swipped(directionSwipe));
-            RecordVoiceCommand = new Command(() =>  RecordVoice());
+            //RecordVoiceCommand = new Command(() =>  RecordVoice());
 
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
@@ -791,17 +791,17 @@ namespace Mobile.Code.ViewModels
                 IsDescriptionMicroPhoneEnabled = false;
                 IsDescriptionMicroPhoneVisible = true;
             }
-            _speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
+            //_speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
 
-            MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
             
-            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            {
-                SpeechToTextFinalResultRecieved(args);
-            });
+            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            //{
+            //    SpeechToTextFinalResultRecieved(args);
+            //});
 
         }
 
@@ -811,17 +811,17 @@ namespace Mobile.Code.ViewModels
             MessagingCenter.Send<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", direction);
         }
     
-        private void RecordVoice()
-        {
-            _speechRecongnitionInstance.StartSpeechToText();
-        }
+        //private void RecordVoice()
+        //{
+        //    _speechRecongnitionInstance.StartSpeechToText();
+        //}
 
-        private void SpeechToTextFinalResultRecieved(string args)
-        {
-            VisualForm.AdditionalConsideration += args;
-        }
+        //private void SpeechToTextFinalResultRecieved(string args)
+        //{
+        //    VisualForm.AdditionalConsideration += args;
+        //}
 
-        private ISpeechToText _speechRecongnitionInstance;
+        //private ISpeechToText _speechRecongnitionInstance;
         private string _countExteriorElements;
 
         public string CountExteriorElements

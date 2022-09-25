@@ -168,7 +168,7 @@ namespace Mobile.Code.ViewModels
                 }
                 else
                 {
-                    if (currentLocationSeq - 1 > 0)
+                    if (currentLocationSeq - 1 >= 0)
                     {
                         currentVisualLocation = VisualFormApartmentLocationItems[currentLocationSeq - 1];
                     }

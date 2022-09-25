@@ -213,10 +213,12 @@
                                                     Grid.Column="2"
                                                     Margin="2,2,10,2"
                                                     Padding="0"
+                                                    BorderColor="{DynamicResource Orange-100}"
                                                     CornerRadius="15"
                                                     HasShadow="True"
                                                     HeightRequest="30"
                                                     HorizontalOptions="End"
+                                                    IsClippedToBounds="True"
                                                     IsVisible="{Binding IsPostInvasiveRepairsRequired}">
                                                     <Image
                                                         HeightRequest="30"

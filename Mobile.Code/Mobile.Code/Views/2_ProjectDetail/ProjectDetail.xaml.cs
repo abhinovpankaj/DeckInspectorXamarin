@@ -19,11 +19,18 @@ namespace Mobile.Code.Views
         }
         protected async override void OnAppearing()
         {
-            lblInvasive.IsVisible = App.IsInvasive;
-            base.OnAppearing();
-            ProjectDetailViewModel vm = ((ProjectDetailViewModel)this.BindingContext);
-            await vm.LoadData();
-           
+            try
+            {
+                lblInvasive.IsVisible = App.IsInvasive;
+                base.OnAppearing();
+                ProjectDetailViewModel vm = ((ProjectDetailViewModel)this.BindingContext);
+                await vm.LoadData();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+                  
         }
         
 

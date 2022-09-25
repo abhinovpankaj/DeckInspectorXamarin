@@ -129,11 +129,12 @@
                                 TextColor="Red"
                                 VerticalTextAlignment="Center" />
                         </StackLayout>
+
                         <ImageButton
                             x:Name="recordName"
                             Grid.Column="1"
                             BackgroundColor="{DynamicResource Orange-300}"
-                             ClassId="recordName"
+                            ClassId="recordName"
                             Clicked="recordClick"
                             HeightRequest="28"
                             HorizontalOptions="End"
@@ -141,7 +142,15 @@
                                                Glyph={x:Static helpers:IconFont.Microphone},
                                                Color=#E65100,
                                                Size=35}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center">
+                            <ImageButton.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="false" />
+                                    <On Platform="Android" Value="true" />
+                                </OnPlatform>
+                            </ImageButton.IsVisible>
+                        </ImageButton>
+
                         <uc:XEditor
                             x:Name="txtName"
                             Grid.Row="1"
@@ -161,8 +170,8 @@
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-100}" />                        
-                        
+                            Color="{DynamicResource Orange-100}" />
+
                     </Grid>
                     <Grid
                         Grid.Row="1"
@@ -571,7 +580,14 @@
                                                Glyph={x:Static helpers:IconFont.Microphone},
                                                Color=#E65100,
                                                Size=35}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center">
+                            <ImageButton.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="false" />
+                                    <On Platform="Android" Value="true" />
+                                </OnPlatform>
+                            </ImageButton.IsVisible>
+                        </ImageButton>
                         <uc:XEditor
                             x:Name="txtDes"
                             Grid.Row="1"

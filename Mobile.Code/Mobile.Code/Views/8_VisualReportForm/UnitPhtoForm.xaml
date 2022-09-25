@@ -19,13 +19,14 @@
         </OnPlatform>
     </ContentPage.Padding>
     <Shell.TitleView>
-        <Grid HorizontalOptions="Center" Margin="0">
-            
-            <Label 
-                FontAttributes="None" HorizontalTextAlignment="Center"
+        <Grid Margin="0" HorizontalOptions="Center">
+
+            <Label
+                FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Subtitle"
                 HorizontalOptions="Start"
+                HorizontalTextAlignment="Center"
                 Text="Location Photos"
                 TextColor="White"
                 VerticalOptions="CenterAndExpand" />
@@ -33,11 +34,11 @@
         </Grid>
     </Shell.TitleView>
     <!--<ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Photo"                     
+        <ToolbarItem Text="Add Photo"
                      IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                      Glyph={x:Static helpers:IconFont.CameraPlus},
-                     Color=Red,Size=45}" 
-                     Command="{Binding ChoosePhotoFromCameraCommand}" 
+                     Color=Red,Size=45}"
+                     Command="{Binding ChoosePhotoFromCameraCommand}"
                      Order="Primary"
                      Priority="0" />
     </ContentPage.ToolbarItems>-->
@@ -46,63 +47,109 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid x:Name="mainLayout" BackgroundColor="{DynamicResource Orange-300}"
+        <Grid
+            x:Name="mainLayout"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource Orange-300}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                
+
             </Grid.RowDefinitions>
-            <StackLayout Margin="0,10,0,0" Padding="0" IsVisible="{Binding IsVisualProjectLocatoion}">
-                <CarouselView x:Name="carouselView" IndicatorView="indicatorView"  PeekAreaInsets="20"                               
-                                            ItemsSource="{Binding VisualProjectLocationPhotoItems}"
-                              EmptyView="No Images to Display" HorizontalOptions="Center"
-                              Margin="10">
+            <StackLayout
+                Margin="0,10,0,0"
+                Padding="0"
+                IsVisible="{Binding IsVisualProjectLocatoion}">
+                <CarouselView
+                    x:Name="carouselView"
+                    Margin="0,10"
+                    EmptyView="No Images to Display"
+                    HorizontalOptions="Center"
+                    IndicatorView="indicatorView"
+                    ItemsSource="{Binding VisualProjectLocationPhotoItems}"
+                    PeekAreaInsets="10">
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout
+                            ItemSpacing="5"
+                            Orientation="Vertical"
+                            SnapPointsType="MandatorySingle" />
+                    </CarouselView.ItemsLayout>
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            
-                            <Frame HasShadow="True" Padding="0"                                                  
-                                                   CornerRadius="10" BackgroundColor="{DynamicResource Orange-700}"                                                
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand">
-                                <SwipeView BackgroundColor="{DynamicResource Orange-400}">
-                                                        <SwipeView.TopItems>
-                                            <SwipeItems Mode="Execute">
-                                                            <SwipeItem Text="Edit" 
-                                                                    IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
-                                                                    BackgroundColor="#FFAB40"
-                                                                    Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
-                                                                    CommandParameter="{Binding}" />
-                                                        </SwipeItems>
-                                                    </SwipeView.TopItems>
-                                        <SwipeView.BottomItems>
-                                            <SwipeItems Mode="Execute">
-                                                <SwipeItem Text="Delete"
-                                                                IconImageSource="{x:Static helpers:IconFont.Delete}"
-                                                                BackgroundColor="Red"  IsVisible="{Binding IsEdit, Source={x:Reference mainLayout}} "
-                                                                Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.DeleteImageCommand}"
-                                                                CommandParameter="{Binding}" />
-                                            </SwipeItems>
-                                        </SwipeView.BottomItems>
-                                    
-                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit" VerticalOptions="Fill"                                                                
-                                                                HorizontalOptions="Fill" />                                    
-                                    </SwipeView>
-                                </Frame>
-                            
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="{DynamicResource Orange-700}"
+                                CornerRadius="10"
+                                HasShadow="True"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand">
+                                <Grid>
+                                    <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                        <ImageButton
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
+                                            CommandParameter="{Binding}"
+                                            HorizontalOptions="End"
+                                            IsVisible="{Binding IsEdit}"
+                                            Opacity="0.9"
+                                            Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                               Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
+                                                               Color=#E65100,
+                                                               Size=26}"
+                                            VerticalOptions="Start" />
+                                    </StackLayout>
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding ImageUrl}"
+                                        VerticalOptions="CenterAndExpand" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                                <!--<SwipeView BackgroundColor="{DynamicResource Orange-400}">
+                                    <SwipeView.TopItems>
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItem
+                                                BackgroundColor="#FFAB40"
+                                                Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
+                                                CommandParameter="{Binding}"
+                                                IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
+                                                Text="Edit" />
+                                        </SwipeItems>
+                                    </SwipeView.TopItems>
+                                    <SwipeView.BottomItems>
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItem
+                                                BackgroundColor="Red"
+                                                Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.DeleteImageCommand}"
+                                                CommandParameter="{Binding}"
+                                                IconImageSource="{x:Static helpers:IconFont.Delete}"
+                                                IsVisible="{Binding IsEdit, Source={x:Reference mainLayout}}"
+                                                Text="Delete" />
+                                        </SwipeItems>
+                                    </SwipeView.BottomItems>
+
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="Fill"
+                                        Source="{Binding ImageUrl}"
+                                        VerticalOptions="Fill" />
+                                </SwipeView>-->
+                            </Frame>
+
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
-                    <CarouselView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle"
-                                                ItemSpacing="10" />
-                    </CarouselView.ItemsLayout>
+
                 </CarouselView>
-                <IndicatorView x:Name="indicatorView" Margin="5"
-                                           IndicatorColor="{DynamicResource Orange-100}"
-                                           SelectedIndicatorColor="{DynamicResource Orange-900}"
-                                           HorizontalOptions="Center" />
+                <IndicatorView
+                    x:Name="indicatorView"
+                    Margin="5"
+                    HorizontalOptions="Center"
+                    IndicatorColor="{DynamicResource Orange-100}"
+                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
                 <FlexLayout
@@ -170,53 +217,69 @@
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
             </ScrollView>-->
-            <StackLayout Margin="0,10,0,0" Padding="0" IsVisible="{Binding IsVisualBuilding}">
-                <CarouselView x:Name="carouselView1" IndicatorView="indicatorView1"  PeekAreaInsets="20"                                       
-                                            ItemsSource="{Binding VisualBuildingLocationPhotoItems}" EmptyView="No Images to Display" HorizontalOptions="Center">
+            <StackLayout
+                Margin="0,10,0,0"
+                Padding="0"
+                IsVisible="{Binding IsVisualBuilding}">
+                <CarouselView
+                    x:Name="carouselView1"
+                    EmptyView="No Images to Display"
+                    HorizontalOptions="Center"
+                    IndicatorView="indicatorView1"
+                    ItemsSource="{Binding VisualBuildingLocationPhotoItems}"
+                    PeekAreaInsets="20">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Frame HasShadow="True" Padding="2"                                                   
-                                                   CornerRadius="5" BackgroundColor="{DynamicResource Orange-700}"                                                
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand">
-                                    <SwipeView>
-                                        <SwipeView.TopItems>
-                                            <SwipeItems Mode="Execute">
-                                                <SwipeItem Text="Edit"
-                                                                       IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
-                                                                       BackgroundColor="#FFAB40"
-                                                                       Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
-                                                                       CommandParameter="{Binding}" />
-                                            </SwipeItems>
-                                        </SwipeView.TopItems>
-                                        <SwipeView.BottomItems>
-                                            <SwipeItems Mode="Execute">
-                                                <SwipeItem Text="Delete"
-                                                                       IconImageSource="{x:Static helpers:IconFont.Delete}"
-                                                                       BackgroundColor="Red"  IsVisible="{Binding IsEdit, Source={x:Reference mainLayout}} "
-                                                                       Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.DeleteImageCommand}"
-                                                                       CommandParameter="{Binding}" />
-                                            </SwipeItems>
-                                        </SwipeView.BottomItems>
-                                        <StackLayout>
-                                            <Image Source="{Binding ImageUrl}" Aspect="AspectFill" VerticalOptions="CenterAndExpand"                                                                
-                                                                HorizontalOptions="Center" />
+                                <Frame
+                                    Padding="2"
+                                    BackgroundColor="{DynamicResource Orange-700}"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand">
+
+                                    <Grid>
+                                        <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                            <ImageButton
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
+                                                CommandParameter="{Binding}"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding IsEdit}"
+                                                Opacity="0.9"
+                                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                   Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
+                                                                   Color=#E65100,
+                                                                   Size=26}"
+                                                VerticalOptions="Start" />
                                         </StackLayout>
-                                    </SwipeView>
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding ImageUrl}"
+                                            VerticalOptions="CenterAndExpand" />
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+
                                 </Frame>
                             </StackLayout>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                     <CarouselView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle"
-                                                ItemSpacing="10" />
+                        <LinearItemsLayout
+                            ItemSpacing="10"
+                            Orientation="Vertical"
+                            SnapPointsType="MandatorySingle" />
                     </CarouselView.ItemsLayout>
                 </CarouselView>
-                <IndicatorView x:Name="indicatorView1"
-                                           IndicatorColor="{DynamicResource Orange-100}"
-                                           SelectedIndicatorColor="{DynamicResource Orange-900}"
-                                           HorizontalOptions="Center" />
+                <IndicatorView
+                    x:Name="indicatorView1"
+                    HorizontalOptions="Center"
+                    IndicatorColor="{DynamicResource Orange-100}"
+                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualBuilding}">
                 <FlexLayout
@@ -284,55 +347,99 @@
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
             </ScrollView>-->
-            <StackLayout Margin="0,10,0,0" Padding="0" IsVisible="{Binding IsVisualApartment}">
-                <CarouselView x:Name="carouselView2" IndicatorView="indicatorView2"  PeekAreaInsets="20"                                       
-                                            ItemsSource="{Binding VisualApartmentLocationPhotoItems}" EmptyView="No Images to Display" HorizontalOptions="Center">
+            <StackLayout
+                Margin="0,10,0,0"
+                Padding="0"
+                IsVisible="{Binding IsVisualApartment}">
+                <CarouselView
+                    x:Name="carouselView2"
+                    EmptyView="No Images to Display"
+                    HorizontalOptions="Center"
+                    IndicatorView="indicatorView2"
+                    ItemsSource="{Binding VisualApartmentLocationPhotoItems}"
+                    PeekAreaInsets="20">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Frame HasShadow="True" Padding="2"                                                   
-                                                   CornerRadius="5" BackgroundColor="{DynamicResource Orange-700}"                                                
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand">
-                                    <SwipeView>
+                                <Frame
+                                    Padding="2"
+                                    BackgroundColor="{DynamicResource Orange-700}"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand">
+                                    <!--<SwipeView>
                                         <SwipeView.TopItems>
                                             <SwipeItems Mode="Execute">
-                                                <SwipeItem Text="Edit"
-                                                                       IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
-                                                                       BackgroundColor="#FFAB40"
-                                                                       Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
-                                                                       CommandParameter="{Binding}" />
+                                                <SwipeItem
+                                                    BackgroundColor="#FFAB40"
+                                                    Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
+                                                    Text="Edit" />
                                             </SwipeItems>
                                         </SwipeView.TopItems>
                                         <SwipeView.BottomItems>
                                             <SwipeItems Mode="Execute">
-                                                <SwipeItem Text="Delete"
-                                                                       IconImageSource="{x:Static helpers:IconFont.Delete}"
-                                                                       BackgroundColor="Red"  IsVisible="{Binding IsEdit, Source={x:Reference mainLayout}} "
-                                                                       Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.DeleteImageCommand}"
-                                                                       CommandParameter="{Binding}" />
+                                                <SwipeItem
+                                                    BackgroundColor="Red"
+                                                    Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.DeleteImageCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    IconImageSource="{x:Static helpers:IconFont.Delete}"
+                                                    IsVisible="{Binding IsEdit, Source={x:Reference mainLayout}}"
+                                                    Text="Delete" />
                                             </SwipeItems>
                                         </SwipeView.BottomItems>
                                         <StackLayout>
-                                            <Image Source="{Binding ImageUrl}" Aspect="AspectFill" VerticalOptions="CenterAndExpand"                                                                
-                                                                HorizontalOptions="Center" />
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HorizontalOptions="Center"
+                                                Source="{Binding ImageUrl}"
+                                                VerticalOptions="CenterAndExpand" />
                                         </StackLayout>
-                                    </SwipeView>
+                                    </SwipeView>-->
+                                    <Grid>
+                                        <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                            <ImageButton
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
+                                                CommandParameter="{Binding}"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding IsEdit}"
+                                                Opacity="0.9"
+                                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                                   Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
+                                                                   Color=#E65100,
+                                                                   Size=26}"
+                                                VerticalOptions="Start" />
+                                        </StackLayout>
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HorizontalOptions="Center"
+                                            Source="{Binding ImageUrl}"
+                                            VerticalOptions="CenterAndExpand" />
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
                                 </Frame>
                             </StackLayout>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                     <CarouselView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle"
-                                                ItemSpacing="10" />
+                        <LinearItemsLayout
+                            ItemSpacing="10"
+                            Orientation="Vertical"
+                            SnapPointsType="MandatorySingle" />
                     </CarouselView.ItemsLayout>
                 </CarouselView>
-                <IndicatorView x:Name="indicatorView2"
-                                           IndicatorColor="{DynamicResource Orange-100}"
-                                           SelectedIndicatorColor="{DynamicResource Orange-900}"
-                                           HorizontalOptions="Center" />
+                <IndicatorView
+                    x:Name="indicatorView2"
+                    HorizontalOptions="Center"
+                    IndicatorColor="{DynamicResource Orange-100}"
+                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
             </StackLayout>
-  
+
         </Grid>
     </AbsoluteLayout>
 

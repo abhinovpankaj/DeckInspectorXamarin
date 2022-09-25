@@ -62,7 +62,7 @@
         <ToolbarItem
             Command="{Binding ShowImagesCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                        Glyph={x:Static helpers:IconFont.Home},
+                                        Glyph={x:Static helpers:IconFont.ImageAlbum},
                                         Color=#FFD180,
                                         Size=45}"
             Order="Secondary"
@@ -153,14 +153,21 @@
                             Grid.Column="1"
                             BackgroundColor="{DynamicResource Orange-300}"
                             ClassId="recordName"
-                            Command="{Binding RecordVoiceCommand}"
+                            Clicked="recordClick"
                             HeightRequest="28"
                             HorizontalOptions="End"
                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                Glyph={x:Static helpers:IconFont.Microphone},
                                                Color=#E65100,
                                                Size=35}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center">
+                            <ImageButton.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="false" />
+                                    <On Platform="Android" Value="true" />
+                                </OnPlatform>
+                            </ImageButton.IsVisible>
+                        </ImageButton>
                         <uc:XEditor
                             x:Name="txtName"
                             Grid.Row="1"
@@ -248,7 +255,7 @@
                                     <LinearItemsLayout
                                         ItemSpacing="10"
                                         Orientation="Horizontal"
-                                        SnapPointsType="MandatorySingle" />
+                                        SnapPointsType="Mandatory" />
                                 </CarouselView.ItemsLayout>
                             </CarouselView>
                             <IndicatorView
@@ -583,6 +590,7 @@
                             Grid.Column="1"
                             BackgroundColor="{DynamicResource Orange-300}"
                             ClassId="recordDes"
+                            Clicked="recordClick"
                             Command="{Binding RecordVoiceCommand}"
                             HeightRequest="28"
                             HorizontalOptions="End"
@@ -590,7 +598,14 @@
                                                Glyph={x:Static helpers:IconFont.Microphone},
                                                Color=#E65100,
                                                Size=35}"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center">
+                            <ImageButton.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="false" />
+                                    <On Platform="Android" Value="true" />
+                                </OnPlatform>
+                            </ImageButton.IsVisible>
+                        </ImageButton>
                         <uc:XEditor
                             x:Name="txtDes"
                             Grid.Row="1"

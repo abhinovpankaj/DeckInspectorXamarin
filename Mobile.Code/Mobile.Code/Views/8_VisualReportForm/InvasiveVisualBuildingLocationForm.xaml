@@ -26,6 +26,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource Orange-300}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -35,6 +36,7 @@
             <Frame
                 Grid.Row="0"
                 Margin="10"
+                BackgroundColor="{DynamicResource Orange-100}"
                 IsEnabled="true">
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -82,7 +84,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Frame Margin="10,2,10,2" HasShadow="True">
+                    <Frame
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        HasShadow="True">
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -140,81 +145,11 @@
                                 VerticalOptions="FillAndExpand" />
                         </Grid>
                     </Frame>
-                    <!--<Frame
-                        Grid.Row="1"
-                        Margin="10,2,10,2"
-                        HasShadow="True">
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                Grid.ColumnSpan="2"
-                                Margin="0,0,8,8"
-                                FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="14"
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource LabelStyle}"
-                                Text="Unit Photo "
-                                TextColor="Black" />
-                            <StackLayout
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="40"
-                                    HorizontalOptions="Start"
-                                    HorizontalTextAlignment="Start"
-                                    Text="{x:Static helpers:IconFont.CameraPlus}"
-                                    TextColor="#2e479b" />
-                    -->
-                    <!--<ImageButton  Command="{Binding ChoosePhotoFromCameraCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Column="2" BackgroundColor="White"
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=#2e479b,Size=25}"></ImageButton>-->
-                    <!--
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ChoosePhotoFromCameraCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-                            <StackLayout
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="20"
-                                    HorizontalOptions="EndAndExpand"
-                                    Text="{Binding UnitPhotoCount}"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center" />
-
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="40"
-                                    HorizontalOptions="EndAndExpand"
-                                    Text="{x:Static helpers:IconFont.ImageAlbum}"
-                                    TextColor="#2e479b" />
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-
-
-                        </Grid>
-
-
-                    </Frame>-->
-
 
                     <Frame
                         Grid.Row="2"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HasShadow="True">
 
                         <Grid>
@@ -259,7 +194,10 @@
 
                     </Frame>
 
-                    <Frame Grid.Row="3" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="3"
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}">
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -306,6 +244,7 @@
                     <Frame
                         Grid.Row="4"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -358,6 +297,7 @@
                     <Frame
                         Grid.Row="5"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -411,6 +351,7 @@
                     <Frame
                         Grid.Row="6"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -464,6 +405,7 @@
                     <Frame
                         Grid.Row="7"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -514,7 +456,10 @@
                         </Grid>
                     </Frame>
 
-                    <Frame Grid.Row="8" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="8"
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}">
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -574,6 +519,7 @@
                     <Frame
                         Grid.Row="9"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -627,6 +573,7 @@
                     <Frame
                         Grid.Row="10"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -680,6 +627,7 @@
                     <Frame
                         Grid.Row="11"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>

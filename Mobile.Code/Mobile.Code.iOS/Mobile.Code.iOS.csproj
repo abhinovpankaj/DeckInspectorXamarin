@@ -406,6 +406,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\conclusive.gif" />
+    <BundleResource Include="Resources\conclusive_new.gif" />
     <Content Include="Resources\DeckInspectorsLocalDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

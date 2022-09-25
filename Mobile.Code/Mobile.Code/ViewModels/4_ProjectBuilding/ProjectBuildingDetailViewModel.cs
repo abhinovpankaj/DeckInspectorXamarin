@@ -272,7 +272,6 @@ namespace Mobile.Code.ViewModels
             {
 
 
-
                 IsBusyProgress = false;
 
 

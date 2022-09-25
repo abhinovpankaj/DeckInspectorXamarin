@@ -39,7 +39,10 @@ namespace Mobile.Code.Views
 
             });
 
-            
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
 
             //this.BindingContext = new ProjectBuildingAddEditViewModel();
         }
@@ -61,10 +64,15 @@ namespace Mobile.Code.Views
             ImageButton btn = sender as ImageButton;
             try
             {
-                
                 if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
+
+                }
+
+                if (btn.ClassId == "recordName")
+                {
+                    txtName.Focus();
 
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
@@ -76,8 +84,7 @@ namespace Mobile.Code.Views
             }
 
             if (Device.RuntimePlatform == Device.iOS)
-            {
-                
+            {                
 
                 recordDes.IsEnabled = false;
             }

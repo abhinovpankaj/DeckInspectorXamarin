@@ -36,6 +36,10 @@ namespace Mobile.Code.Views
 
                 }
             });
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
         }
         private void SpeechToTextFinalResultRecieved(string args)
         {
@@ -43,6 +47,11 @@ namespace Mobile.Code.Views
             if (txtDes.IsFocused)
             {
                 txtDes.Text += args;
+            }
+            if (txtName.IsFocused )
+            {
+                txtName.Text += args;
+
             }
         }
 

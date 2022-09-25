@@ -129,11 +129,11 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.PushAsync(new AddProjectBuilding() { BindingContext = new ProjectBuildingAddEditViewModel() { Title = "Edit Project Building" } });
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
-        public ICommand DeleteCommand => new Command(Delete, canDelete);
+        public Command DeleteCommand { get; set; }
 
         private bool canDelete(object arg)
         {
-            return IsEditDeleteAccess;
+            return _isEditDeleteAccess;
         }
 
         private async void Delete(object obj)
@@ -183,21 +183,30 @@ namespace Mobile.Code.ViewModels
         
         public ProjectDetailViewModel()
         {
-            CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
-            GoBackCommand = new Command(async () => await GoBack());
-            
-            EditCommand = new Command(Edit, canEdit);
-            
-            
-            NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
-            NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
+            try
+            {
+                CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
+                GoBackCommand = new Command(async () => await GoBack());
 
-            LocationDetailCommand = new Command<ProjectLocation>(async (ProjectLocation parm) => await ExecuteLocationDetailCommand(parm));
-            BuildingDetailCommand = new Command<ProjectBuilding>(async (ProjectBuilding parm) => await ExecuteBuildingDetailCommand(parm));
+                EditCommand = new Command(Edit, canEdit);
+                DeleteCommand = new Command(Delete, canDelete);
 
-            ShowPickerCommand = new Command( () =>  OpenOfflineProjectList());
+                NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
+                NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
+
+                LocationDetailCommand = new Command<ProjectLocation>(async (ProjectLocation parm) => await ExecuteLocationDetailCommand(parm));
+                BuildingDetailCommand = new Command<ProjectBuilding>(async (ProjectBuilding parm) => await ExecuteBuildingDetailCommand(parm));
+
+                ShowPickerCommand = new Command(() => OpenOfflineProjectList());
+
+                DownloadOfflineCommand = new Command(DownloadOffline, canDownLoadOffline);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
             
-            DownloadOfflineCommand = new Command(DownloadOffline,canDownLoadOffline);
         }
 
         private bool canEdit(object arg)
@@ -239,7 +248,7 @@ namespace Mobile.Code.ViewModels
                 if (_isInvasive != value)
                 {
                     _isInvasive = value;
-                    DownloadOfflineCommand.ChangeCanExecute();
+                    DownloadOfflineCommand?.ChangeCanExecute();
                     OnPropertyChanged("IsInvasive");
                 }
                 
@@ -495,7 +504,17 @@ namespace Mobile.Code.ViewModels
         public bool IsEditDeleteAccess
         {
             get { return _isEditDeleteAccess; }
-            set { _isEditDeleteAccess = value; OnPropertyChanged("IsEditDeleteAccess"); }
+            set 
+            {
+                if (_isEditDeleteAccess!=value)
+                {
+                    _isEditDeleteAccess = value;
+                    EditCommand?.ChangeCanExecute();
+                    DeleteCommand?.ChangeCanExecute();
+                    OnPropertyChanged("IsEditDeleteAccess");
+                }
+               
+            }
         }
         private bool _canInvasiveCreate;
 
@@ -504,7 +523,7 @@ namespace Mobile.Code.ViewModels
             get { return _canInvasiveCreate; }
             set { 
                 _canInvasiveCreate = value;
-                CreateInvasiveCommand.ChangeCanExecute();
+                CreateInvasiveCommand?.ChangeCanExecute();
                 OnPropertyChanged("CanInvasiveCreate"); 
             }
         }
@@ -533,17 +552,20 @@ namespace Mobile.Code.ViewModels
 
         async Task<bool> Running()
         {
+            bool cancreateInvasive=false, iseditDeleteAccess=false; 
+            string invasiveText="Invasive";
             IsOnline = !App.IsAppOffline;
             IsInvasive = (IsOnline && App.IsInvasive) ? true : false;
             if (App.IsInvasive)
             {
-                CanInvasiveCreate = false;
+                cancreateInvasive = false;
                 IsInvasiveControlDisable = true;
+                iseditDeleteAccess = false;
             }
             if (App.IsAppOffline)
             {
                 Project = await ProjectSQLiteDataStore.GetItemAsync(Project.Id);
-                CanInvasiveCreate = false;
+                cancreateInvasive = false;
                 if (Project.ProjectType != "Invasive")
                 {
 
@@ -554,7 +576,7 @@ namespace Mobile.Code.ViewModels
                     App.IsInvasive = true;
                 }
 
-                IsEditDeleteAccess = true;
+                iseditDeleteAccess = true;
 
                 ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
                 ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
@@ -570,18 +592,18 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
                     }
                     else
                     {
 
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        cancreateInvasive = true;
+                        invasiveText = "Refresh";
                     }
 
-                    IsEditDeleteAccess = true;
+                    iseditDeleteAccess = true;
                 }
                 else if (Project.UserId == App.LogUser.Id.ToString())
                 {
@@ -589,24 +611,24 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
                     }
                     else
                     {
                         if (Project.IsAccess == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Refresh";
+                            cancreateInvasive = true;
+                            invasiveText = "Refresh";
                         }
                         else
                         {
-                            CanInvasiveCreate = false;
+                            cancreateInvasive = false;
                         }
                     }
 
-                    IsEditDeleteAccess = true;
+                    iseditDeleteAccess = true;
                 }
                 else
                 {
@@ -614,15 +636,15 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
-
+                        iseditDeleteAccess = true;
                     }
                     if (Project.ProjectType == "Invasive" && Project.IsAccess)
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        cancreateInvasive = true;
+                        invasiveText = "Refresh";
                     }
 
                 }
@@ -637,6 +659,13 @@ namespace Mobile.Code.ViewModels
             {
                 OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Id == Project.Id));
             }
+
+            Device.BeginInvokeOnMainThread(() => {
+                IsEditDeleteAccess = iseditDeleteAccess;
+                CanInvasiveCreate = cancreateInvasive;
+                BtnInvasiveText = invasiveText;
+            });
+
             return await Task.FromResult(true);
 
 

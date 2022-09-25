@@ -38,10 +38,10 @@ namespace Mobile.Code.Views
 
             });
 
-            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            //{
-            //    SpeechToTextFinalResultRecieved(args);
-            //});
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
         }
         private void SpeechToTextFinalResultRecieved(string args)
         {
@@ -64,6 +64,11 @@ namespace Mobile.Code.Views
                 if (btn.ClassId == "recordDes")
                 {
                     txtDes.Focus();
+
+                }
+                if (btn.ClassId == "recordName")
+                {
+                    txtName.Focus();
 
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
