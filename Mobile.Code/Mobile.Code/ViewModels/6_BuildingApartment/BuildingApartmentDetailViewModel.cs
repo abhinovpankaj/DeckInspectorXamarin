@@ -23,8 +23,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 2]);
-            await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopToRootAsync();
 
         }
         private BuildingApartment _app;
@@ -153,8 +152,44 @@ namespace Mobile.Code.ViewModels
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
 
+            MessagingCenter.Unsubscribe<VisualApartmentFormViewModel, string>(this, "LocationSwipped");
+
+            MessagingCenter.Subscribe<VisualApartmentFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            {
+                Apartment_Visual currentVisualLocation = null;
+
+                if (arg == "Right")
+                {
+                    if (currentLocationSeq + 1 < VisualFormApartmentLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormApartmentLocationItems[currentLocationSeq + 1];
+                    }
+
+                }
+                else
+                {
+                    if (currentLocationSeq - 1 >= 0)
+                    {
+                        currentVisualLocation = VisualFormApartmentLocationItems[currentLocationSeq - 1];
+                    }
+                }
+
+                try
+                {
+                    if (currentVisualLocation != null)
+                        await GoToVisualForm(currentVisualLocation, true);
+                    else
+                        await Shell.Current.Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            });
 
         }
+        private int currentLocationSeq;
         public ICommand NewImagCommand => new Command(async () => await NewImage());
         private async Task NewImage()
         {
@@ -392,9 +427,10 @@ namespace Mobile.Code.ViewModels
             get { return _apartmentViewModel; }
             set { _apartmentViewModel = value; OnPropertyChanged("vm"); }
         }
-        private async Task GoToVisualForm(Apartment_Visual parm)
+        private async Task GoToVisualForm(Apartment_Visual parm, bool isSwipped = false)
         {
             App.IsNewForm = false;
+            currentLocationSeq = VisualFormApartmentLocationItems.IndexOf(parm);
             vm = new VisualApartmentFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
@@ -457,11 +493,24 @@ namespace Mobile.Code.ViewModels
             App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
             if (App.IsInvasive == false)
             {
-
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualApartmentLocationForm))
+                if (isSwipped)
                 {
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     await Shell.Current.Navigation.PushAsync(new VisualApartmentLocationForm() { BindingContext = vm });
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
+                else
+                {
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new VisualApartmentLocationForm() { BindingContext = vm });
+                    }
+                }
+
+                //if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualApartmentLocationForm))
+                //{
+                //    await Shell.Current.Navigation.PushAsync(new VisualApartmentLocationForm() { BindingContext = vm });
+                //}
             }
             else
             {

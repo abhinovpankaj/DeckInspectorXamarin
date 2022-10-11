@@ -24,31 +24,6 @@ namespace Mobile.Code.Views
             await ((BuildingLocationDetailViewModel)this.BindingContext).LoadData();
             //vm.LoadData();
         }
-        
-
-        private async void TapGestureRecognizer_TappedLN(object sender, EventArgs e)
-        {
-            await Task.FromResult(true);
-            // await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new AddProjectLocation()));
-        }
-        private async void TapGestureRecognizer_CommonLocation(object sender, EventArgs e)
-        {
-            await Task.FromResult(true);
-            //     await Shell.Current.GoToAsync("buildingLocation");
-            //   await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new ProjectLocationPage()));
-
-        }
-        private async void TapGestureRecognizer_TappedBN(object sender, EventArgs e)
-        {
-            await Task.FromResult(true);
-            // await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new AddProjectBuilding()));
-        }
-        private async void TapGestureRecognizer_Building(object sender, EventArgs e)
-        {
-            await Task.FromResult(true);
-            //await Shell.Current.GoToAsync("BuildingApartment");
-            //await Navigation.PushAsync(new Xamarin.Forms.NavigationPage(new ProjectBuildingPage()));
-
-        }
+ 
     }
 }

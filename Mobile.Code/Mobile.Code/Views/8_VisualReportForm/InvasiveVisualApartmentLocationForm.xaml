@@ -26,6 +26,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource Orange-300}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -35,6 +36,8 @@
             <Frame
                 Grid.Row="0"
                 Margin="10"
+                BackgroundColor="{DynamicResource Orange-100}"
+                CornerRadius="10"
                 IsEnabled="true">
                 <StackLayout Orientation="Horizontal">
                     <Label
@@ -42,14 +45,14 @@
                         FontSize="20"
                         HorizontalOptions="StartAndExpand"
                         Text=" Visual Photos"
-                        TextColor="Black"
+                        TextColor="{DynamicResource mainLabel}"
                         VerticalTextAlignment="Center" />
                     <Label
                         FontFamily="{StaticResource MaterialFontFamily}"
                         FontSize="20"
                         HorizontalOptions="EndAndExpand"
                         Text="{Binding UnitPhotoCount}"
-                        TextColor="Black"
+                        TextColor="{DynamicResource mainLabel}"
                         VerticalTextAlignment="Center" />
 
                     <Label
@@ -57,7 +60,7 @@
                         FontSize="40"
                         HorizontalOptions="EndAndExpand"
                         Text="{x:Static helpers:IconFont.ImageArea}"
-                        TextColor="#2e479b" />
+                        TextColor="{DynamicResource mainLabel}" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
                     </StackLayout.GestureRecognizers>
@@ -83,7 +86,11 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Frame Margin="10,2,10,2" HasShadow="True">
+                    <Frame
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
+                        HasShadow="True">
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -116,7 +123,6 @@
                             <ImageButton
                                 x:Name="recordName"
                                 Grid.Column="1"
-                                BackgroundColor="White"
                                 BorderWidth="1"
                                 ClassId="recordName"
                                 Clicked="recordClick"
@@ -125,14 +131,14 @@
                                 IsVisible="false"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
+                                                   Color=Red,
                                                    Size=20}"
                                 VerticalOptions="Center" />
                             <controles:BorderlessEntry
                                 x:Name="txtName"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                                FontAttributes="Bold"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
                                 HeightRequest="40"
@@ -141,81 +147,13 @@
                                 VerticalOptions="FillAndExpand" />
                         </Grid>
                     </Frame>
-                    <!--<Frame
-                        Grid.Row="1"
-                        Margin="10,2,10,2"
-                        HasShadow="True">
 
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                Grid.ColumnSpan="2"
-                                Margin="0,0,8,8"
-                                FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="14"
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource LabelStyle}"
-                                Text="Unit Photo "
-                                TextColor="Black" />
-                            <StackLayout
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="40"
-                                    HorizontalOptions="Start"
-                                    HorizontalTextAlignment="Start"
-                                    Text="{x:Static helpers:IconFont.CameraPlus}"
-                                    TextColor="#2e479b" />
-                    -->
-                    <!--<ImageButton  Command="{Binding ChoosePhotoFromCameraCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Grid.Column="2" BackgroundColor="White"
-                                  Source="{FontImage FontFamily={StaticResource MaterialFontFamily},Glyph={x:Static helpers:IconFont.CameraPlus},Color=#2e479b,Size=25}"></ImageButton>-->
-                    <!--
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ChoosePhotoFromCameraCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-                            <StackLayout
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                IsEnabled="true"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="20"
-                                    HorizontalOptions="EndAndExpand"
-                                    Text="{Binding UnitPhotoCount}"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center" />
-
-                                <Label
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="40"
-                                    HorizontalOptions="EndAndExpand"
-                                    Text="{x:Static helpers:IconFont.ImageAlbum}"
-                                    TextColor="#2e479b" />
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-
-
-                        </Grid>
-
-
-                    </Frame>-->
 
                     <Frame
                         Grid.Row="2"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HasShadow="True">
 
                         <Grid>
@@ -260,7 +198,11 @@
 
                     </Frame>
 
-                    <Frame Grid.Row="3" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="3"
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10">
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -304,6 +246,8 @@
                     <Frame
                         Grid.Row="4"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -356,6 +300,8 @@
                     <Frame
                         Grid.Row="5"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -409,6 +355,8 @@
                     <Frame
                         Grid.Row="6"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="70">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -449,8 +397,6 @@
                                                 HeightRequest="50"
                                                 IsChecked="{Binding IsSelected}" />
 
-
-
                                         </Grid>
 
                                     </DataTemplate>
@@ -462,6 +408,8 @@
                     <Frame
                         Grid.Row="7"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -512,7 +460,11 @@
                         </Grid>
                     </Frame>
 
-                    <Frame Grid.Row="8" Margin="10,2,10,2">
+                    <Frame
+                        Grid.Row="8"
+                        Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10">
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -549,16 +501,17 @@
                                 Clicked="recordClick"
                                 HeightRequest="28"
                                 HorizontalOptions="End"
+                                IsVisible="false"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#2e479b,
+                                                   Color=#E65100,
                                                    Size=20}"
                                 VerticalOptions="Center" />
                             <controles:XEditor
                                 x:Name="txtDes"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="#ececec"
+                                FontAttributes="Bold"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="15"
                                 HeightRequest="100"
@@ -572,6 +525,8 @@
                     <Frame
                         Grid.Row="9"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -625,6 +580,8 @@
                     <Frame
                         Grid.Row="10"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -678,6 +635,8 @@
                     <Frame
                         Grid.Row="11"
                         Margin="10,2,10,2"
+                        BackgroundColor="{DynamicResource Orange-100}"
+                        CornerRadius="10"
                         HeightRequest="150">
                         <Grid>
                             <Grid.RowDefinitions>

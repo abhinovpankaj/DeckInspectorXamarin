@@ -3,7 +3,6 @@
     x:Class="Mobile.Code.Views.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controles="clr-namespace:Mobile.Code.Controls"
     xmlns:controls="clr-namespace:Mobile.Code.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,36 +11,38 @@
     Visual="Material"
     mc:Ignorable="d">
 
-    <AbsoluteLayout>
+    <Grid BackgroundColor="{DynamicResource Orange-400}" VerticalOptions="Fill">
         <controls:Loading
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutBounds="0,0,0,0"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
+        <Grid           
             HorizontalOptions="FillAndExpand"
+            
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
-            VerticalOptions="CenterAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <yummy:PancakeView
-                Grid.Row="0"
-                Margin="0,-80,0,0"
+            VerticalOptions="StartAndExpand">
+            
+            <Image  Grid.RowSpan="2"  Source="heroimage.png"
+                    Margin="-10,0" 
+                   VerticalOptions="CenterAndExpand" Aspect="Fill" />
+            <yummy:PancakeView   HeightRequest="100"            
+                Opacity=".7"  Grid.Row="0"
                 CornerRadius="5"
+                Margin="10,75"
                 HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand">
+                VerticalOptions="StartAndExpand">
                 <Image Aspect="AspectFill" Source="icon.png" />
             </yummy:PancakeView>
-            <Frame
-                Grid.Row="1"
-                Margin="10,10"
-                BackgroundColor="White"
-                HasShadow="True"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="CenterAndExpand">
+
+
+            <Frame Opacity="0.9" BorderColor="{DynamicResource Orange-100}"
+                   HasShadow="True" 
+                    Grid.Row="1"
+                    Margin="15,-25"
+                    CornerRadius="10"
+                    BackgroundColor="{DynamicResource Orange-900}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
                 <Grid
                     Padding="0"
                     ColumnSpacing="0"
@@ -61,72 +62,73 @@
 
                     </Grid.RowDefinitions>
                     <Label
+                        FontAttributes="Bold"
                         Grid.Row="0"
                         FontFamily="{StaticResource Montserrat-Regular}"
                         FontSize="20"
                         HorizontalOptions="CenterAndExpand"
                         Style="{StaticResource LabelStyle}"
                         Text="Login"
-                        TextColor="{DynamicResource Gray-900}"
+                        TextColor="{DynamicResource  ColorBackground}"
                         VerticalOptions="CenterAndExpand"
                         VerticalTextAlignment="Start" />
 
-                    <BoxView
-                        Grid.Row="1"
-                        Margin="0,1,0,14"
-                        HeightRequest="1"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource BoxViewStyle}"
-                        VerticalOptions="FillAndExpand"
-                        Color="Gray" />
-
+                    
                     <Label
-                        Grid.Row="2"
-                        Margin="0,5,0,5"
+                        Grid.Row="1"
+                        Margin="0,5,0,0"
                         FontFamily="{StaticResource Montserrat-Regular}"
                         Style="{StaticResource LabelStyle}"
                         Text="Username"
-                        TextColor="Black" />
+                         TextColor="{DynamicResource  ColorBackground}" />
 
+                    <controls:BorderlessEntry Grid.Row="2"
+                    HeightRequest="40"
+                    BackgroundColor="{DynamicResource Orange-900}"
+                    FontFamily="{StaticResource Montserrat-Regular}"
+                    Text="{Binding Username}"
+                    TextColor="{DynamicResource ColorBackground}" />
 
-
-
-                    <Grid Grid.Row="3">
-
-                        <controles:BorderlessEntry
-                            BackgroundColor="#ececec"
-                            FontFamily="{StaticResource Montserrat-Regular}"
-                            HeightRequest="40"
-                            Text="{Binding Username}"
-                            TextColor="Black" />
-
-                    </Grid>
-
+                    <BoxView 
+                        CornerRadius="5"
+                        Grid.Row="3" 
+                        VerticalOptions="Start"
+                        HeightRequest="1"
+                        HorizontalOptions="Fill" Color="{DynamicResource Orange-100}" >
+                    </BoxView>
+                    
                     <Label
                         Grid.Row="4"
-                        Margin="0,5,0,3"
+                        Margin="0,20,0,0"
                         FontFamily="{StaticResource Montserrat-Regular}"
                         Style="{StaticResource LabelStyle}"
                         Text="Password"
-                        TextColor="Black" />
-                    <Grid Grid.Row="5" Margin="0,10,0,0">
+                         TextColor="{DynamicResource  ColorBackground}" />
 
-                        <controles:BorderlessEntry
-                            BackgroundColor="#ececec"
-                            FontFamily="{StaticResource Montserrat-Regular}"
-                            HeightRequest="40"
-                            IsPassword="True"
-                            Text="{Binding Password}"
-                            TextColor="Black" />
+                    <controls:BorderlessEntry Grid.Row="5"
+                        BackgroundColor="{DynamicResource Orange-900}"
+                        FontFamily="{StaticResource Montserrat-Regular}"
+                        HeightRequest="40"
+                        IsPassword="True"                                                  
+                        Text="{Binding Password}"
+                        TextColor="{DynamicResource ColorBackground}" />
 
-                    </Grid>
-                    <Grid x:Name="GridRemember" Grid.Row="6">
+                    <BoxView
+                        Grid.Row="6" VerticalOptions="Start"
+                        CornerRadius="5"
+                        HeightRequest="1"
+                        HorizontalOptions="Fill" Color="{DynamicResource Orange-100}" />
+                    
+                    <Grid x:Name="GridRemember" Grid.Row="7"
+                          Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox IsChecked="{Binding Savecredentials,Mode=TwoWay}" Color="#2e479b" />
+                        <CheckBox IsChecked="{Binding Savecredentials }" Margin="0"
+                                  HorizontalOptions="StartAndExpand"
+                                  Color="{DynamicResource Orange-100}" />
                         <Label
                             Grid.Column="1"
                             Margin="0,5,0,3"
@@ -134,27 +136,27 @@
                             FontSize="12"
                             Style="{StaticResource LabelStyle}"
                             Text="Save login credentials"
-                            TextColor="Black" />
+                            TextColor="White" />
                         <!--<Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SavecredentialCommand}" />
+                            <TapGestureRecognizer Command="{Binding SavecredentialCommand, Source={x:Reference GridRemember}}" />
                         </Grid.GestureRecognizers>-->
                     </Grid>
-                    <StackLayout
-                        Grid.Row="7"
+                    <StackLayout Margin="0,10,0,0"
+                        Grid.Row="8" VerticalOptions="EndAndExpand"
                         HorizontalOptions="CenterAndExpand"
                         Orientation="Horizontal">
-                        <Button
+                        <Button BorderColor="{DynamicResource Orange-100}" BorderWidth="2"
                             Margin="0,16"
-                            BackgroundColor="#2e479b"
+                            BackgroundColor="{DynamicResource Orange-400}"
                             Command="{Binding LoginCommand}"
-                            Text="LOG IN"
-                            TextColor="White" />
+                            Text="LOG IN" FontAttributes="Bold"
+                            TextColor="{DynamicResource  ColorBackground}" />
                         <Button
-                            Margin="0,16"
-                            BackgroundColor="#2e479b"
+                            Margin="0,16" FontAttributes="Bold"
+                            BackgroundColor="{DynamicResource Orange-400}"
                             Command="{Binding WorkOfflineCommand}"
-                            Text="Work Offline"
-                            TextColor="White" />
+                            Text="Work Offline" BorderColor="{DynamicResource Orange-100}" BorderWidth="2"
+                            TextColor="{DynamicResource ColorBackground}" />
                     </StackLayout>
 
 
@@ -162,5 +164,5 @@
 
             </Frame>
         </Grid>
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

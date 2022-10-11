@@ -23,23 +23,177 @@ using Mobile.Code.Services.SQLiteLocal;
 
 namespace Mobile.Code.ViewModels
 {
-    [QueryProperty("Id", "Id")]
+    //[QueryProperty("Id", "Id")]
     //[QueryProperty("Title", "Id")]
     public class SingleLevelProjectDetailViewModel : BaseViewModel
     {
+        #region Commands
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
+
+        public ICommand ChoosePhotoCommand { get; set; }
+
+        public Command GoBackCommand { get; set; }
+
+        private async Task GoBack()
+        {
+
+            await Shell.Current.Navigation.PopToRootAsync();
+
+        }
+
+        public Command ImageDetailCommand { get; set; }
+        async Task ExecuteProjectEditCommand()
+        {
+            await Shell.Current.GoToAsync($"newProject?Id={Id}");
+        }
         private async Task GoHome()
         {
             await Shell.Current.Navigation.PopToRootAsync();
 
         }
 
+        private bool canDownloadOffline(object arg)
+        {
+            return IsInvasive;
+        }
+
+        private async void DownloadOffline(object obj)
+        {
+            await DownloadOffline();
+        }
+
+        private bool canDelete(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Delete(object obj)
+        {
+            await Delete();
+        }
+
+        private bool canEdit(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Edit(object obj)
+        {
+            await Edit();
+        }
+
+        private bool canCreateInvasive(object arg)
+        {
+            return CanInvasiveCreate;
+        }
+
+        private async void CreateInvasive(object obj)
+        {
+            await CreateInvasive();
+        }
+
+        public Command CreateInvasiveCommand { get; set; }  
+        public Command EditCommand { get; set; } 
+        public Command DeleteCommand { get; set; } 
+        public Command DownloadOfflineCommand { get; set; } 
+
+        public Command NewViusalReportCommand => new Command(async () => await NewViusalReportCommandExecue());
+
+        public Command ShowPickerCommand { get; set; }
+        public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) => await GoToVisualForm(parm));
+        #endregion
+
+
+
+        #region Properties
+        public string SelectedImage { get; set; }
+
+
+        private ImageData _imgData;
+
+        public ImageData ImgData
+        {
+            get { return _imgData; }
+            set { _imgData = value; OnPropertyChanged("ImgData"); }
+        }
+
+        private bool _Isbusyprog;
+
+        public bool IsBusyProgress
+        {
+            get { return _Isbusyprog; }
+            set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
+        }
+
+        private Project _selectedOfflineProject;
+        public Project SelectedOfflineProject
+        {
+            get { return _selectedOfflineProject; }
+            set { _selectedOfflineProject = value; OnPropertyChanged("SelectedOfflineProject"); }
+        }
+        public Command SyncProjectCommand { get; set; }
+        private ObservableCollection<Project> _offlineProjects;
+        public ObservableCollection<Project> OfflineProjects
+        {
+            get { return _offlineProjects; }
+            set { _offlineProjects = value; OnPropertyChanged("OfflineProjects"); }
+        }
+        private string _imgPath;
+
+        public string ImgPatah
+        {
+            get { return _imgPath; }
+            set { _imgPath = value; OnPropertyChanged(); }
+        }
+
+
+        private bool _isEditDeleteAccess;
+
+        public bool IsEditDeleteAccess
+        {
+            get { return _isEditDeleteAccess; }
+            set { _isEditDeleteAccess = value; 
+                EditCommand.ChangeCanExecute();
+                DeleteCommand.ChangeCanExecute();
+                OnPropertyChanged("IsEditDeleteAccess");
+            }
+        }
+        private bool _isInvasiveControlDisable;
+
+        public bool IsInvasiveControlDisable
+        {
+            get { return _isInvasiveControlDisable; }
+            set { _isInvasiveControlDisable = value; OnPropertyChanged("IsInvasiveControlDisable"); }
+        }
+
+        private bool _isOnline;
+        public bool IsOnline
+        {
+            get { return _isOnline; }
+            set { _isOnline = value; OnPropertyChanged("IsOnline"); }
+        }
+        private bool _isInvasive;
+        public bool IsInvasive
+        {
+            get { return _isInvasive; }
+            set 
+            { 
+                _isInvasive = value;
+                DownloadOfflineCommand.ChangeCanExecute();
+                OnPropertyChanged("IsInvasive");
+                
+            }
+        }
         private bool _canInvasiveCreate;
 
         public bool CanInvasiveCreate
         {
             get { return _canInvasiveCreate; }
-            set { _canInvasiveCreate = value; OnPropertyChanged("CanInvasiveCreate"); }
+            set { _canInvasiveCreate = value;
+                CreateInvasiveCommand.ChangeCanExecute();
+                OnPropertyChanged("CanInvasiveCreate");
+                
+            }
         }
         private bool _isCreateOrRefreshInvasive;
 
@@ -63,7 +217,7 @@ namespace Mobile.Code.ViewModels
             get { return project; }
             set { project = value; OnPropertyChanged("Project"); }
         }
-        
+
 
         private string _projectID;
 
@@ -88,16 +242,6 @@ namespace Mobile.Code.ViewModels
             get { return _projectLocationID; }
             set { _projectLocationID = value; OnPropertyChanged("ProjectLocationID"); }
         }
-
-        public ICommand ChoosePhotoCommand { get; set; }
-
-        public Command GoBackCommand { get; set; }
-        public Command SaveCommand { get; set; }
-        public Command EditCommand { get; set; }
-        public Command DeleteCommand { get; set; }
-
-        public Command DownloadOfflineCommand { get; set; }
-
         private bool _isVisualReport = false;
 
         public bool IsViusalReport
@@ -112,18 +256,7 @@ namespace Mobile.Code.ViewModels
             get { return _isFinelOrInvasiveReport; }
             set { _isFinelOrInvasiveReport = value; OnPropertyChanged("IsFinelOrInvasiveReport"); }
         }
-        private async Task GoBack()
-        {
-            
-            await Shell.Current.Navigation.PopToRootAsync();
 
-        }
-        private async Task Save()
-        {
-            //await App.Current.MainPage.Navigation.PushAsync(new SingleLevelProjectLocation());
-            await Task.FromResult(true);
-
-        }
         public ObservableCollection<ProjectCommonLocationImages> _projectCommonLocationImagesItems { get; set; }
 
         public ObservableCollection<ProjectCommonLocationImages> ProjectCommonLocationImagesItems
@@ -132,8 +265,6 @@ namespace Mobile.Code.ViewModels
             set { _projectCommonLocationImagesItems = value; OnPropertyChanged("ProjectCommonLocationImagesItems"); }
         }
 
-        public Command ImageDetailCommand { get; set; }
-
         private ProjectCommonLocationImages _projectCommonLocationImages;
 
         public ProjectCommonLocationImages ProjectCommonLocationImages
@@ -141,18 +272,17 @@ namespace Mobile.Code.ViewModels
             get { return _projectCommonLocationImages; }
             set { _projectCommonLocationImages = value; OnPropertyChanged("ProjectCommonLocationImages"); }
         }
-       
+
         private string _id;
         public string Id
         {
             get { return _id; }
             set { _id = value; OnPropertyChanged("Id"); }
         }
-        async Task ExecuteProjectEditCommand()
-        {
-            await Shell.Current.GoToAsync($"newProject?Id={Id}");
-        }
         public bool IsPickerVisible { get; set; }
+        #endregion
+
+        
         public SingleLevelProjectDetailViewModel()
         {
             if (App.ReportType == ReportType.Visual)
@@ -165,18 +295,52 @@ namespace Mobile.Code.ViewModels
                 IsViusalReport = false;
                 IsFinelOrInvasiveReport = true;
             }
-            CreateInvasiveCommand = new Command(async () => await CreateInvasive());
-            GoBackCommand = new Command(async () => await GoBack());
             
-            EditCommand = new Command(async () => await Edit());
-            SaveCommand = new Command(async () => await Save());
-            DeleteCommand = new Command(async () => await Delete());
+            GoBackCommand = new Command(async () => await GoBack());
             ShowPickerCommand = new Command(() => OpenOfflineProjectList());
+             CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
+            EditCommand = new Command(Edit, canEdit);
+            DeleteCommand = new Command(Delete, canDelete);
+            DownloadOfflineCommand = new Command(DownloadOffline, canDownloadOffline);
 
-            DownloadOfflineCommand = new Command(async () => await DownloadOffline());
+            MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
+
+            MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            {
+                ProjectLocation_Visual currentVisualLocation = null;
+
+                if (arg == "Right")
+                {
+                    if (currentLocationSeq + 1 < VisualFormProjectLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                    }
+
+                }
+                else
+                {
+                    if (currentLocationSeq - 1 >= 0)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
+                    }
+                }
+
+                try
+                {
+                    if (currentVisualLocation != null)
+                        await GoToVisualForm(currentVisualLocation, true);
+                    else
+                        await Shell.Current.Navigation.PopToRootAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            });
 
         }
-
+        private int currentLocationSeq;
         private async Task DownloadOffline()
         {
             IsBusyProgress = true;
@@ -189,6 +353,7 @@ namespace Mobile.Code.ViewModels
 
             foreach (var projLocForm in projLocForms)
             {
+                DependencyService.Get<IToast>().Show($"Downloading {projLocForm.Name}");
                 //insert projLoc offline db.
                 //download image.
                 var images = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(projLocForm.Id, true);
@@ -206,13 +371,14 @@ namespace Mobile.Code.ViewModels
             DependencyService.Get<IToast>().Show("Project is available offline now.");
         }
 
-        public Command ShowPickerCommand { get; set; }
+        
         private void OpenOfflineProjectList()
         {
             IsPickerVisible = true;
             OnPropertyChanged("IsPickerVisible");
         }
-        public Command CreateInvasiveCommand { get; set; }
+        
+        
         async Task CreateInvasive()
         {
 
@@ -258,7 +424,7 @@ namespace Mobile.Code.ViewModels
             }
         }
 
-        public ICommand NewViusalReportCommand => new Command(async () => await NewViusalReportCommandExecue());
+        
         private ObservableCollection<ProjectLocation_Visual> _visualFormProjectLocationItems;
 
         public ObservableCollection<ProjectLocation_Visual> VisualFormProjectLocationItems
@@ -271,9 +437,8 @@ namespace Mobile.Code.ViewModels
         private async Task NewViusalReportCommandExecue()
         {
             ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
-            
+
             visualForm.ProjectLocationId = Project.Id;
-            
 
             VisualProjectLocationPhotoDataStore.Clear();
 
@@ -287,8 +452,11 @@ namespace Mobile.Code.ViewModels
             {
                 App.FormString = JsonConvert.SerializeObject(visualForm);
                 App.IsNewForm = true;
-                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() 
-                { ProjectLocation = ProjectLocation, VisualForm = visualForm, ProjectID= Project.Id } });
+                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm()
+                {
+                    BindingContext = new VisualProjectLocationFormViewModel()
+                    { ProjectLocation = ProjectLocation, VisualForm = visualForm, ProjectID = Project.Id }
+                });
 
             }
             else
@@ -310,7 +478,7 @@ namespace Mobile.Code.ViewModels
 
             IsBusyProgress = true;
             bool result = HttpUtil.UploadFromGallary(ProjectLocation.Name, "/api/ProjectLocationImage/AddEdit?ParentId=" + ProjectLocation.Id + "&UserId=" + App.LogUser.Id.ToString(), images);
-            if (result == true)
+            if (result)
             {
 
                 IsBusyProgress = false;
@@ -336,10 +504,11 @@ namespace Mobile.Code.ViewModels
             ProjectCommonLocationImagesItems = new ObservableCollection<ProjectCommonLocationImages>(await ProjectCommonLocationImagesDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
             // UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
         }
-        public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) => await GoToVisualForm(parm));
-        private async Task GoToVisualForm(ProjectLocation_Visual parm)
+        
+        private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped = false)
         {
             App.IsNewForm = false;
+            currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
             VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
@@ -406,10 +575,23 @@ namespace Mobile.Code.ViewModels
             if (App.IsInvasive == false)
             {
 
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                if (isSwipped)
                 {
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
+                else
+                {
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    }
+                }
+                //if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                //{
+                //    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                //}
             }
             else
             {
@@ -433,7 +615,6 @@ namespace Mobile.Code.ViewModels
             }
 
         }
-
 
         public ICommand DeleteVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual obj) => await DeleteVisualFormCommandExecute(obj));
         private async Task DeleteVisualFormCommandExecute(ProjectLocation_Visual obj)
@@ -504,17 +685,7 @@ namespace Mobile.Code.ViewModels
         {
             await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "Edit Project", Project = Project, ProjectType = Project.ProjectType, ProjectCategory=Project.Category } });
         }
-        public string SelectedImage { get; set; }
-       
-
-        private ImageData _imgData;
-
-        public ImageData ImgData
-        {
-            get { return _imgData; }
-            set { _imgData = value; OnPropertyChanged("ImgData"); }
-        }
-
+        
         private async Task<string> TakePictureFromLibrary()
         {
             IsBusy = true;
@@ -550,45 +721,13 @@ namespace Mobile.Code.ViewModels
 
             return file.Path;
         }
-        private string _imgPath;
-
-        public string ImgPatah
-        {
-            get { return _imgPath; }
-            set { _imgPath = value; OnPropertyChanged(); }
-        }
-
        
-        private bool _isEditDeleteAccess;
-
-        public bool IsEditDeleteAccess
-        {
-            get { return _isEditDeleteAccess; }
-            set { _isEditDeleteAccess = value; OnPropertyChanged("IsEditDeleteAccess"); }
-        }
-        private bool _isInvasiveControlDisable;
-
-        public bool IsInvasiveControlDisable
-        {
-            get { return _isInvasiveControlDisable; }
-            set { _isInvasiveControlDisable = value; OnPropertyChanged("IsInvasiveControlDisable"); }
-        }
-
-        private bool _isOnline;
-        public bool IsOnline
-        {
-            get { return _isOnline; }
-            set { _isOnline = value; OnPropertyChanged("IsOnline"); }
-        }
-        private bool _isInvasive;
-        public bool IsInvasive
-        {
-            get { return _isInvasive; }
-            set { _isInvasive = value; OnPropertyChanged("IsInvasive"); }
-        }
 
         private async Task<bool> Running()
         {
+            bool isEditdeleteAccess = false;
+            bool canInvasiveCreate = false;
+            string btnInvasiveText = "Invasive";
             IsOnline = !App.IsAppOffline;
             IsInvasive = (IsOnline && App.IsInvasive)?true:false;
             if (App.IsInvasive)
@@ -597,7 +736,7 @@ namespace Mobile.Code.ViewModels
             }
             if (App.IsAppOffline)
             {
-                CanInvasiveCreate = false;
+                canInvasiveCreate = false;
                 Project = await ProjectSQLiteDataStore.GetItemAsync(Project.Id);
                 if (Project.ProjectType != "Invasive")
                 {
@@ -609,7 +748,7 @@ namespace Mobile.Code.ViewModels
                     App.IsInvasive = true;
                 }
 
-                IsEditDeleteAccess = true;
+                isEditdeleteAccess = true;
                 VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(Project.Id));
             }
             //online
@@ -623,17 +762,17 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
                     }
                     else
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        canInvasiveCreate = true;
+                        btnInvasiveText = "Refresh";
                     }
 
-                    IsEditDeleteAccess = true;
+                    isEditdeleteAccess = true;
                     
                 }
                 else if (Project.UserId == App.LogUser.Id.ToString())
@@ -642,16 +781,16 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
                     }
                     else
                     {
                         if (Project.IsAccess == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Refresh";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Refresh";
                         }
                         else
                         {
@@ -659,7 +798,7 @@ namespace Mobile.Code.ViewModels
                         }
                     }
 
-                    IsEditDeleteAccess = true;
+                    isEditdeleteAccess = true;
                 }
                 else
                 {
@@ -667,15 +806,15 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            canInvasiveCreate = true;
+                            btnInvasiveText = "Invasive";
                         }
 
                     }
                     if (Project.ProjectType == "Invasive" && Project.IsAccess)
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        canInvasiveCreate = true;
+                        btnInvasiveText = "Refresh";
                     }
 
                 }
@@ -689,6 +828,11 @@ namespace Mobile.Code.ViewModels
                 else
                     OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Category == Project.Category));
             }
+            Device.BeginInvokeOnMainThread(() => {
+                IsEditDeleteAccess = isEditdeleteAccess;
+                CanInvasiveCreate = canInvasiveCreate;
+                BtnInvasiveText = btnInvasiveText;
+            });
 
             return await Task.FromResult(true);
 
@@ -696,37 +840,16 @@ namespace Mobile.Code.ViewModels
         public async Task<bool> LoadData()
         {
             IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
+            bool complete = await Task.Run(Running);
             if (complete == true)
             {
                 IsBusyProgress = false;
             }
-            return await Task.FromResult(true);
-           
+            return await Task.FromResult(true);           
 
         }
 
-        private bool _Isbusyprog;
-
-        public bool IsBusyProgress
-        {
-            get { return _Isbusyprog; }
-            set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
-        }
-
-        private Project _selectedOfflineProject;
-        public Project SelectedOfflineProject
-        {
-            get { return _selectedOfflineProject; }
-            set { _selectedOfflineProject = value; OnPropertyChanged("SelectedOfflineProject"); }
-        }
-        public Command SyncProjectCommand { get; set; }
-        private ObservableCollection<Project> _offlineProjects;
-        public ObservableCollection<Project> OfflineProjects
-        {
-            get { return _offlineProjects; }
-            set { _offlineProjects = value; OnPropertyChanged("OfflineProjects"); }
-        }
+        
 
         public async Task PushProjectToServer()
         {
@@ -749,6 +872,7 @@ namespace Mobile.Code.ViewModels
                 _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id);
                 foreach (var formLocationItem in VisualFormProjectLocationItems)
                 {
+                    //DependencyService.Get<IToast>().Show($"Syncing Location {formLocationItem.Name}");
                     //add lowest level  location data
                     string localFormId = formLocationItem.Id;
                     var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
@@ -834,17 +958,25 @@ namespace Mobile.Code.ViewModels
                     if (locationResult.Status == ApiResult.Success)
                     {
                         response.Message = response.Message + "\n" + formLocationItem.Name + "added successully.";
-
+                        
                     }
                     else
                     {
                         syncedSuccessfully = false;
                         response.Message = response.Message + "\n" + formLocationItem.Name + "failed to added.";
+
                     }
 
                 }
    
                 Project.IsSynced = syncedSuccessfully;
+                //if (syncedSuccessfully)
+                //{
+                //    DependencyService.Get<IToast>().Show("Project sync complete.");
+                //}
+                //else
+                //    DependencyService.Get<IToast>().Show($"Project sync failed,{response.Message}.");
+
                 await ProjectSQLiteDataStore.UpdateItemAsync(Project);
                 return response;
             });

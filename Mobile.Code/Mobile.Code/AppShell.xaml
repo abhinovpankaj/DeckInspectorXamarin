@@ -11,11 +11,17 @@
     Title="Mobile.Code"
     FlyoutBehavior="Disabled"
     mc:Ignorable="d">
-
+    <Shell.FlyoutBackground>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0.1" Color="{DynamicResource Orange-200}" />
+            <GradientStop Offset="0.6" Color="{DynamicResource Orange-300}" />
+            <GradientStop Offset="1.0" Color="{DynamicResource Orange-400}" />
+        </LinearGradientBrush>
+    </Shell.FlyoutBackground>
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
-            <Setter Property="Shell.BackgroundColor" Value="White" />
-
+            <Setter Property="Shell.BackgroundColor" Value="#FF9100" />
+            <Setter Property="Shell.FlyoutBackgroundColor" Value="#FF9100" />
             <Setter Property="Shell.TitleColor" Value="White" />
             <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
             <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
@@ -25,7 +31,7 @@
             x:Key="HomeShell"
             BasedOn="{StaticResource BaseStyle}"
             TargetType="Element">
-            <Setter Property="Shell.BackgroundColor" Value="#2e479b" />
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource Orange-900}" />
 
         </Style>
         <Style
@@ -57,7 +63,20 @@
     <Shell.FlyoutHeader>
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
-
+    <Shell.FlyoutFooter>
+        <StackLayout Margin="10" HorizontalOptions="CenterAndExpand">
+            <Label
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Deck Inspectors"
+                TextColor="White" />
+            <Label
+                Margin="4"
+                HorizontalOptions="Center"
+                Text="V5.0"
+                TextColor="White" />
+        </StackLayout>
+    </Shell.FlyoutFooter>
 
     <ShellItem
         IsTabStop="False"
@@ -70,13 +89,19 @@
         IsTabStop="False"
         Route="main"
         Shell.TabBarIsVisible="False">
-
+        <Shell.FlyoutBackdrop>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.1" Color="#8A2387" />
+                <GradientStop Offset="0.6" Color="#E94057" />
+                <GradientStop Offset="1.0" Color="#F27121" />
+            </LinearGradientBrush>
+        </Shell.FlyoutBackdrop>
         <ShellContent
             Title="Project(s)"
             ContentTemplate="{DataTemplate views:HomePage}"
             Icon="{FontImage FontFamily={StaticResource MaterialFontFamily},
                              Glyph={x:Static helpers:IconFont.Home},
-                             Color=#2e479b,
+                             Color=#e65100,
                              Size=24}"
             IsTabStop="False"
             Route="project"
@@ -86,22 +111,22 @@
     <MenuItem
         Command="{Binding GoOfflineProjectCommand}"
         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                    Glyph={x:Static helpers:IconFont.NetworkOff},
-                                    Color=#2e479b,
+                                    Glyph={x:Static helpers:IconFont.WifiOff},
+                                    Color=#E65100,
                                     Size=24}"
         Text="Offline Project" />
     <MenuItem
         Command="{Binding GoNewProjectCommand}"
         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                     Glyph={x:Static helpers:IconFont.PlusCircle},
-                                    Color=#2e479b,
+                                    Color=#E65100,
                                     Size=24}"
         Text="New Project" />
     <MenuItem
         Command="{Binding GoSettingCommand}"
         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                     Glyph={x:Static helpers:IconFont.Cog},
-                                    Color=#2e479b,
+                                    Color=#E65100,
                                     Size=24}"
         Text="Settings" />
 
@@ -109,10 +134,8 @@
         Command="{Binding LogoutCommand}"
         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                     Glyph={x:Static helpers:IconFont.Logout},
-                                    Color=#2e479b,
+                                    Color=#E65100,
                                     Size=24}"
         Text="Logout" />
-
-    <MenuItem IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily}, Glyph={x:Static helpers:IconFont.InformationOutline}, Color=#2e479b, Size=24}" Text="V4.0" />
 
 </Shell>

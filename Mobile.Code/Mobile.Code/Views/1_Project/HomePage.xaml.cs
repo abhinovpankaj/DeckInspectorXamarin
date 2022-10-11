@@ -17,11 +17,8 @@ namespace Mobile.Code.Views
         }
         protected async override void OnAppearing()
         {
-
-            base.OnAppearing();
-            
-            await vm.LoadData();
-
+            base.OnAppearing();           
+            await vm.LoadData();           
         }
 
 

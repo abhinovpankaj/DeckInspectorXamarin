@@ -43,10 +43,6 @@
                 <On Platform="iOS" Value="Roboto-Light" />
             </OnPlatform>
 
-            <!--<Style TargetType="Label" >
-                <Setter Property="FontFamily" Value="{StaticResource NormalFont}"/>
-            </Style>-->
-
             <ControlTemplate x:Key="GeneralTemplate">
                 <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
@@ -92,60 +88,22 @@
                         VerticalOptions="FillAndExpand" />
                 </Grid>
             </ControlTemplate>
-            <DataTemplate x:Key="AnimalTemplate">
-                <!--<Grid Padding="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.RowSpan="2"
-                       Source="{Binding ImageUrl}"
-                       Aspect="AspectFill"
-                       HeightRequest="60"
-                       WidthRequest="60" />
-                    <Label Grid.Column="1"
-                       Text="{Binding Name}"
-                       FontAttributes="Bold" />
-                    <Label Grid.Row="1"
-                       Grid.Column="1"
-                       Text="{Binding Location}"
-                       FontAttributes="Italic"
-                       VerticalOptions="End" />
-                </Grid>-->
-
-                <Grid>
-
-
-
-                    <Image
-                        Aspect="AspectFill"
-                        HorizontalOptions="FillAndExpand"
-                        Source="{Binding ImageUrl}"
-                        VerticalOptions="FillAndExpand" />
-
-                    <Image
-                        Aspect="Fill"
-                        HorizontalOptions="FillAndExpand"
-                        Source="overlayCol.png"
-                        VerticalOptions="FillAndExpand" />
-
-                    <Label
-                        Margin="10,20"
-                        FontFamily="{StaticResource PlayfairBold}"
-                        FontSize="35"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding Name}"
-                        TextColor="White"
-                        VerticalOptions="End" />
-                </Grid>
-
-            </DataTemplate>
-
-            <Color x:Key="primaryColor">#3596fc</Color>
+            <Color x:Key="ColorForegroundText">#000000</Color>
+            <Color x:Key="ColorForegroundAction">#E65100</Color>
+            <Color x:Key="ColorForegroundFocus">#FF6D00</Color>
+            <Color x:Key="ColorForegroundMuted">#636363</Color>
+            <Color x:Key="ColorForegroundBorder">#808080</Color>
+            <Color x:Key="ColorBackground">#FFFFFF</Color>
+            <Color x:Key="ColorBackgroundShade">#F5F5F5</Color>
+            <Color x:Key="ColorBackgroundAlt">#EBEBEB</Color>
+            <Color x:Key="ColorBackgroundAltShade">#E0E0E0</Color>
+            <Color x:Key="primaryColor">#E65100</Color>
+            <Color x:Key="Orange-900">#E65100</Color>
+            <Color x:Key="Orange-700">#FF6D00</Color>
+            <Color x:Key="Orange-200">#FFAB40</Color>
+            <Color x:Key="Orange-400">#FF9100</Color>
+            <Color x:Key="Orange-100">#FFD180</Color>
+            <Color x:Key="Orange-300">#FFB74D</Color>
             <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
                 <On Platform="Android" Value="FontAwesome5Brands.otf#Regular" />
                 <On Platform="iOS" Value="FontAwesome5Brands-Regular" />
@@ -195,10 +153,7 @@
                 <On Platform="Android" Value="Montserrat-SemiBold.ttf#Light" />
                 <On Platform="iOS" Value="Montserrat-SemiBold" />
             </OnPlatform>
-            <!--<Style TargetType="Label">
-                <Setter Property="FontFamily"
-                Value="{StaticResource InterLight}"/>
-            </Style>-->
+
             <Style x:Key="BoxViewStyle" TargetType="BoxView">
                 <Setter Property="Color" Value="{DynamicResource Gray-900}" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -207,7 +162,7 @@
                 <Setter Property="FontFamily" Value="{StaticResource InterLight}" />
             </Style>
             <Style x:Key="LabelStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+                <Setter Property="TextColor" Value="{DynamicResource ColorForegroundText}" />
                 <Setter Property="FontFamily" Value="Montserrat-Regular" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="LineHeight" Value="{OnPlatform Android=1.5, Default=-1}" />
@@ -227,17 +182,17 @@
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Opacity" Value="0" />
                 <Setter Property="TranslationY" Value="100" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource background}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource Orange-400}" />
             </Style>
 
             <Style x:Key="cardTitleStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="Large" />
-                <Setter Property="TextColor" Value="{DynamicResource mainLabel}" />
+                <Setter Property="TextColor" Value="{DynamicResource ColorForegroundText}" />
                 <Setter Property="FontFamily" Value="{DynamicResource InterBold}" />
             </Style>
 
             <Style x:Key="borderStyle" TargetType="BoxView">
-                <Setter Property="BackgroundColor" Value="{DynamicResource borderColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource Orange-100}" />
                 <Setter Property="HeightRequest" Value="1" />
             </Style>
 
@@ -248,7 +203,7 @@
             <Style x:Key="listOptionLayoutTextStyle" TargetType="Label">
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                <Setter Property="TextColor" Value="{StaticResource primaryColor}" />
+                <Setter Property="TextColor" Value="{StaticResource ColorForegroundText}" />
             </Style>
 
         </ResourceDictionary>

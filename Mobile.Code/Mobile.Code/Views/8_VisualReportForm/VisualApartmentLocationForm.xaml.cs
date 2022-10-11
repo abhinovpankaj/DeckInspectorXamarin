@@ -29,7 +29,7 @@ namespace Mobile.Code.Views
             MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
             {
                 ImageButton btn = sender as ImageButton;
-                if (btn.ClassId == "recordName")
+                if (btn.ClassId == "recordDes")
                 {
                     recordName.IsEnabled = true;
                 }
@@ -41,7 +41,10 @@ namespace Mobile.Code.Views
 
             });
 
-           
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
         private void SpeechToTextFinalResultRecieved(string args)
@@ -62,15 +65,14 @@ namespace Mobile.Code.Views
             ImageButton btn = sender as ImageButton;
             try
             {
+                if (btn.ClassId == "recordDes")
+                {
+                    txtDes.Focus();
+
+                }
                 if (btn.ClassId == "recordName")
                 {
                     txtName.Focus();
-
-                }
-
-                else if (btn.ClassId == "recordDes")
-                {
-                    txtDes.Focus();
 
                 }
                 _speechRecongnitionInstance.StartSpeechToText();
@@ -83,8 +85,7 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                recordName.IsEnabled = false;
-
+                
                 recordDes.IsEnabled = false;
             }
 

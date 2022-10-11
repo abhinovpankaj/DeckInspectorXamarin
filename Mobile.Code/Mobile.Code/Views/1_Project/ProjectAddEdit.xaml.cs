@@ -29,17 +29,8 @@ namespace Mobile.Code.Views
             MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
             {
                 ImageButton btn = sender as ImageButton;
-                if (btn.ClassId == "recordName")
-                {
-                    recordName.IsEnabled = true;
-
-                }
-                else if (btn.ClassId == "recordAddress")
-                {
-                    recordAddress.IsEnabled = true;
-
-                }
-                else if (btn.ClassId == "recordDes")
+                
+                if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
 
@@ -47,10 +38,10 @@ namespace Mobile.Code.Views
 
             });
 
-            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            //{
-            //    SpeechToTextFinalResultRecieved(args);
-            //});
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
 
             txtName.Completed += (s, e) => txtAddress.Focus();
             txtAddress.Completed += (s, e) => txtDes.Focus();
@@ -108,12 +99,15 @@ namespace Mobile.Code.Views
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                recordName.IsEnabled = false;
-                recordAddress.IsEnabled = false;
+                
                 recordDes.IsEnabled = false;
             }
 
         }
-       
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            //Shell.Current.Navigation.RemovePage(this);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Mobile.Code.ViewModels
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
-
+        public Command SwippedCommand { get; set; }
         public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
         {
@@ -642,6 +642,7 @@ namespace Mobile.Code.ViewModels
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
             SaveAndCreateNewCommand = new Command(async () => await SaveCreateNew());
+            SwippedCommand = new Command<string>((directionSwipe) => Swipped(directionSwipe));
             ExteriorElements = new ObservableCollection<string>();
             WaterProofingElements = new ObservableCollection<string>();
 
@@ -664,7 +665,11 @@ namespace Mobile.Code.ViewModels
             App.ListCamera2Api = new List<MultiImage>();
 
         }
-
+        private void Swipped(string direction)
+        {
+            IsBusyProgress = true;
+            MessagingCenter.Send<VisualBuildingLocationFormViewModel, string>(this, "LocationSwipped", direction);
+        }
         public VisualBuildingLocationFormViewModel(VisualBuildingLocationFormViewModel viewModel)
         {
         }
@@ -685,11 +690,19 @@ namespace Mobile.Code.ViewModels
             set { _countWaterProofingElements = value; OnPropertyChanged("CountWaterProofingElements"); }
         }
 
-        private ObservableCollection<VisualBuildingLocationPhoto> _visualbuildingLocationPhotoItems;
+        private ObservableCollection<VisualBuildingLocationPhoto> _visualbuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>();
 
         public ObservableCollection<VisualBuildingLocationPhoto> VisualBuildingLocationPhotoItems
         {
-            get { return _visualbuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(_visualbuildingLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            get 
+            {
+                if (_visualbuildingLocationPhotoItems!=null)
+                {
+                    _visualbuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(_visualbuildingLocationPhotoItems.Where(c => c.InvasiveImage == false));
+                }
+                
+                return _visualbuildingLocationPhotoItems;
+            }
             //get { return _visualbuildingLocationPhotoItems; }
             set { _visualbuildingLocationPhotoItems = value; OnPropertyChanged("VisualBuildingLocationPhotoItems"); }
         }
@@ -798,11 +811,8 @@ namespace Mobile.Code.ViewModels
                     }
 
                 }
-
                 UnitPhotoCount = VisualBuildingLocationPhotoItems.Count.ToString();
-
             }
-
             return await Task.FromResult(true);
         }
         private bool _isprojectLoc;
@@ -828,21 +838,13 @@ namespace Mobile.Code.ViewModels
         }
         public async Task<bool> Load()
         {
-
-
             IsBusyProgress = true;
             bool complete = await Task.Run(Running).ConfigureAwait(false);
             if (complete == true)
             {
-
-
-
                 IsBusyProgress = false;
-
-
             }
             return await Task.FromResult(true);
-
         }
 
         private string _title;

@@ -79,8 +79,7 @@ namespace Mobile.Code.ViewModels
         public Command LocationDetailCommand { get; set; }
         public Command BuildingDetailCommand { get; set; }
         public Command GoBackCommand { get; set; }
-        public Command SaveCommand { get; set; }
-
+        
         public Command EditCommand { get; set; }
         public Command DownloadOfflineCommand { get; set; }
         private async Task GoBack()
@@ -96,12 +95,7 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.Cle ;
             //}
         }
-        private async Task Save()
-        {
-            await Task.FromResult(true);
-            // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
-        }
-
+       
         private bool _Isbusyprog;
 
         public bool IsBusyProgress
@@ -135,7 +129,18 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.PushAsync(new AddProjectBuilding() { BindingContext = new ProjectBuildingAddEditViewModel() { Title = "Edit Project Building" } });
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
-        public ICommand DeleteCommand => new Command(async () => await Delete());
+        public Command DeleteCommand { get; set; }
+
+        private bool canDelete(object arg)
+        {
+            return _isEditDeleteAccess;
+        }
+
+        private async void Delete(object obj)
+        {
+            await Delete();
+        }
+
         private async Task Delete()
         {
             Response response;
@@ -178,28 +183,76 @@ namespace Mobile.Code.ViewModels
         
         public ProjectDetailViewModel()
         {
-            CreateInvasiveCommand = new Command(async () => await CreateInvasive());
-            GoBackCommand = new Command(async () => await GoBack());
-            //  SaveCommand = new Command(async () => await Save());
-            EditCommand = new Command(async () => await Edit());
-            SaveCommand = new Command(async () => await Save());
-            
-            NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
-            NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
+            try
+            {
+                CreateInvasiveCommand = new Command(CreateInvasive, canCreateInvasive);
+                GoBackCommand = new Command(async () => await GoBack());
 
-            LocationDetailCommand = new Command<ProjectLocation>(async (ProjectLocation parm) => await ExecuteLocationDetailCommand(parm));
-            BuildingDetailCommand = new Command<ProjectBuilding>(async (ProjectBuilding parm) => await ExecuteBuildingDetailCommand(parm));
+                EditCommand = new Command(Edit, canEdit);
+                DeleteCommand = new Command(Delete, canDelete);
 
-            ShowPickerCommand = new Command( () =>  OpenOfflineProjectList());
+                NewProjectCommonLocationCommand = new Command(async () => await NewProjectCommonLocation());
+                NewProjectBuildingCommand = new Command(async () => await NewProjectBuilding());
+
+                LocationDetailCommand = new Command<ProjectLocation>(async (ProjectLocation parm) => await ExecuteLocationDetailCommand(parm));
+                BuildingDetailCommand = new Command<ProjectBuilding>(async (ProjectBuilding parm) => await ExecuteBuildingDetailCommand(parm));
+
+                ShowPickerCommand = new Command(() => OpenOfflineProjectList());
+
+                DownloadOfflineCommand = new Command(DownloadOffline, canDownLoadOffline);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
             
-            DownloadOfflineCommand = new Command(async () => await DownloadOffline());
         }
-       
+
+        private bool canEdit(object arg)
+        {
+            return IsEditDeleteAccess;
+        }
+
+        private async void Edit(object obj)
+        {
+            await Edit();
+        }
+
+        private bool canCreateInvasive(object arg)
+        {
+            return CanInvasiveCreate;
+        }
+
+        private async void CreateInvasive(object obj)
+        {
+            await CreateInvasive();
+        }
+
+        private async void DownloadOffline(object obj)
+        {
+            await DownloadOffline();
+        }
+
+        private bool canDownLoadOffline(object arg)
+        {
+            return IsInvasive;
+        }
+
         private bool _isInvasive;
         public bool IsInvasive
         {
             get { return _isInvasive; }
-            set { _isInvasive = value; OnPropertyChanged("IsInvasive"); }
+            set 
+            {
+                if (_isInvasive != value)
+                {
+                    _isInvasive = value;
+                    DownloadOfflineCommand?.ChangeCanExecute();
+                    OnPropertyChanged("IsInvasive");
+                }
+                
+            }
         }
 
         private async Task DownloadOffline()
@@ -425,9 +478,7 @@ namespace Mobile.Code.ViewModels
             }
         }
         async Task ExecuteLocationDetailCommand(ProjectLocation parm)
-        {
-
-           
+        {           
             if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(ProjectLocationDetail))
                 await Shell.Current.Navigation.PushAsync(new ProjectLocationDetail()
                 { BindingContext = new ProjectLocationDetailViewModel() { ProjectLocation = parm } }).ConfigureAwait(false);
@@ -445,7 +496,6 @@ namespace Mobile.Code.ViewModels
             bool complete = await Task.Run(Running);
             if (complete == true)
             {
-
                 IsBusyProgress = false;
             }
         }
@@ -454,14 +504,28 @@ namespace Mobile.Code.ViewModels
         public bool IsEditDeleteAccess
         {
             get { return _isEditDeleteAccess; }
-            set { _isEditDeleteAccess = value; OnPropertyChanged("IsEditDeleteAccess"); }
+            set 
+            {
+                if (_isEditDeleteAccess!=value)
+                {
+                    _isEditDeleteAccess = value;
+                    EditCommand?.ChangeCanExecute();
+                    DeleteCommand?.ChangeCanExecute();
+                    OnPropertyChanged("IsEditDeleteAccess");
+                }
+               
+            }
         }
         private bool _canInvasiveCreate;
 
         public bool CanInvasiveCreate
         {
             get { return _canInvasiveCreate; }
-            set { _canInvasiveCreate = value; OnPropertyChanged("CanInvasiveCreate"); }
+            set { 
+                _canInvasiveCreate = value;
+                CreateInvasiveCommand?.ChangeCanExecute();
+                OnPropertyChanged("CanInvasiveCreate"); 
+            }
         }
         private bool _isCreateOrRefreshInvasive;
 
@@ -488,16 +552,20 @@ namespace Mobile.Code.ViewModels
 
         async Task<bool> Running()
         {
+            bool cancreateInvasive=false, iseditDeleteAccess=false; 
+            string invasiveText="Invasive";
             IsOnline = !App.IsAppOffline;
             IsInvasive = (IsOnline && App.IsInvasive) ? true : false;
             if (App.IsInvasive)
             {
+                cancreateInvasive = false;
                 IsInvasiveControlDisable = true;
+                iseditDeleteAccess = false;
             }
             if (App.IsAppOffline)
             {
                 Project = await ProjectSQLiteDataStore.GetItemAsync(Project.Id);
-                CanInvasiveCreate = false;
+                cancreateInvasive = false;
                 if (Project.ProjectType != "Invasive")
                 {
 
@@ -508,7 +576,7 @@ namespace Mobile.Code.ViewModels
                     App.IsInvasive = true;
                 }
 
-                IsEditDeleteAccess = true;
+                iseditDeleteAccess = true;
 
                 ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
                 ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore.GetItemsAsyncByProjectID(Project.Id));
@@ -524,18 +592,18 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
                     }
                     else
                     {
 
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        cancreateInvasive = true;
+                        invasiveText = "Refresh";
                     }
 
-                    IsEditDeleteAccess = true;
+                    iseditDeleteAccess = true;
                 }
                 else if (Project.UserId == App.LogUser.Id.ToString())
                 {
@@ -543,24 +611,24 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
                     }
                     else
                     {
                         if (Project.IsAccess == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Refresh";
+                            cancreateInvasive = true;
+                            invasiveText = "Refresh";
                         }
                         else
                         {
-                            CanInvasiveCreate = false;
+                            cancreateInvasive = false;
                         }
                     }
 
-                    IsEditDeleteAccess = true;
+                    iseditDeleteAccess = true;
                 }
                 else
                 {
@@ -568,15 +636,15 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Project.IsInvaisveExist == true)
                         {
-                            CanInvasiveCreate = true;
-                            BtnInvasiveText = "Invasive";
+                            cancreateInvasive = true;
+                            invasiveText = "Invasive";
                         }
-
+                        iseditDeleteAccess = true;
                     }
                     if (Project.ProjectType == "Invasive" && Project.IsAccess)
                     {
-                        CanInvasiveCreate = true;
-                        BtnInvasiveText = "Refresh";
+                        cancreateInvasive = true;
+                        invasiveText = "Refresh";
                     }
 
                 }
@@ -591,12 +659,17 @@ namespace Mobile.Code.ViewModels
             {
                 OfflineProjects = new ObservableCollection<Project>(allOffProjs.Where(x => x.Id == Project.Id));
             }
+
+            Device.BeginInvokeOnMainThread(() => {
+                IsEditDeleteAccess = iseditDeleteAccess;
+                CanInvasiveCreate = cancreateInvasive;
+                BtnInvasiveText = invasiveText;
+            });
+
             return await Task.FromResult(true);
 
 
-        }
-
-        
+        }        
 
         private Project _selectedOfflineProject;
         public Project SelectedOfflineProject
@@ -670,6 +743,8 @@ namespace Mobile.Code.ViewModels
 
                     if (resultProjLocation.Status == ApiResult.Success)
                     {
+                        //DependencyService.Get<IToast>().Show(item.Name + "Project Location synced.");
+
                         var uploadedProjectLocation = JsonConvert.DeserializeObject<ProjectLocation>(resultProjLocation.Data.ToString());
                         //update local projectlocation
                         item.Id = localId;
@@ -687,6 +762,7 @@ namespace Mobile.Code.ViewModels
                         
                         foreach (var formLocationItem in VisualFormProjectLocationItems)
                         {
+                            //DependencyService.Get<IToast>().Show($"Syncing {formLocationItem.Name}");
                             //add lowest level  location data
                             string localFormId = formLocationItem.Id;
                             var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
@@ -725,6 +801,7 @@ namespace Mobile.Code.ViewModels
                                 List<MultiImage> FilteredImages = new List<MultiImage>();
                                 if (locationResult.Status == ApiResult.Success)
                                 {
+
                                     List<MultiImage> ImagesList = new List<MultiImage>(await VisualProjectLocationPhotoDataStore.GetMultiImagesAsyncByLoacationIDSqLite
                                         (localFormId, false));
 
@@ -793,8 +870,9 @@ namespace Mobile.Code.ViewModels
 
                 foreach (var item in ProjectBuildingItems)
                 {
+                    //DependencyService.Get<IToast>().Show($"Syncing Building {item.Name}");
                     //insert buildinglocations
-                    
+
                     string localId = item.Id;
                     
                     if (item.OnlineId == null)
@@ -840,7 +918,8 @@ namespace Mobile.Code.ViewModels
                         
                         foreach (var buildingLoc in BuildingLocations)
                         {
-                            
+
+                           // DependencyService.Get<IToast>().Show($"Syncing Building location {buildingLoc.Name}");
                             string localBuildId = buildingLoc.Id;
 
                             //check if projectlocation exists on central repo
@@ -992,7 +1071,7 @@ namespace Mobile.Code.ViewModels
 
                         foreach (var apartment in BuildingApartments)
                         {
-
+                            //DependencyService.Get<IToast>().Show($"Syncing Apartment {apartment.Name}");
                             string localaptId = apartment.Id;
 
                             //check if projectlocation exists on central repo
@@ -1038,6 +1117,7 @@ namespace Mobile.Code.ViewModels
                                 
                                 foreach (var aptLoc in VisualFormApartmentLocationItems)
                                 {
+                                   // DependencyService.Get<IToast>().Show($"Syncing apartment location {aptLoc.Name}");
                                     string localAptLocFormId = aptLoc.Id;
                                     var images = new ObservableCollection<VisualApartmentLocationPhoto>
                                         (await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(aptLoc.Id, false));

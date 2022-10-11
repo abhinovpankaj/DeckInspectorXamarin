@@ -14,7 +14,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.Navigation.PopToRootAsync();
          
         }
 
@@ -113,8 +113,7 @@ namespace Mobile.Code.ViewModels
             // ProjectBuildingItems = new ObservableCollection<WorkImage>();
             NewBuildingLocationCommand = new Command(async () => await ExecuteNewBuildingLocationCommand());
             NewBuildingApartmentCommand = new Command(async () => await ExecuteNewBuildingApartmentCommand());
-            ProjectEditCommand = new Command(async () => await ExecuteProjectEditCommand());
-
+            ProjectEditCommand = new Command(async () => await ExecuteProjectEditCommand());            
         }
 
         private async Task ExecuteNewBuildingLocationCommand()
@@ -271,7 +270,6 @@ namespace Mobile.Code.ViewModels
             bool complete = await Task.Run(Running).ConfigureAwait(false);
             if (complete == true)
             {
-
 
 
                 IsBusyProgress = false;

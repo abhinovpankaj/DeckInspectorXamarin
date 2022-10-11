@@ -108,7 +108,7 @@
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms" Version="3.0.0" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />  
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />  
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2515" />  
     <PackageReference Include="Xamarin.Plugin.ImageEdit" Version="1.0.0" />  
@@ -222,6 +222,9 @@
     </Compile>
     <Compile Update="Views\8_VisualReportForm\InvasiveVisualProjectLocationForm.xaml.cs">
       <DependentUpon>InvasiveVisualProjectLocationForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\8_VisualReportForm\VisualProjectLocationsSwipeView.xaml.cs">
+      <DependentUpon>VisualProjectLocationsSwipeView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\8_VisualReportForm\VisualProjectLocationForm.xaml.cs">
       <DependentUpon>VisualProjectLocationForm.xaml</DependentUpon>

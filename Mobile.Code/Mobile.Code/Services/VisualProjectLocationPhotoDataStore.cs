@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Mobile.Code.Services
 {
-    public interface IVisualProjectLocationPhotoDataStore
+    
+    public interface IVisualProjectLocationPhotoDataStore : ITaskCancellationToken
     {
         Task<bool> AddItemAsync(VisualProjectLocationPhoto item, bool isOffline = false);
 
@@ -30,6 +32,12 @@ namespace Mobile.Code.Services
         List<VisualProjectLocationPhoto> items;
         List<MultiImage> multiImages;
         private SQLiteConnection _connection;
+
+        public CancellationToken CancelToken 
+        { 
+            get ; set;
+        }
+
         public VisualProjectLocationPhotoDataStore()
         {
             items = new List<VisualProjectLocationPhoto>();
@@ -180,7 +188,7 @@ namespace Mobile.Code.Services
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
-                    using (HttpResponseMessage response = await client.GetAsync($"api/VisualProjectLocationImage/GetVisualProjectLocationImageByVisualLocationId?VisualLocationId=" + locationVisualID))
+                    using (HttpResponseMessage response = await client.GetAsync($"api/VisualProjectLocationImage/GetVisualProjectLocationImageByVisualLocationId?VisualLocationId=" + locationVisualID,CancelToken))
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();
                         Response result = JsonConvert.DeserializeObject<Response>(responseBody);
@@ -329,5 +337,9 @@ namespace Mobile.Code.Services
             }
         }
 
+        public void SetCancellationToken(CancellationToken token)
+        {
+            CancelToken = token;
+        }
     }
 }

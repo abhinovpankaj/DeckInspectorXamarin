@@ -2,6 +2,7 @@
 using Mobile.Code.Media;
 using Mobile.Code.Models;
 using Mobile.Code.Services;
+
 using Mobile.Code.Views;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -24,8 +26,7 @@ namespace Mobile.Code.ViewModels
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
-            await Shell.Current.Navigation.PopAsync();
-
+            await Shell.Current.Navigation.PopToRootAsync();
         }
 
         private Project project;
@@ -114,7 +115,7 @@ namespace Mobile.Code.ViewModels
             ProjectCommonLocationImages.ImageUrl = ImgData.Path;
 
             if (App.IsAppOffline) { } //todo
-               // await ProjectCommonLocationImagesSqLiteDataStore.UpdateItemAsync(ProjectCommonLocationImages);
+                                      // await ProjectCommonLocationImagesSqLiteDataStore.UpdateItemAsync(ProjectCommonLocationImages);
             else
                 await ProjectCommonLocationImagesDataStore.UpdateItemAsync(ProjectCommonLocationImages);
         }
@@ -136,10 +137,45 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
+            MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
+            
+            MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            {
+                ProjectLocation_Visual currentVisualLocation=null;
+
+                if (arg == "Right")
+                {
+                    if (currentLocationSeq+1 < VisualFormProjectLocationItems.Count)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                    }
+                    
+                }
+                else
+                {
+                    if (currentLocationSeq -1>=0)
+                    {
+                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
+                    }
+                }
+                    
+                try
+                {
+                    if (currentVisualLocation != null)
+                        await GoToVisualForm(currentVisualLocation, true);
+                    else
+                        await Shell.Current.Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
+            });
 
         }
 
-
+        private int currentLocationSeq;
         public ICommand NewViusalReportCommand => new Command(async () => await NewViusalReportCommandExecue());
         private ObservableCollection<ProjectLocation_Visual> _visualFormProjectLocationItems;
 
@@ -156,13 +192,13 @@ namespace Mobile.Code.ViewModels
             visualForm = new ProjectLocation_Visual();
             //visualForm.Id = Guid.NewGuid().ToString();
             visualForm.ProjectLocationId = ProjectLocation.Id;
-            
+
 
             VisualProjectLocationPhotoDataStore.Clear();
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-            
+
             InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
 
@@ -177,10 +213,10 @@ namespace Mobile.Code.ViewModels
 
             {
                 App.IsNewForm = false;
-               
+
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                     await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
-                
+
             }
 
             //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
@@ -282,9 +318,35 @@ namespace Mobile.Code.ViewModels
             ProjectCommonLocationImagesItems = new ObservableCollection<ProjectCommonLocationImages>(await ProjectCommonLocationImagesDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
             // UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
         }
-        public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) => await GoToVisualForm(parm));
-        private async Task GoToVisualForm(ProjectLocation_Visual parm)
+
+        public ICommand GoToVisualSwipeViewCommand => new Command(async () => await GotoVisualSwipeView());
+
+        private async Task GotoVisualSwipeView()
         {
+            VisualProjectLocationSwipeViewModel vm = new VisualProjectLocationSwipeViewModel();
+            vm.VisualFormProjectLocationItems = this.VisualFormProjectLocationItems;
+            await Shell.Current.Navigation.PushAsync(new VisualProjectLocationsSwipeView() { BindingContext = vm });
+        }
+        
+        public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) =>
+        {
+            IsBusyProgress = true;
+            try
+            {
+                await GoToVisualForm(parm);
+            }
+            catch (Exception ex)
+            {
+                //Task cancelled moving to new location
+            }
+            finally { IsBusyProgress = false; }
+                
+        });
+        
+        private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped=false)
+        {
+            IsBusyProgress = true;
+            currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
             App.IsNewForm = false;
             VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
@@ -299,6 +361,7 @@ namespace Mobile.Code.ViewModels
             vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsSelected = true;
             vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsSelected = true;
 
+            vm.ProjectVisualLocations = VisualFormProjectLocationItems;
             if (App.IsInvasive)
             {
                 //For Conclusive 
@@ -331,12 +394,13 @@ namespace Mobile.Code.ViewModels
 
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-            
+
             VisualProjectLocationPhotoDataStore.Clear();
             InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
 
             vm.VisualForm = parm;
+            
             if (App.IsAppOffline)
             {
                 vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
@@ -351,14 +415,24 @@ namespace Mobile.Code.ViewModels
 
             if (App.IsInvasive == false)
             {
-
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                if (isSwipped)
                 {
+                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();                    
                     await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    Shell.Current.Navigation.RemovePage(_lastPage);
                 }
+                else
+                {
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                    }
+                }
+               
             }
             else
             {
+                
                 IEnumerable<VisualProjectLocationPhoto> photos;
                 if (App.IsAppOffline)
                 {
@@ -367,9 +441,10 @@ namespace Mobile.Code.ViewModels
                 else
                     photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
 
-                
+
                 vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                 vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                //think later of this serialization
                 App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
 
                 if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
@@ -378,7 +453,7 @@ namespace Mobile.Code.ViewModels
                 }
 
             }
-
+            IsBusyProgress = false;
         }
 
 
@@ -470,7 +545,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Edit()
         {
-            await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } });
+            await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } },true);
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
         public string SelectedImage { get; set; }

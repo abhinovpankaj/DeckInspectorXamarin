@@ -11,6 +11,7 @@ namespace Mobile.Code
 
     public partial class App : Application
     {
+        //http://surveyorwebapi-test.us-west-1.elasticbeanstalk.com/
         public static string AzureBackendUrl =
         //DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.43.248/" : "http://localhost:5000";
         DeviceInfo.Platform == DevicePlatform.Android ? "https://api.deckinspectors.com/v3/" : "https://api.deckinspectors.com/v3/";
@@ -86,6 +87,7 @@ namespace Mobile.Code
 
 
             MainPage = new AppShell();
+            
         }
         protected override void OnStart()
         {
@@ -101,5 +103,7 @@ namespace Mobile.Code
         {
             // Handle when your app resumes
         }
+
+        
     }
 }

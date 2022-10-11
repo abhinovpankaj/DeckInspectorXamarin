@@ -96,7 +96,7 @@ namespace Mobile.Code.ViewModels
         private ImageData _imgData;
         public Command GoBackCommand { get; set; }
         public Command SaveCommand { get; set; }
-
+        public Command SwippedCommand { get; set; }
         public Command SaveAndCreateNewCommand { get; set; }
         public ImageData ImgData
         {
@@ -332,7 +332,11 @@ namespace Mobile.Code.ViewModels
             
         
         }
-
+        private void Swipped(string direction)
+        {
+            IsBusyProgress = true;
+            MessagingCenter.Send<VisualApartmentFormViewModel, string>(this, "LocationSwipped", direction);
+        }
         private async Task<Response> SaveLoad()
         {
 
@@ -675,7 +679,7 @@ namespace Mobile.Code.ViewModels
             RadioList_LifeExpectancyAWE.Add(new CustomRadioItem() { ID = 4, Name = "7+ Years", IsSelected = false, GroupName = "AWE" });
 
             PopulateConclusiveRadios();
-
+            SwippedCommand = new Command<string>((directionSwipe) => Swipped(directionSwipe));
             GoBackCommand = new Command(async () => await GoBack());
             SaveCommand = new Command(async () => await Save());
             SaveAndCreateNewCommand = new Command(async () => await SaveCreateNew());
@@ -718,7 +722,16 @@ namespace Mobile.Code.ViewModels
 
         public ObservableCollection<VisualApartmentLocationPhoto> VisualApartmentLocationPhotoItems
         {
-            get { return _visualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(_visualApartmentLocationPhotoItems.Where(c => c.InvasiveImage == false)); }
+            get 
+            {
+                if (_visualApartmentLocationPhotoItems!=null)
+                {
+                    _visualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(_visualApartmentLocationPhotoItems.Where(c => c.InvasiveImage == false));
+                    
+                }
+                return _visualApartmentLocationPhotoItems;
+                
+            }
             set { _visualApartmentLocationPhotoItems = value; OnPropertyChanged("VisualApartmentLocationPhotoItems"); }
         }
         private string _unitPhotCount;

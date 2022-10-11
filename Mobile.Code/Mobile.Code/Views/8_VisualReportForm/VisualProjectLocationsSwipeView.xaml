@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.Code.Views.VisualProjectLocationsSwipeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controles="clr-namespace:Mobile.Code.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:fontawesome="clr-namespace:FontAwesome"
+    xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Mobile.Code.Controls"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:views="clr-namespace:Mobile.Code.Views"
+    x:Name="ProjectLocationForm"
+    
+    Shell.NavBarIsVisible="True"
+    mc:Ignorable="d">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                FontAttributes="None"
+                FontFamily="{StaticResource Montserrat-Regular}"
+                FontSize="Subtitle"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding VisualForm.Name}"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand" />
+
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add Photo"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.CameraPlus},
+                     Color=Red,Size=45}" 
+                     Command="{Binding ChoosePhotoFromCameraCommand}" 
+                     Order="Primary"
+                     Priority="0" />
+        <ToolbarItem Text="Save"                     
+                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                     Glyph={x:Static helpers:IconFont.ContentSave},
+                     Color=Red,Size=45}" 
+                     Command="{Binding SaveCommand}" IsDestructive="False"
+                     Order="Primary"
+                     Priority="1" />
+        <ToolbarItem Text="Show All Images"
+                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                 Glyph={x:Static helpers:IconFont.Home},
+                 Color=#FFD180,Size=45}"
+                 Order="Secondary" Command="{Binding ShowImagesCommand}"
+                 Priority="2" />
+       
+    </ContentPage.ToolbarItems>
+    <AbsoluteLayout>
+        <StackLayout Grid.Row="1" Padding="0" Margin="5,2">
+            <CarouselView x:Name="carouselView" 
+                      IndicatorView="indicatorView"                                      
+                                        ItemsSource="{Binding VisualFormProjectLocationItems}" 
+                          EmptyView="No locations to Display." HorizontalOptions="Center">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <views:VisualProjectLocationForm/>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="indicatorView" VerticalOptions="EndAndExpand"
+                                        IndicatorColor="{DynamicResource Orange-100}"
+                                        SelectedIndicatorColor="{DynamicResource Orange-900}"
+                                        HorizontalOptions="Center" />
+        </StackLayout>
+    </AbsoluteLayout>
+
+</ContentPage>

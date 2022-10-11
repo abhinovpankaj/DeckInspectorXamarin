@@ -30,20 +30,17 @@ namespace Mobile.Code.Views
             MessagingCenter.Subscribe<ISpeechToText>(this, "Final", (sender) =>
             {
                 ImageButton btn = sender as ImageButton;
-                if (btn.ClassId == "recordName")
-                {
-                    recordName.IsEnabled = true;
-
-                }
-
-                else if (btn.ClassId == "recordDes")
+                if (btn.ClassId == "recordDes")
                 {
                     recordDes.IsEnabled = true;
                 }
 
             });
 
-           
+            MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
+            {
+                SpeechToTextFinalResultRecieved(args);
+            });
 
             //this.BindingContext =vm= new ProjectAddEditViewModel();
         }
