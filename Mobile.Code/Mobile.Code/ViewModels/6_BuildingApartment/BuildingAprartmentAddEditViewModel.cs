@@ -273,11 +273,12 @@ namespace Mobile.Code.ViewModels
             set { _imgPath = value; OnPropertyChanged(); }
         }
 
-        private void testphoto(ImageData ImgData)
+        private async void testphoto(ImageData ImgData)
         {
             BuildingApartment.ImageName = ImgData.Name;
             BuildingApartment.ImageDescription = ImgData.Description;
             BuildingApartment.ImageUrl = ImgData.Path;
+            await Save();
             //ImgPatah = ImgData.Path;
             // await App.Current.MainPage.DisplayAlert(ImgData.Name, ImgData.Path, "ok", "cancel");
         }

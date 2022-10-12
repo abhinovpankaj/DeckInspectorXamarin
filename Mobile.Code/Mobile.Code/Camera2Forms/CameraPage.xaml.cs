@@ -209,5 +209,17 @@ namespace Mobile.Code.Camera2Forms
                 zoomfactor.Text = Math.Round(currentScale,2).ToString() + "x";
             }
         }
+
+        private void OnFlashClicked(object sender, EventArgs e)
+        {
+            if (cameraView.FlashMode == CameraFlashMode.On)
+            {
+                cameraView.FlashMode = CameraFlashMode.Off;                
+            }
+            else
+            {
+                cameraView.FlashMode = CameraFlashMode.On;
+            }               
+        }
     }
 }

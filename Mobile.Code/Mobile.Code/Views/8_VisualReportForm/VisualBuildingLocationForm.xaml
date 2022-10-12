@@ -36,7 +36,7 @@
         </Grid>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem
+        <!--<ToolbarItem
             Command="{Binding ChoosePhotoFromCameraCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.CameraPlus},
@@ -44,7 +44,7 @@
                                         Size=45}"
             Order="Primary"
             Priority="0"
-            Text="Add Photo" />
+            Text="Add Photo" />-->
         <ToolbarItem
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
@@ -113,7 +113,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackLayout
-                            Margin="0,5,0,5"
+                            Margin="10,5,0,5"
                             HorizontalOptions="FillAndExpand"
                             Orientation="Horizontal">
                             <Label
@@ -169,7 +169,7 @@
                             x:Name="txtName"
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            Margin="0,-8,0,0"
+                            Margin="10,-8,0,0"
                             FontFamily="{StaticResource Montserrat-Regular}"
                             FontSize="Medium"
                             HeightRequest="40"
@@ -180,7 +180,7 @@
                         <BoxView
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
-                            Margin="0,-8,8,0"
+                            Margin="10,-8,8,0"
                             CornerRadius="5"
                             HeightRequest="1"
                             HorizontalOptions="Fill"
@@ -195,25 +195,49 @@
                         Padding="0"
                         BackgroundColor="{DynamicResource Orange-300}"
                         RowDefinitions="auto,*">
-                        <StackLayout
-                            HorizontalOptions="CenterAndExpand"
-                            Orientation="Horizontal"
+                        <Grid
+                            ColumnDefinitions="auto,*"
+                            HorizontalOptions="FillAndExpand"
                             VerticalOptions="Start">
-                            <Label
+                            <StackLayout
+                                Margin="20,0,0,0"
+                                HorizontalOptions="CenterAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="Small"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Unit Photo(s) :"
+                                    TextColor="{DynamicResource ColorForegroundText}" />
+                                <Label
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding UnitPhotoCount}"
+                                    TextColor="{DynamicResource ColorForegroundText}"
+                                    VerticalOptions="Start"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+
+                            <Button
+                                Grid.Column="1"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                Command="{Binding ChoosePhotoFromCameraCommand}"
+                                CornerRadius="25"
                                 FontFamily="{StaticResource Montserrat-Regular}"
-                                FontSize="Small"
-                                HorizontalOptions="Center"
-                                Text="Unit Photo(s) :"
-                                TextColor="{DynamicResource ColorForegroundText}" />
-                            <Label
-                                FontFamily="{StaticResource MaterialFontFamily}"
-                                FontSize="Medium"
-                                HorizontalOptions="EndAndExpand"
-                                Text="{Binding UnitPhotoCount}"
-                                TextColor="{DynamicResource ColorForegroundText}"
-                                VerticalOptions="Start"
-                                VerticalTextAlignment="Center" />
-                        </StackLayout>
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                        Glyph={x:Static helpers:IconFont.CameraPlus},
+                                                        Color=White,
+                                                        Size=45}"
+                                TextColor="White"
+                                VerticalOptions="Start" />
+
+                        </Grid>
+
                         <StackLayout
                             Grid.Row="1"
                             Margin="5,2"
@@ -224,7 +248,7 @@
                                 HeightRequest="280"
                                 HorizontalOptions="Center"
                                 IndicatorView="indicatorView"
-                                ItemsSource="{Binding VisualBuildingLocationPhotoItems}">
+                                ItemsSource="{Binding VisualApartmentLocationPhotoItems}">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
@@ -264,7 +288,9 @@
                                 SelectedIndicatorColor="{DynamicResource Orange-900}"
                                 VerticalOptions="EndAndExpand" />
                         </StackLayout>
+
                     </Grid>
+
 
 
                     <Frame

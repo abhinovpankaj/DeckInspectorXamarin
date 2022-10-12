@@ -157,7 +157,7 @@
                 <Grid
                     x:Name="FlexTypesVisualForm"
                     Grid.Row="2"
-                    RowDefinitions="auto,*">
+                    RowDefinitions="auto,auto">
                     <StackLayout Grid.Row="0" Margin="5,0,0,0">
                         <Label
                             Margin="5,0,0,0"
@@ -174,7 +174,24 @@
                             EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
                             IsVisible="{Binding IsViusalReport}"
                             ItemsSource="{Binding VisualFormProjectLocationItems}"
-                            VerticalOptions="Center">
+                            ItemsUpdatingScrollMode="KeepItemsInView"
+                            VerticalOptions="CenterAndExpand"
+                            VerticalScrollBarVisibility="Default">
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        <Label
+                                            Margin="0,120,0,0"
+                                            FontAttributes="Bold"
+                                            FontSize="Large"
+                                            HorizontalOptions="Fill"
+                                            HorizontalTextAlignment="Center"
+                                            Text="No locations to display, use &quot;+&quot; button to add new locations."
+                                            VerticalTextAlignment="Start" />
+                                    </Grid>
+
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
                             </CollectionView.ItemsLayout>

@@ -143,6 +143,21 @@
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
                             </CollectionView.ItemsLayout>
+                            <CollectionView.EmptyViewTemplate>
+                                <DataTemplate>
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        <Label
+                                            Margin="0,120,0,0"
+                                            FontAttributes="Bold"
+                                            FontSize="Large"
+                                            HorizontalOptions="Fill"
+                                            HorizontalTextAlignment="Center"
+                                            Text="No locations to display, use &quot;+&quot; button to add new locations."
+                                            VerticalTextAlignment="Start" />
+                                    </Grid>
+
+                                </DataTemplate>
+                            </CollectionView.EmptyViewTemplate>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Frame
