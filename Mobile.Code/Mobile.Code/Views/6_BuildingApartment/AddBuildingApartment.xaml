@@ -144,7 +144,7 @@
                                     HeightRequest="1"
                                     HorizontalOptions="Fill"
                                     VerticalOptions="Start"
-                                    Color="{DynamicResource Orange-900}" />
+                                    Color="{DynamicResource Orange-700}" />
 
                             </Grid>
 
@@ -200,7 +200,7 @@
                                     HeightRequest="1"
                                     HorizontalOptions="Fill"
                                     VerticalOptions="StartAndExpand"
-                                    Color="{DynamicResource Orange-900}" />
+                                    Color="{DynamicResource Orange-700}" />
 
                             </Grid>
                             <Grid Grid.Row="2" Margin="0,10,0,0">

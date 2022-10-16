@@ -147,7 +147,7 @@
                         FontSize="Body"
                         HorizontalOptions="EndAndExpand"
                         Text="Invasive Report"
-                        TextColor="{DynamicResource Orange-900}"
+                        TextColor="{DynamicResource Orange-700}"
                         VerticalOptions="StartAndExpand"
                         VerticalTextAlignment="Center" />
                 </Grid>

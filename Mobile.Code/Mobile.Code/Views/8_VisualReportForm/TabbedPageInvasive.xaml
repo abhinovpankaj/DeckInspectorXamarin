@@ -88,7 +88,7 @@
                     Margin="5"
                     BackgroundColor="{DynamicResource Orange-100}"
                     HeaderBackgroundColor="{DynamicResource Orange-100}"
-                    HeaderSelectionUnderlineColor="{DynamicResource Orange-900}"
+                    HeaderSelectionUnderlineColor="{DynamicResource Orange-700}"
                     HeaderSelectionUnderlineThickness="3"
                     HeaderTabTextColor="{DynamicResource ColorBackground}"
                     HeaderTabTextFontAttributes="Bold"

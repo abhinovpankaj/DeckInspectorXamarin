@@ -131,7 +131,7 @@
                                             <Label
                                                 Margin="-10,-10,0,0"
                                                 Padding="2"
-                                                Background="#2C1DFF"
+                                                Background="{DynamicResource Orange-400}"
                                                 FontAttributes="Bold"
                                                 FontSize="Subtitle"
                                                 HeightRequest="25"
@@ -157,7 +157,7 @@
                                             </Label>
                                             <Label
                                                 Padding="0"
-                                                Background="#1C3FFD"
+                                                Background="{DynamicResource Orange-400}"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
                                                 HeightRequest="28"

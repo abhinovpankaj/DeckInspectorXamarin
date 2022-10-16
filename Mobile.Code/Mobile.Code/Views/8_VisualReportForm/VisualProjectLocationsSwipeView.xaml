@@ -78,7 +78,7 @@
             </CarouselView>
             <IndicatorView x:Name="indicatorView" VerticalOptions="EndAndExpand"
                                         IndicatorColor="{DynamicResource Orange-100}"
-                                        SelectedIndicatorColor="{DynamicResource Orange-900}"
+                                        SelectedIndicatorColor="{DynamicResource Orange-700}"
                                         HorizontalOptions="Center" />
         </StackLayout>
     </AbsoluteLayout>

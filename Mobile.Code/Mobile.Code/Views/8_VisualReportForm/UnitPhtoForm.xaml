@@ -150,7 +150,7 @@
                     Margin="5"
                     HorizontalOptions="Center"
                     IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
+                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
                 <FlexLayout
@@ -281,7 +281,7 @@
                     x:Name="indicatorView1"
                     HorizontalOptions="Center"
                     IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
+                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualBuilding}">
                 <FlexLayout
@@ -440,7 +440,7 @@
                     x:Name="indicatorView2"
                     HorizontalOptions="Center"
                     IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-900}" />
+                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
             </StackLayout>
 
         </Grid>
