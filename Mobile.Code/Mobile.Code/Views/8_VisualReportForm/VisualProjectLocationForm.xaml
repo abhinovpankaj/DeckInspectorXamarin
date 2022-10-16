@@ -292,7 +292,7 @@
                             <IndicatorView
                                 x:Name="indicatorView"
                                 HorizontalOptions="Center"
-                                IndicatorColor="{DynamicResource Orange-100}"
+                                IndicatorColor="{DynamicResource Orange-200}"
                                 SelectedIndicatorColor="{DynamicResource Orange-900}"
                                 VerticalOptions="EndAndExpand" />
                         </StackLayout>

@@ -326,7 +326,7 @@
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
                                                    Color=#1B76FF,
-                                                   Size=35}"
+                                                   Size=25}"
                                 VerticalOptions="Center"
                                 WidthRequest="40">
                                 <ImageButton.IsVisible>
