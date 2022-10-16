@@ -89,21 +89,22 @@
                 </Grid>
             </ControlTemplate>
             <Color x:Key="ColorForegroundText">#000000</Color>
-            <Color x:Key="ColorForegroundAction">#E65100</Color>
-            <Color x:Key="ColorForegroundFocus">#FF6D00</Color>
+            <Color x:Key="ColorForegroundAction">#1C3FFD</Color>
+            <Color x:Key="ColorForegroundFocus">#1C3FFD</Color>
             <Color x:Key="ColorForegroundMuted">#636363</Color>
             <Color x:Key="ColorForegroundBorder">#808080</Color>
-            <Color x:Key="ColorBackground">#FFFFFF</Color>
+            <Color x:Key="ColorBackground">#000000</Color>
             <Color x:Key="ColorBackgroundShade">#F5F5F5</Color>
             <Color x:Key="ColorBackgroundAlt">#EBEBEB</Color>
             <Color x:Key="ColorBackgroundAltShade">#E0E0E0</Color>
-            <Color x:Key="primaryColor">#E65100</Color>
-            <Color x:Key="Orange-900">#E65100</Color>
-            <Color x:Key="Orange-700">#FF6D00</Color>
-            <Color x:Key="Orange-200">#FFAB40</Color>
-            <Color x:Key="Orange-400">#FF9100</Color>
-            <Color x:Key="Orange-100">#FFD180</Color>
-            <Color x:Key="Orange-300">#FFB74D</Color>
+            <Color x:Key="primaryColor">#1C3FFD</Color>
+            <Color x:Key="Orange-900">#1C3FFD</Color>
+            <Color x:Key="Orange-700">#1B76FF</Color>
+            <Color x:Key="Orange-400">#1B76FF</Color>
+            <Color x:Key="Orange-300">#15A9FA</Color>
+            <Color x:Key="Orange-200">#0EEAFF</Color>
+            <Color x:Key="Orange-100">#FFFFFF</Color>
+
             <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
                 <On Platform="Android" Value="FontAwesome5Brands.otf#Regular" />
                 <On Platform="iOS" Value="FontAwesome5Brands-Regular" />
@@ -182,7 +183,7 @@
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Opacity" Value="0" />
                 <Setter Property="TranslationY" Value="100" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource Orange-400}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource Orange-100}" />
             </Style>
 
             <Style x:Key="cardTitleStyle" TargetType="Label">
@@ -205,7 +206,64 @@
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
                 <Setter Property="TextColor" Value="{StaticResource ColorForegroundText}" />
             </Style>
+            <!--<ControlTemplate x:Key="RadioButtonTemplate">
+                <Frame
+                    Padding="0"
+                    BackgroundColor="{DynamicResource Orange-400}"
+                    BorderColor="{DynamicResource Orange-400}"
+                    HasShadow="False"
+                    HeightRequest="100"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    WidthRequest="100">
+                    <Grid Margin="4" WidthRequest="100">
+                        <Grid
+                            HeightRequest="18"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            WidthRequest="18">
+                            <Ellipse
+                                Fill="White"
+                                HeightRequest="16"
+                                HorizontalOptions="Center"
+                                Stroke="{DynamicResource Orange-700}"
+                                VerticalOptions="Center"
+                                WidthRequest="16" />
+                            <Ellipse
+                                x:Name="check"
+                                Fill="{DynamicResource Orange-700}"
+                                HeightRequest="8"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="8" />
+                        </Grid>
+                        <ContentPresenter />
+                    </Grid>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CheckedStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="#FF3300" />
+                                        <Setter TargetName="check" Property="Opacity" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#F3F2F1" />
+                                        <Setter Property="BorderColor" Value="#F3F2F1" />
+                                        <Setter TargetName="check" Property="Opacity" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Frame>
+            </ControlTemplate>
 
+            <Style TargetType="RadioButton">
+                <Setter Property="ControlTemplate" Value="{StaticResource RadioButtonTemplate}" />
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 

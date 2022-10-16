@@ -59,7 +59,7 @@
         <ToolbarItem Text="Show All Images"
                  IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                  Glyph={x:Static helpers:IconFont.Home},
-                 Color=#FFD180,Size=45}"
+                 Color=#0EEAFF,Size=45}"
                  Order="Secondary" Command="{Binding ShowImagesCommand}"
                  Priority="2" />
        

@@ -48,9 +48,10 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             IsVisible="{Binding IsBusyProgress}" />
-        <Grid BackgroundColor="{DynamicResource Orange-300}"
+        <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource Orange-300}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
 
@@ -63,8 +64,8 @@
             <Grid
                 AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                BackgroundColor="{DynamicResource Orange-300}" />
-            
+                BackgroundColor="{DynamicResource Orange-900}" />
+
             <StackLayout
                 Grid.Row="0"
                 Margin="10,10,10,0"
@@ -82,23 +83,21 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Frame
-                                     x:Name="FrameTypes"
-                                    Margin="4" BorderColor="{DynamicResource  Orange-100}"
-                                    HasShadow="True"
-                                    Padding="10" CornerRadius="10"
+                                    x:Name="FrameTypes"
+                                    Margin="4"
+                                    Padding="10"
+                                    BorderColor="{DynamicResource Orange-100}"
+                                    CornerRadius="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
-                                                               Tablet='50%'}">
+                                                               Tablet='50%'}"
+                                    HasShadow="True">
                                     <Frame.Background>
 
-                                        <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="1,1">
-                                            <GradientStop Color="{DynamicResource Orange-100}"
-                            Offset="0.1" />
-                                            <GradientStop Color="{DynamicResource Orange-400}"
-                            Offset="0.6" />
-                                            <GradientStop Color="{DynamicResource Orange-700}"
-                            Offset="1.0" />
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Offset="0.1" Color="{DynamicResource Orange-100}" />
+                                            <GradientStop Offset="0.6" Color="{DynamicResource Orange-100}" />
+                                            <GradientStop Offset="1.0" Color="{DynamicResource Orange-700}" />
                                         </LinearGradientBrush>
                                     </Frame.Background>
                                     <Grid>
@@ -153,12 +152,13 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <Button
-                                                    Grid.Column="1" CornerRadius="5"
+                                                    Grid.Column="1"
                                                     Margin="1,5,2,5"
                                                     BackgroundColor="{StaticResource primaryColor}"
                                                     BorderWidth="1"
                                                     Command="{Binding BindingContext.SyncProjectCommand, Source={x:Reference FlexTypes}}"
                                                     CommandParameter="{Binding}"
+                                                    CornerRadius="5"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     HeightRequest="35"
                                                     HorizontalOptions="EndAndExpand"

@@ -67,7 +67,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-300}"
+            BackgroundColor="{DynamicResource Orange-100}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <!--<Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -94,7 +94,7 @@
                                     x:Name="FrameTypes"
                                     Margin="4"
                                     Padding="10"
-                                    BorderColor="{DynamicResource Orange-100}"
+                                    BorderColor="{DynamicResource Orange-700}"
                                     CornerRadius="10"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='100%',
@@ -104,8 +104,8 @@
 
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                             <GradientStop Offset="0.1" Color="{DynamicResource Orange-100}" />
-                                            <GradientStop Offset="0.6" Color="{DynamicResource Orange-400}" />
-                                            <GradientStop Offset="1.0" Color="{DynamicResource Orange-700}" />
+                                            <GradientStop Offset="0.35" Color="{DynamicResource Orange-100}" />
+                                            <GradientStop Offset="1.0" Color="{DynamicResource Orange-200}" />
                                         </LinearGradientBrush>
                                     </Frame.Background>
                                     <Grid>
@@ -131,7 +131,7 @@
                                             <Label
                                                 Margin="-10,-10,0,0"
                                                 Padding="2"
-                                                Background="#E65100"
+                                                Background="#2C1DFF"
                                                 FontAttributes="Bold"
                                                 FontSize="Subtitle"
                                                 HeightRequest="25"
@@ -157,7 +157,7 @@
                                             </Label>
                                             <Label
                                                 Padding="0"
-                                                Background="#FF9100"
+                                                Background="#1C3FFD"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
                                                 HeightRequest="28"
@@ -223,7 +223,7 @@
                                                 <Button
                                                     Grid.Column="1"
                                                     Margin="1,5,2,5"
-                                                    BackgroundColor="{DynamicResource Orange-900}"
+                                                    BackgroundColor="{DynamicResource Orange-400}"
                                                     BorderColor="{DynamicResource Orange-100}"
                                                     BorderWidth="1"
                                                     Command="{Binding BindingContext.InvasiveDetailCommand, Source={x:Reference FlexTypes}}"
@@ -264,8 +264,8 @@
             <Frame
                 Margin="10,10,20,30"
                 Padding="0"
-                BackgroundColor="{DynamicResource Orange-900}"
-                BorderColor="{DynamicResource ColorBackground}"
+                BackgroundColor="{DynamicResource Orange-700}"
+                BorderColor="{DynamicResource Orange-200}"
                 CornerRadius="40"
                 HasShadow="True"
                 HeightRequest="80"

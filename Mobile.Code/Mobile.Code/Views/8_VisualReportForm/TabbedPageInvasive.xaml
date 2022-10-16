@@ -54,8 +54,7 @@
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ContentSave},
-                                        Color=Red,
-                                        Size=45}"
+                                        Color=Red}"
             IsDestructive="False"
             Order="Primary"
             Priority="0"
@@ -64,7 +63,7 @@
             Command="{Binding ShowImagesCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Home},
-                                        Color=#FFD180,
+                                        Color=#0EEAFF,
                                         Size=45}"
             Order="Secondary"
             Priority="2"
@@ -81,17 +80,17 @@
             <Grid
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="{DynamicResource Orange-300}"
+                BackgroundColor="{DynamicResource Orange-100}"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
 
                 <tabview:TabViewControl
                     x:Name="tabbedControl"
                     Margin="5"
-                    BackgroundColor="{DynamicResource Orange-300}"
-                    HeaderBackgroundColor="{DynamicResource Orange-300}"
+                    BackgroundColor="{DynamicResource Orange-100}"
+                    HeaderBackgroundColor="{DynamicResource Orange-100}"
                     HeaderSelectionUnderlineColor="{DynamicResource Orange-900}"
                     HeaderSelectionUnderlineThickness="3"
-                    HeaderTabTextColor="White"
+                    HeaderTabTextColor="{DynamicResource ColorBackground}"
                     HeaderTabTextFontAttributes="Bold"
                     HeaderTabTextFontSize="Medium"
                     HorizontalOptions="FillAndExpand"

@@ -38,8 +38,7 @@
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ContentSave},
-                                        Color=Red,
-                                        Size=45}"
+                                        Color=#1B76FF}"
             Order="Primary"
             Priority="0"
             Text="Save" />
@@ -54,7 +53,7 @@
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
 
-                <Frame BackgroundColor="{DynamicResource Orange-400}">
+                <Frame BackgroundColor="{DynamicResource Orange-100}">
                     <!--<Frame.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
                             <On Platform="iOS" Value="5,40,5,0" />
@@ -109,8 +108,8 @@
                                 x:Name="recordName"
                                 Grid.Column="1"
                                 Padding="5"
-                                BackgroundColor="{DynamicResource Orange-900}"
-                                BorderColor="{DynamicResource Orange-100}"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-700}"
                                 BorderWidth="1"
                                 ClassId="recordName"
                                 Clicked="recordClick"
@@ -119,10 +118,10 @@
                                 HorizontalOptions="End"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=White,
+                                                   Color=#1B76FF,
                                                    Size=25}"
                                 VerticalOptions="Center"
-                                WidthRequest="50">
+                                WidthRequest="40">
                                 <ImageButton.IsVisible>
                                     <OnPlatform x:TypeArguments="x:Boolean">
                                         <On Platform="iOS" Value="false" />
@@ -146,12 +145,13 @@
                                 VerticalOptions="StartAndExpand" />
                             <BoxView
                                 Grid.Row="2"
+                                Grid.ColumnSpan="2"
                                 Margin="0,-8,0,0"
                                 CornerRadius="5"
                                 HeightRequest="1"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Start"
-                                Color="{DynamicResource Orange-100}" />
+                                Color="{DynamicResource Orange-900}" />
 
                         </Grid>
                         <Grid Grid.Row="1">
@@ -181,8 +181,8 @@
                                 x:Name="recordAddress"
                                 Grid.Column="1"
                                 Padding="5"
-                                BackgroundColor="{DynamicResource Orange-900}"
-                                BorderColor="{DynamicResource Orange-100}"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-400}"
                                 BorderWidth="1"
                                 ClassId="recordAddress"
                                 Clicked="recordClick"
@@ -191,10 +191,10 @@
                                 HorizontalOptions="End"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=White,
+                                                   Color=#1B76FF,
                                                    Size=25}"
                                 VerticalOptions="Center"
-                                WidthRequest="50">
+                                WidthRequest="40">
                                 <ImageButton.IsVisible>
                                     <OnPlatform x:TypeArguments="x:Boolean">
                                         <On Platform="iOS" Value="false" />
@@ -216,12 +216,13 @@
                                 VerticalOptions="FillAndExpand" />
                             <BoxView
                                 Grid.Row="2"
+                                Grid.ColumnSpan="2"
                                 Margin="0,-8,0,0"
                                 CornerRadius="5"
                                 HeightRequest="1"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Start"
-                                Color="{DynamicResource Orange-100}" />
+                                Color="{DynamicResource Orange-700}" />
                         </Grid>
 
                         <Grid Grid.Row="2" Margin="0,5,0,0">
@@ -243,8 +244,8 @@
                                 x:Name="recordDes"
                                 Grid.Column="1"
                                 Padding="5"
-                                BackgroundColor="{DynamicResource Orange-900}"
-                                BorderColor="{DynamicResource Orange-100}"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-700}"
                                 BorderWidth="1"
                                 ClassId="recordDes"
                                 Clicked="recordClick"
@@ -253,10 +254,10 @@
                                 HorizontalOptions="End"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=White,
+                                                   Color=#1B76FF,
                                                    Size=25}"
                                 VerticalOptions="Center"
-                                WidthRequest="50">
+                                WidthRequest="40">
                                 <ImageButton.IsVisible>
                                     <OnPlatform x:TypeArguments="x:Boolean">
                                         <On Platform="iOS" Value="false" />
@@ -282,7 +283,7 @@
                                 HeightRequest="1"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="StartAndExpand"
-                                Color="{DynamicResource Orange-100}" />
+                                Color="{DynamicResource Orange-700}" />
 
                         </Grid>
                         <Grid Grid.Row="3" Margin="0,10,0,0">
@@ -307,17 +308,17 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Padding="5"
-                                BackgroundColor="{DynamicResource Orange-900}"
-                                BorderColor="{DynamicResource Orange-100}"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-700}"
                                 BorderWidth="1"
                                 Command="{Binding ChoosePhotoCommand}"
                                 CornerRadius="20"
                                 HeightRequest="40"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Camera},
-                                                   Color=White,
+                                                   Color=#1B76FF,
                                                    Size=15}"
-                                WidthRequest="50" />
+                                WidthRequest="40" />
 
                         </Grid>
                         <Grid Grid.Row="4">
@@ -334,100 +335,6 @@
 
                 </Frame>
             </ScrollView>
-
-            <!--<Grid
-                x:Name="gridtoolbar"
-                AbsoluteLayout.LayoutBounds="0,0,1,.1"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="White"
-                ColumnSpacing="0"
-                RowSpacing="0"
-                VerticalOptions="FillAndExpand">
-                <Grid.Margin>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,0,0,0" />
-                        <On Platform="Android, WinPhone, Windows" Value="0" />
-                    </OnPlatform>
-                </Grid.Margin>
-                <Grid.Padding>
-                    <OnPlatform x:TypeArguments="Thickness">
-                        <On Platform="iOS" Value="0,0,0,5" />
-                        <On Platform="Android, WinPhone, Windows" Value="0,5,0,5" />
-                    </OnPlatform>
-                </Grid.Padding>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-
-                </Grid.ColumnDefinitions>
-                <Image
-                    Grid.Column="0"
-                    Margin="0"
-                    HeightRequest="{x:OnPlatform Android=30,
-                                                 iOS=30,
-                                                 UWP=30}"
-                    HorizontalOptions="Start"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.ArrowLeft},
-                                       Color=#2e479b,
-                                       Size={x:OnPlatform Android=30,
-                                                          iOS=30,
-                                                          UWP=30}}"
-                    VerticalOptions="Center"
-                    WidthRequest="{x:OnPlatform Android=30,
-                                                iOS=30,
-                                                UWP=30}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <StackLayout Grid.Column="1">
-                    <Label
-                        FontAttributes="None"
-                        FontFamily="{StaticResource Montserrat-SemiBold}"
-                        FontSize="15"
-                        HorizontalOptions="CenterAndExpand"
-                        Style="{StaticResource LabelStyle}"
-                        Text="{Binding Title}"
-                        TextColor="Black"
-                        VerticalOptions="CenterAndExpand" />
-                    <Label
-                        FontAttributes="None"
-                        FontFamily="{StaticResource Montserrat-SemiBold}"
-                        FontSize="12"
-                        HorizontalOptions="CenterAndExpand"
-                        Style="{StaticResource LabelStyle}"
-                        Text="{Binding ProjectType}"
-                        TextColor="#2e479b"
-                        VerticalOptions="CenterAndExpand" />
-                </StackLayout>
-
-                <Image
-                    Grid.Column="2"
-                    Margin="0"
-                    HeightRequest="{x:OnPlatform Android=30,
-                                                 iOS=30,
-                                                 UWP=30}"
-                    HorizontalOptions="Start"
-                    IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
-                    Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                       Glyph={x:Static helpers:IconFont.Floppy},
-                                       Color=#2e479b,
-                                       Size={x:OnPlatform Android=30,
-                                                          iOS=30,
-                                                          UWP=30}}"
-                    VerticalOptions="Center"
-                    WidthRequest="{x:OnPlatform Android=30,
-                                                iOS=30,
-                                                UWP=30}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SaveCommand}" />
-                    </Image.GestureRecognizers>
-                </Image>
-
-
-            </Grid>-->
 
         </AbsoluteLayout>
     </ContentPage.Content>

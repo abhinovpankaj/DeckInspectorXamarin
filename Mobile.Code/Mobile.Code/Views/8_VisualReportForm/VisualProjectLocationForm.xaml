@@ -44,8 +44,7 @@
             Command="{Binding ChoosePhotoFromCameraCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.CameraPlus},
-                                        Color=Red,
-                                        Size=45}"
+                                        Color=Red}"
             Order="Primary"
             Priority="0"
             Text="Add Photo" />
@@ -53,8 +52,7 @@
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ContentSave},
-                                        Color=Red,
-                                        Size=45}"
+                                        Color=Red}"
             IsDestructive="False"
             Order="Primary"
             Priority="1"
@@ -63,8 +61,7 @@
             Command="{Binding ShowImagesCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ImageAlbum},
-                                        Color=#FFD180,
-                                        Size=45}"
+                                        Color=#0EEAFF}"
             Order="Secondary"
             Priority="2"
             Text="Show All Images" />
@@ -79,7 +76,7 @@
             x:Name="MainGrid"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-300}"
+            BackgroundColor="{DynamicResource Orange-100}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -89,6 +86,7 @@
 
             <ScrollView Grid.Row="1" VerticalOptions="StartAndExpand">
                 <Grid>
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -105,6 +103,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
 
                     <Grid Margin="10,2">
                         <Grid.RowDefinitions>
@@ -133,32 +132,22 @@
                                 TextColor="Red"
                                 VerticalTextAlignment="Center" />
                         </StackLayout>
-
-                        <!--<ImageButton
-                            x:Name="recordName"
-                            Grid.Column="1"
-                            BackgroundColor="White"
-                            ClassId="recordName"
-                            Clicked="recordClick"
-                            HeightRequest="28"
-                            HorizontalOptions="End"
-                            IsVisible="true"
-                            Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                               Glyph={x:Static helpers:IconFont.Microphone},
-                                               Color=#2e479b,
-                                               Size=20}"
-                            VerticalOptions="Center" />-->
                         <ImageButton
                             x:Name="recordName"
                             Grid.Column="1"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            Padding="5"
+                            BackgroundColor="{DynamicResource Orange-100}"
+                            BorderColor="{DynamicResource Orange-700}"
+                            BorderWidth="1"
                             ClassId="recordName"
                             Clicked="recordClick"
-                            HeightRequest="28"
+                            Command="{Binding ChoosePhotoCommand}"
+                            CornerRadius="20"
+                            HeightRequest="40"
                             HorizontalOptions="End"
                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                Glyph={x:Static helpers:IconFont.Microphone},
-                                               Color=#E65100,
+                                               Color=#1B76FF,
                                                Size=35}"
                             VerticalOptions="Center">
                             <ImageButton.IsVisible>
@@ -168,19 +157,19 @@
                                 </OnPlatform>
                             </ImageButton.IsVisible>
                         </ImageButton>
-                        <uc:XEditor
+
+                        <controles:BorderlessEntry
                             x:Name="txtName"
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
                             Margin="10,-8,0,0"
-                            AutoSize="TextChanges"
                             FontFamily="{StaticResource Montserrat-Regular}"
-                            FontSize="15"
-                            IsSpellCheckEnabled="True"
-                            IsTextPredictionEnabled="True"
+                            FontSize="Medium"
+                            HeightRequest="40"
+                            TabIndex="0"
                             Text="{Binding VisualForm.Name}"
-                            TextColor="{DynamicResource ColorBackground}"
-                            VerticalOptions="FillAndExpand" />
+                            TextColor="Black"
+                            VerticalOptions="StartAndExpand" />
                         <BoxView
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
@@ -189,13 +178,14 @@
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-100}" />
+                            Color="{DynamicResource Orange-900}" />
                     </Grid>
+
                     <Grid
                         Grid.Row="1"
                         Margin="0"
                         Padding="0"
-                        BackgroundColor="{DynamicResource Orange-300}"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         RowDefinitions="auto,*">
                         <Grid
                             ColumnDefinitions="auto,*"
@@ -214,29 +204,45 @@
                                     TextColor="{DynamicResource ColorForegroundText}" />
                                 <Label
                                     FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="Medium"
+                                    FontSize="Large"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding UnitPhotoCount}"
                                     TextColor="{DynamicResource ColorForegroundText}"
                                     VerticalOptions="Start"
                                     VerticalTextAlignment="Center" />
                             </StackLayout>
-
-                            <Button
+                            <ImageButton
+                                Grid.Column="1"
+                                Margin="0,0,10,0"
+                                Padding="5"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-700}"
+                                BorderWidth="1"
+                                Command="{Binding ChoosePhotoCommand}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                                   Glyph={x:Static helpers:IconFont.CameraPlus},
+                                                   Color=#1B76FF,
+                                                   Size=35}"
+                                VerticalOptions="Start" />
+                            <!--<Button
                                 Grid.Column="1"
                                 Padding="0"
-                                BackgroundColor="Transparent"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-400}"
                                 Command="{Binding ChoosePhotoFromCameraCommand}"
-                                CornerRadius="25"
+                                CornerRadius="20"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 HeightRequest="40"
                                 HorizontalOptions="End"
                                 ImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                         Glyph={x:Static helpers:IconFont.CameraPlus},
-                                                        Color=White,
-                                                        Size=45}"
-                                TextColor="White"
-                                VerticalOptions="Start" />
+                                                        Color=#1B76FF,
+                                                        Size=35}"
+                                TextColor="{DynamicResource Orange-400}"
+                                VerticalOptions="Start" />-->
 
                         </Grid>
 
@@ -250,13 +256,13 @@
                                 HeightRequest="280"
                                 HorizontalOptions="Center"
                                 IndicatorView="indicatorView"
-                                ItemsSource="{Binding VisualApartmentLocationPhotoItems}">
+                                ItemsSource="{Binding VisualProjectLocationPhotoItems}">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
                                             <Frame
                                                 Padding="2"
-                                                BackgroundColor="{DynamicResource Orange-400}"
+                                                BackgroundColor="{DynamicResource Orange-100}"
                                                 CornerRadius="10"
                                                 HasShadow="True"
                                                 HorizontalOptions="Center"
@@ -304,14 +310,13 @@
 
                         <Grid ColumnDefinitions="*,auto,auto">
                             <Label
-                                Margin="0,0,8,0"
+                                Margin="0,0,8,8"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="14"
                                 HorizontalOptions="StartAndExpand"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Exterior Elements "
-                                TextColor="{DynamicResource ColorForegroundText}"
-                                VerticalOptions="CenterAndExpand" />
+                                TextColor="{DynamicResource ColorForegroundText}" />
                             <Label
                                 Grid.Column="1"
                                 Margin="5,5"
@@ -352,14 +357,13 @@
                             </Grid.ColumnDefinitions>
 
                             <Label
-                                Margin="0,0,8,0"
+                                Margin="0,0,8,8"
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="14"
                                 HorizontalOptions="StartAndExpand"
                                 Style="{StaticResource LabelStyle}"
                                 Text="Waterproofing Elements "
-                                TextColor="{DynamicResource ColorForegroundText}"
-                                VerticalOptions="CenterAndExpand" />
+                                TextColor="{DynamicResource ColorForegroundText}" />
                             <Label
                                 Grid.Column="1"
                                 Margin="5,5"
@@ -399,7 +403,9 @@
                                 FontFamily="{StaticResource Montserrat-Regular}"
                                 FontSize="14"
                                 HorizontalTextAlignment="Start"
-                                Text="Visual Review" />
+                                Style="{StaticResource LabelStyle}"
+                                Text="Visual Review"
+                                TextColor="{DynamicResource mainLabel}" />
                             <FlexLayout
                                 x:Name="VisualReviewFrm"
                                 Grid.Row="1"
@@ -615,17 +621,21 @@
                         <ImageButton
                             x:Name="recordDes"
                             Grid.Column="1"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            Padding="5"
+                            BackgroundColor="{DynamicResource Orange-100}"
+                            BorderColor="{DynamicResource Orange-700}"
+                            BorderWidth="1"
                             ClassId="recordDes"
                             Clicked="recordClick"
-                            Command="{Binding RecordVoiceCommand}"
-                            HeightRequest="28"
+                            CornerRadius="20"
+                            HeightRequest="40"
                             HorizontalOptions="End"
                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                Glyph={x:Static helpers:IconFont.Microphone},
-                                               Color=#E65100,
+                                               Color=#1B76FF,
                                                Size=35}"
-                            VerticalOptions="Center">
+                            VerticalOptions="Center"
+                            WidthRequest="40">
                             <ImageButton.IsVisible>
                                 <OnPlatform x:TypeArguments="x:Boolean">
                                     <On Platform="iOS" Value="false" />
@@ -642,6 +652,7 @@
                             FontSize="15"
                             IsSpellCheckEnabled="True"
                             IsTextPredictionEnabled="True"
+                            Keyboard="Chat"
                             Text="{Binding VisualForm.AdditionalConsideration}"
                             TextColor="{DynamicResource ColorBackground}"
                             VerticalOptions="FillAndExpand" />
@@ -649,13 +660,13 @@
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
                             Margin="0,-8,8,0"
+                            BackgroundColor="{DynamicResource Orange-900}"
                             CornerRadius="5"
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-100}" />
+                            Color="{DynamicResource Orange-900}" />
                     </Grid>
-
                     <Frame
                         Grid.Row="9"
                         Margin="5,0"
@@ -816,20 +827,10 @@
                         </Grid>
                     </Frame>
 
-                    <Grid.GestureRecognizers>
-                        <SwipeGestureRecognizer
-                            Command="{Binding SwippedCommand}"
-                            CommandParameter="Right"
-                            Direction="Right" />
-                        <SwipeGestureRecognizer
-                            Command="{Binding SwippedCommand}"
-                            CommandParameter="Left"
-                            Direction="Left" />
-                    </Grid.GestureRecognizers>
+
 
                 </Grid>
             </ScrollView>
-
             <Button
                 x:Name="btnSwipeLeft"
                 Grid.Row="1"
@@ -878,7 +879,7 @@
                 x:Name="btnSaveNNew"
                 Grid.Row="1"
                 Margin="20"
-                BackgroundColor="{DynamicResource Orange-900}"
+                BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-100}"
                 BorderWidth="2"
                 Command="{Binding SaveAndCreateNewCommand}"

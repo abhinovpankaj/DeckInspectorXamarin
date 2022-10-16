@@ -5,9 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
-    Visual="Material" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Shell.NavBarIsVisible="True"
+    Visual="Material"
     mc:Ignorable="d">
     <Shell.TitleView>
         <StackLayout Padding="2,2" Orientation="Horizontal">
@@ -26,17 +26,18 @@
             <On Platform="iOS" Value="0,45,0,0" />
         </OnPlatform>
     </ContentPage.Padding>
-    <Grid RowSpacing="0" BackgroundColor="{DynamicResource Orange-100}">
+    <Grid BackgroundColor="{DynamicResource Orange-100}" RowSpacing="0">
         <Grid.RowDefinitions>
-            
+
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <Grid BackgroundColor="{DynamicResource Orange-300 }"
-            x:Name="SelectAllGrid"            
-            Margin="0,5,0,5">
+
+        <Grid
+            x:Name="SelectAllGrid"
+            Margin="0,5,0,5"
+            BackgroundColor="{DynamicResource Orange-200}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -48,18 +49,19 @@
                 Margin="10,1,0,0"
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Body"
-                HorizontalOptions="StartAndExpand"  
-                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="StartAndExpand"
                 Text="Select All"
-                TextColor="{DynamicResource  ColorForegroundText}"
+                TextColor="{DynamicResource ColorForegroundText}"
+                VerticalOptions="CenterAndExpand"
                 VerticalTextAlignment="Center" />
 
-            <CheckBox Margin="10,0,0,0"
+            <CheckBox
                 Grid.Column="0"
+                Margin="10,0,0,0"
                 HorizontalOptions="StartAndExpand"
                 IsChecked="{Binding IsAllSelect}"
                 WidthRequest="30"
-                Color="{DynamicResource Orange-900 }" />
+                Color="{DynamicResource Orange-400}" />
 
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding AllSelectedCommand}" />
@@ -67,7 +69,10 @@
             </Grid.GestureRecognizers>
 
         </Grid>
-        <ScrollView Grid.Row="1" Margin="5,2" BackgroundColor="{DynamicResource Orange-100 }">
+        <ScrollView
+            Grid.Row="1"
+            Margin="5,2"
+            BackgroundColor="{DynamicResource Orange-100}">
             <StackLayout
                 x:Name="FlexTypes"
                 BindableLayout.ItemsSource="{Binding Items}"
@@ -75,9 +80,12 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
 
-                        <Frame HasShadow="True" BackgroundColor="{DynamicResource Orange-300 }"
-                               Margin="10,0"
-                               Padding="2" CornerRadius="5">
+                        <Frame
+                            Margin="10,0"
+                            Padding="2"
+                            BackgroundColor="{DynamicResource Orange-200}"
+                            CornerRadius="5"
+                            HasShadow="True">
                             <Grid
                                 x:Name="FrameTypes"
                                 Margin="5,0"
@@ -92,7 +100,7 @@
                                     Margin="0,1,0,0"
                                     FontFamily="{StaticResource Montserrat-Regular}"
                                     FontSize="Body"
-                                    HorizontalOptions="StartAndExpand"                                   
+                                    HorizontalOptions="StartAndExpand"
                                     Text="{Binding Name}"
                                     TextColor="{DynamicResource ColorForegroundText}"
                                     VerticalTextAlignment="Center" />
@@ -100,8 +108,8 @@
                                 <CheckBox
                                     Grid.Column="1"
                                     HorizontalOptions="CenterAndExpand"
-                                    IsChecked="{Binding IsSelected}"                                    
-                                    Color="{DynamicResource Orange-900 }" />
+                                    IsChecked="{Binding IsSelected}"
+                                    Color="{DynamicResource Orange-400}" />
                             </Grid>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemSelectedCommand, Source={x:Reference FlexTypes}}" CommandParameter="{Binding}" />
@@ -118,8 +126,8 @@
             x:Name="btnDone"
             Grid.Row="2"
             Margin="5"
-            BackgroundColor="{DynamicResource Orange-900 }"
-            BorderColor="{DynamicResource Orange-100 }"
+            BackgroundColor="{DynamicResource Orange-300}"
+            BorderColor="{DynamicResource Orange-100}"
             BorderWidth="1"
             Clicked="btnDone_Clicked"
             FontSize="Small"

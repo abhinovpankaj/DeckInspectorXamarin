@@ -34,10 +34,6 @@
     <Compile Remove="Views\AddProjectLocationImage.xaml.cs" />
     <Compile Remove="Views\BearDetailPage.xaml.cs" />
     <Compile Remove="Views\BearsPage.xaml.cs" />
-    <Compile Remove="Views\BuildingView\BuildingApartment.xaml.cs" />
-    <Compile Remove="Views\BuildingView\BuildingDetail.xaml.cs" />
-    <Compile Remove="Views\BuildingView\BuildingLocation.xaml.cs" />
-    <Compile Remove="Views\BuildingView\BuildingLocationDetail.xaml.cs" />
     <Compile Remove="Views\CameraPage.xaml.cs" />
     <Compile Remove="Views\CatDetailPage.xaml.cs" />
     <Compile Remove="Views\CatsPage.xaml.cs" />
@@ -68,10 +64,6 @@
     <EmbeddedResource Remove="Views\AddProjectLocationImage.xaml" />
     <EmbeddedResource Remove="Views\BearDetailPage.xaml" />
     <EmbeddedResource Remove="Views\BearsPage.xaml" />
-    <EmbeddedResource Remove="Views\BuildingView\BuildingApartment.xaml" />
-    <EmbeddedResource Remove="Views\BuildingView\BuildingDetail.xaml" />
-    <EmbeddedResource Remove="Views\BuildingView\BuildingLocation.xaml" />
-    <EmbeddedResource Remove="Views\BuildingView\BuildingLocationDetail.xaml" />
     <EmbeddedResource Remove="Views\CameraPage.xaml" />
     <EmbeddedResource Remove="Views\CatDetailPage.xaml" />
     <EmbeddedResource Remove="Views\CatsPage.xaml" />
@@ -229,9 +221,6 @@
     <Compile Update="Views\8_VisualReportForm\VisualProjectLocationForm.xaml.cs">
       <DependentUpon>VisualProjectLocationForm.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\BuildingView\AddBuildingImage.xaml.cs">
-      <DependentUpon>AddBuildingImage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\5_BuildingLocation\AddBuildingLocation.xaml.cs">
       <DependentUpon>AddBuildingLocation.xaml</DependentUpon>
     </Compile>
@@ -252,9 +241,6 @@
     </Compile>
     <Compile Update="Views\2_ProjectDetail\AddProjectLocation.xaml.cs">
       <DependentUpon>AddProjectLocation.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\BuildingView\BuildingImage.xaml.cs">
-      <DependentUpon>BuildingImage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\ImageEditorPageForIOS.xaml.cs">
       <DependentUpon>ImageEditorPageForIOS.xaml</DependentUpon>

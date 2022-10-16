@@ -25,7 +25,7 @@
                     HorizontalOptions="CenterAndExpand"
                     IsRunning="{Binding IsBusyProgress}"
                     VerticalOptions="CenterAndExpand"
-                    Color="{DynamicResource Orange-700}" />
+                    Color="{DynamicResource Orange-400}" />
             </StackLayout>
 
         </StackLayout>

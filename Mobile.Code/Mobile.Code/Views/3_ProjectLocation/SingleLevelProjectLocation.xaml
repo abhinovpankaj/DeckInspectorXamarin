@@ -40,8 +40,7 @@
             Command="{Binding CreateInvasiveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ShieldRefresh},
-                                        Color=#FFD180,
-                                        Size=45}"
+                                        Color=#0EEAFF}"
             IsEnabled="{Binding CanInvasiveCreate}"
             Order="Primary"
             Priority="1"
@@ -50,8 +49,7 @@
             Command="{Binding DownloadOfflineCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.CloudDownload},
-                                        Color=#FFD180,
-                                        Size=45}"
+                                        Color=#0EEAFF}"
             IsEnabled="{Binding IsInvasive}"
             Order="Primary"
             Priority="1"
@@ -61,8 +59,7 @@
             Command="{Binding EditCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                                        Color=#FFD180,
-                                        Size=45}"
+                                        Color=#0EEAFF}"
             IsEnabled="{Binding IsEditDeleteAccess}"
             Order="Secondary"
             Priority="1"
@@ -71,8 +68,7 @@
             Command="{Binding DeleteCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Delete},
-                                        Color=Red,
-                                        Size=45}"
+                                        Color=Red}"
             IsDestructive="True"
             IsEnabled="{Binding IsEditDeleteAccess}"
             Order="Secondary"
@@ -84,8 +80,7 @@
             Command="{Binding GoHomeCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Home},
-                                        Color=#FFD180,
-                                        Size=45}"
+                                        Color=#0EEAFF}"
             Order="Secondary"
             Priority="1"
             Text="Home" />
@@ -99,7 +94,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-300}">
+            BackgroundColor="{DynamicResource Orange-100}">
             <Grid IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}" VerticalOptions="Fill">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -170,7 +165,7 @@
                     <ScrollView Grid.Row="1">
                         <CollectionView
                             Margin="10,5"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            BackgroundColor="{DynamicResource Orange-100}"
                             EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
                             IsVisible="{Binding IsViusalReport}"
                             ItemsSource="{Binding VisualFormProjectLocationItems}"
@@ -200,7 +195,8 @@
                                     <Frame
                                         Margin="4"
                                         Padding="0"
-                                        BorderColor="{DynamicResource Orange-100}"
+                                        BackgroundColor="{DynamicResource Orange-400}"
+                                        BorderColor="{DynamicResource Orange-400}"
                                         CornerRadius="8"
                                         HasShadow="True"
                                         IsClippedToBounds="True">
@@ -216,13 +212,13 @@
 
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                                 <GradientStop Offset="0.1" Color="{DynamicResource Orange-100}" />
-                                                <GradientStop Offset="0.6" Color="{DynamicResource Orange-400}" />
+                                                <GradientStop Offset="0.6" Color="{DynamicResource Orange-100}" />
                                                 <GradientStop Offset="1.0" Color="{DynamicResource Orange-700}" />
                                             </LinearGradientBrush>
                                         </Frame.Background>
-                                        <SwipeView>
+                                        <SwipeView Margin="1" IsClippedToBounds="True">
 
-                                            <Grid
+                                            <Grid 
                                                 x:Name="FrameTypes"
                                                 ColumnDefinitions="auto,auto,*"
                                                 ColumnSpacing="0"
@@ -232,9 +228,9 @@
                                                 <Grid.Background>
 
                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                        <GradientStop Offset="0.1" Color="{DynamicResource Orange-100}" />
-                                                        <GradientStop Offset="0.6" Color="{DynamicResource Orange-400}" />
-                                                        <GradientStop Offset="1.0" Color="{DynamicResource Orange-700}" />
+                                                        <GradientStop Offset="0.1" Color="{DynamicResource Orange-200}" />
+                                                        <GradientStop Offset="0.6" Color="{DynamicResource Orange-200}" />
+                                                        <GradientStop Offset="1.0" Color="{DynamicResource Orange-300}" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
 
@@ -341,12 +337,12 @@
                                             <SwipeView.RightItems>
                                                 <SwipeItems>
                                                     <SwipeItem
-                                                        BackgroundColor="{DynamicResource Orange-900}"
+                                                        BackgroundColor="Red"
                                                         Command="{Binding BindingContext.DeleteVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}"
                                                         CommandParameter="{Binding .}"
                                                         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                                     Glyph={x:Static helpers:IconFont.Delete},
-                                                                                    Color=#e65100,
+                                                                                    Color=#2C1DFF,
                                                                                     Size=26}"
                                                         IsDestructive="True"
                                                         Text="Delete" />
@@ -355,7 +351,7 @@
                                             <SwipeView.LeftItems Mode="Execute">
                                                 <SwipeItems>
                                                     <SwipeItem
-                                                        BackgroundColor="{DynamicResource Orange-400}"
+                                                        BackgroundColor="{DynamicResource Orange-700}"
                                                         Command="{Binding BindingContext.GoToVisualFormCommand, Source={x:Reference FlexTypesVisualForm}}"
                                                         CommandParameter="{Binding .}"
                                                         IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
@@ -387,8 +383,8 @@
             <Frame
                 Margin="10,10,20,30"
                 Padding="0"
-                BackgroundColor="{DynamicResource Orange-900}"
-                BorderColor="{DynamicResource ColorBackground}"
+                BackgroundColor="{DynamicResource Orange-700}"
+                BorderColor="{DynamicResource Orange-200}"
                 CornerRadius="40"
                 HasShadow="True"
                 HeightRequest="70"

@@ -20,11 +20,11 @@
     <ContentView.Content>
 
         <ScrollView
-            BackgroundColor="{DynamicResource Orange-300}"
+            BackgroundColor="{DynamicResource Orange-100}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
             VerticalOptions="FillAndExpand">
             <StackLayout Margin="0,10" VerticalOptions="FillAndExpand">
-                <Grid BackgroundColor="{DynamicResource Orange-300}">
+                <Grid BackgroundColor="{DynamicResource Orange-100}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -317,15 +317,18 @@
                             <ImageButton
                                 x:Name="recordDesInv"
                                 Grid.Column="1"
-                                BackgroundColor="{DynamicResource Orange-300}"
+                                BackgroundColor="{DynamicResource Orange-100}"
+                                BorderColor="{DynamicResource Orange-400}"
                                 ClassId="recordDesInv"
-                                HeightRequest="28"
+                                CornerRadius="20"
+                                HeightRequest="40"
                                 HorizontalOptions="End"
                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                    Glyph={x:Static helpers:IconFont.Microphone},
-                                                   Color=#E65100,
+                                                   Color=#1B76FF,
                                                    Size=35}"
-                                VerticalOptions="Center">
+                                VerticalOptions="Center"
+                                WidthRequest="40">
                                 <ImageButton.IsVisible>
                                     <OnPlatform x:TypeArguments="x:Boolean">
                                         <On Platform="iOS" Value="false" />
@@ -355,11 +358,11 @@
                                 HeightRequest="1"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Start"
-                                Color="{DynamicResource Orange-100}" />
+                                Color="{DynamicResource Orange-900}" />
                         </Grid>
                         <Frame
                             Margin="10,2,10,2"
-                            BackgroundColor="{DynamicResource Orange-100}"
+                            BackgroundColor="{DynamicResource Orange-200}"
                             CornerRadius="10">
 
                             <Grid>
@@ -382,7 +385,7 @@
                                         HorizontalOptions="Start"
                                         HorizontalTextAlignment="Start"
                                         Text="{x:Static helpers:IconFont.CameraPlus}"
-                                        TextColor="#E65100" />
+                                        TextColor="#1B76FF" />
 
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding ChooseConclusivePhotoFromCameraCommand}" />
@@ -418,7 +421,7 @@
                             AlignContent="Start"
                             AlignItems="Start"
                             AlignSelf="Start"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            BackgroundColor="{DynamicResource Orange-100}"
                             BindableLayout.ItemsSource="{Binding ConclusiveVisualProjectLocationPhotoItems}"
                             Direction="Row"
                             IsVisible="{Binding IsVisualProjectLocatoion}"
@@ -454,10 +457,10 @@
                                             Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes}}"
                                             CommandParameter="{Binding}"
                                             HorizontalOptions="End"
-                                            Opacity="0.9"
+                                            Opacity="1"
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                               Color=#E65100,
+                                                               Color=#1B76FF,
                                                                Size=28}"
                                             VerticalOptions="Start" />
                                         <Grid.GestureRecognizers>
@@ -478,7 +481,7 @@
                             AlignContent="Start"
                             AlignItems="Start"
                             AlignSelf="Start"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            BackgroundColor="{DynamicResource Orange-100}"
                             BindableLayout.ItemsSource="{Binding ConclusiveVisualBuildingLocationPhotoItems}"
                             Direction="Row"
                             IsVisible="{Binding IsVisualBuilding}"
@@ -504,7 +507,7 @@
                                         <yummy:PancakeView CornerRadius="5">
                                             <ffimageloading:CachedImage
                                                 Aspect="AspectFill"
-                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                BackgroundColor="{DynamicResource Orange-200}"
                                                 DownsampleToViewSize="True"
                                                 ErrorPlaceholder="blank.png"
                                                 HeightRequest="140"
@@ -517,10 +520,10 @@
                                             Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes2}}"
                                             CommandParameter="{Binding}"
                                             HorizontalOptions="End"
-                                            Opacity="0.9"
+                                            Opacity="1"
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                               Color=#E65100,
+                                                               Color=#1B76FF,
                                                                Size=28}"
                                             VerticalOptions="Start" />
 
@@ -545,7 +548,7 @@
                             AlignContent="Start"
                             AlignItems="Start"
                             AlignSelf="Start"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            BackgroundColor="{DynamicResource Orange-100}"
                             BindableLayout.ItemsSource="{Binding ConclusiveVisualApartmentLocationPhotoItems}"
                             Direction="Row"
                             IsVisible="{Binding IsVisualApartment}"
@@ -572,7 +575,7 @@
                                             <ffimageloading:CachedImage
                                                 Margin="1"
                                                 Aspect="AspectFill"
-                                                BackgroundColor="{DynamicResource Gray-200}"
+                                                BackgroundColor="{DynamicResource Orange-200}"
                                                 DownsampleToViewSize="True"
                                                 ErrorPlaceholder="blank.png"
                                                 HeightRequest="140"
@@ -585,10 +588,10 @@
                                             Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes3}}"
                                             CommandParameter="{Binding}"
                                             HorizontalOptions="End"
-                                            Opacity="0.9"
+                                            Opacity="1"
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                               Color=#E65100,
+                                                               Color=#1B76FF,
                                                                Size=28}"
                                             VerticalOptions="Start" />
 

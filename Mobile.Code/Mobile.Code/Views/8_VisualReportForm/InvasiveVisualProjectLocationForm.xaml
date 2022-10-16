@@ -27,7 +27,7 @@
             <Grid
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="{DynamicResource Orange-300}"
+                BackgroundColor="{DynamicResource Orange-100}"
                 IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -61,7 +61,7 @@
                             FontSize="40"
                             HorizontalOptions="EndAndExpand"
                             Text="{x:Static helpers:IconFont.ImageArea}"
-                            TextColor="{DynamicResource Orange-900}" />
+                            TextColor="{DynamicResource Orange-400}" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ShowImagesCommand}" />
                         </StackLayout.GestureRecognizers>
@@ -513,7 +513,7 @@
                                     IsVisible="false"
                                     Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                        Glyph={x:Static helpers:IconFont.Microphone},
-                                                       Color=#E65100,
+                                                       Color=#2C1DFF,
                                                        Size=35}"
                                     VerticalOptions="Center" />
                                 <uc:XEditor

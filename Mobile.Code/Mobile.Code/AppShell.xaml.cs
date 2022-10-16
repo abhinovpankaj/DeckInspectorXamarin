@@ -101,11 +101,11 @@ namespace Mobile.Code
             Routing.RegisterRoute("BuildingApartmentDetail", typeof(BuildingApartmentDetail));
 
 
-            Routing.RegisterRoute("buildingImages", typeof(BuildingImage));
+            //Routing.RegisterRoute("buildingImages", typeof(BuildingImage));
 
 
 
-            Routing.RegisterRoute("AddbuildingImages", typeof(AddBuildingImage));
+            //Routing.RegisterRoute("AddbuildingImages", typeof(AddBuildingImage));
 
            
             foreach (var item in routes)

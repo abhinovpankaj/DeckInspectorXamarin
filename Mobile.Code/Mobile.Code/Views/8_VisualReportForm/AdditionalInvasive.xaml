@@ -20,11 +20,11 @@
     <ContentView.Content>
 
         <ScrollView
-            BackgroundColor="{DynamicResource Orange-300}"
+            BackgroundColor="{DynamicResource Orange-100}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}"
             VerticalOptions="FillAndExpand">
-            <StackLayout BackgroundColor="{DynamicResource Orange-300}" VerticalOptions="FillAndExpand">
-                <Grid BackgroundColor="{DynamicResource Orange-300}">
+            <StackLayout BackgroundColor="{DynamicResource Orange-100}" VerticalOptions="FillAndExpand">
+                <Grid BackgroundColor="{DynamicResource Orange-100}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -37,7 +37,7 @@
                     <Frame
                         Grid.Row="2"
                         Margin="10,2,10,2"
-                        BackgroundColor="{DynamicResource Orange-100}"
+                        BackgroundColor="{DynamicResource Orange-200}"
                         CornerRadius="10">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -59,7 +59,7 @@
                                     HorizontalOptions="Start"
                                     HorizontalTextAlignment="Start"
                                     Text="{x:Static helpers:IconFont.CameraPlus}"
-                                    TextColor="Red" />
+                                    TextColor="#1B76FF" />
 
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ChoosePhotoFromCameraCommand}" />
@@ -95,10 +95,11 @@
                     <FlexLayout
                         x:Name="FlexTypes"
                         Grid.Row="3"
+                        Margin="10,2,10,2"
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BackgroundColor="{DynamicResource Orange-300}"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         BindableLayout.ItemsSource="{Binding InvasiveVisualProjectLocationPhotoItems}"
                         Direction="Row"
                         IsVisible="{Binding IsVisualProjectLocatoion}"
@@ -124,7 +125,7 @@
                                     <yummy:PancakeView CornerRadius="5">
                                         <ffimageloading:CachedImage
                                             Aspect="AspectFill"
-                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            BackgroundColor="{DynamicResource Orange-200}"
                                             HeightRequest="140"
                                             Source="{Binding Path=ImageUrl}" />
 
@@ -134,10 +135,10 @@
                                         Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes}}"
                                         CommandParameter="{Binding}"
                                         HorizontalOptions="End"
-                                        Opacity="0.9"
+                                        Opacity="1"
                                         Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                            Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                           Color=#E65100,
+                                                           Color=#1B76FF,
                                                            Size=26}"
                                         VerticalOptions="Start" />
 
@@ -160,10 +161,11 @@
                     <FlexLayout
                         x:Name="FlexTypes2"
                         Grid.Row="3"
+                        Margin="10,2,10,2"
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BackgroundColor="{DynamicResource Orange-300}"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         BindableLayout.ItemsSource="{Binding InvasiveVisualBuildingLocationPhotoItems}"
                         Direction="Row"
                         IsVisible="{Binding IsVisualBuilding}"
@@ -174,7 +176,7 @@
 
                                 <Grid
                                     Margin="4"
-                                    BackgroundColor="{DynamicResource Orange-300}"
+                                    BackgroundColor="{DynamicResource Orange-100}"
                                     ColumnSpacing="0"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='50%',
@@ -190,7 +192,7 @@
                                     <yummy:PancakeView CornerRadius="5">
                                         <ffimageloading:CachedImage
                                             Aspect="AspectFill"
-                                            BackgroundColor="{DynamicResource Gray-200}"
+                                            BackgroundColor="{DynamicResource Orange-200}"
                                             HeightRequest="140"
                                             Source="{Binding Path=ImageUrl}" />
 
@@ -200,11 +202,11 @@
                                         Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes2}}"
                                         CommandParameter="{Binding}"
                                         HorizontalOptions="End"
-                                        Opacity="0.9"
+                                        Opacity="1"
                                         Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                            Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                           Color=#E65100,
-                                                           Size=26}"
+                                                           Color=#1B76FF,
+                                                           Size=30}"
                                         VerticalOptions="Start" />
 
 
@@ -226,10 +228,11 @@
                     <FlexLayout
                         x:Name="FlexTypes3"
                         Grid.Row="3"
+                        Margin="10,2,10,2"
                         AlignContent="Start"
                         AlignItems="Start"
                         AlignSelf="Start"
-                        BackgroundColor="{DynamicResource Orange-300}"
+                        BackgroundColor="{DynamicResource Orange-100}"
                         BindableLayout.ItemsSource="{Binding InvasiveVisualApartmentLocationPhotoItems}"
                         Direction="Row"
                         IsVisible="{Binding IsVisualApartment}"
@@ -240,7 +243,7 @@
 
                                 <Grid
                                     Margin="4"
-                                    BackgroundColor="{DynamicResource Orange-300}"
+                                    BackgroundColor="{DynamicResource Orange-100}"
                                     ColumnSpacing="0"
                                     FlexLayout.AlignSelf="Start"
                                     FlexLayout.Basis="{OnIdiom Phone='50%',
@@ -266,10 +269,10 @@
                                         Command="{Binding BindingContext.DeleteImageCommandLocation, Source={x:Reference FlexTypes3}}"
                                         CommandParameter="{Binding}"
                                         HorizontalOptions="End"
-                                        Opacity="0.9"
+                                        Opacity="1"
                                         Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                            Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                           Color=#E65100,
+                                                           Color=#1B76FF,
                                                            Size=26}"
                                         VerticalOptions="Start" />
 
@@ -286,7 +289,10 @@
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
                     <StackLayout Margin="10,2,10,2" Orientation="Horizontal">
-                        <CheckBox CheckedChanged="CheckBox_CheckedChanged" IsChecked="{Binding VisualForm.IsPostInvasiveRepairsRequired}" />
+                        <CheckBox
+                            CheckedChanged="CheckBox_CheckedChanged"
+                            IsChecked="{Binding VisualForm.IsPostInvasiveRepairsRequired}"
+                            Color="{DynamicResource Orange-400}" />
                         <Label
                             Margin="5,0,0,0"
                             FontFamily="{StaticResource Montserrat-Regular}"
@@ -329,16 +335,21 @@
                                 TextColor="Red"
                                 VerticalTextAlignment="Center" />
                         </StackLayout>
+
+
+
                         <ImageButton
                             x:Name="recordDesInv"
                             Grid.Column="1"
-                            BackgroundColor="{DynamicResource Orange-300}"
+                            BackgroundColor="{DynamicResource Orange-100}"
+                            BorderColor="{DynamicResource Orange-700}"
                             ClassId="recordDesInv"
-                            HeightRequest="28"
+                            CornerRadius="20"
+                            HeightRequest="40"
                             HorizontalOptions="End"
                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                Glyph={x:Static helpers:IconFont.Microphone},
-                                               Color=#E65100,
+                                               Color=#1B76FF,
                                                Size=35}"
                             VerticalOptions="Center">
                             <ImageButton.IsVisible>
@@ -382,7 +393,7 @@
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-100}" />
+                            Color="{DynamicResource Orange-900}" />
                     </Grid>
                 </Grid>
             </StackLayout>

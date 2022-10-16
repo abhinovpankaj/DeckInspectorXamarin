@@ -71,7 +71,7 @@
                                 WidthRequest="350">
                                 <ffimageloading:CachedImage
                                     Aspect="Fill"
-                                    BackgroundColor="{DynamicResource Gray-200}"
+                                    BackgroundColor="{DynamicResource Orange-200}"
                                     DownsampleToViewSize="True"
                                     ErrorPlaceholder="blank.png"
                                     LoadingPlaceholder="loading.png"
@@ -99,13 +99,13 @@
 
                             <yummy:PancakeView
                                 Margin="10,10,10,10"
-                                BackgroundColor="{DynamicResource Gray-200}"
+                                BackgroundColor="{DynamicResource Orange-200}"
                                 CornerRadius="5"
                                 HeightRequest="300"
                                 WidthRequest="350">
                                 <ffimageloading:CachedImage
                                     Aspect="Fill"
-                                    BackgroundColor="{DynamicResource Gray-200}"
+                                    BackgroundColor="{DynamicResource Orange-200}"
                                     DownsampleToViewSize="True"
                                     ErrorPlaceholder="blank.png"
                                     LoadingPlaceholder="loading.png"
@@ -137,7 +137,7 @@
                                 WidthRequest="350">
                                 <ffimageloading:CachedImage
                                     Aspect="Fill"
-                                    BackgroundColor="{DynamicResource Gray-200}"
+                                    BackgroundColor="{DynamicResource Orange-200}"
                                     DownsampleToViewSize="True"
                                     ErrorPlaceholder="blank.png"
                                     LoadingPlaceholder="loading.png"

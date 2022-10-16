@@ -102,7 +102,7 @@
                                             Opacity="0.9"
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                               Color=#E65100,
+                                                               Color=#2C1DFF,
                                                                Size=36}"
                                             VerticalOptions="Start" />
                                     </StackLayout>
@@ -110,11 +110,11 @@
                                         <TapGestureRecognizer Command="{Binding BindingContext.ImageDetailCommand, Source={x:Reference mainLayout}}" CommandParameter="{Binding}" />
                                     </Grid.GestureRecognizers>
                                 </Grid>
-                                <!--<SwipeView BackgroundColor="{DynamicResource Orange-400}">
+                                <!--<SwipeView BackgroundColor="{DynamicResource Orange-100}">
                                     <SwipeView.TopItems>
                                         <SwipeItems Mode="Execute">
                                             <SwipeItem
-                                                BackgroundColor="#FFAB40"
+                                                BackgroundColor="#15A9FA"
                                                 Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
                                                 CommandParameter="{Binding}"
                                                 IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
@@ -257,7 +257,7 @@
                                                 Opacity="0.9"
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                                   Color=#E65100,
+                                                                   Color=#2C1DFF,
                                                                    Size=36}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
@@ -374,7 +374,7 @@
                                         <SwipeView.TopItems>
                                             <SwipeItems Mode="Execute">
                                                 <SwipeItem
-                                                    BackgroundColor="#FFAB40"
+                                                    BackgroundColor="#15A9FA"
                                                     Command="{Binding Source={x:Reference mainLayout}, Path=BindingContext.ImageDetailCommand}"
                                                     CommandParameter="{Binding}"
                                                     IconImageSource="{x:Static helpers:IconFont.ContentSaveEdit}"
@@ -417,7 +417,7 @@
                                                 Opacity="0.9"
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                                   Color=#E65100,
+                                                                   Color=#2C1DFF,
                                                                    Size=36}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
