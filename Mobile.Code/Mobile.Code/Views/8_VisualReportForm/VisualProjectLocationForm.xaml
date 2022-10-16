@@ -178,7 +178,7 @@
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-900}" />
+                            Color="{DynamicResource Orange-700}" />
                     </Grid>
 
                     <Grid
@@ -293,7 +293,7 @@
                                 x:Name="indicatorView"
                                 HorizontalOptions="Center"
                                 IndicatorColor="{DynamicResource Orange-200}"
-                                SelectedIndicatorColor="{DynamicResource Orange-900}"
+                                SelectedIndicatorColor="{DynamicResource Orange-700}"
                                 VerticalOptions="EndAndExpand" />
                         </StackLayout>
 
@@ -660,12 +660,12 @@
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
                             Margin="0,-8,8,0"
-                            BackgroundColor="{DynamicResource Orange-900}"
+                            BackgroundColor="{DynamicResource Orange-700}"
                             CornerRadius="5"
                             HeightRequest="1"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
-                            Color="{DynamicResource Orange-900}" />
+                            Color="{DynamicResource Orange-700}" />
                     </Grid>
                     <Frame
                         Grid.Row="9"

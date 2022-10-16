@@ -358,7 +358,7 @@
                                 HeightRequest="1"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Start"
-                                Color="{DynamicResource Orange-900}" />
+                                Color="{DynamicResource Orange-700}" />
                         </Grid>
                         <Frame
                             Margin="10,2,10,2"

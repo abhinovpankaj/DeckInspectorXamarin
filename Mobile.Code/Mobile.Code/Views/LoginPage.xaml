@@ -102,7 +102,7 @@
                         HeightRequest="1"
                         HorizontalOptions="Fill"
                         VerticalOptions="Start"
-                        Color="{DynamicResource Orange-900}" />
+                        Color="{DynamicResource Orange-400}" />
 
                     <Label
                         Grid.Row="4"
@@ -127,7 +127,7 @@
                         HeightRequest="1"
                         HorizontalOptions="Fill"
                         VerticalOptions="Start"
-                        Color="{DynamicResource Orange-900}" />
+                        Color="{DynamicResource Orange-400}" />
 
                     <Grid
                         x:Name="GridRemember"
@@ -163,7 +163,7 @@
                         <Button
                             Margin="0,16"
                             BackgroundColor="{DynamicResource Orange-200}"
-                            BorderColor="{DynamicResource Orange-700}"
+                            BorderColor="{DynamicResource Orange-400}"
                             BorderWidth="2"
                             Command="{Binding LoginCommand}"
                             FontAttributes="Bold"
@@ -172,8 +172,8 @@
                             Visual="Material" />
                         <Button
                             Margin="0,16"
-                            BackgroundColor="{DynamicResource Orange-200}"
-                            BorderColor="{DynamicResource Orange-700}"
+                            BackgroundColor="{DynamicResource Orange-400}"
+                            BorderColor="{DynamicResource Orange-400}"
                             BorderWidth="2"
                             Command="{Binding WorkOfflineCommand}"
                             FontAttributes="Bold"
