@@ -207,7 +207,13 @@ namespace Mobile.Code.ViewModels
                     if (currentVisualLocation != null)
                         await GoToVisualForm(currentVisualLocation, true);
                     else
-                        await Shell.Current.Navigation.PopAsync();
+                    {
+                        var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
+                        if (_lastPage.GetType() == typeof(VisualBuildingLocationForm))
+                        {
+                            await Shell.Current.Navigation.PopAsync();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -509,6 +515,7 @@ namespace Mobile.Code.ViewModels
         {
             IsBusyProgress = true;
             App.IsNewForm = false;
+            currentLocationSeq = VisualFormBuildingLocationItems.IndexOf(parm);
             VisualBuildingLocationFormViewModel vm = new VisualBuildingLocationFormViewModel();
             vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
             vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
@@ -573,7 +580,8 @@ namespace Mobile.Code.ViewModels
                 {
                     var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
                     await Shell.Current.Navigation.PushAsync(new VisualBuildingLocationForm() { BindingContext = vm });
-                    Shell.Current.Navigation.RemovePage(_lastPage);
+                    if (_lastPage.GetType() == typeof(VisualBuildingLocationForm))
+                        Shell.Current.Navigation.RemovePage(_lastPage);
                 }
                 else
                 {

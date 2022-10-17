@@ -25,7 +25,7 @@ using Environment = System.Environment;
 
 namespace Mobile.Code.Droid
 {
-    [Activity(Label = "DECK INSPECTOR", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "DECK INSPECTORS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMessageSender, ISensorEventListener
     {
         public const int CameraPermissionsCode = 1;

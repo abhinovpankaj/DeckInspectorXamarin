@@ -29,7 +29,7 @@ namespace Mobile.Code.Droid
 
             if (rotation == SurfaceOrientation.Rotation90)
             {
-                return 0;
+                return 90;
             }
             if (rotation == SurfaceOrientation.Rotation180)
             {
@@ -41,7 +41,7 @@ namespace Mobile.Code.Droid
             }
             if (rotation == SurfaceOrientation.Rotation0)
             {
-                return 90;
+                return 0;
             }
             return 0;
         }
@@ -125,32 +125,37 @@ namespace Mobile.Code.Droid
             }
         }
 
-        
-        public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes)
+
+        public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes, float rotation = 0)
         {
 
             Bitmap originalImage = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
             Matrix matrix = new Matrix();
-            if (MainActivity.AppOrientation == 0)
-            {
-                matrix.PostRotate(0);
-            }
-            if (MainActivity.AppOrientation == 2)
-            {
-                matrix.PostRotate(-90);
-            }
-            if (MainActivity.AppOrientation == 3)
-            {
-                matrix.PostRotate(90);
-            }
-            if (MainActivity.AppOrientation == 4)
-            {
-                matrix.PostRotate(180);
-            }
+            
             int width = originalImage.Width;
             int height = originalImage.Height;
-           
-            matrix.PostRotate(GetImageRotation());
+            if (rotation != 0)
+            {
+                if (MainActivity.AppOrientation == 0)
+                {
+                    matrix.PostRotate(0);
+                }
+                if (MainActivity.AppOrientation == 2)
+                {
+                    matrix.PostRotate(-90);
+                }
+                if (MainActivity.AppOrientation == 3)
+                {
+                    matrix.PostRotate(90);
+                }
+                if (MainActivity.AppOrientation == 4)
+                {
+                    matrix.PostRotate(180);
+                }
+                matrix.PostRotate(rotation);
+            }
+            else
+                matrix.PostRotate(GetImageRotation());
             Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, originalImage.Width, originalImage.Height, matrix, true);
 
 

@@ -9,14 +9,13 @@
     xmlns:helpers="clr-namespace:Mobile.Code.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="clr-namespace:Mobile.Code.Controls"
-    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     xmlns:views="clr-namespace:Mobile.Code.Views"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
     x:Name="ProjectLocationForm"
-    
     Shell.NavBarIsVisible="True"
     mc:Ignorable="d">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding GoBackCommand}"/>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -26,8 +25,8 @@
     <Shell.TitleView>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
             <Label
@@ -42,44 +41,59 @@
         </Grid>
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Photo"                     
-                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                     Glyph={x:Static helpers:IconFont.CameraPlus},
-                     Color=Red,Size=45}" 
-                     Command="{Binding ChoosePhotoFromCameraCommand}" 
-                     Order="Primary"
-                     Priority="0" />
-        <ToolbarItem Text="Save"                     
-                     IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                     Glyph={x:Static helpers:IconFont.ContentSave},
-                     Color=Red,Size=45}" 
-                     Command="{Binding SaveCommand}" IsDestructive="False"
-                     Order="Primary"
-                     Priority="1" />
-        <ToolbarItem Text="Show All Images"
-                 IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                 Glyph={x:Static helpers:IconFont.Home},
-                 Color=#0EEAFF,Size=45}"
-                 Order="Secondary" Command="{Binding ShowImagesCommand}"
-                 Priority="2" />
-       
+        <ToolbarItem
+            Command="{Binding ChoosePhotoFromCameraCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.CameraPlus},
+                                        Color=Red,
+                                        Size=45}"
+            Order="Primary"
+            Priority="0"
+            Text="Add Photo" />
+        <ToolbarItem
+            Command="{Binding SaveCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.ContentSave},
+                                        Color=Red,
+                                        Size=45}"
+            IsDestructive="False"
+            Order="Primary"
+            Priority="1"
+            Text="Save" />
+        <ToolbarItem
+            Command="{Binding ShowImagesCommand}"
+            IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
+                                        Glyph={x:Static helpers:IconFont.Home},
+                                        Color=#0EEAFF,
+                                        Size=45}"
+            Order="Secondary"
+            Priority="2"
+            Text="Show All Images" />
+
     </ContentPage.ToolbarItems>
     <AbsoluteLayout>
-        <StackLayout Grid.Row="1" Padding="0" Margin="5,2">
-            <CarouselView x:Name="carouselView" 
-                      IndicatorView="indicatorView"                                      
-                                        ItemsSource="{Binding VisualFormProjectLocationItems}" 
-                          EmptyView="No locations to Display." HorizontalOptions="Center">
+        <StackLayout
+            Grid.Row="1"
+            Margin="5,2"
+            Padding="0">
+            <CarouselView
+                x:Name="carouselView"
+                EmptyView="No locations to Display."
+                HorizontalOptions="Center"
+                IndicatorView="indicatorView"
+                ItemsSource="{Binding VisualFormProjectLocationItems}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <views:VisualProjectLocationForm/>
+                        <views:VisualProjectLocationForm />
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-            <IndicatorView x:Name="indicatorView" VerticalOptions="EndAndExpand"
-                                        IndicatorColor="{DynamicResource Orange-100}"
-                                        SelectedIndicatorColor="{DynamicResource Orange-700}"
-                                        HorizontalOptions="Center" />
+            <IndicatorView
+                x:Name="indicatorView"
+                HorizontalOptions="Center"
+                IndicatorColor="{DynamicResource Orange-100}"
+                SelectedIndicatorColor="{DynamicResource Orange-700}"
+                VerticalOptions="EndAndExpand" />
         </StackLayout>
     </AbsoluteLayout>
 

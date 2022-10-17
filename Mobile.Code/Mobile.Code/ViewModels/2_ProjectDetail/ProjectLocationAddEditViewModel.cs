@@ -201,10 +201,11 @@ namespace Mobile.Code.ViewModels
             }
             if (!string.IsNullOrEmpty(SelectedImage))
             {
-                ImgData.Path = SelectedImage;
-                ImgData.Name = ProjectLocation.ImageName;
-                ImgData.Description = ProjectLocation.ImageDescription;
-                await Current.EditImage(ImgData, testphoto);
+                ProjectLocation.ImageUrl = SelectedImage;
+                //ImgData.Path = SelectedImage;
+                //ImgData.Name = ProjectLocation.ImageName;
+                //ImgData.Description = ProjectLocation.ImageDescription;
+                //await Current.EditImage(ImgData, testphoto);
             }
         }
 
@@ -230,6 +231,7 @@ namespace Mobile.Code.ViewModels
         private async Task<string> TakePictureFromCamera()
         {
             IsBusy = true;
+
             var file = await CrossMedia.Current.TakePhotoAsync
                 (new StoreCameraMediaOptions()
                 {
@@ -242,35 +244,34 @@ namespace Mobile.Code.ViewModels
             IsBusy = false;
             if (file == null)
                 return null;
-            //   return file.Path;
-            if (Device.RuntimePlatform == Device.iOS)
+
+
+            byte[] arr = null;
+            var buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
             {
+                int read = 0;
+                var readstream = file.GetStreamWithImageRotatedForExternalStorage();
+                while ((read = readstream.Read(buffer, 0, buffer.Length)) > 0)
+                    ms.Write(buffer, 0, read);
 
-                byte[] arr = null;
-                var buffer = new byte[16 * 1024];
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    int read = 0;
-                    var readstream = file.GetStreamWithImageRotatedForExternalStorage();
-                    while ((read = readstream.Read(buffer, 0, buffer.Length)) > 0)
-                        ms.Write(buffer, 0, read);
+                file.GetStream().CopyTo(ms);
 
-                    file.GetStream().CopyTo(ms);
+                //  file.Dispose();
+                readstream.Dispose();
+                arr = ms.ToArray();
+                readstream = null;
+            }
+            string filepath;
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), arr);
 
-                    //  file.Dispose();
-                    readstream.Dispose();
-                    arr = ms.ToArray();
-                    readstream = null;
-                }
-                string filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
-                //  ImgData.mediaFile = arr;
-                return filepath;
-               
             }
             else
-            {
-                return file.Path;
-            }
+                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), arr);
+
+            return filepath;
 
 
         }

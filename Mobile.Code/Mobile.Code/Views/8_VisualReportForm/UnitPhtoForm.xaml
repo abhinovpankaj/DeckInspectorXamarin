@@ -51,7 +51,7 @@
             x:Name="mainLayout"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-300}"
+            BackgroundColor="{DynamicResource Orange-100}"
             IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -80,7 +80,7 @@
                         <DataTemplate>
                             <Frame
                                 Padding="0"
-                                BackgroundColor="{DynamicResource Orange-700}"
+                                BackgroundColor="{DynamicResource Orange-400}"
                                 CornerRadius="10"
                                 HasShadow="True"
                                 HorizontalOptions="Center"
@@ -88,7 +88,7 @@
                                 <Grid>
 
                                     <Image
-                                        Aspect="AspectFill"
+                                        Aspect="Fill"
                                         HorizontalOptions="Center"
                                         Source="{Binding ImageUrl}"
                                         VerticalOptions="CenterAndExpand" />
@@ -149,8 +149,8 @@
                     x:Name="indicatorView"
                     Margin="5"
                     HorizontalOptions="Center"
-                    IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
+                    IndicatorColor="{DynamicResource Orange-200}"
+                    SelectedIndicatorColor="{DynamicResource Orange-400}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualProjectLocatoion}">
                 <FlexLayout
@@ -243,7 +243,7 @@
                                     <Grid>
 
                                         <Image
-                                            Aspect="AspectFill"
+                                            Aspect="Fill"
                                             HorizontalOptions="Center"
                                             Source="{Binding ImageUrl}"
                                             VerticalOptions="CenterAndExpand" />
@@ -280,8 +280,8 @@
                 <IndicatorView
                     x:Name="indicatorView1"
                     HorizontalOptions="Center"
-                    IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
+                    IndicatorColor="{DynamicResource Orange-200}"
+                    SelectedIndicatorColor="{DynamicResource Orange-400}" />
             </StackLayout>
             <!--<ScrollView Grid.Row="1" IsVisible="{Binding IsVisualBuilding}">
                 <FlexLayout
@@ -365,7 +365,7 @@
                             <StackLayout>
                                 <Frame
                                     Padding="2"
-                                    BackgroundColor="{DynamicResource Orange-700}"
+                                    BackgroundColor="{DynamicResource Orange-400}"
                                     CornerRadius="5"
                                     HasShadow="True"
                                     HorizontalOptions="Center"
@@ -403,7 +403,7 @@
                                     <Grid>
 
                                         <Image
-                                            Aspect="AspectFill"
+                                            Aspect="Fill"
                                             HorizontalOptions="Center"
                                             Source="{Binding ImageUrl}"
                                             VerticalOptions="CenterAndExpand" />
@@ -439,8 +439,8 @@
                 <IndicatorView
                     x:Name="indicatorView2"
                     HorizontalOptions="Center"
-                    IndicatorColor="{DynamicResource Orange-100}"
-                    SelectedIndicatorColor="{DynamicResource Orange-700}" />
+                    IndicatorColor="{DynamicResource Orange-200}"
+                    SelectedIndicatorColor="{DynamicResource Orange-400}" />
             </StackLayout>
 
         </Grid>

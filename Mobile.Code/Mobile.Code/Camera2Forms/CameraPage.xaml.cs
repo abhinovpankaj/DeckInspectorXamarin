@@ -28,7 +28,8 @@ namespace Mobile.Code.Camera2Forms
             // cameraView.MediaCaptured += CameraView_MediaCaptured; ;
         }
 
-        private async void CameraView_MediaCaptured(object sender, Xamarin.CommunityToolkit.UI.Views.MediaCapturedEventArgs e)
+        private async void CameraView_MediaCaptured(object sender, 
+            Xamarin.CommunityToolkit.UI.Views.MediaCapturedEventArgs e)
         {
 
             //switch (cameraView.CaptureMode)
@@ -44,8 +45,7 @@ namespace Mobile.Code.Camera2Forms
 
             CameraViewModel vm = (CameraViewModel)this.BindingContext;
             string filepath = string.Empty;
-
-
+            
             if (Device.RuntimePlatform == Device.iOS)
             {
 
@@ -54,7 +54,7 @@ namespace Mobile.Code.Camera2Forms
             }
             if (Device.RuntimePlatform == Device.Android)
             {
-                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), e.ImageData);
+                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), e.ImageData,float.Parse(e.Rotation.ToString()));
 
             }
             MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = e.ImageData, ImageType = vm.ImageType };
@@ -206,6 +206,7 @@ namespace Mobile.Code.Camera2Forms
                 //xOffset = Content.TranslationX;
                 //yOffset = Content.TranslationY;
                 cameraView.Zoom = currentScale;
+                
                 zoomfactor.Text = Math.Round(currentScale,2).ToString() + "x";
             }
         }

@@ -218,7 +218,7 @@
                                         </Frame.Background>
                                         <SwipeView Margin="1" IsClippedToBounds="True">
 
-                                            <Grid 
+                                            <Grid
                                                 x:Name="FrameTypes"
                                                 ColumnDefinitions="auto,auto,*"
                                                 ColumnSpacing="0"

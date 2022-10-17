@@ -90,7 +90,7 @@ namespace Mobile.Code.iOS
             return null;
         }
 
-        public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes)
+        public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes, float rotation=0)
         {
             UIImage originalImage = ImageFromByteArray(bytes);
 

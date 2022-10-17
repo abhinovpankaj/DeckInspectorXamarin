@@ -59,7 +59,7 @@
                     <Grid>
                         <xct:CameraView
                             x:Name="cameraView"
-                            CaptureMode="Photo"
+                            CaptureMode="Photo" 
                             HorizontalOptions="FillAndExpand"
                             MediaCaptured="CameraView_MediaCaptured"
                             VerticalOptions="FillAndExpand">

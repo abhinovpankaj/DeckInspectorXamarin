@@ -164,7 +164,13 @@ namespace Mobile.Code.ViewModels
                     if (currentVisualLocation != null)
                         await GoToVisualForm(currentVisualLocation, true);
                     else
-                        await Shell.Current.Navigation.PopAsync();
+                    {
+                        var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
+                        if (_lastPage.GetType() == typeof(VisualProjectLocationForm))
+                        {
+                            await Shell.Current.Navigation.PopAsync();
+                        }                        
+                    }                        
                 }
                 catch (Exception ex)
                 {
@@ -319,14 +325,14 @@ namespace Mobile.Code.ViewModels
             // UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
         }
 
-        public ICommand GoToVisualSwipeViewCommand => new Command(async () => await GotoVisualSwipeView());
+        //public ICommand GoToVisualSwipeViewCommand => new Command(async () => await GotoVisualSwipeView());
 
-        private async Task GotoVisualSwipeView()
-        {
-            VisualProjectLocationSwipeViewModel vm = new VisualProjectLocationSwipeViewModel();
-            vm.VisualFormProjectLocationItems = this.VisualFormProjectLocationItems;
-            await Shell.Current.Navigation.PushAsync(new VisualProjectLocationsSwipeView() { BindingContext = vm });
-        }
+        //private async Task GotoVisualSwipeView()
+        //{
+        //    VisualProjectLocationSwipeViewModel vm = new VisualProjectLocationSwipeViewModel();
+        //    vm.VisualFormProjectLocationItems = this.VisualFormProjectLocationItems;
+        //    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationsSwipeView() { BindingContext = vm });
+        //}
         
         public ICommand GoToVisualFormCommand => new Command<ProjectLocation_Visual>(async (ProjectLocation_Visual parm) =>
         {
@@ -419,7 +425,11 @@ namespace Mobile.Code.ViewModels
                 {
                     var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();                    
                     await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
-                    Shell.Current.Navigation.RemovePage(_lastPage);
+                    if(_lastPage.GetType() == typeof(VisualProjectLocationForm))
+                    {                        
+                        Shell.Current.Navigation.RemovePage(_lastPage);
+                    }
+                        
                 }
                 else
                 {
