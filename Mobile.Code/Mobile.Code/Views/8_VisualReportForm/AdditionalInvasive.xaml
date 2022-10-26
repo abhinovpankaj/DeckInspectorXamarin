@@ -382,6 +382,7 @@
                             HeightRequest="100"
                             IsSpellCheckEnabled="True"
                             IsTextPredictionEnabled="True"
+                            Keyboard="Text"
                             Text="{Binding VisualForm.ImageDescription}"
                             TextColor="{DynamicResource ColorBackground}"
                             VerticalOptions="FillAndExpand" />

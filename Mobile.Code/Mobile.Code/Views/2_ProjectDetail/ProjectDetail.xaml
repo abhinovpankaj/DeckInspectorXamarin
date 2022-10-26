@@ -88,6 +88,25 @@
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress}" />
+            <StackLayout IsVisible="{Binding IsSyncing}"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="FillAndExpand">
+                <ProgressBar
+                    x:Name="styledProgressBar"
+                    Margin="5,100,5,0"
+                    HorizontalOptions="FillAndExpand"
+                    
+                    Progress="{Binding ProgressValue}"
+                    ProgressColor="{DynamicResource Orange-400}"
+                    VerticalOptions="End" />
+                <Label
+                    Margin="5,0"
+                    FontSize="Header"
+                    HorizontalOptions="Center"
+                    Text="{Binding ProgressValue, StringFormat='{0:P0}'}"
+                    TextColor="{DynamicResource Orange-400}" />
+            </StackLayout>
 
             <Grid
                 AbsoluteLayout.LayoutBounds="0,0,1,1"

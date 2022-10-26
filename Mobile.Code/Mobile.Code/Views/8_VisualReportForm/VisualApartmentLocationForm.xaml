@@ -646,6 +646,7 @@
                             FontSize="15"
                             IsSpellCheckEnabled="True"
                             IsTextPredictionEnabled="True"
+                            Keyboard="Text"
                             Text="{Binding VisualForm.AdditionalConsideration}"
                             TextColor="{DynamicResource ColorBackground}"
                             VerticalOptions="FillAndExpand" />
@@ -829,7 +830,7 @@
             </ScrollView>
             <Button
                 x:Name="btnSwipeLeft"
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="10"
                 BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-100}"
@@ -851,7 +852,7 @@
                 WidthRequest="50" />
             <Button
                 x:Name="btnSwipeRight"
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="10"
                 BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-100}"

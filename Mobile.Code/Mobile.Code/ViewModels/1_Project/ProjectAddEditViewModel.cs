@@ -80,19 +80,21 @@ namespace Mobile.Code.ViewModels
             IsBusyProgress = true;
             
             bool complete = await Task.Run(Running);
+            await Shell.Current.Navigation.PopAsync(true);
             if (complete == true)
             {
+                //to navigate to the Project details page.
                 IsBusyProgress = false;
-                //if (Project.Category == "SingleLevel")
-                //{
-                //    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
-                //    { BindingContext = new SingleLevelProjectDetailViewModel() { Project = Project } }).ConfigureAwait(false);
-                //}
-                //else
-                //    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
+                if (Project.Category == "SingleLevel")
+                {
+                    await Shell.Current.Navigation.PushAsync(new SingleLevelProjectLocation()
+                    { BindingContext = new SingleLevelProjectDetailViewModel() { Project = Project } }).ConfigureAwait(false);
+                }
+                else
+                    await Shell.Current.Navigation.PushAsync(new ProjectDetail() { BindingContext = new ProjectDetailViewModel() { Project = Project } });
 
             }
-            await Shell.Current.Navigation.PopAsync(true);
+            
 
         }
         private async Task<bool> Running()

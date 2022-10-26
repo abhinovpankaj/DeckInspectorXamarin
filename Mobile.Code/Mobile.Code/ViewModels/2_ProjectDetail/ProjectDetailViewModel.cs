@@ -95,7 +95,13 @@ namespace Mobile.Code.ViewModels
             // await Shell.Current.Navigation.Cle ;
             //}
         }
-       
+        private bool _isSyncing;
+
+        public bool IsSyncing
+        {
+            get { return _isSyncing; }
+            set { _isSyncing = value; OnPropertyChanged("IsSyncing"); }
+        }
         private bool _Isbusyprog;
 
         public bool IsBusyProgress
@@ -255,20 +261,43 @@ namespace Mobile.Code.ViewModels
             }
         }
 
+        private float _progressValue;
+        public float ProgressValue
+        {
+            get { return _progressValue; }
+            set
+            {
+                if (_progressValue != value)
+                {
+                    _progressValue = value;                    
+                    OnPropertyChanged("ProgressValue");
+                    
+                }
+
+            }
+        }      
         private async Task DownloadOffline()
         {
             IsBusyProgress = true;
+            IsSyncing = true;
             //create an offline Project
             Response res1 = await ProjectSQLiteDataStore.AddItemAsync(Project);
            
             //get project common loc and Building details
             var ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationDataStore
                 .GetItemsAsyncByProjectID(Project.Id));
+            var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore
+                .GetItemsAsyncByProjectID(Project.Id));
 
+            float totalCount = ProjectLocationItems.Count+ ProjectBuildingItems.Count; 
+            
             Response response = new Response();
+            
+            float completedCount = 0;
+            
             foreach (var item in ProjectLocationItems)
             {
-
+                completedCount++;
                 //insert projectlocations
                 item.OnlineId = item.Id;
                 Response resultProjLocation;
@@ -279,14 +308,16 @@ namespace Mobile.Code.ViewModels
                 }
                  else
                     _  = await ProjectLocationSqLiteDataStore.UpdateItemAsync(item);
-
+                
                 response.Message = response.Message + "\n" + item.Name + ": " + item.Id + " added successully, locations will be added now.";
                 var VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>
                     (await VisualFormProjectLocationDataStore
                     .GetItemsAsyncByProjectLocationId(item.Id));
-
+                totalCount+=VisualFormProjectLocationItems.Count;
+                
                 foreach (var projLocForm in VisualFormProjectLocationItems)
                 {
+                    completedCount++;
                     var images = await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(projLocForm.Id, true);
                     foreach (var img in images.ToList())
                     {
@@ -303,16 +334,17 @@ namespace Mobile.Code.ViewModels
                     }
                     else
                         res = await VisualFormProjectLocationSqLiteDataStore.UpdateItemAsync(projLocForm,null);
-                    
-                   // DependencyService.Get<IToast>().Show(item.Name + " Location is available offline now.");
+
+                    // DependencyService.Get<IToast>().Show(item.Name + " Location is available offline now.");
+                    ProgressValue =  completedCount / totalCount;
                 }
-              
+                ProgressValue = completedCount/ totalCount;
             }
 
-            var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingDataStore
-                .GetItemsAsyncByProjectID(Project.Id));
+            
             foreach (var item in ProjectBuildingItems)
             {
+                completedCount++;
                 item.OnlineId = item.Id;
                 Response resultBuild;
                 var existinbuild = await ProjectBuildingSqLiteDataStore.GetItemAsync(item.Id);
@@ -327,9 +359,13 @@ namespace Mobile.Code.ViewModels
 
                 var BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationDataStore
                 .GetItemsAsyncByBuildingId(item.Id));
-
+                var BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore
+                    .GetItemsAsyncByBuildingId(item.Id));
+                totalCount += BuildingApartments.Count + BuildingLocations.Count;
+                
                 foreach (var buildingLoc in BuildingLocations)
                 {
+                    completedCount++;
                     buildingLoc.OnlineId = buildingLoc.Id;
 
                     Response resultBuildLoc;
@@ -349,9 +385,11 @@ namespace Mobile.Code.ViewModels
                     var VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationDataStore
                     .GetItemsAsyncByBuildingLocationId(buildingLoc.Id));
 
-
+                    
+                    totalCount += VisualFormBuildingLocationItems.Count;
                     foreach (var buildLocForm in VisualFormBuildingLocationItems)
                     {
+                        completedCount++;
                         var images = await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(buildLocForm.Id, true);
                         foreach (var img in images.ToList())
                         {
@@ -367,19 +405,19 @@ namespace Mobile.Code.ViewModels
                         }    
                         else
                             _ = await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, null);
-                            
-                        //DependencyService.Get<IToast>().Show(buildLocForm.Name + " Location is available offline now.");
 
+                        //DependencyService.Get<IToast>().Show(buildLocForm.Name + " Location is available offline now.");
+                        ProgressValue = completedCount / totalCount;
                     }
                     //}
-
+                    ProgressValue = completedCount / totalCount;
                 }
 
-                var BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore
-                    .GetItemsAsyncByBuildingId(item.Id));
 
+               
                 foreach (var apartment in BuildingApartments)
                 {
+                    completedCount++;
                     apartment.OnlineId = apartment.Id;
                     Response resultApt;
                     var existinApt = await BuildingApartmentSqLiteDataStore.GetItemAsync(apartment.Id);
@@ -396,10 +434,11 @@ namespace Mobile.Code.ViewModels
                     var VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>
                         (await VisualFormApartmentDataStore.GetItemsAsyncByApartmentId(apartment.Id));
 
-
+                    
+                    totalCount += VisualFormApartmentLocationItems.Count;
                     foreach (var aptLoc in VisualFormApartmentLocationItems)
                     {
-
+                        completedCount++;
                         var images = await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(aptLoc.Id, true);
                         foreach (var img in images.ToList())
                         {
@@ -415,15 +454,20 @@ namespace Mobile.Code.ViewModels
                         }
                         else
                             _ = await VisualFormApartmentSqLiteDataStore.UpdateItemAsync(aptLoc, null);
-                            
+
                         //DependencyService.Get<IToast>().Show(aptLoc.Name + " apartment is available offline now.");
+                        ProgressValue = completedCount / totalCount;
                     }
                     //}
+                    ProgressValue = completedCount / totalCount;
                 }
-               
-            }           
+                ProgressValue = completedCount / totalCount;
 
+            }
+            
             IsBusyProgress = false;
+            IsSyncing = false;
+            ProgressValue = 0;
         }
 
         private void OpenOfflineProjectList()
@@ -692,7 +736,7 @@ namespace Mobile.Code.ViewModels
             
             bool syncedSuccessfully = true;
             IsBusyProgress = true;
-
+            IsSyncing = true; 
             var res = await Task.Run(async () =>
             {
                 Response response = new Response();
@@ -704,12 +748,14 @@ namespace Mobile.Code.ViewModels
                 //get project common loc and Building details
                 var ProjectLocationItems = new ObservableCollection<ProjectLocation>(await ProjectLocationSqLiteDataStore
                     .GetItemsAsyncByProjectID(SelectedOfflineProject.Id));
-
+                var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore
+                   .GetItemsAsyncByProjectID(SelectedOfflineProject.Id));
+                float totalCount = (ProjectLocationItems.Count + ProjectBuildingItems.Count);
+                float completedCount = 0;
                 foreach (var item in ProjectLocationItems)
                 {
-                   
+
                     //insert projectlocations
-                   
                     string localId = item.Id;
                     
                     //check if projectlocation exists on central repo
@@ -759,9 +805,12 @@ namespace Mobile.Code.ViewModels
                             (await VisualFormProjectLocationSqLiteDataStore
                             .GetItemsAsyncByProjectLocationId(localId));
                         _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(uploadedProjectLocation.Id);
+                        completedCount++;
+                        totalCount += VisualFormProjectLocationItems.Count;
                         
                         foreach (var formLocationItem in VisualFormProjectLocationItems)
                         {
+                            completedCount++;
                             //DependencyService.Get<IToast>().Show($"Syncing {formLocationItem.Name}");
                             //add lowest level  location data
                             string localFormId = formLocationItem.Id;
@@ -855,8 +904,9 @@ namespace Mobile.Code.ViewModels
                                 syncedSuccessfully = false;
                                 response.Message = response.Message + "\n" + formLocationItem.Name + "failed to added.";
                             }
-
+                            ProgressValue = completedCount/totalCount;
                         }
+                        ProgressValue = completedCount / totalCount;
                     }
                     else
                     {
@@ -865,14 +915,11 @@ namespace Mobile.Code.ViewModels
                     }
                 }
 
-                var ProjectBuildingItems = new ObservableCollection<ProjectBuilding>(await ProjectBuildingSqLiteDataStore
-                    .GetItemsAsyncByProjectID(SelectedOfflineProject.Id));
-
                 foreach (var item in ProjectBuildingItems)
                 {
                     //DependencyService.Get<IToast>().Show($"Syncing Building {item.Name}");
                     //insert buildinglocations
-
+                    completedCount++;
                     string localId = item.Id;
                     
                     if (item.OnlineId == null)
@@ -915,10 +962,14 @@ namespace Mobile.Code.ViewModels
                        
                         var BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationSqLiteDataStore
                         .GetItemsAsyncByBuildingId(localId));
-                        
+                        var BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentSqLiteDataStore
+                            .GetItemsAsyncByBuildingId(localId));
+
+                        totalCount += BuildingLocations.Count + BuildingApartments.Count;
+
                         foreach (var buildingLoc in BuildingLocations)
                         {
-
+                            completedCount++;
                            // DependencyService.Get<IToast>().Show($"Syncing Building location {buildingLoc.Name}");
                             string localBuildId = buildingLoc.Id;
 
@@ -949,13 +1000,10 @@ namespace Mobile.Code.ViewModels
                             buildingLoc.BuildingId = resultBuilding.ID==null?item.OnlineId:resultBuilding.ID;
                             
                             var resultBuildLoc = await BuildingLocationDataStore.AddItemAsync(buildingLoc);
+                            
                             if (resultBuildLoc.Status == ApiResult.Success)
                             {
-                                //var uploadedBuildingLocation = JsonConvert.DeserializeObject<BuildingLocation>(resultBuildLoc.Data.ToString());
-                                //resultBuilding.ID = uploadedBuildingLocation.Id;//added now
                                 
-                                buildingLoc.Id = localBuildId;
-                               // if(buildingLoc.OnlineId ==null)
                                 buildingLoc.OnlineId = resultBuildLoc.ID;
                                 buildingLoc.BuildingId = localId;
                                 await BuildingLocationSqLiteDataStore.UpdateItemAsync(buildingLoc);
@@ -965,9 +1013,11 @@ namespace Mobile.Code.ViewModels
                                 var VisualFormBuildingLocationItems = new ObservableCollection<BuildingLocation_Visual>(await VisualFormBuildingLocationSqLiteDataStore
                                 .GetItemsAsyncByBuildingLocationId(localBuildId));
                                 _= await VisualFormBuildingLocationDataStore.GetItemsAsyncByBuildingLocationId(resultBuildLoc.ID);
-
+                                totalCount += VisualFormBuildingLocationItems.Count;
+                                
                                 foreach (var buildLocForm in VisualFormBuildingLocationItems)
                                 {
+                                    completedCount++;
                                     string localBuildFormId = buildLocForm.Id;
                                     var images = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore
                                 .GetItemsAsyncByProjectIDSqLite(localBuildFormId, false));
@@ -1050,7 +1100,7 @@ namespace Mobile.Code.ViewModels
                                         _=await VisualFormBuildingLocationSqLiteDataStore.UpdateItemAsync(buildLocForm, FilteredImages);
                                     }
 
-
+                                    
                                     if (BuildlocationResult.Status == ApiResult.Success)
                                     {
                                        
@@ -1061,16 +1111,17 @@ namespace Mobile.Code.ViewModels
                                         syncedSuccessfully = false;
                                         response.Message = response.Message + "\n" + buildLocForm.Name + "failed to added.";
                                     }
+                                    ProgressValue = completedCount / totalCount;
                                 }
                             }
-
+                            ProgressValue = completedCount / totalCount;
                         }   
                         
-                        var BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentSqLiteDataStore
-                            .GetItemsAsyncByBuildingId(localId));
+                        
 
                         foreach (var apartment in BuildingApartments)
                         {
+                            completedCount++;
                             //DependencyService.Get<IToast>().Show($"Syncing Apartment {apartment.Name}");
                             string localaptId = apartment.Id;
 
@@ -1101,8 +1152,10 @@ namespace Mobile.Code.ViewModels
 
         
                             var aptResult = await BuildingApartmentDataStore.AddItemAsync(apartment);
+
                             if (aptResult.Status == ApiResult.Success)
                             {
+                                
                                 response.Message = response.Message + "\n" + apartment.Name + "added successully. Locations will be added";
                                 apartment.Id = localaptId;
                                 //if (apartment.OnlineId == null)
@@ -1114,9 +1167,10 @@ namespace Mobile.Code.ViewModels
                                 var VisualFormApartmentLocationItems = new ObservableCollection<Apartment_Visual>
                                     (await VisualFormApartmentSqLiteDataStore.GetItemsAsyncByApartmentId(localaptId));
                                 _ = await VisualFormApartmentDataStore.GetItemsAsyncByApartmentId(aptResult.ID);
-                                
+                                totalCount+= VisualFormApartmentLocationItems.Count;
                                 foreach (var aptLoc in VisualFormApartmentLocationItems)
                                 {
+                                    completedCount++;
                                    // DependencyService.Get<IToast>().Show($"Syncing apartment location {aptLoc.Name}");
                                     string localAptLocFormId = aptLoc.Id;
                                     var images = new ObservableCollection<VisualApartmentLocationPhoto>
@@ -1215,14 +1269,17 @@ namespace Mobile.Code.ViewModels
                                         syncedSuccessfully = false;
                                         response.Message = response.Message + "\n" + aptLoc.Name + "failed to added.";
                                     }
+                                    ProgressValue = completedCount / totalCount;
                                 }
                             }
+                            ProgressValue = completedCount / totalCount;
                         }
                     }
                     else
                     {
                         response.Message = response.Message + item.Name + "failed to be added.";
                     }
+                    ProgressValue = completedCount / totalCount;
                 }
                 Project.IsSynced = syncedSuccessfully;
                 await ProjectSQLiteDataStore.UpdateItemAsync(Project);
@@ -1230,6 +1287,8 @@ namespace Mobile.Code.ViewModels
             });
             await LoadData();
             IsBusyProgress = false;
+            IsSyncing=false;
+            ProgressValue = 0;
         }
     }
     

@@ -651,10 +651,18 @@
                             FontSize="15"
                             IsSpellCheckEnabled="True"
                             IsTextPredictionEnabled="True"
-                            Keyboard="Chat"
+                            Keyboard="Text"
                             Text="{Binding VisualForm.AdditionalConsideration}"
                             TextColor="{DynamicResource ColorBackground}"
-                            VerticalOptions="FillAndExpand" />
+                            VerticalOptions="FillAndExpand">
+                            <!--<uc:XEditor.Keyboard>
+                                <Keyboard x:FactoryMethod="Create">
+                                    <x:Arguments>
+                                        <KeyboardFlags>All</KeyboardFlags>
+                                    </x:Arguments>
+                                </Keyboard>
+                            </uc:XEditor.Keyboard>-->
+                        </uc:XEditor>
                         <BoxView
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
@@ -832,7 +840,7 @@
             </ScrollView>
             <Button
                 x:Name="btnSwipeLeft"
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="10"
                 BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-100}"
@@ -854,7 +862,7 @@
                 WidthRequest="50" />
             <Button
                 x:Name="btnSwipeRight"
-                Grid.Row="1"
+                Grid.Row="0"
                 Margin="10"
                 BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-100}"
