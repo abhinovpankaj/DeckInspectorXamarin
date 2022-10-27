@@ -1,6 +1,7 @@
 ﻿using CarouselView.FormsPlugin.iOS;
 using Foundation;
 using UIKit;
+using Xamarin.Essentials;
 
 namespace Mobile.Code.iOS
 {
@@ -30,6 +31,8 @@ namespace Mobile.Code.iOS
             Syncfusion.SfImageEditor.XForms.iOS.SfImageEditorRenderer.Init();
             CarouselViewRenderer.Init();
             LoadApplication(new App());
+
+            DeviceDisplay.KeepScreenOn = true;
 
             // Xamarin.Forms.DependencyService.Register<Xamarin.Forms.ImagePicker.IImagePickerService, Xamarin.Forms.ImagePicker.iOS.ImagePickerService>();
             return base.FinishedLaunching(app, options);

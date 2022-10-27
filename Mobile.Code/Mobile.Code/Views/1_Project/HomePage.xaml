@@ -131,7 +131,7 @@
                                             <Label
                                                 Margin="-10,-10,0,0"
                                                 Padding="2"
-                                                Background="{DynamicResource Orange-400}"
+                                                BackgroundColor="{StaticResource Orange-400}"
                                                 FontAttributes="Bold"
                                                 FontSize="Subtitle"
                                                 HeightRequest="25"
@@ -144,11 +144,13 @@
                                                 WidthRequest="25">
 
                                                 <Label.Triggers>
+
                                                     <DataTrigger
                                                         Binding="{Binding Category}"
                                                         TargetType="Label"
                                                         Value="SingleLevel">
                                                         <Setter Property="Text" Value="S" />
+                                                        <Setter Property="Background" Value="{StaticResource Orange-400}" />
                                                     </DataTrigger>
 
                                                 </Label.Triggers>
@@ -157,7 +159,7 @@
                                             </Label>
                                             <Label
                                                 Padding="0"
-                                                Background="{DynamicResource Orange-400}"
+                                                BackgroundColor="{StaticResource Orange-400}"
                                                 FontAttributes="Bold"
                                                 FontSize="Large"
                                                 HeightRequest="28"
@@ -176,6 +178,7 @@
                                                         TargetType="Label"
                                                         Value="Invasive">
                                                         <Setter Property="IsVisible" Value="True" />
+                                                        <Setter Property="Background" Value="{StaticResource Orange-400}" />
                                                     </DataTrigger>
 
                                                 </Label.Triggers>

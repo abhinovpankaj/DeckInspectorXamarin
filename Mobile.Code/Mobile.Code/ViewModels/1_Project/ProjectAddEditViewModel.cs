@@ -116,11 +116,8 @@ namespace Mobile.Code.ViewModels
                 {
                     result = await ProjectDataStore.AddItemAsync(Project);
                     Project = JsonConvert.DeserializeObject<Project>(result.Data.ToString());
-                }
-                    
+                }                 
 
-
-                return await Task.FromResult(true);
             }
             else
             {
@@ -134,10 +131,8 @@ namespace Mobile.Code.ViewModels
                 else
                     await ProjectDataStore.AddItemAsync(Project);
                 
-                return await Task.FromResult(true);
             }
-
-
+            return true;
         }
 
 

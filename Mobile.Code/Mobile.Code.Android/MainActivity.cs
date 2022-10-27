@@ -20,6 +20,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Wibci.Xamarin.Images;
 using Wibci.Xamarin.Images.Droid;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Environment = System.Environment;
 
@@ -70,8 +71,10 @@ namespace Mobile.Code.Droid
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
-            
-           
+
+            //To keep Screen On even if the app is not in use.
+            DeviceDisplay.KeepScreenOn = true;
+
             LoadApplication(new App());
         }
 

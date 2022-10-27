@@ -106,6 +106,21 @@ namespace Mobile.Code.ViewModels
 
 
         #region Properties
+        private float _progressValue;
+        public float ProgressValue
+        {
+            get { return _progressValue; }
+            set
+            {
+                if (_progressValue != value)
+                {
+                    _progressValue = value;
+                    OnPropertyChanged("ProgressValue");
+
+                }
+
+            }
+        }
         public string SelectedImage { get; set; }
 
 
@@ -356,9 +371,11 @@ namespace Mobile.Code.ViewModels
             
                 //get all locations
             var projLocForms = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id);
-
+            float completedCount = 0;
+            float totalCount = projLocForms.Count();
             foreach (var projLocForm in projLocForms)
             {
+                completedCount++;
                 DependencyService.Get<IToast>().Show($"Downloading {projLocForm.Name}");
                 //insert projLoc offline db.
                 //download image.
@@ -371,10 +388,11 @@ namespace Mobile.Code.ViewModels
                 }
                 projLocForm.OnlineId = projLocForm.Id;
                 _ = await VisualFormProjectLocationSqLiteDataStore.AddItemAsync(projLocForm);
+                ProgressValue = completedCount / totalCount;
             }
             
             IsBusyProgress = false;
-            DependencyService.Get<IToast>().Show("Project is available offline now.");
+            //DependencyService.Get<IToast>().Show("Project is available offline now.");
         }
 
         
@@ -878,12 +896,14 @@ namespace Mobile.Code.ViewModels
                 var VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>
                             (await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(SelectedOfflineProject.Id));
 
-
+                float totalCount = VisualFormProjectLocationItems.Count;
+                float uploadCount = 0;
                 _ = await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(Project.Id);
                 foreach (var formLocationItem in VisualFormProjectLocationItems)
                 {
                     //DependencyService.Get<IToast>().Show($"Syncing Location {formLocationItem.Name}");
                     //add lowest level  location data
+                    uploadCount++;
                     string localFormId = formLocationItem.Id;
                     var images = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore
                         .GetItemsAsyncByLoacationIDSqLite(formLocationItem.Id, false));
@@ -976,7 +996,7 @@ namespace Mobile.Code.ViewModels
                         response.Message = response.Message + "\n" + formLocationItem.Name + "failed to added.";
 
                     }
-
+                    ProgressValue = uploadCount / totalCount;
                 }
    
                 Project.IsSynced = syncedSuccessfully;
