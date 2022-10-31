@@ -49,7 +49,7 @@
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ContentSave},
-                                        Color=Red}"
+                                        Color=#1B76FF}"
             IsDestructive="False"
             Order="Primary"
             Priority="0"
@@ -58,7 +58,7 @@
             Command="{Binding ShowImagesCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Home},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             Order="Secondary"
             Priority="1"
             Text="Show All Images" />

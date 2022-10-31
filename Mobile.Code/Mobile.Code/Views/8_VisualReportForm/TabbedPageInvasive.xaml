@@ -54,7 +54,7 @@
             Command="{Binding SaveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ContentSave},
-                                        Color=Red}"
+                                        Color=#1B76FF}"
             IsDestructive="False"
             Order="Primary"
             Priority="0"

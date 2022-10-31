@@ -40,7 +40,7 @@
             Command="{Binding CreateInvasiveCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.ShieldRefresh},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             IsEnabled="{Binding CanInvasiveCreate}"
             Order="Primary"
             Priority="1"
@@ -49,7 +49,7 @@
             Command="{Binding DownloadOfflineCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.CloudDownload},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             IsEnabled="{Binding IsInvasive}"
             Order="Primary"
             Priority="1"
@@ -59,7 +59,7 @@
             Command="{Binding EditCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             IsEnabled="{Binding IsEditDeleteAccess}"
             Order="Secondary"
             Priority="1"
@@ -80,7 +80,7 @@
             Command="{Binding GoHomeCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Home},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             Order="Secondary"
             Priority="1"
             Text="Home" />
