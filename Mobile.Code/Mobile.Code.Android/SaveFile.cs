@@ -128,52 +128,55 @@ namespace Mobile.Code.Droid
 
         public async Task<string> SaveFilesForCameraApi(string filename, byte[] bytes, float rotation = 0)
         {
-
-            Bitmap originalImage = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
-            Matrix matrix = new Matrix();
-            
-            int width = originalImage.Width;
-            int height = originalImage.Height;
-            if (rotation != 0)
+            string filePath = string.Empty;
+            await Task.Run(() =>
             {
-                if (MainActivity.AppOrientation == 0)
+                Bitmap originalImage = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
+                Matrix matrix = new Matrix();
+
+                int width = originalImage.Width;
+                int height = originalImage.Height;
+                if (rotation != 0)
                 {
-                    matrix.PostRotate(0);
+                    if (MainActivity.AppOrientation == 0)
+                    {
+                        matrix.PostRotate(0);
+                    }
+                    if (MainActivity.AppOrientation == 2)
+                    {
+                        matrix.PostRotate(-90);
+                    }
+                    if (MainActivity.AppOrientation == 3)
+                    {
+                        matrix.PostRotate(90);
+                    }
+                    if (MainActivity.AppOrientation == 4)
+                    {
+                        matrix.PostRotate(180);
+                    }
+                    matrix.PostRotate(rotation);
                 }
-                if (MainActivity.AppOrientation == 2)
-                {
-                    matrix.PostRotate(-90);
-                }
-                if (MainActivity.AppOrientation == 3)
-                {
-                    matrix.PostRotate(90);
-                }
-                if (MainActivity.AppOrientation == 4)
-                {
-                    matrix.PostRotate(180);
-                }
-                matrix.PostRotate(rotation);
-            }
-            else
-                matrix.PostRotate(GetImageRotation());
-            Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, originalImage.Width, originalImage.Height, matrix, true);
+                else
+                    matrix.PostRotate(GetImageRotation());
+                Bitmap resizedImage = Bitmap.CreateBitmap(originalImage, 0, 0, width, height, matrix, true);
 
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                resizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
-                bytes = ms.ToArray();
-            }
-            // var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    resizedImage.Compress(Bitmap.CompressFormat.Jpeg, 30, ms);
+                    bytes = ms.ToArray();
+                }
 
-            var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath; //Android.OS.Environment.StorageDirectory.AbsolutePath;
-            documentsPath = documentsPath.Replace("Android/data/com.deckinspectors.mobile/files", "");
-            var filePath = System.IO.Path.Combine(documentsPath,"DeckInspectors");
-            Directory.CreateDirectory(filePath);
-            filePath= System.IO.Path.Combine(filePath,filename) + ".png";
-            File.WriteAllBytes(filePath, bytes);
-            
-            return await Task.FromResult(filePath);
+                var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath; //Android.OS.Environment.StorageDirectory.AbsolutePath;
+                documentsPath = documentsPath.Replace("Android/data/com.deckinspectors.mobile/files", "");
+                filePath = System.IO.Path.Combine(documentsPath, "DeckInspectors");
+                Directory.CreateDirectory(filePath);
+                filePath = System.IO.Path.Combine(filePath, filename) + ".png";
+                File.WriteAllBytes(filePath, bytes);
+            });                       
+
+            return filePath;
+
         }
 
         public async Task<string> SaveFiles(string filename, byte[] bytes)

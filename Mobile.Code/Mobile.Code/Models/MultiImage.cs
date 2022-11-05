@@ -1,5 +1,7 @@
 ﻿using SQLite;
 using System;
+using System.IO;
+using Xamarin.Forms;
 
 namespace Mobile.Code.Models
 {
@@ -26,5 +28,13 @@ namespace Mobile.Code.Models
         public string OnlineId { get; set; }
 
         public bool IsSynced { get; set; }
+       // public bool IsLoading { get; set; }
+    }
+
+    public class LoadingImage
+    {
+        public string Id { get; set; }
+        //public bool IsLoading { get; set; }
+        public ImageSource ImageSourceData { get; set; }
     }
 }

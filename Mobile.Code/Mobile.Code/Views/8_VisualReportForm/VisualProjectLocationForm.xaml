@@ -256,6 +256,12 @@
                                 HorizontalOptions="Center"
                                 IndicatorView="indicatorView"
                                 ItemsSource="{Binding VisualProjectLocationPhotoItems}">
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout
+                                        ItemSpacing="10"
+                                        Orientation="Horizontal"
+                                        SnapPointsType="MandatorySingle" />
+                                </CarouselView.ItemsLayout>
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout>
@@ -281,12 +287,7 @@
                                         </StackLayout>
                                     </DataTemplate>
                                 </CarouselView.ItemTemplate>
-                                <CarouselView.ItemsLayout>
-                                    <LinearItemsLayout
-                                        ItemSpacing="10"
-                                        Orientation="Horizontal"
-                                        SnapPointsType="MandatorySingle" />
-                                </CarouselView.ItemsLayout>
+
                             </CarouselView>
                             <IndicatorView
                                 x:Name="indicatorView"

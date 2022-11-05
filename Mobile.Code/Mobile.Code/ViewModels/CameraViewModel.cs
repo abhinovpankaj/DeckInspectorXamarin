@@ -1,5 +1,6 @@
 ﻿using Mobile.Code.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -9,6 +10,8 @@ namespace Mobile.Code.ViewModels
     public class CameraViewModel : BaseViewModel
     {
         private VisualProjectLocationPhoto _vpc;
+
+        private ObservableCollection<LoadingImage> _imageTempList;
         private ObservableCollection<MultiImage> _imageList;
 
 
@@ -27,7 +30,18 @@ namespace Mobile.Code.ViewModels
             get { return _Isbusyprog; }
             set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
         }
+        public ObservableCollection<LoadingImage> ImageTempList
+        {
 
+            get
+            {
+
+                return _imageTempList;
+
+
+            }
+            set { _imageTempList = value; OnPropertyChanged("ImageTempList"); }
+        }
         public ObservableCollection<MultiImage> ImageList
         {
 
@@ -211,19 +225,33 @@ namespace Mobile.Code.ViewModels
         {
             IsBusyProgress = false;
             ImageList = new ObservableCollection<MultiImage>();
+            ImageTempList = new ObservableCollection<LoadingImage>();
             CountPhoto = "0 Photo(s)";
         }
-        public ICommand DeleteCommand => new Command<MultiImage>(async (MultiImage parm) => await Delete(parm));
+        public ICommand DeleteCommand => new Command<LoadingImage>(async (LoadingImage parm) => await Delete(parm));
         private async Task Delete(MultiImage parm)
         {
             ImageList.Remove(parm);
+            //ImageTempList.Remove()
             App.ListCamera2Api.Remove(parm);
             CountPhoto = ImageList.Count + " Photo(s)";
-            await Task.FromResult(true);
+            await Task.FromResult(true);          
+        }
+        private async Task Delete(LoadingImage parm)
+        {
+            ImageTempList.Remove(parm);
+            //ImageTempList.Remove()
+            var rem = App.ListCamera2Api.FirstOrDefault(x => x.Id == parm.Id);
+            if (rem!=null)
+            {
+                App.ListCamera2Api.Remove(rem);
+            }
             
+            CountPhoto = ImageTempList.Count + " Photo(s)";
+            await Task.FromResult(true);
+
 
         }
-
         public string ImageType { get; set; }
     }
 }

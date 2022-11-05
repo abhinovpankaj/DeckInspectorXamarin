@@ -90,7 +90,8 @@ namespace Mobile.Code.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await ((VisualProjectLocationFormViewModel)this.BindingContext).Load().ConfigureAwait(false);
+           // carouselView.ItemsLayout = new LinearItemsLayout(ItemsLayoutOrientation.Horizontal) { ItemSpacing = 10  };
+            await ((VisualProjectLocationFormViewModel)this.BindingContext).Load();
             //vm.Load();
         }
 

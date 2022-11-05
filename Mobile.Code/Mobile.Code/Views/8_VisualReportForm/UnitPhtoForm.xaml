@@ -92,18 +92,20 @@
                                         HorizontalOptions="Center"
                                         Source="{Binding ImageUrl}"
                                         VerticalOptions="CenterAndExpand" />
-                                    <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                    <StackLayout
+                                        Margin="10"
+                                        HorizontalOptions="EndAndExpand"
+                                        VerticalOptions="StartAndExpand">
                                         <ImageButton
-                                            BackgroundColor="Transparent"
+                                            BackgroundColor="White"
                                             Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
                                             CommandParameter="{Binding}"
                                             HorizontalOptions="End"
                                             IsVisible="{Binding IsEdit}"
-                                            Opacity="0.9"
                                             Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                               Color=#2C1DFF,
-                                                               Size=36}"
+                                                               Color=#1B76FF,
+                                                               Size=48}"
                                             VerticalOptions="Start" />
                                     </StackLayout>
                                     <Grid.GestureRecognizers>
@@ -247,18 +249,21 @@
                                             HorizontalOptions="Center"
                                             Source="{Binding ImageUrl}"
                                             VerticalOptions="CenterAndExpand" />
-                                        <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                        <StackLayout
+                                            Margin="10"
+                                            HorizontalOptions="EndAndExpand"
+                                            VerticalOptions="StartAndExpand">
                                             <ImageButton
-                                                BackgroundColor="Transparent"
+                                                Padding="0"
+                                                BackgroundColor="white"
                                                 Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
                                                 CommandParameter="{Binding}"
                                                 HorizontalOptions="End"
                                                 IsVisible="{Binding IsEdit}"
-                                                Opacity="0.9"
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                                   Color=#2C1DFF,
-                                                                   Size=36}"
+                                                                   Color=#1B76FF,
+                                                                   Size=48}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
                                         <Grid.GestureRecognizers>
@@ -407,18 +412,20 @@
                                             HorizontalOptions="Center"
                                             Source="{Binding ImageUrl}"
                                             VerticalOptions="CenterAndExpand" />
-                                        <StackLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand">
+                                        <StackLayout
+                                            Margin="10"
+                                            HorizontalOptions="EndAndExpand"
+                                            VerticalOptions="StartAndExpand">
                                             <ImageButton
-                                                BackgroundColor="Transparent"
+                                                BackgroundColor="White"
                                                 Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference mainLayout}}"
                                                 CommandParameter="{Binding}"
                                                 HorizontalOptions="End"
                                                 IsVisible="{Binding IsEdit}"
-                                                Opacity="0.9"
                                                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                                                    Glyph={x:Static helpers:IconFont.DeleteCircleOutline},
-                                                                   Color=#2C1DFF,
-                                                                   Size=36}"
+                                                                   Color=#1B76FF,
+                                                                   Size=48}"
                                                 VerticalOptions="Start" />
                                         </StackLayout>
                                         <Grid.GestureRecognizers>

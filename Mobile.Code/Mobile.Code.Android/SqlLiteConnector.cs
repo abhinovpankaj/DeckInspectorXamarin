@@ -11,18 +11,37 @@ namespace Mobile.Code.Droid
     public class SqlLiteConnector : ISQLite
     {
         public SqlLiteConnector() { }
+
+        private SQLiteConnection _connection;
         public SQLiteConnection GetConnection()
         {
-            var dbase = "DeckInspectorsLocalDB.db";
+            try
+            {
+                if (_connection == null)
+                {
+                    var dbase = "DeckInspectorsLocalDB.db";
 
-            //var dbpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath; 
-            documentsPath = documentsPath.Replace("Android/data/com.deckinspectors.mobile/files", "");
-            var filePath = System.IO.Path.Combine(documentsPath, "DeckInspectors");
-            Directory.CreateDirectory(filePath);
-            var path = Path.Combine(filePath, dbase);
-            var connection = new SQLiteConnection(path);
-            return connection;
+                    //var dbpath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+                    var documentsPath = Android.App.Application.Context.GetExternalFilesDir("").AbsolutePath;
+                    documentsPath = documentsPath.Replace("Android/data/com.deckinspectors.mobile/files", "");
+                    var filePath = System.IO.Path.Combine(documentsPath, "DeckInspectors");
+                    Directory.CreateDirectory(filePath);
+                    var path = Path.Combine(filePath, dbase);
+                    //if (!File.Exists(path))
+                    //{
+                    //    File.Copy("DeckInspectorsLocalDB.db", path);
+                    //}
+                    _connection = new SQLiteConnection(path);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+            
+            return _connection;
         }
     }
 }

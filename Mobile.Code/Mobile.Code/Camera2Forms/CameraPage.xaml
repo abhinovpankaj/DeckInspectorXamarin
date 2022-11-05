@@ -59,7 +59,7 @@
                     <Grid>
                         <xct:CameraView
                             x:Name="cameraView"
-                            CaptureMode="Photo" 
+                            CaptureMode="Photo"
                             HorizontalOptions="FillAndExpand"
                             MediaCaptured="CameraView_MediaCaptured"
                             VerticalOptions="FillAndExpand">
@@ -182,7 +182,7 @@
                     Margin="0"
                     Orientation="Both">
 
-                    <FlexLayout x:Name="FlexTypes" BindableLayout.ItemsSource="{Binding ImageList}">
+                    <FlexLayout x:Name="FlexTypes" BindableLayout.ItemsSource="{Binding ImageTempList}">
                         <FlexLayout.Margin>
                             <OnPlatform x:TypeArguments="Thickness">
                                 <On Platform="iOS" Value="0" />
@@ -211,10 +211,11 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <yummy:PancakeView CornerRadius="5">
-                                        <ffimageloading:CachedImage
+                                        <Image
                                             Aspect="AspectFill"
                                             HeightRequest="120"
-                                            Source="{Binding Image}"
+                                            Rotation="90"
+                                            Source="{Binding ImageSourceData}"
                                             WidthRequest="120" />
                                     </yummy:PancakeView>
                                     <ImageButton

@@ -25,7 +25,7 @@ namespace Mobile.Code.Camera2Forms
 
             InitializeComponent();
             //CameraPreview.PictureFinished += OnPictureFinished;
-            // cameraView.MediaCaptured += CameraView_MediaCaptured; ;
+            //CameraPreview.MediaCaptured += CameraView_MediaCaptured; ;
         }
 
         private async void CameraView_MediaCaptured(object sender, 
@@ -45,58 +45,62 @@ namespace Mobile.Code.Camera2Forms
 
             CameraViewModel vm = (CameraViewModel)this.BindingContext;
             string filepath = string.Empty;
+            var guid = Guid.NewGuid().ToString();
             
+            vm.ImageTempList.Add(new LoadingImage() { ImageSourceData = e.Image, Id = guid });
+            vm.CountPhoto = vm.ImageTempList.Count + " Photo(s)";
             if (Device.RuntimePlatform == Device.iOS)
             {
 
-                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), e.ImageData);
+                filepath = await DependencyService.Get<ISaveFile>().SaveFiles(guid, e.ImageData);
 
             }
             if (Device.RuntimePlatform == Device.Android)
             {
-                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), e.ImageData,float.Parse(e.Rotation.ToString()));
+                //filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), e.ImageData);
+                
+                filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(guid, e.ImageData,float.Parse(e.Rotation.ToString()));
 
             }
-            MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = e.ImageData, ImageType = vm.ImageType };
+            MultiImage img = new MultiImage() { Image=filepath, Id = guid, ImageArray = e.ImageData, ImageType = vm.ImageType };
+            vm.ImageList.Add(img);
+            //vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
+
             App.ListCamera2Api.Add(img);
 
-
-            vm.ImageList.Add(img);
-            vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
-            vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
         }
 
         void OnCameraClicked(object sender, EventArgs e)
         {
             //CameraPreview.CameraClick.Execute(null);
-            cameraView.Shutter();
+            cameraView.Shutter(); 
         }
 
-        private void OnPictureFinished()
-        {
-            //CameraViewModel vm = (CameraViewModel)this.BindingContext;
-            //string filepath = string.Empty;
+        //private async void OnPictureFinished()
+        //{
+        //    //CameraViewModel vm = (CameraViewModel)this.BindingContext;
+        //    //string filepath = string.Empty;
 
 
-            //if (Device.RuntimePlatform == Device.iOS)
-            //{
+        //    //if (Device.RuntimePlatform == Device.iOS)
+        //    //{
 
-            //    filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+        //    //    filepath = await DependencyService.Get<ISaveFile>().SaveFiles(Guid.NewGuid().ToString(), CameraPreview.byteArr);
 
-            //}
-            //if (Device.RuntimePlatform == Device.Android)
-            //{
-            //    filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
+        //    //}
+        //    //if (Device.RuntimePlatform == Device.Android)
+        //    //{
+        //    //    filepath = await DependencyService.Get<ISaveFile>().SaveFilesForCameraApi(Guid.NewGuid().ToString(), CameraPreview.byteArr);
 
-            //}
-            //MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType };
-            //App.ListCamera2Api.Add(img);
+        //    //}
+        //    //MultiImage img = new MultiImage() { Image = filepath, Id = Guid.NewGuid().ToString(), ImageArray = CameraPreview.byteArr, ImageType = vm.ImageType };
+        //    //App.ListCamera2Api.Add(img);
 
 
-            //vm.ImageList.Add(img);
-            //vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
-            //vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
-        }
+        //    //vm.ImageList.Add(img);
+        //    //vm.ImageList = new ObservableCollection<MultiImage>(vm.ImageList.OrderByDescending(c => c.CreateOn));
+        //    //vm.CountPhoto = vm.ImageList.Count + " Photo(s)";
+        //}
         public static event EventHandler<ImageSource> PhotoCapturedEvent;
 
         public static void OnPhotoCaptured(ImageSource src)
@@ -206,7 +210,7 @@ namespace Mobile.Code.Camera2Forms
                 //xOffset = Content.TranslationX;
                 //yOffset = Content.TranslationY;
                 cameraView.Zoom = currentScale;
-                
+               
                 zoomfactor.Text = Math.Round(currentScale,2).ToString() + "x";
             }
         }
@@ -215,12 +219,12 @@ namespace Mobile.Code.Camera2Forms
         {
             if (cameraView.FlashMode == CameraFlashMode.On)
             {
-                cameraView.FlashMode = CameraFlashMode.Off;                
+                cameraView.FlashMode = CameraFlashMode.Off;
             }
             else
             {
                 cameraView.FlashMode = CameraFlashMode.On;
-            }               
+            }
         }
     }
 }
