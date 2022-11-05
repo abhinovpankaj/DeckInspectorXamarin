@@ -49,7 +49,7 @@
             Command="{Binding EditCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.FileDocumentEdit},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             Order="Primary"
             Priority="1"
             Text="Edit" />
