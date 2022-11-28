@@ -185,7 +185,6 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-            Debug.WriteLine("On Project list page");
             IsOnline = !App.IsAppOffline;
             IsBusyProgress = true;
             if (App.IsAppOffline)

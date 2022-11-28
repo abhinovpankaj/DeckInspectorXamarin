@@ -27,6 +27,7 @@ namespace Mobile.Code.Models
         }
         public bool InvasiveImage { get; set; }
 
-        public  string OnlineId { get; set; }
+        
+        
     }
 }
