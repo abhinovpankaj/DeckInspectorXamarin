@@ -74,8 +74,8 @@ namespace Mobile.Code.Models
             get { return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
-       
 
+        
         private bool _isSynced;
 
         public bool IsSynced
@@ -83,7 +83,23 @@ namespace Mobile.Code.Models
             get { return _isSynced; }
             set { _isSynced = value; OnPropertyChanged("IsSynced"); }
         }
-        
+
+        private bool? _isAvailableOffline;
+        public bool? IsAvailableOffline
+        {
+            get
+            {
+                return _isAvailableOffline;
+            }
+            set
+            {
+                if (value != _isAvailableOffline)
+                {
+                    _isAvailableOffline = value;
+                    OnPropertyChanged("IsAvailableOffline");
+                }
+            }
+        }
     }
 
     public enum ProjectCategory

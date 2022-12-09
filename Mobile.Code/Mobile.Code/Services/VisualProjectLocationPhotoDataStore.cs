@@ -25,6 +25,8 @@ namespace Mobile.Code.Services
         Task<IEnumerable<VisualProjectLocationPhoto>> GetItemsAsyncByProjectVisualID(string locationVisualID, bool loadServer, bool isSync=false);
 
         Task<IEnumerable<VisualProjectLocationPhoto>> GetItemsAsyncByLoacationIDSqLite(string locationVisualID, bool loadLocally);
+
+       // Task<IEnumerable<VisualProjectLocationPhoto>> GetUnsyncedItemsAsyncByLoacationIDSqLite(string locationVisualID, bool loadLocally);
         Task<IEnumerable<MultiImage>>  GetMultiImagesAsyncByLoacationIDSqLite(string locationVisualID, bool loadLocally);
     }
     public class VisualProjectLocationPhotoDataStore : IVisualProjectLocationPhotoDataStore
@@ -62,6 +64,7 @@ namespace Mobile.Code.Services
             
             if (isOffline)
             {
+                multiImage.IsSynced = false;
                 InsertPhoto(item);
                 InsertMultiPhoto(multiImage);
             }
@@ -226,7 +229,7 @@ namespace Mobile.Code.Services
             }
             else
             {
-                var allitems = _connection.Table<VisualProjectLocationPhoto>().ToList();
+                //var allitems = _connection.Table<VisualProjectLocationPhoto>().ToList();
 
                 items = _connection.Table<VisualProjectLocationPhoto>().Where(t => t.VisualLocationId == locationVisualID).ToList();
                 
@@ -243,6 +246,30 @@ namespace Mobile.Code.Services
            
             return await Task.FromResult(items);
         }
+
+        //public async Task<IEnumerable<VisualProjectLocationPhoto>> GetUnsyncedItemsAsyncByLoacationIDSqLite(string locationVisualID, bool loadLocally)
+        //{
+        //    if (loadLocally)
+        //    {
+        //        return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false  ));
+        //    }
+        //    else
+        //    {                
+        //        items = _connection.Table<VisualProjectLocationPhoto>().Where(t => t.VisualLocationId == locationVisualID && t.IsDelete==false).ToList();
+
+        //        //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+
+        //        foreach (var item in items)
+        //        {
+        //            var multiimg = new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
+        //            App.VisualEditTracking.Add(multiimg);
+        //            //InsertMultiPhoto(multiimg);
+        //            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+        //        }
+        //    }
+
+        //    return await Task.FromResult(items);
+        //}
 
         public async Task<IEnumerable<MultiImage>> GetMultiImagesAsyncByLoacationIDSqLite(string locationVisualID, bool loadLocally)
         {

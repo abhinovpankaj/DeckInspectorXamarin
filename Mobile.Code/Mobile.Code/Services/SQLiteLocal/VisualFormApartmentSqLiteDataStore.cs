@@ -73,6 +73,13 @@ namespace Mobile.Code.Services.SQLiteLocal
                 res.Data = item;
                 res.Message = "Record Updated Successfully";
                 res.Status = ApiResult.Success;
+                if (finelList != null)
+                {
+                    foreach (var img in finelList)
+                    {
+                        var updateRes = _connection.Update(img);
+                    }
+                }
             }
             catch (Exception)
             {
