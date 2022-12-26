@@ -135,58 +135,61 @@ namespace Mobile.Code.ViewModels
         {
 
             Response result = new Response();
-
-
-            try
+            await Task.Run(async () =>
             {
-                User user = new User();
-                user.UserName = Username;
-                user.Pwd = Password;
-                Response response = await LogDataStore.ValidateLogin(user);
-                if (response.Status == ApiResult.Success)
+                try
                 {
-                    user = JsonConvert.DeserializeObject<User>(response.Data.ToString());
-                    if (user.ErrNo == 1)
+                    User user = new User();
+                    user.UserName = Username;
+                    user.Pwd = Password;
+                    Response response = await LogDataStore.ValidateLogin(user);
+                    if (response.Status == ApiResult.Success)
                     {
-                        if (user.RoleName == "Mobile" || user.RoleName == "Admin" || user.RoleName == "Desktop,Mobile")
+                        user = JsonConvert.DeserializeObject<User>(response.Data.ToString());
+                        if (user.ErrNo == 1)
                         {
-                            App.LogUser = user;
-                            if (Savecredentials == true)
+                            if (user.RoleName == "Mobile" || user.RoleName == "Admin" || user.RoleName == "Desktop,Mobile")
                             {
-                                await SecureStorage.SetAsync("Username", Username);
-                                await SecureStorage.SetAsync("Password", Password);
-                                await SecureStorage.SetAsync("Savecredential", "True");
+                                App.LogUser = user;
+                                if (Savecredentials == true)
+                                {
+                                    await SecureStorage.SetAsync("Username", Username);
+                                    await SecureStorage.SetAsync("Password", Password);
+                                    await SecureStorage.SetAsync("Savecredential", "True");
+                                }
+                                else
+                                {
+                                    await SecureStorage.SetAsync("Username", string.Empty);
+                                    await SecureStorage.SetAsync("Password", string.Empty);
+                                    await SecureStorage.SetAsync("Savecredential", "False");
+                                }
+                                result.Status = ApiResult.Success; ;
+
                             }
                             else
                             {
-                                await SecureStorage.SetAsync("Username", string.Empty);
-                                await SecureStorage.SetAsync("Password", string.Empty);
-                                await SecureStorage.SetAsync("Savecredential", "False");
-                            }
-                            result.Status = ApiResult.Success; ;
 
+                                result.Message = "you are not authorized to access this application";
+                                result.Status = ApiResult.Fail; ;
+                            }
                         }
                         else
                         {
-
                             result.Message = "you are not authorized to access this application";
                             result.Status = ApiResult.Fail; ;
                         }
+
                     }
-                    else
-                    {
-                        result.Message = "you are not authorized to access this application";
-                        result.Status = ApiResult.Fail; ;
-                    }
+                }
+                catch (Exception ex)
+                {
+                    result.Message = ex.Message;
+                    result.Status = ApiResult.Fail; ;
 
                 }
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-                result.Status = ApiResult.Fail; ;
+            });
 
-            }
+           
             return await Task.FromResult(result);
         }
         private bool _Savecredentials;

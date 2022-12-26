@@ -182,6 +182,7 @@ namespace Mobile.Code.Services
 
                         items = JsonConvert.DeserializeObject<List<VisualApartmentLocationPhoto>>(result.Data.ToString());
                         items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+                        List<MultiImage> images = new List<MultiImage>();
                         foreach (var item in items)
                         {
                             var onlineImage = new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
@@ -189,10 +190,11 @@ namespace Mobile.Code.Services
                             {
                                 InsertMultiPhoto(onlineImage);
                             }
-                            
-                            App.VisualEditTracking.Add(onlineImage);
-                            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                            images.Add(onlineImage);
+
                         }
+                        App.VisualEditTracking.AddRange(images);
+                        App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
                         response.EnsureSuccessStatusCode();
 
                         return await Task.FromResult(items);
@@ -212,13 +214,14 @@ namespace Mobile.Code.Services
             else
             {
                 items = _connection.Table<VisualApartmentLocationPhoto>().Where(t => t.VisualApartmentId == aptId).ToList();
-
+                List<MultiImage> images = new List<MultiImage>();
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
                 foreach (var item in items)
                 {
-                    App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                    App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                    images.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualApartmentId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });                    
                 }
+                App.VisualEditTracking.AddRange(images);
+                App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
             }
 
             return await Task.FromResult(items);

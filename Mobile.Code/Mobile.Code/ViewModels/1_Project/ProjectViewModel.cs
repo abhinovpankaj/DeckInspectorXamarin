@@ -185,27 +185,37 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-            IsOnline = !App.IsAppOffline;
-            IsBusyProgress = true;
-            if (App.IsAppOffline)
-            {
-                AllProjects = new ObservableCollection<Project>(await ProjectSQLiteDataStore.GetItemsAsync(true));
-            }
-            else
-                AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
-
-            
-            return await Task.FromResult(true);
+            //await Task.Factory.StartNew(async () =>
+            //{
+                IsOnline = !App.IsAppOffline;
+                IsBusyProgress = true;
+                if (App.IsAppOffline)
+                {
+                    await Task.Run(async () =>
+                    {
+                        AllProjects = new ObservableCollection<Project>(await ProjectSQLiteDataStore.GetItemsAsync(true));
+                    });
+                
+                }
+                else
+                {
+                   await Task.Run(async () =>
+                    {
+                        AllProjects = new ObservableCollection<Project>(await ProjectDataStore.GetItemsAsync(true));
+                    });
+                }
+                    
+                
+            //});
+            return true;
         }
         public async Task LoadData()
         {
             // AllProjects = new ObservableCollection<Project>();
-            bool complete = await Task.Run(Running);
-            if (complete == true)
+            bool complete = await Task.Run(()=>Running());
+            if (complete == true)  
             {
-
                 IsBusyProgress = false;
-
             }
         }
         public Command<Project> CreateInvasiveCommand { get; set; }

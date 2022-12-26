@@ -10,6 +10,7 @@ using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,8 @@ namespace Mobile.Code.ViewModels
     //[QueryProperty("Title", "Id")]
     public class ProjectLocationDetailViewModel : BaseViewModel
     {
+
+        CancellationTokenSource tokenSource = new CancellationTokenSource();
         public ICommand GoHomeCommand => new Command(async () => await GoHome());
         private async Task GoHome()
         {
@@ -75,6 +78,7 @@ namespace Mobile.Code.ViewModels
         private async Task GoBack()
         {
             //await Shell.Current.Navigation.PopAsync();
+            tokenSource.Cancel();
             await Shell.Current.Navigation.PopAsync();
 
         }
@@ -137,47 +141,55 @@ namespace Mobile.Code.ViewModels
             ImageDetailCommand = new Command<ProjectCommonLocationImages>(async (ProjectCommonLocationImages parm) => await ExecuteImageDetailCommand(parm));
             ChoosePhotoCommand = new Command(async () => await ChoosePhotoCommandExecute());
             ImgData = new ImageData();
-            MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
-            
-            MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
+            Task.Run(() =>
             {
-                ProjectLocation_Visual currentVisualLocation=null;
+                //MessagingCenter.Unsubscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped");
 
-                if (arg == "Right")
+                MessagingCenter.Subscribe<VisualProjectLocationFormViewModel, string>(this, "LocationSwipped", async (sender, arg) =>
                 {
-                    if (currentLocationSeq+1 < VisualFormProjectLocationItems.Count)
+                    ProjectLocation_Visual currentVisualLocation = null;
+
+                    if (arg == "Right")
                     {
-                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                        if (currentLocationSeq + 1 < VisualFormProjectLocationItems.Count)
+                        {
+                            currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq + 1];
+                        }
+
                     }
-                    
-                }
-                else
-                {
-                    if (currentLocationSeq -1>=0)
-                    {
-                        currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
-                    }
-                }
-                    
-                try
-                {
-                    if (currentVisualLocation != null)
-                        await GoToVisualForm(currentVisualLocation, true);
                     else
                     {
-                        var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
-                        if (_lastPage.GetType() == typeof(VisualProjectLocationForm))
+                        if (currentLocationSeq - 1 >= 0)
                         {
-                            await Shell.Current.Navigation.PopAsync();
-                        }                        
-                    }                        
-                }
-                catch (Exception ex)
-                {
+                            currentVisualLocation = VisualFormProjectLocationItems[currentLocationSeq - 1];
+                        }
+                    }
 
-                }
-                
-            });
+                    try
+                    {
+                        IsBusyProgress = true;
+                        if (currentVisualLocation != null)
+                            await GoToVisualForm(currentVisualLocation, true);
+                        else
+                        {
+                            var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
+                            if (_lastPage.GetType() == typeof(VisualProjectLocationForm))
+                            {
+                                await Shell.Current.Navigation.PopAsync();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        IsBusyProgress = false;
+                    }
+
+                });
+            });          
 
         }
 
@@ -194,37 +206,40 @@ namespace Mobile.Code.ViewModels
         //public ObservableCollection<VisualFormProjectLocation> VisualFormProjectLocationItems { get; set; }
         private async Task NewViusalReportCommandExecue()
         {
-            ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
-            visualForm = new ProjectLocation_Visual();
-            //visualForm.Id = Guid.NewGuid().ToString();
-            visualForm.ProjectLocationId = ProjectLocation.Id;
-
-
-            VisualProjectLocationPhotoDataStore.Clear();
-
+            IsBusyProgress = true;
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-
-            InvasiveVisualProjectLocationPhotoDataStore.Clear();
-
-
-            if (App.IsInvasive == false)
+            await Task.Run(async () =>
             {
-                App.FormString = JsonConvert.SerializeObject(visualForm);
-                App.IsNewForm = true;
-                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+                ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
+                visualForm = new ProjectLocation_Visual();
+                //visualForm.Id = Guid.NewGuid().ToString();
+                visualForm.ProjectLocationId = ProjectLocation.Id;
 
-            }
-            else
 
-            {
-                App.IsNewForm = false;
+                VisualProjectLocationPhotoDataStore.Clear();               
 
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
-                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+                InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
-            }
 
+                if (App.IsInvasive == false)
+                {
+                    App.FormString = JsonConvert.SerializeObject(visualForm);
+                    App.IsNewForm = true;
+                    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+                }
+                else
+
+                {
+                    App.IsNewForm = false;
+
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
+                        await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
+
+                }
+            });
+
+            IsBusyProgress = false;
             //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
         }
 
@@ -352,117 +367,127 @@ namespace Mobile.Code.ViewModels
         private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped=false)
         {
             IsBusyProgress = true;
-            currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
-            App.IsNewForm = false;
-            VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
-            vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
-            vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
-            vm.CountExteriorElements = vm.ExteriorElements.Count.ToString();
-            vm.CountWaterProofingElements = vm.WaterProofingElements.Count.ToString();
-            vm.RadioList_VisualReviewItems.Where(c => c.Name == parm.VisualReview).Single().IsSelected = true;
-            vm.RadioList_AnyVisualSignItems.Where(c => c.Name == parm.AnyVisualSign).Single().IsSelected = true;
-            vm.RadioList_FurtherInasiveItems.Where(c => c.Name == parm.FurtherInasive).Single().IsSelected = true;
-            vm.RadioList_ConditionAssessment.Where(c => c.Name == parm.ConditionAssessment).Single().IsSelected = true;
-            vm.RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsSelected = true;
-            vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsSelected = true;
-            vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsSelected = true;
+            await Task.Run(async () =>
+            {                         
+                currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
+                App.IsNewForm = false;
+                VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
+                vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
+                vm.WaterProofingElements = new ObservableCollection<string>(parm.WaterProofingElements.Split(',').ToList());
+                vm.CountExteriorElements = vm.ExteriorElements.Count.ToString();
+                vm.CountWaterProofingElements = vm.WaterProofingElements.Count.ToString();
+                vm.RadioList_VisualReviewItems.Where(c => c.Name == parm.VisualReview).Single().IsSelected = true;
+                vm.RadioList_AnyVisualSignItems.Where(c => c.Name == parm.AnyVisualSign).Single().IsSelected = true;
+                vm.RadioList_FurtherInasiveItems.Where(c => c.Name == parm.FurtherInasive).Single().IsSelected = true;
+                vm.RadioList_ConditionAssessment.Where(c => c.Name == parm.ConditionAssessment).Single().IsSelected = true;
+                vm.RadioList_LifeExpectancyEEE.Where(c => c.Name == parm.LifeExpectancyEEE).Single().IsSelected = true;
+                vm.RadioList_LifeExpectancyLBC.Where(c => c.Name == parm.LifeExpectancyLBC).Single().IsSelected = true;
+                vm.RadioList_LifeExpectancyAWE.Where(c => c.Name == parm.LifeExpectancyAWE).Single().IsSelected = true;
 
-            vm.ProjectVisualLocations = VisualFormProjectLocationItems;
-            if (App.IsInvasive)
-            {
-                //For Conclusive 
-                if (parm.IsPostInvasiveRepairsRequired)
+                vm.ProjectVisualLocations = VisualFormProjectLocationItems;
+                if (App.IsInvasive)
                 {
-                    if (parm.IsInvasiveRepairApproved)
+                    //For Conclusive 
+                    if (parm.IsPostInvasiveRepairsRequired)
                     {
-                        if (parm.IsInvasiveRepairComplete)
+                        if (parm.IsInvasiveRepairApproved)
                         {
-                            if (parm.ConclusiveLifeExpEEE.Length > 0)
+                            if (parm.IsInvasiveRepairComplete)
                             {
-                                vm.RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
-                                vm.RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
-                                vm.RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
+                                if (parm.ConclusiveLifeExpEEE.Length > 0)
+                                {
+                                    vm.RadioList_ConclusiveLifeExpectancyEEE.Single(c => c.Name == parm.ConclusiveLifeExpEEE).IsSelected = true;
+                                    vm.RadioList_ConclusiveLifeExpectancyLBC.Single(c => c.Name == parm.ConclusiveLifeExpLBC).IsSelected = true;
+                                    vm.RadioList_ConclusiveLifeExpectancyAWE.Single(c => c.Name == parm.ConclusiveLifeExpAWE).IsSelected = true;
+                                }
+
                             }
+                            string isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
+                            vm.RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
 
                         }
-                        string isChked = parm.IsInvasiveRepairComplete ? "Yes" : "No";
-                        vm.RadioList_RepairComplete.Single(c => c.Name == isChked).IsSelected = true;
 
+                        string isChked1 = parm.IsInvasiveRepairApproved ? "Yes" : "No";
+                        vm.RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked1).IsSelected = true;
                     }
 
-                    string isChked1 = parm.IsInvasiveRepairApproved ? "Yes" : "No";
-                    vm.RadioList_OwnerAgreedToRepair.Single(c => c.Name == isChked1).IsSelected = true;
+
                 }
 
 
-            }
+                App.VisualEditTracking = new List<MultiImage>();
+                App.VisualEditTrackingForInvasive = new List<MultiImage>();
+
+                VisualProjectLocationPhotoDataStore.Clear();
+                InvasiveVisualProjectLocationPhotoDataStore.Clear();
 
 
-            App.VisualEditTracking = new List<MultiImage>();
-            App.VisualEditTrackingForInvasive = new List<MultiImage>();
-
-            VisualProjectLocationPhotoDataStore.Clear();
-            InvasiveVisualProjectLocationPhotoDataStore.Clear();
-
-
-            vm.VisualForm = parm;
-            
-            if (App.IsAppOffline)
-            {
-                vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
-            }
-            else
-
-                vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
-
-            vm.ProjectLocation = ProjectLocation;
-            ProjectLocationViewModel = vm;
-            App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
-
-            if (App.IsInvasive == false)
-            {
-                if (isSwipped)
-                {
-                    var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();                    
-                    await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
-                    if(_lastPage.GetType() == typeof(VisualProjectLocationForm))
-                    {                        
-                        Shell.Current.Navigation.RemovePage(_lastPage);
-                    }
-                        
-                }
-                else
-                {
-                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
-                    {
-                        await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
-                    }
-                }
-               
-            }
-            else
-            {
-                
-                IEnumerable<VisualProjectLocationPhoto> photos;
+                vm.VisualForm = parm;
+            //await Task.Run(async () =>
+            //{
                 if (App.IsAppOffline)
                 {
-                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                    vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
                 }
                 else
-                    photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
 
+                    vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
-                vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
-                vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                //think later of this serialization
-                App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
+            //});
+                
+                vm.ProjectLocation = ProjectLocation;
+                ProjectLocationViewModel = vm;
+                App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
 
-                if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
+                if (App.IsInvasive == false)
                 {
-                    await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(ProjectLocationViewModel));
+                    if (isSwipped)
+                    {
+                        var _lastPage = Shell.Current.Navigation.NavigationStack.LastOrDefault();
+                        await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                        if (_lastPage.GetType() == typeof(VisualProjectLocationForm))
+                        {
+                            Shell.Current.Navigation.RemovePage(_lastPage);
+                        }
+
+                    }
+                    else
+                    {
+                        if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
+                        {
+                            await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                        }
+                    }
+
+                }
+                else
+                {
+
+                    IEnumerable<VisualProjectLocationPhoto> photos;
+                    //await Task.Run(async () =>
+                    //{
+                        if (App.IsAppOffline)
+                        {
+                            photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
+                        }
+                        else
+                            photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
+                        vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
+                        vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                    //});                        
+                    
+                    
+                    //think later of this serialization
+                    App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
+
+                    if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
+                    {
+                        await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(ProjectLocationViewModel));
+                    }
+
                 }
 
-            }
+            });
             IsBusyProgress = false;
         }
 
@@ -555,6 +580,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task Edit()
         {
+            tokenSource.Cancel();
             await Shell.Current.Navigation.PushAsync(new AddProjectLocation() { BindingContext = new ProjectLocationAddEditViewModel() { Title = "Edit Project Common Image", Project = Project, ProjectLocation = ProjectLocation } },true);
             // await App.Current.MainPage.Navigation.PushAsync(new ProjectDetail());
         }
@@ -683,7 +709,7 @@ namespace Mobile.Code.ViewModels
             _locImage.ProjectLocationId = ProjectLocation.Id;
 
             ProjectCommonLocationImagesDataStore.AddItemAsync(_locImage);
-            Task.Run(() => this.LoadData()).Wait();
+            //Task.Run(() => this.LoadData()).Wait();
             //LoadData();
         }
         private bool _isEditDeleteAccess;
@@ -700,16 +726,25 @@ namespace Mobile.Code.ViewModels
             get { return _isInvasiveControlDisable; }
             set { _isInvasiveControlDisable = value; OnPropertyChanged("IsInvasiveControlDisable"); }
         }
-        private async Task<bool> Running()
+        public async Task<bool> Running(CancellationToken token)
         {
-
+            IsBusyProgress = true;
+            if (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+                IsBusyProgress = false;
+            }
             if (App.IsAppOffline)
             {
                 IsEditDeleteAccess = true;
                 if (ProjectLocation != null)
                 {
-                    ProjectLocation = await ProjectLocationSqLiteDataStore.GetItemAsync(ProjectLocation.Id);
-                    VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                    //await Task.Run(async() =>
+                    //{
+                        ProjectLocation = await ProjectLocationSqLiteDataStore.GetItemAsync(ProjectLocation.Id);
+                        VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationSqLiteDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                    //});
+                    
                 }
             }
             else
@@ -722,33 +757,41 @@ namespace Mobile.Code.ViewModels
                 {
                     IsEditDeleteAccess = true;
                 }
+                if (token.IsCancellationRequested)
+                {
+                    token.ThrowIfCancellationRequested();
+                    IsBusyProgress = false;
+                }
 
                 if (ProjectLocation != null)
                 {
-                    ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
-                    VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                    //await Task.Run(async () =>
+                    //{
+                        ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
+                        VisualFormProjectLocationItems = new ObservableCollection<ProjectLocation_Visual>(await VisualFormProjectLocationDataStore.GetItemsAsyncByProjectLocationId(ProjectLocation.Id));
+                    //});                   
 
                 }
             }
-            
-
             if (App.IsInvasive)
             {
                 IsInvasiveControlDisable = true;
                 IsEditDeleteAccess = false;
             }
-            return await Task.FromResult(true);
+
+            IsBusyProgress = false;
+            return true;
 
         }
         public async Task<bool> LoadData()
         {
             IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
+            bool complete = await Task.Run(()=>Running(new CancellationTokenSource().Token));
             if (complete == true)
             {
                 IsBusyProgress = false;
             }
-            return await Task.FromResult(true);
+            return true;
             // ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
 
         }

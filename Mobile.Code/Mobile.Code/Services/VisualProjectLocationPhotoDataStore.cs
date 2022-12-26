@@ -180,7 +180,6 @@ namespace Mobile.Code.Services
             if (loadServer == false)
             {
                 return await Task.FromResult(items.Where(c => c.VisualLocationId == locationVisualID && c.IsDelete == false));
-
             }
             else
             {
@@ -199,6 +198,7 @@ namespace Mobile.Code.Services
 
                         items = JsonConvert.DeserializeObject<List<VisualProjectLocationPhoto>>(result.Data.ToString());
                         items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+                        List<MultiImage> images = new List<MultiImage>();
                         foreach (var item in items)
                         {
                             var onlineImage = new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
@@ -206,15 +206,17 @@ namespace Mobile.Code.Services
                             {
                                 InsertMultiPhoto(onlineImage);
                             }
-                            App.VisualEditTracking.Add(onlineImage);
-                            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                            images.Add(onlineImage);
+                            
                         }
-
+                        //Device.BeginInvokeOnMainThread(() =>
+                        //{
+                            App.VisualEditTracking.AddRange(images);
+                            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                        //});
                         response.EnsureSuccessStatusCode();
 
                         return await Task.FromResult(items);
-
-
                     }
                 }
             }
@@ -232,16 +234,19 @@ namespace Mobile.Code.Services
                 //var allitems = _connection.Table<VisualProjectLocationPhoto>().ToList();
 
                 items = _connection.Table<VisualProjectLocationPhoto>().Where(t => t.VisualLocationId == locationVisualID).ToList();
-                
+
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
-                
+                List<MultiImage> images = new List<MultiImage>();
                 foreach (var item in items)
                 {
                     var multiimg = new MultiImage() { Id = item.Id, ParentId = item.VisualLocationId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
-                    App.VisualEditTracking.Add(multiimg);
-                    //InsertMultiPhoto(multiimg);
-                    App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                    images.Add(multiimg);
                 }
+                //Device.BeginInvokeOnMainThread(() =>
+                //{
+                    App.VisualEditTracking.AddRange(images);
+                    App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                //});
             }
            
             return await Task.FromResult(items);

@@ -45,6 +45,7 @@
     <AndroidSigningKeyAlias>decknew</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Deck@21</AndroidSigningKeyPass>
     <MandroidI18n />
+    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

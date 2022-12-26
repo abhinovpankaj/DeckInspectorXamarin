@@ -28,7 +28,7 @@ namespace Mobile.Code.Views
             }
             catch (Exception ex)
             {
-                throw;
+                
             }
                   
         }

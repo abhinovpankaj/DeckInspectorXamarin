@@ -635,6 +635,7 @@ namespace Mobile.Code.ViewModels
         }
         public VisualApartmentFormViewModel()
         {
+            IsBusyProgress = true; 
             IsVisualApartment = true;
             IsVisualProjectLocatoion = false;
             IsVisualBuilding = false;
@@ -701,6 +702,7 @@ namespace Mobile.Code.ViewModels
             });
 
             App.ListCamera2Api = new List<MultiImage>();
+            IsBusyProgress = false;
         }
         private string _countExteriorElements;
 
@@ -792,58 +794,60 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
-
-            if (App.ListCamera2Api != null)
-            {
-
-                foreach (var photo in App.ListCamera2Api)
+            //await Task.Run(async () =>
+            //{
+                if (App.ListCamera2Api != null)
                 {
-                    VisualApartmentLocationPhoto newObj = new VisualApartmentLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualApartmentId = VisualForm.Id, DateCreated = DateTime.Now };
-                    newObj.ImageDescription = photo.ImageType;
-                    _ = AddNewPhoto(newObj).ConfigureAwait(false);
 
-                }
-                App.ListCamera2Api.Clear();
-            }
-            UnitPhotos = new ObservableCollection<VisualApartmentLocationPhoto>();
-            if (VisualForm != null)
-            {
-                if (string.IsNullOrEmpty(VisualForm.Id))
-                {
-                    if (App.IsAppOffline)
+                    foreach (var photo in App.ListCamera2Api)
                     {
-                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
+                        VisualApartmentLocationPhoto newObj = new VisualApartmentLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualApartmentId = VisualForm.Id, DateCreated = DateTime.Now };
+                        newObj.ImageDescription = photo.ImageType;
+                        _ = AddNewPhoto(newObj).ConfigureAwait(false);
+
+                    }
+                    App.ListCamera2Api.Clear();
+                }
+                UnitPhotos = new ObservableCollection<VisualApartmentLocationPhoto>();
+                if (VisualForm != null)
+                {
+                    if (string.IsNullOrEmpty(VisualForm.Id))
+                    {
+                        if (App.IsAppOffline)
+                        {
+                            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
+                        }
+                        else
+                            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
                     }
                     else
-                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
-                }
-                else
-                {
-                    if (App.IsAppOffline)
                     {
-                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
-                    }
-                    else
-                        VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
-                   
-                    if (App.IsInvasive == true)
-                    {
-                        var photos = new ObservableCollection<VisualApartmentLocationPhoto>((await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
-                        InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
-                        InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
+                        if (App.IsAppOffline)
+                        {
+                            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(VisualForm.Id, true));
+                        }
+                        else
+                            VisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(await VisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false));
 
-                        ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                        ConclusiveUnitPhotoCount = ConclusiveVisualApartmentLocationPhotoItems.Count.ToString();
+                        if (App.IsInvasive == true)
+                        {
+                            var photos = new ObservableCollection<VisualApartmentLocationPhoto>((await InvasiveVisualApartmentLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(VisualForm.Id, false)));
+                            InvasiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
+                            InvasiveUnitPhotoCount = InvasiveVisualApartmentLocationPhotoItems.Count.ToString();
+
+                            ConclusiveVisualApartmentLocationPhotoItems = new ObservableCollection<VisualApartmentLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                            ConclusiveUnitPhotoCount = ConclusiveVisualApartmentLocationPhotoItems.Count.ToString();
+                        }
                     }
+                    UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
                 }
-                UnitPhotoCount = VisualApartmentLocationPhotoItems.Count.ToString();
-            }
-            return await Task.FromResult(true);
+            //});            
+            return true;
         }
         public async Task<bool> Load()
         {
             IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
+            bool complete = await Task.Run(()=>Running());
             if (complete == true)
             {
 

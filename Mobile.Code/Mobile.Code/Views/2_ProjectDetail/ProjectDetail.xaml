@@ -57,7 +57,7 @@
                                         Glyph={x:Static helpers:IconFont.ShieldRefresh},
                                         Color=#1B76FF}"
             IsEnabled="{Binding CanInvasiveCreate}"
-            Order="Primary" 
+            Order="Primary"
             Priority="1"
             Text="{Binding BtnInvasiveText}" />
 
@@ -88,15 +88,15 @@
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                 IsVisible="{Binding IsBusyProgress}" />
-            <StackLayout IsVisible="{Binding IsSyncing}"
+            <StackLayout
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
-                HorizontalOptions="FillAndExpand">
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsSyncing}">
                 <ProgressBar
                     x:Name="styledProgressBar"
                     Margin="5,100,5,0"
                     HorizontalOptions="FillAndExpand"
-                    
                     Progress="{Binding ProgressValue}"
                     ProgressColor="{DynamicResource Orange-400}"
                     VerticalOptions="End" />
