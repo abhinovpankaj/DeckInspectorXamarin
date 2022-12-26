@@ -1,4 +1,4 @@
-﻿using Mobile.Code.Models;
+using Mobile.Code.Models;
 using Mobile.Code.Services.SQLiteLocal;
 using Mobile.Code.Views;
 using Newtonsoft.Json;
