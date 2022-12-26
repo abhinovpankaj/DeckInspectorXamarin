@@ -64,16 +64,16 @@
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
     <Shell.FlyoutFooter>
-        <StackLayout Margin="10" HorizontalOptions="CenterAndExpand">
+        <StackLayout Margin="0,-20,0,0" HorizontalOptions="FillAndExpand">
             <Label
-                FontAttributes="Bold"
+                FontAttributes="None"
                 HorizontalOptions="Center"
                 Text="Deck Inspectors"
                 TextColor="White" />
             <Label
                 Margin="4"
                 HorizontalOptions="Center"
-                Text="V5.0"
+                Text="V5.3"
                 TextColor="White" />
         </StackLayout>
     </Shell.FlyoutFooter>

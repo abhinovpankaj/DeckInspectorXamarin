@@ -70,8 +70,9 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-100}">
-            <Grid IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}" VerticalOptions="Fill">
+            BackgroundColor="{DynamicResource Orange-100}"
+            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
+            <Grid VerticalOptions="Fill">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -129,33 +130,35 @@
                             Text="{Binding BuildingApartment.Description}"
                             TextColor="{DynamicResource ColorForegroundText}" />
                     </StackLayout>
-                    <ScrollView Grid.Row="1">
-                        <CollectionView
-                            Margin="10,5"
-                            BackgroundColor="{DynamicResource Orange-100}"
-                            EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
-                            IsVisible="{Binding IsViusalReport}"
-                            ItemsSource="{Binding VisualFormApartmentLocationItems}"
-                            Scrolled="OnCollectionViewScrolled">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.EmptyViewTemplate>
-                                <DataTemplate>
-                                    <Grid VerticalOptions="CenterAndExpand">
-                                        <Label
-                                            Margin="0,120,0,0"
-                                            FontAttributes="Bold"
-                                            FontSize="Large"
-                                            HorizontalOptions="Fill"
-                                            HorizontalTextAlignment="Center"
-                                            Text="No locations to display, use &quot;+&quot; button to add new locations."
-                                            VerticalTextAlignment="Start" />
-                                    </Grid>
+                    <ScrollView
+                        x:Name="Locations"
+                        Grid.Row="1"
+                        Margin="5,0"
+                        Padding="0"
+                        Orientation="Vertical">
 
-                                </DataTemplate>
-                            </CollectionView.EmptyViewTemplate>
-                            <CollectionView.ItemTemplate>
+                        <FlexLayout
+                            AlignItems="Stretch"
+                            BackgroundColor="{DynamicResource Orange-100}"
+                            BindableLayout.ItemsSource="{Binding VisualFormApartmentLocationItems}"
+                            Direction="Column"
+                            IsVisible="{Binding IsViusalReport}">
+                            <BindableLayout.EmptyView>
+                                <StackLayout
+                                    Margin="0,100,0,0"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontSize="Title"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalOptions="Center">
+                                        No locations to display, use &quot;+&quot; button to add new locations.
+                                    </Label>
+                                </StackLayout>
+                            </BindableLayout.EmptyView>
+
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <Frame
                                         Margin="4"
@@ -197,7 +200,7 @@
 
                                             <Grid
                                                 x:Name="FrameTypes"
-                                                ColumnDefinitions="auto,auto,*"
+                                                ColumnDefinitions="*,auto,*"
                                                 ColumnSpacing="0"
                                                 IsClippedToBounds="True"
                                                 RowDefinitions="Auto,Auto,auto"
@@ -213,7 +216,7 @@
 
                                                 <Label
                                                     Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
+                                                    Grid.ColumnSpan="3"
                                                     Margin="8,2"
                                                     FontAttributes="Bold"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
@@ -264,7 +267,7 @@
                                                     Margin="5,5,10,0"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     FontSize="Small"
-                                                    HorizontalOptions="End"
+                                                    HorizontalOptions="StartAndExpand"
                                                     HorizontalTextAlignment="Start"
                                                     TextColor="{DynamicResource ColorForegroundText}">
                                                     <Label.FormattedText>
@@ -299,7 +302,7 @@
                                                     Margin="5,5,10,0"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     FontSize="Small"
-                                                    HorizontalOptions="End"
+                                                    HorizontalOptions="StartAndExpand"
                                                     HorizontalTextAlignment="Start"
                                                     Text="{Binding FurtherInasive}"
                                                     TextColor="{DynamicResource ColorForegroundText}"
@@ -321,8 +324,8 @@
 
                                     </Frame>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
                     </ScrollView>
 
                 </Grid>

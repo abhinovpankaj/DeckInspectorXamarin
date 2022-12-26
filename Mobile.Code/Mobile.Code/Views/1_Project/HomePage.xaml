@@ -17,14 +17,17 @@
     mc:Ignorable="d">
 
     <Shell.TitleView>
-        <StackLayout Padding="10,2" Orientation="Horizontal">
+        <StackLayout
+            Padding="10,2"
+            MinimumHeightRequest="44"
+            Orientation="Horizontal">
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
                 FontSize="Title"
                 HorizontalOptions="StartAndExpand"
                 Text="Projects"
-                TextColor="White"
+                TextColor="{StaticResource primaryColor}"
                 VerticalOptions="CenterAndExpand" />
             <ImageButton
                 Margin="10,0,10,0"
@@ -33,7 +36,7 @@
                 HorizontalOptions="Start"
                 Source="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                    Glyph={x:Static helpers:IconFont.Wifi},
-                                   Color=White,
+                                   Color=#1B76FF,
                                    Size=30}"
                 VerticalOptions="Center">
                 <ImageButton.Triggers>

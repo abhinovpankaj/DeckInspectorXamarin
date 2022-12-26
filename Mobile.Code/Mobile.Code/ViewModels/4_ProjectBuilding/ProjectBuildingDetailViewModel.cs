@@ -216,10 +216,14 @@ namespace Mobile.Code.ViewModels
             {
                 if (ProjectBuilding!=null)
                 {
-                    ProjectBuilding = await ProjectBuildingSqLiteDataStore.GetItemAsync(ProjectBuilding.Id);
-                   
-                    BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
-                    BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    await Task.Run(async () =>
+                    {
+                        ProjectBuilding = await ProjectBuildingSqLiteDataStore.GetItemAsync(ProjectBuilding.Id);
+
+                        BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                        BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentSqLiteDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    });
+                    
                 }
                 IsEditDeleteAccess = true;
             }
@@ -237,9 +241,13 @@ namespace Mobile.Code.ViewModels
                 }
                 if (ProjectBuilding!=null)
                 {
-                    ProjectBuilding = await ProjectBuildingDataStore.GetItemAsync(ProjectBuilding.Id);
-                    BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
-                    BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    await Task.Run(async () =>
+                    {
+                        ProjectBuilding = await ProjectBuildingDataStore.GetItemAsync(ProjectBuilding.Id);
+                        BuildingLocations = new ObservableCollection<BuildingLocation>(await BuildingLocationDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                        BuildingApartments = new ObservableCollection<BuildingApartment>(await BuildingApartmentDataStore.GetItemsAsyncByBuildingId(ProjectBuilding.Id));
+                    });
+                    
                 }
                 
             }
@@ -255,7 +263,7 @@ namespace Mobile.Code.ViewModels
             //{
             //    BuildingApartments = new ObservableCollection<BuildingApartment>(items);
             //}
-            return await Task.FromResult(true);
+            return true;
         }
         private bool _isEditDeleteAccess;
 
@@ -267,16 +275,12 @@ namespace Mobile.Code.ViewModels
         public async Task<bool> LoadData()
         {
             IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
+            bool complete = await Task.Run(Running) ;
             if (complete == true)
             {
-
-
                 IsBusyProgress = false;
-
-
             }
-            return await Task.FromResult(true);
+            return true;
             // ProjectLocation = await ProjectLocationDataStore.GetItemAsync(ProjectLocation.Id);
 
         }

@@ -292,16 +292,7 @@ namespace Mobile.Code.ViewModels
 
             if (result)
             {
-                await Shell.Current.Navigation.PopAsync();
-                //if (!string.IsNullOrEmpty(Project.Id))
-                //{
-                //    await Shell.Current.Navigation.PopAsync();
-                //}
-                //else
-                //{
-                //    await Shell.Current.GoToAsync("//main");
-                //}
-                // await Shell.Current.Navigation.Cle ;
+                await Shell.Current.Navigation.PopAsync();                
             }
         }
         private ObservableCollection<string> _exteriorElements;
@@ -714,6 +705,11 @@ namespace Mobile.Code.ViewModels
 
         public VisualProjectLocationFormViewModel()
         {
+            IsBusyProgress = true;
+            //Task.Run(() => 
+            //{ 
+
+            
             IsVisualApartment = false;
             IsVisualProjectLocatoion = true;
             IsVisualBuilding = false;
@@ -791,18 +787,8 @@ namespace Mobile.Code.ViewModels
                 IsDescriptionMicroPhoneEnabled = false;
                 IsDescriptionMicroPhoneVisible = true;
             }
-            //_speechRecongnitionInstance = DependencyService.Get<ISpeechToText>();
-
-            //MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
-            //{
-            //    SpeechToTextFinalResultRecieved(args);
             //});
-            
-            //MessagingCenter.Subscribe<IMessageSender, string>(this, "STT", (sender, args) =>
-            //{
-            //    SpeechToTextFinalResultRecieved(args);
-            //});
-
+            IsBusyProgress = false;
         }
 
         private void Swipped(string direction)
@@ -930,15 +916,15 @@ namespace Mobile.Code.ViewModels
             throw new NotImplementedException();
         }
         static readonly CancellationTokenSource s_cts = new CancellationTokenSource();
-        private async Task<bool> Running(CancellationToken token)
+        private async Task<bool> Running()
         {
 
-            if (token.IsCancellationRequested)
-            {
-                return await Task.FromResult(true); 
-            }
+            //if (token.IsCancellationRequested)
+            //{
+            //    return await Task.FromResult(true); 
+            //}
             IsBusyProgress = true;
-            VisualProjectLocationPhotoDataStore.CancelToken = token;
+            //VisualProjectLocationPhotoDataStore.CancelToken = token;
 
             if (App.ListCamera2Api != null)
             {
@@ -947,11 +933,12 @@ namespace Mobile.Code.ViewModels
                 {
                     VisualProjectLocationPhoto newObj = new VisualProjectLocationPhoto() { ImageDescription = photo.ImageType, ImageUrl = photo.Image, Id = Guid.NewGuid().ToString(), VisualLocationId = VisualForm.Id };
                     newObj.ImageDescription = photo.ImageType;
-                    _ = AddNewPhoto(newObj).ConfigureAwait(false);
-                    if (token.IsCancellationRequested)
-                    {
-                        return await Task.FromResult(true);
-                    }
+                    _ = AddNewPhoto(newObj);
+                    //if (token.IsCancellationRequested)
+                    //{
+                    //    App.ListCamera2Api.Clear();
+                    //    return await Task.FromResult(true);
+                    //}
                 }
                 App.ListCamera2Api.Clear();
             }
@@ -995,14 +982,14 @@ namespace Mobile.Code.ViewModels
 
             }
             IsBusyProgress = false;
-            return await Task.FromResult(true);
+            return true;
         }
         public async Task<bool> Load()
         {
             try
             {
                 IsBusyProgress = true;
-                bool complete = await Task.Run(() => Running(s_cts.Token), s_cts.Token);
+                bool complete = await Task.Run(()=>Running());
                 if (complete == true)
                 {
                     IsBusyProgress = false;
@@ -1016,7 +1003,7 @@ namespace Mobile.Code.ViewModels
             {
                 IsBusyProgress = false;
             }
-            return await Task.FromResult(true);
+            return true;
 
         }
         private string _title;

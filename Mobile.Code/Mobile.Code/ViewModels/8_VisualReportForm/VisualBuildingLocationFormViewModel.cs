@@ -839,12 +839,12 @@ namespace Mobile.Code.ViewModels
         public async Task<bool> Load()
         {
             IsBusyProgress = true;
-            bool complete = await Task.Run(Running).ConfigureAwait(false);
+            bool complete = await Running();
             if (complete == true)
             {
                 IsBusyProgress = false;
             }
-            return await Task.FromResult(true);
+            return true;
         }
 
         private string _title;

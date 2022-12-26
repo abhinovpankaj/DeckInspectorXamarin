@@ -162,35 +162,34 @@
                             Text="{Binding Project.Description}"
                             TextColor="{DynamicResource ColorForegroundText}" />
                     </StackLayout>
-                    <ScrollView Grid.Row="1">
-                        <CollectionView
-                            Margin="10,5"
+                    <ScrollView
+                        x:Name="Locations"
+                        Grid.Row="1"
+                        Margin="5,0"
+                        Padding="0"
+                        Orientation="Vertical">
+                        <FlexLayout
+                            AlignItems="Stretch"
                             BackgroundColor="{DynamicResource Orange-100}"
-                            EmptyView="No locations to display, use &quot;+&quot; button to add new locations."
-                            IsVisible="{Binding IsViusalReport}"
-                            ItemsSource="{Binding VisualFormProjectLocationItems}"
-                            ItemsUpdatingScrollMode="KeepItemsInView"
-                            VerticalOptions="CenterAndExpand"
-                            VerticalScrollBarVisibility="Default">
-                            <CollectionView.EmptyViewTemplate>
-                                <DataTemplate>
-                                    <Grid VerticalOptions="CenterAndExpand">
-                                        <Label
-                                            Margin="0,120,0,0"
-                                            FontAttributes="Bold"
-                                            FontSize="Large"
-                                            HorizontalOptions="Fill"
-                                            HorizontalTextAlignment="Center"
-                                            Text="No locations to display, use &quot;+&quot; button to add new locations."
-                                            VerticalTextAlignment="Start" />
-                                    </Grid>
+                            BindableLayout.ItemsSource="{Binding VisualFormProjectLocationItems}"
+                            Direction="Column"
+                            IsVisible="{Binding IsViusalReport}">
+                            <BindableLayout.EmptyView>
+                                <StackLayout
+                                    Margin="0,100,0,0"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontSize="Title"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalOptions="Center">
+                                        No locations to display, use &quot;+&quot; button to add new locations.
+                                    </Label>
+                                </StackLayout>
+                            </BindableLayout.EmptyView>
 
-                                </DataTemplate>
-                            </CollectionView.EmptyViewTemplate>
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <Frame
                                         Margin="4"
@@ -220,7 +219,7 @@
 
                                             <Grid
                                                 x:Name="FrameTypes"
-                                                ColumnDefinitions="auto,auto,*"
+                                                ColumnDefinitions="*,auto,*"
                                                 ColumnSpacing="0"
                                                 IsClippedToBounds="True"
                                                 RowDefinitions="Auto,Auto,auto"
@@ -236,7 +235,7 @@
 
                                                 <Label
                                                     Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
+                                                    Grid.ColumnSpan="3"
                                                     Margin="8,2"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     FontSize="Body"
@@ -285,7 +284,7 @@
                                                     Margin="5,5,10,0"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     FontSize="Small"
-                                                    HorizontalOptions="End"
+                                                    HorizontalOptions="StartAndExpand"
                                                     HorizontalTextAlignment="Start"
                                                     TextColor="{DynamicResource ColorForegroundText}">
                                                     <Label.FormattedText>
@@ -320,7 +319,7 @@
                                                     Margin="5,5,10,0"
                                                     FontFamily="{StaticResource Montserrat-Regular}"
                                                     FontSize="Small"
-                                                    HorizontalOptions="End"
+                                                    HorizontalOptions="StartAndExpand"
                                                     HorizontalTextAlignment="Start"
                                                     Text="{Binding FurtherInasive}"
                                                     TextColor="{DynamicResource ColorForegroundText}"
@@ -373,8 +372,8 @@
                                         </Frame.GestureRecognizers>-->
                                     </Frame>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
                     </ScrollView>
 
                 </Grid>

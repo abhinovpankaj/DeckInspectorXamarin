@@ -186,6 +186,7 @@ namespace Mobile.Code.Services
 
                         items = JsonConvert.DeserializeObject<List<VisualBuildingLocationPhoto>>(result.Data.ToString());
                         items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
+                        List<MultiImage> images = new List<MultiImage>();
                         foreach (var item in items)
                         {
                             var onlineImage = new MultiImage() { Id = item.Id, ParentId = item.VisualBuildingId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
@@ -193,9 +194,11 @@ namespace Mobile.Code.Services
                             {
                                 InsertMultiPhoto(onlineImage);
                             }
-                            App.VisualEditTracking.Add(onlineImage);
-                            App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                            images.Add(onlineImage);
+                            
                         }
+                        App.VisualEditTracking.AddRange(images);
+                        App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
                         response.EnsureSuccessStatusCode();
 
                         return await Task.FromResult(items);
@@ -217,12 +220,15 @@ namespace Mobile.Code.Services
                 items = _connection.Table<VisualBuildingLocationPhoto>().Where(t => t.VisualBuildingId == buildingId).ToList();
 
                 //items = items.Where(c => c.ImageDescription != "TRUE" && c.ImageDescription != "CONCLUSIVE").ToList();
-
+                List<MultiImage> images = new List<MultiImage>();
                 foreach (var item in items)
                 {
-                    App.VisualEditTracking.Add(new MultiImage() { Id = item.Id, ParentId = item.VisualBuildingId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true });
-                    App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
+                    var multiimg= new MultiImage() { Id = item.Id, ParentId = item.VisualBuildingId, Status = "FromServer", Image = item.ImageUrl, IsDelete = false, IsServerData = true };
+                    images.Add(multiimg);
+                    
                 }
+                App.VisualEditTracking.AddRange(images);
+                App.ImageFormString = JsonConvert.SerializeObject(App.VisualEditTracking);
             }
 
             return await Task.FromResult(items);
