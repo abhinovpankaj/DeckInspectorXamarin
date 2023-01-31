@@ -178,9 +178,11 @@ namespace Mobile.Code.ViewModels
             }
 
             App.IsInvasive = false;
-
-            ProjectType = "Visual Report";
-            await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType, ProjectCategory= ProjectCategory } });
+            if (!string.IsNullOrEmpty(ProjectCategory))
+            {
+                ProjectType = "Visual Report";
+                await Shell.Current.Navigation.PushAsync(new ProjectAddEdit() { BindingContext = new ProjectAddEditViewModel() { Title = "New Project", ProjectType = ProjectType, ProjectCategory = ProjectCategory } });
+            }
 
         }
         private async Task<bool> Running()

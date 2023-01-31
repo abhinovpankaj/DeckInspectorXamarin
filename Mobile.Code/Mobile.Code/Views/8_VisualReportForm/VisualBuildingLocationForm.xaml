@@ -57,7 +57,7 @@
         <ToolbarItem
             Command="{Binding ShowImagesCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
-                                        Glyph={x:Static helpers:IconFont.Home},
+                                        Glyph={x:Static helpers:IconFont.ImageAlbum},
                                         Color=#1B76FF}"
             Order="Secondary"
             Priority="1"

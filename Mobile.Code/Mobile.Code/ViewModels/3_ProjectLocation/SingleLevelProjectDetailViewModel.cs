@@ -860,6 +860,12 @@ namespace Mobile.Code.ViewModels
                 IsEditDeleteAccess = isEditdeleteAccess;
                 CanInvasiveCreate = canInvasiveCreate;
                 BtnInvasiveText = btnInvasiveText;
+                if (App.IsInvasive)
+                {
+                    IsInvasive = (IsOnline && App.IsInvasive) ? true : false;
+                }
+                else
+                    IsInvasive = (IsOnline && (bool)Project.IsAvailableOffline) ? true : false;
             });
 
             return await Task.FromResult(true);

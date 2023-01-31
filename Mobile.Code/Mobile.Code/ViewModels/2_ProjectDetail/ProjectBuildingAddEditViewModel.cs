@@ -290,8 +290,6 @@ namespace Mobile.Code.ViewModels
             get { return _Isbusyprog; }
             set { _Isbusyprog = value; OnPropertyChanged("IsBusyProgress"); }
         }
-
-
     }
 
 }
