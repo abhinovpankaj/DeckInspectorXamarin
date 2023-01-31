@@ -209,8 +209,8 @@ namespace Mobile.Code.ViewModels
             IsBusyProgress = true;
             App.VisualEditTracking = new List<MultiImage>();
             App.VisualEditTrackingForInvasive = new List<MultiImage>();
-            await Task.Run(async () =>
-            {
+            //await Task.Run(async () =>
+            //{
                 ProjectLocation_Visual visualForm = new ProjectLocation_Visual();
                 visualForm = new ProjectLocation_Visual();
                 //visualForm.Id = Guid.NewGuid().ToString();
@@ -237,7 +237,7 @@ namespace Mobile.Code.ViewModels
                         await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive() { BindingContext = new VisualProjectLocationFormViewModel() { ProjectLocation = ProjectLocation, VisualForm = visualForm } });
 
                 }
-            });
+            //});
 
             IsBusyProgress = false;
             //{ BindingContext = new EditProjectLocationImageViewModel() { Title = "New Common Location Image", ProjectCommonLocationImages = new ProjectCommonLocationImages() { ImageUrl = "blank.png" }, ProjectLocation = ProjectLocation } });
@@ -367,8 +367,9 @@ namespace Mobile.Code.ViewModels
         private async Task GoToVisualForm(ProjectLocation_Visual parm, bool isSwipped=false)
         {
             IsBusyProgress = true;
-            await Task.Run(async () =>
-            {                         
+            
+            //await Task.Run(async () =>
+            //{                         
                 currentLocationSeq = VisualFormProjectLocationItems.IndexOf(parm);
                 App.IsNewForm = false;
                 VisualProjectLocationFormViewModel vm = new VisualProjectLocationFormViewModel();
@@ -423,8 +424,8 @@ namespace Mobile.Code.ViewModels
 
 
                 vm.VisualForm = parm;
-            //await Task.Run(async () =>
-            //{
+            await Task.Run(async () =>
+            {
                 if (App.IsAppOffline)
                 {
                     vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false));
@@ -433,9 +434,9 @@ namespace Mobile.Code.ViewModels
 
                     vm.VisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(await VisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
-            //});
-                
-                vm.ProjectLocation = ProjectLocation;
+            });
+
+            vm.ProjectLocation = ProjectLocation;
                 ProjectLocationViewModel = vm;
                 App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
 
@@ -455,7 +456,12 @@ namespace Mobile.Code.ViewModels
                     {
                         if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(VisualProjectLocationForm))
                         {
-                            await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                            //Device.BeginInvokeOnMainThread(async () =>
+                            //{
+                                await Shell.Current.Navigation.PushAsync(new VisualProjectLocationForm() { BindingContext = vm });
+                            //});
+                            
+
                         }
                     }
 
@@ -464,9 +470,9 @@ namespace Mobile.Code.ViewModels
                 {
 
                     IEnumerable<VisualProjectLocationPhoto> photos;
-                    //await Task.Run(async () =>
-                    //{
-                        if (App.IsAppOffline)
+                await Task.Run(async () =>
+                {
+                    if (App.IsAppOffline)
                         {
                             photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
                         }
@@ -474,20 +480,23 @@ namespace Mobile.Code.ViewModels
                             photos = await InvasiveVisualProjectLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true);
                         vm.InvasiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                         vm.ConclusiveVisualProjectLocationPhotoItems = new ObservableCollection<VisualProjectLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
-                    //});                        
-                    
-                    
-                    //think later of this serialization
-                    App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
+                });
+
+                 
+                //think later of this serialization
+                App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualProjectLocationPhotoItems);
 
                     if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                     {
-                        await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(ProjectLocationViewModel));
+                        //Device.BeginInvokeOnMainThread(async () =>
+                        //{
+                            await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(ProjectLocationViewModel));
+                        //});
                     }
 
                 }
 
-            });
+            //});
             IsBusyProgress = false;
         }
 

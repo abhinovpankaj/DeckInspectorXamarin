@@ -539,8 +539,8 @@ namespace Mobile.Code.ViewModels
         {
             App.IsNewForm = false;
             IsBusyProgress = true;
-            await Task.Run(async () =>
-            {
+            //await Task.Run(async () =>
+            //{
                 currentLocationSeq = VisualFormBuildingLocationItems.IndexOf(parm);
                 VisualBuildingLocationFormViewModel vm = new VisualBuildingLocationFormViewModel();
                 vm.ExteriorElements = new ObservableCollection<string>(parm.ExteriorElements.Split(',').ToList());
@@ -592,6 +592,8 @@ namespace Mobile.Code.ViewModels
                 vm.BuildingLocation = BuildingLocation;
 
                 App.FormString = JsonConvert.SerializeObject(vm.VisualForm);
+            await Task.Run(async () =>
+            {
                 if (App.IsAppOffline)
                 {
                     vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectIDSqLite(parm.Id, false));
@@ -599,7 +601,7 @@ namespace Mobile.Code.ViewModels
                 else
                     vm.VisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(await VisualBuildingLocationPhotoDataStore.GetItemsAsyncByProjectVisualID(parm.Id, true));
 
-
+            });
                 if (App.IsInvasive == false)
                 {
                     if (isSwipped)
@@ -621,6 +623,8 @@ namespace Mobile.Code.ViewModels
                 else
                 {
                     IEnumerable<VisualBuildingLocationPhoto> photos;
+                await Task.Run(async () =>
+                {
                     if (App.IsAppOffline)
                     {
                         photos = await InvasiveVisualBuildingLocationPhotoDataStore.GetItemsAsyncByLoacationIDSqLite(parm.Id, false);
@@ -631,12 +635,13 @@ namespace Mobile.Code.ViewModels
 
                     vm.InvasiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "TRUE"));
                     vm.ConclusiveVisualBuildingLocationPhotoItems = new ObservableCollection<VisualBuildingLocationPhoto>(photos.Where(x => x.ImageDescription == "CONCLUSIVE"));
+                });
                     App.InvaiveImages = JsonConvert.SerializeObject(vm.InvasiveVisualBuildingLocationPhotoItems);
 
                     if (Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 1].GetType() != typeof(TabbedPageInvasive))
                         await Shell.Current.Navigation.PushAsync(new TabbedPageInvasive(vm));
                 }
-            });            
+            //});            
             
             IsBusyProgress = false;
         }
