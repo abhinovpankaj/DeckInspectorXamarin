@@ -12,15 +12,42 @@
     xmlns:tabview="clr-namespace:Xam.Plugin.TabView;assembly=Xam.Plugin.TabView"
     xmlns:vm="clr-namespace:Mobile.Code.ViewModels"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    Title="Home"
+    Title="Home" Shell.NavBarIsVisible="True"
     Visual="Material"
     mc:Ignorable="d">
 
-    <Shell.TitleView>
-        <StackLayout
-            Padding="10,2"
-            MinimumHeightRequest="44"
-            Orientation="Horizontal">
+    <!--<Shell.TitleView>
+
+        
+       
+    </Shell.TitleView>-->
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,45,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <AbsoluteLayout>
+        <controls:Loading
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsBusyProgress}" />
+        <Grid
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="{DynamicResource Orange-100}"
+            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>-->
+            <StackLayout
+
+                Grid.Row="0"
+                Margin="5,10,5,0"
+                Padding="0">
+                 <StackLayout Padding="10,2" Orientation="Horizontal" MinimumHeightRequest="44">
             <Label
                 FontAttributes="None"
                 FontFamily="{StaticResource Montserrat-Regular}"
@@ -56,31 +83,6 @@
             </ImageButton>
 
         </StackLayout>
-    </Shell.TitleView>
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <On Platform="iOS" Value="0,45,0,0" />
-        </OnPlatform>
-    </ContentPage.Padding>
-    <AbsoluteLayout>
-        <controls:Loading
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            IsVisible="{Binding IsBusyProgress}" />
-        <Grid
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="{DynamicResource Orange-100}"
-            IsVisible="{Binding IsBusyProgress, Converter={StaticResource InverseBoolConverter}}">
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>-->
-            <StackLayout
-                Grid.Row="0"
-                Margin="5,10,5,0"
-                Padding="0">
                 <ScrollView>
                     <FlexLayout
                         x:Name="FlexTypes"

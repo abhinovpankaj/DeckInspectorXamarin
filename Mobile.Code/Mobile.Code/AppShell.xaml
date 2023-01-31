@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Mobile.Code.Views"
     Title="Mobile.Code"
-    FlyoutBehavior="Disabled"
+    FlyoutBehavior="Flyout"
     mc:Ignorable="d">
     <Shell.FlyoutBackground>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -34,7 +34,7 @@
             <Setter Property="Shell.BackgroundColor" Value="{StaticResource Orange-400}" />
 
         </Style>
-        <Style
+        <!--<Style
             x:Key="MonkeysShell"
             BasedOn="{StaticResource BaseStyle}"
             TargetType="Element">
@@ -51,7 +51,7 @@
             BasedOn="{StaticResource BaseStyle}"
             TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="#546DFE" />
-        </Style>
+        </Style>Style-->
         <Style
             x:Key="AboutShell"
             BasedOn="{StaticResource BaseStyle}"
@@ -62,21 +62,7 @@
 
     <Shell.FlyoutHeader>
         <controls:FlyoutHeader />
-    </Shell.FlyoutHeader>
-    <Shell.FlyoutFooter>
-        <StackLayout Margin="0,-20,0,0" HorizontalOptions="FillAndExpand">
-            <Label
-                FontAttributes="None"
-                HorizontalOptions="Center"
-                Text="Deck Inspectors"
-                TextColor="White" />
-            <Label
-                Margin="4"
-                HorizontalOptions="Center"
-                Text="V5.3"
-                TextColor="White" />
-        </StackLayout>
-    </Shell.FlyoutFooter>
+    </Shell.FlyoutHeader>       
 
     <ShellItem
         IsTabStop="False"
@@ -84,7 +70,7 @@
         Style="{StaticResource HomeShell}">
         <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
     </ShellItem>
-    <FlyoutItem
+    <FlyoutItem 
         FlyoutDisplayOptions="AsMultipleItems"
         IsTabStop="False"
         Route="main"
@@ -137,5 +123,19 @@
                                     Color=#1B76FF,
                                     Size=24}"
         Text="Logout" />
-
+    <Shell.FlyoutFooter >
+        <StackLayout Margin="0,-20,0,0"  HorizontalOptions="FillAndExpand"
+                     Orientation="Vertical">
+            <Label
+                FontAttributes="None"
+                HorizontalOptions="Center"
+                Text="Deck Inspectors"
+                TextColor="White" />
+            <Label
+                Margin="4"
+                HorizontalOptions="Center"
+                Text="V5.2"
+                TextColor="White" />
+        </StackLayout>
+    </Shell.FlyoutFooter>
 </Shell>

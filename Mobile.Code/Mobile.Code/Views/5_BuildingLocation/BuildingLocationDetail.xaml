@@ -57,7 +57,7 @@
             Command="{Binding GoHomeCommand}"
             IconImageSource="{FontImage FontFamily={StaticResource MaterialFontFamily},
                                         Glyph={x:Static helpers:IconFont.Home},
-                                        Color=#0EEAFF}"
+                                        Color=#1B76FF}"
             Order="Secondary"
             Priority="1"
             Text="Projects" />
@@ -127,6 +127,7 @@
                             Text="{Binding BuildingLocation.Description}"
                             TextColor="{DynamicResource ColorForegroundText}" />
                     </StackLayout>
+
                     <ScrollView
                         x:Name="Locations"
                         Grid.Row="1"
@@ -152,7 +153,7 @@
                                         No locations to display, use &quot;+&quot; button to add new locations.
                                     </Label>
                                 </StackLayout>
-                            </BindableLayout.EmptyView>
+                            </BindableLayout.EmptyView>                                             
 
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
@@ -330,7 +331,7 @@
                 Padding="0"
                 BackgroundColor="{DynamicResource Orange-700}"
                 BorderColor="{DynamicResource Orange-200}"
-                CornerRadius="40"
+                CornerRadius="35"
                 HasShadow="True"
                 HeightRequest="70"
                 HorizontalOptions="End"

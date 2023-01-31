@@ -6,9 +6,10 @@
     xmlns:con="clr-namespace:Mobile.Code.Convertors"
     xmlns:convertor="clr-namespace:Mobile.Code.Convertors"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-    mc:Ignorable="d">
+    mc:Ignorable="d" ios:Application.EnableAccessibilityScalingForNamedFontSizes="False" >
     <Application.Resources>
         <!--<ResourceDictionary Source="/Styles/LightTheme.xaml"/>-->
         <con:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -43,7 +44,7 @@
                 <On Platform="iOS" Value="Roboto-Light" />
             </OnPlatform>
 
-            <ControlTemplate x:Key="GeneralTemplate">
+            <ControlTemplate x:Key="GeneralTemplate1">
                 <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
