@@ -187,6 +187,7 @@ namespace Mobile.Code.ViewModels
         }
         private async Task<bool> Running()
         {
+
             //await Task.Factory.StartNew(async () =>
             //{
                 IsOnline = !App.IsAppOffline;
@@ -210,6 +211,7 @@ namespace Mobile.Code.ViewModels
                 
             //});
             return true;
+
         }
         public async Task LoadData()
         {

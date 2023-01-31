@@ -57,7 +57,7 @@
                                         Glyph={x:Static helpers:IconFont.ShieldRefresh},
                                         Color=#1B76FF}"
             IsEnabled="{Binding CanInvasiveCreate}"
-            Order="Primary"
+            Order="Primary" 
             Priority="1"
             Text="{Binding BtnInvasiveText}" />
 
